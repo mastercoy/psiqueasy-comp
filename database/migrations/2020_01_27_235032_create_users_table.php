@@ -11,7 +11,8 @@ class CreateUsersTable extends Migration {
      * @return void
      */
     public function up() {
-        Schema::table('users', function (Blueprint $table) {
+        //fixme de criar para alterar
+        Schema::create('users', function (Blueprint $table) {
             //fixme os nullable
             $table->increments('id');
             $table->string('name', 191)->nullable();
@@ -40,15 +41,22 @@ class CreateUsersTable extends Migration {
             $table->string('cpf', 191)->nullable();
             $table->mediumText('endereco')->nullable();
             $table->mediumText('cartao')->nullable();
-            $table->integer('empresa_id')->unsigned()->nullable();
-            $table->foreign('empresa_id')
-                  ->references('id')
-                  ->on('empresas')
-                  ->onDelete('cascade');
+
+        });
+
+
+        //fixme PRIMARY?
+        Schema::create('userperfil', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name', 45);
+            $table->string('label', 45)->nullable();
+            $table->tinyInteger('active')->default(true);
+            $table->timestamps();
+
         });
 
         // tabela pivot | users | > users_userperfil <  | userperfil |
-        Schema::table('users_userperfil', function (Blueprint $table) {
+        Schema::create('users_userperfil', function (Blueprint $table) {
 
             $table->integer('users_id')->unsigned()->nullable();
             $table->foreign('users_id')
@@ -64,8 +72,7 @@ class CreateUsersTable extends Migration {
             $table->timestamps();
         });
 
-        //fixme PRIMARY?
-        Schema::table('userperfil', function (Blueprint $table) {
+        Schema::create('userpermissoes', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 45);
             $table->string('label', 45)->nullable();
@@ -75,7 +82,7 @@ class CreateUsersTable extends Migration {
         });
 
         // tabela pivot | userperfil | > userperfil_userpermissoes < | userpermissoes |
-        Schema::table('userperfil_userpermissoes', function (Blueprint $table) {
+        Schema::create('userperfil_userpermissoes', function (Blueprint $table) {
 
             $table->integer('userperfil_id')->unsigned()->nullable();
             $table->foreign('userperfil_id')
@@ -91,27 +98,36 @@ class CreateUsersTable extends Migration {
             $table->timestamps();
         });
 
-        Schema::table('userpermissoes', function (Blueprint $table) {
+        Schema::create('user_modelos_docs', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name', 45);
-            $table->string('label', 45)->nullable();
-            $table->tinyInteger('active')->default(true);
-            $table->timestamps();
-
-        });
-
-        Schema::table('user_modelos_docs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nome');
+            $table->string('name');
             $table->longText('conteudo')->nullable();
             $table->boolean('active')->default(true);
-            $table->timestamps();
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
                   ->references('id')
                   ->on('users')
                   ->onDelete('cascade');
             $table->timestamps();
+        });
+
+        Schema::create('responsavel', function (Blueprint $table) {
+
+            $table->increments('id');
+            $table->string('name');
+            $table->string('parentesco')->nullable();
+            $table->dateTime('data_nasc')->nullable();
+            $table->mediumText('end')->nullable();
+            $table->string('tel')->nullable();
+            $table->string('cpf')->nullable();
+            $table->string('rg')->nullable();
+            $table->boolean('active')->default(true);
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users');
+            $table->timestamps();
+
         });
 
     }
@@ -123,20 +139,12 @@ class CreateUsersTable extends Migration {
      * @return void
      */
     public function down() {
-        Schema::table('users', function (Blueprint $table) {
-            //
-        });
-        Schema::table('users_userperfil', function (Blueprint $table) {
-            //
-        });
-        Schema::table('userperfil', function (Blueprint $table) {
-            //
-        });
-        Schema::table('userperfil_userpermissoes', function (Blueprint $table) {
-            //
-        });
-        Schema::table('userpermissoes', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('users_userperfil');
+        Schema::dropIfExists('userperfil');
+        Schema::dropIfExists('userperfil_userpermissoes');
+        Schema::dropIfExists('userpermissoes');
+        Schema::dropIfExists('responsavel');
+
     }
 }

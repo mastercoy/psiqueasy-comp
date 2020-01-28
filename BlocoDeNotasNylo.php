@@ -14,7 +14,7 @@
 | users | > users_usersperfis <  | usersperfis |
 | usersperfis | > usersperfis_userspermissoes | userspermissoes |
  *
- *
+ * //afazer envio de email para confirmar conta
 //afazer TABELA EMPRESA
 //afazer TABELA USER PERMISSOES ITENS
 //afazer CLASSE CONTROLLER
@@ -263,3 +263,5 @@ Gate::define('pertence-usuario-logado-e-active', function($user, $objeto){
     return $user->id == $objeto->user_id && $objeto->active == 1;
 });
 */
+
+
