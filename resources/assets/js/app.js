@@ -20,10 +20,13 @@ import store from "./store";
 
 Vue.use(VueRouter);
 const router = new VueRouter({
+    mode: "history",
+    base: process.env.APP_URL,
     routes
 });
 
- Vue.component("index", require("./components/Index.vue"));
+
+ Vue.component("modulo-clinica", require("./components/modulo_clinica.vue"));
 
 
 const app = new Vue({
