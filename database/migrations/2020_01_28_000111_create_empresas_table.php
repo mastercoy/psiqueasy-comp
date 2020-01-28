@@ -9,7 +9,7 @@ class CreateEmpresasTable extends Migration {
      * Run the migrations.
      *
      * @return void
-     * Empresas
+     * Empresa
      * id int
      * nome varchar 191
      * cpf_cnpj varchar 191

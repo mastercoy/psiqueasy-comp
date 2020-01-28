@@ -15,7 +15,7 @@ class CreateUsersTable extends Migration {
         Schema::create('users', function (Blueprint $table) {
             //fixme os nullable
             $table->increments('id');
-            $table->string('name', 191)->nullable();
+            $table->string('name', 191);
             $table->string('foto', 191)->nullable();
             $table->string('email', 191)->unique();
             $table->string('password', 191);
@@ -44,8 +44,6 @@ class CreateUsersTable extends Migration {
 
         });
 
-
-        //fixme PRIMARY?
         Schema::create('userperfil', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 45);
@@ -122,7 +120,7 @@ class CreateUsersTable extends Migration {
             $table->string('cpf')->nullable();
             $table->string('rg')->nullable();
             $table->boolean('active')->default(true);
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')
                   ->references('id')
                   ->on('users');

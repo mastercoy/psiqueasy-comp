@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Atendimentos extends Model {
+class Atendimento extends Model {
     //
+    protected $guarded = [];
 }

@@ -14,10 +14,10 @@
 | users | > users_usersperfis <  | usersperfis |
 | usersperfis | > usersperfis_userspermissoes | userspermissoes |
  *
- * //afazer envio de email para confirmar conta
-//afazer TABELA EMPRESA
-//afazer TABELA USER PERMISSOES ITENS
-//afazer CLASSE CONTROLLER
+//afazer envio de email para confirmar conta
+// TABELA EMPRESA
+//a TABELA USER PERMISSOES ITENS
+// CLASSE CONTROLLER
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -125,7 +125,7 @@ class ResponsavelController extends Controller {
 // um perfil tem varias permissões obs model permissoes
 // uma permissão pode pertencer a varios perfis
 
-//afazer TABELA RESPONSAVEL
+// TABELA RESPONSAVEL
 Schema::create('responsaveis', function(Blueprint $table){
 
           $table->increments('id');
@@ -142,7 +142,7 @@ Schema::create('responsaveis', function(Blueprint $table){
           $table->integer('user_id')->unsigned();
         });
 
-//afazer TABELA EMPRESA CATEGORIAS
+// TABELA EMPRESA CATEGORIAS
 Schema::create('empresa_categs', function(Blueprint $table){
             $table->increments('id');
             $table->string('nome');
@@ -158,7 +158,7 @@ Schema::create('empresa_categs', function(Blueprint $table){
                     ->onDelete('cascade');
         });
 
-//afazer TABELA EMPRESA MODELO DOCUMENTOS
+// TABELA EMPRESA MODELO DOCUMENTOS
 Schema::create('empresa_modelos_docs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
@@ -172,7 +172,7 @@ Schema::create('empresa_modelos_docs', function (Blueprint $table) {
                     ->onDelete('cascade');
         });
 
-//afazer TABELA USER MODELO DOCUMENTOS
+//TABELA USER MODELO DOCUMENTOS
 Schema::create('user_modelos_docs', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
@@ -186,7 +186,7 @@ Schema::create('user_modelos_docs', function (Blueprint $table) {
                     ->onDelete('cascade');
         });
 
-//afazer TABELA USER PERFIS
+//TABELA USER PERFIS
 Schema::create('user_perfis', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nome');
