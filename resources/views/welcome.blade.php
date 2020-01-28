@@ -16,15 +16,12 @@
 
     </head>
     <body>
-          <h1>Componente 02/2020</h1>
-          <div id="app">
+        <h1>Componente 02/2020</h1>
+        <div id="app">
 
-          </div>
-
-
+        </div>
 
 
-
-          <script src="{{ mix('js/app.js') }}"></script>
+        <script src="{{ mix('js/app.js') }}"></script>
     </body>
 </html>
