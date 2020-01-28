@@ -18,7 +18,7 @@
     <body>
         <h1>Componente 02/2020</h1>
         <div id="app">
-            <index />
+            <modulo-clinica />
         </div>
 
 
