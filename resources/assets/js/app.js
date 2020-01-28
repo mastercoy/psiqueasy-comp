@@ -10,6 +10,7 @@ window.Vue = require("vue");
 
 import VueRouter from "vue-router";
 import routes from "./routes";
+import store from "./store";
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -22,9 +23,11 @@ const router = new VueRouter({
     routes
 });
 
-// Vue.component("relatorios-modal", require("./components/Modal_Relatorios.vue"));
+ Vue.component("index", require("./components/Index.vue"));
+
 
 const app = new Vue({
     el: "#app",
-    router
+    router,
+    store
 });
