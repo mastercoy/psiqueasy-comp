@@ -113,27 +113,22 @@ class ResponsavelController extends Controller {
         //
     }
 
-
     public function create() {
         //
     }
-
 
     public function store() {
         $responsavel_json = Responsavel::create($this->validateResponsavelRequest());
 
     }
 
-
     public function show(Responsavel $responsavel_json) {
         return $responsavel = Responsavel::find($responsavel_json->id);
     }
 
-
     public function edit(Responsavel $responsavel) {
         //
     }
-
 
     //fixme usar GATE
     public function update(Responsavel $responsavel_json) {

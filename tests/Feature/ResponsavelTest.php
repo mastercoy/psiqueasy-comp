@@ -61,4 +61,20 @@ class ResponsavelTest extends TestCase {
         $this->assertEquals('novo nome', Responsavel::first()->name);
 
     }
+
+    /** @test */ //obs SUCESSO
+    public function responsável_pode_ser_destruido() {
+
+        $response = $this->post('/api/responsavel-json', [
+            'name' => 'obrigatorio',
+            'parentesco' => 'irmão',
+            'end' => 'endereço teste'
+        ]);
+
+        $this->assertCount(1, Responsavel::all());
+        $responsavel = Responsavel::first();
+        $response    = $this->delete('/api/responsavel-json/' . $responsavel->id);
+        $this->assertCount(0, Responsavel::all());
+
+    }
 }

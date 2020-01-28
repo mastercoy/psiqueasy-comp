@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class UserModelosDocs extends Model {
     //
     protected $guarded = [];
+    protected $table   = 'user_modelos_docs';
 }
