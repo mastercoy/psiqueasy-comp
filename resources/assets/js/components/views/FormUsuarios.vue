@@ -23,8 +23,8 @@
 
          <div class="form-group">
           <label for="alocacao"><strong>Alocação: </strong></label>
-          <select class="form-control">
-            <option disable value=""> //</option>
+          <select class="form-control" v-model="newUser.aloc">
+            <option disable value=""> </option>
             <option> Matriz </option>
           </select>
         </div>
@@ -42,20 +42,20 @@
             <h5>Atribuições: </h5>
                 <div class="row">
                   <div class="col-md-3">
-                    <input class="magic-checkbox" type="checkbox" id="AgendarCheck" /> 
-                    <label for="AgendarCheck">Agendamentos</label>
+                    <input class="magic-checkbox" type="checkbox" id="Agendamentos" value="Agendamentos" v-model="newUser.atribuicoes" /> 
+                    <label for="Agendamentos">Agendamentos</label>
                   </div>
                   <div class="col-md-3">
-                    <input class="magic-checkbox" type="checkbox" id="financasCheck"/> 
-                    <label for="financasCheck">Financas</label>
+                    <input class="magic-checkbox" type="checkbox" id="Financas"  value="Financas" v-model="newUser.atribuicoes"/> 
+                    <label for="Financas">Financas</label>
                   </div>
                   <div class="col-md-3">
-                    <input class="magic-checkbox" type="checkbox" id="cadastroCheck"/> 
-                    <label for="cadastroCheck">Cadastros</label>
+                    <input class="magic-checkbox" type="checkbox" id="cadastros" value="cadastros" v-model="newUser.atribuicoes"/> 
+                    <label for="cadastros">Cadastros</label>
                   </div>
                   <div class="col-md-3">
-                    <input class="magic-checkbox" type="checkbox" id="adminCheck"/> 
-                    <label for="adminCheck">Admin</label>
+                    <input class="magic-checkbox" type="checkbox" id="Admin" value="admin"  v-model="newUser.atribuicoes"/> 
+                     <label for="Admin">Admin</label>
                   </div>
                 </div>   
           </div>       
@@ -66,7 +66,7 @@
             <div class="col-md-8"></div>
             <div class="col-md-4">
                <button type="button" class="btn btn-default mr-1" @click="vefCadastro = false">Cancelar</button>
-               <button type="submit" class="btn btn-success"><i aria-hidden="true" class="fa fa-floppy-o"></i>  <b>Salvar</b> </button>
+               <button type="button" class="btn btn-success" @click="addUser"><i aria-hidden="true" class="fa fa-floppy-o"></i>  <b>Salvar</b> </button>
             </div>
           </div>
           <br>
@@ -94,11 +94,32 @@
               <td>3</td>
               <td>Matriz</td>
               <td><a class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></td>  
-              <td><a class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a></td>                
+              <td><a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a></td>                
             </tr>
           </tbody>
          </table>
     </div>
+
+    <!-- Modal para comfirmação de deletar -->
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h5>Voce tem certeza de que deseja deletar a filial selecionada?</h5>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-danger">Continuar</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
   </div>
 </template>
@@ -111,9 +132,15 @@ export default {
       newUser: {
         nome: '',
         descricao: '',
-        nivelAcesso: 0,
+        atribuicoes: [],
         aloc: ''
       }
+    }
+  },
+  methods: {
+    addUser() {
+      console.log(this.newUser)
+      this.vefCadastro = false
     }
   }
 
