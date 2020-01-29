@@ -12,7 +12,9 @@ export default new Vuex.Store({
             NomeEmp: "",
             naturezaJuridica: "",
             gestao: ""
-        }
+        },
+        Filiais: [],
+        usuários: []
     },
     mutations: {},
     actions: {},

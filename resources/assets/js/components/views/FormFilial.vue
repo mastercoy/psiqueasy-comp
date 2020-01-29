@@ -10,15 +10,15 @@
           </div>
         </div>
     <div v-if="vefNewFilial" class="container container-new">
-      <form>
+      <form >
         <div class="form-group">
           <label for="nome"><strong>Nome: </strong></label>
-          <input type="text" class="form-control" id="nome" v-model="filial.nome" placeholder="Digite o nome do responsável pela empresa">
+          <input type="text" class="form-control" id="nome" v-model="filial.nome" placeholder="Digite o nome da Filial">
         </div>
 
         <div class="form-group">
-          <label for="CNPJ"><strong>Matriz: </strong></label>
-          <input type="text" class="form-control" id="CNPJ" v-model="filial.matriz" placeholder="Digite o CNPJ da empresa">
+          <label for="CNPJ"><strong>localidade: </strong></label>
+          <input type="text" class="form-control" id="CNPJ" v-model="filial.localidade" placeholder="Digite a localidade da Filia">
         </div>
 
           <hr />
@@ -50,11 +50,33 @@
               <td> Loja 2</td>
               <td> Salvador/BA</td>
               <td><a class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></td>  
-              <td><a class="btn btn-danger btn-sm"><i class="fa fa-trash" aria-hidden="true"></i></a></td>              
+              <td><a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter" ><i class="fa fa-trash" aria-hidden="true"></i></a></td>              
             </tr>
           </tbody>
          </table>
     </div>
+
+
+       <!-- Modal para comfirmação de deletar -->
+          <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <h5>Voce tem certeza de que deseja deletar a filial selecionada?</h5>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-danger">Continuar</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
 
   </div>
@@ -67,7 +89,7 @@ export default {
       vefNewFilial: false,
       filial: {
       nome: '',
-      matriz: '',
+      localidade: '',
       complemento: ''
     }
     }
