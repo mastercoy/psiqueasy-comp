@@ -78,7 +78,7 @@ export default {
 <style scoped>
   .form-temp {
    padding: 20px;
-   background-color: rgb(250, 250, 250);
+   background-color:#fff;
    border-radius: 5px;
   }
 

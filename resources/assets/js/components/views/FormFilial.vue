@@ -4,7 +4,7 @@
       <hr>
       <div class="row">
           <div class="col-md-4">
-            <button class="btn btn-primary btn-lg mb-3">
+            <button class="btn btn-primary btn-lg mb-3" @click="vefNewFilial = true">
               <i class="fa fa-plus-square" aria-hidden="true"></i> Adicionar Filial
             </button>
           </div>
@@ -25,7 +25,7 @@
           <div class="row">          
             <div class="col-md-8"></div>
             <div class="col-md-4">
-               <button type="button" class="btn btn-default mr-1">Cancelar</button>
+               <button type="button" class="btn btn-default mr-1"  @click="vefNewFilial = false">Cancelar</button>
                <button type="submit" class="btn btn-success"><i aria-hidden="true" class="fa fa-floppy-o"></i>  <b>Salvar</b> </button>
             </div>
           </div>
@@ -90,5 +90,6 @@ export default {
   .container-new {
     border: 1px solid rgb(202, 202, 202);
     border-radius: 5px;
+    padding: 10px;
   }
 </style>

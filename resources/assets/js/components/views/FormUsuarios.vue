@@ -4,7 +4,7 @@
     <hr>
     <div class="row">
       <div class="col-md-4">
-        <button class="btn btn-primary btn-lg mb-3">
+        <button class="btn btn-primary btn-lg mb-3" @click="vefCadastro = true">
           <i class="fa fa-plus-square" aria-hidden="true"></i> Adicionar Usuário
         </button>
       </div>
@@ -17,16 +17,55 @@
         </div>
 
         <div class="form-group">
-          <label for="CNPJ"><strong>Nível de Acesso: </strong></label>
-          <input type="text" class="form-control" id="CNPJ" v-model="newUser.nivel" >
-          <small id="emailHelp" class="form-text text-muted">Descreva de forma resumida a função definida para o usuário</small>
+          <label for="descricao"><strong>Descrição: </strong></label>
+          <input type="text" class="form-control" id="descricao" v-model="newUser.descricao" placeholder="Digite uma breve descrição da função exercida pela usuário">
+        </div>
+
+         <div class="form-group">
+          <label for="alocacao"><strong>Alocação: </strong></label>
+          <select class="form-control">
+            <option disable value=""> //</option>
+            <option> Matriz </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+
+          <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div> -->
+  
+          <div class="container">
+            <h5>Atribuições: </h5>
+                <div class="row">
+                  <div class="col-md-3">
+                    <input class="magic-checkbox" type="checkbox" id="AgendarCheck" /> 
+                    <label for="AgendarCheck">Agendamentos</label>
+                  </div>
+                  <div class="col-md-3">
+                    <input class="magic-checkbox" type="checkbox" id="financasCheck"/> 
+                    <label for="financasCheck">Financas</label>
+                  </div>
+                  <div class="col-md-3">
+                    <input class="magic-checkbox" type="checkbox" id="cadastroCheck"/> 
+                    <label for="cadastroCheck">Cadastros</label>
+                  </div>
+                  <div class="col-md-3">
+                    <input class="magic-checkbox" type="checkbox" id="adminCheck"/> 
+                    <label for="adminCheck">Admin</label>
+                  </div>
+                </div>   
+          </div>       
         </div>
 
          <hr />
           <div class="row">          
             <div class="col-md-8"></div>
             <div class="col-md-4">
-               <button type="button" class="btn btn-default mr-1">Cancelar</button>
+               <button type="button" class="btn btn-default mr-1" @click="vefCadastro = false">Cancelar</button>
                <button type="submit" class="btn btn-success"><i aria-hidden="true" class="fa fa-floppy-o"></i>  <b>Salvar</b> </button>
             </div>
           </div>
@@ -84,7 +123,7 @@ export default {
 <style scoped>
   .form-temp {
    padding: 20px;
-   background-color: rgb(250, 250, 250);
+   background-color:#fff;
    border-radius: 5px;
   }
 
@@ -94,5 +133,6 @@ export default {
   .container-new {
     border: 1px solid rgb(202, 202, 202);
     border-radius: 5px;
+    padding: 10px;
   }
 </style>
