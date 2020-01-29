@@ -262,12 +262,7 @@ Gate::define('pertence-usuario-logado-e-active', function($user, $objeto){
     return $user->id == $objeto->user_id && $objeto->active == 1;
 });
 
-Bom dia Moisés. Estamos com algumas duvidas e tentarei formulá-las da melhor maneira para não tomar muito seu tempo.
-1 - Precisamos entender, no contexto do sistema, quem é o USER (dono da empresa? profissional que atende?)
-e quem é o RESPONSAVEL (responsavel pelo paciente? pela empresa?)
-2 - Quais serão os níveis de permissão? Admin, SuperAdmin, User, Member... etc
-Sei que é seu dia de 'folga', porém pelo bem da empresa estou julgando melhor tirar essas dúvidas do que esperar até amanhã.
-Muito obrigado!
+
 
 */
 

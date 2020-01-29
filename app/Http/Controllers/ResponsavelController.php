@@ -153,7 +153,7 @@ class ResponsavelController extends Controller {
     }
 
 
-    // ============================
+    // =========================================== protected
 
 
     protected function validateResponsavelRequest() {

@@ -65,7 +65,7 @@ class UserTest extends TestCase {
 
     }
 
-    /** @test */
+    /** @test */ //obs SUCESSO
     public function user_pode_ser_destruido() {
 
         $response = $this->post('/api/user-json', [
