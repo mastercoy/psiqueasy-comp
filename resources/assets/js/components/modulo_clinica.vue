@@ -12,9 +12,9 @@
       <div class="col-md-3">
         
           <ul>
-            <li><router-link to="/about">Empresa</router-link></li>
-            <li @click="imprimir"> <router-link to="/">Filiais</router-link></li>
-            <li> Usuários </li>
+            <li><router-link to="/cadastro">Empresa</router-link></li>
+            <li @click="imprimir"> <router-link to="/filial">Filiais</router-link></li>
+            <li><router-link to="/usuarios">Usuários</router-link></li>
             <li> Perfil </li>
             <li> Configurações </li>
             <li> E-Mail </li>
@@ -23,11 +23,11 @@
           </ul>
        
         
-      </div>
+      </div> <!-- FIM DA DIV DA COL MD-3 -->
 
       <div class="col-md-9">
         <router-view />
-      </div>
+      </div><!-- FIM DA DIV DA COL MD-9 -->
     </div>
 
 
@@ -45,3 +45,11 @@ export default {
   }
 }
 </script>
+
+<style >
+  body {
+    background-color: #e5edfa;
+  }
+
+</style>
+
