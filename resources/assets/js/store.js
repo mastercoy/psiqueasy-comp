@@ -5,16 +5,16 @@ import Vuex from 'vuex';
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
-
-  },
-  mutations: {
-
-  },
-  actions: {
-
-  },
-  getters: {
-    
-  }
+    state: {
+        Empresa: {
+            nome: "",
+            cnpj: "",
+            NomeEmp: "",
+            naturezaJuridica: "",
+            gestao: ""
+        }
+    },
+    mutations: {},
+    actions: {},
+    getters: {}
 });
