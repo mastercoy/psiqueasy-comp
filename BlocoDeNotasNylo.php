@@ -230,7 +230,7 @@ Schema::create('user_perfis', function (Blueprint $table) {
             $table->timestamps();
         });
 
-//afazer VALIDATION ????
+//afazer VALIDATION
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;

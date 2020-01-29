@@ -143,6 +143,7 @@ class ResponsavelController extends Controller {
     }
 
     //fixme TESTAR
+    //afazer criar rota post
     public function excluidos(Request $request) {
         return Responsavel::where([
                                       ['user_id', '=', $request->user()->id], // do usuário
