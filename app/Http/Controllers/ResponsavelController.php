@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 
 use App\Responsavel;
+use App\User;
 use Gate;
+use http\Client\Request;
 
 //afazer CLASSE CONTROLLER
 /*namespace App\Http\Controllers;
@@ -110,7 +112,7 @@ class ResponsavelController extends Controller {
 class ResponsavelController extends Controller {
 
     public function index() {
-        //
+        return User::find(auth()->user()->id)->responsavel()->get();
     }
 
     public function create() {
@@ -140,36 +142,19 @@ class ResponsavelController extends Controller {
         $responsavel_json->delete();
     }
 
-    protected function validateUserRequest() {
-        return request()->validate([
-                                       'name' => 'required',
-                                       'foto' => 'nullable',
-                                       'email' => 'required',
-                                       'password' => 'required',
-                                       'data_nasc' => 'nullable',
-                                       'formacao' => 'nullable',
-                                       'profissao' => 'nullable',
-                                       'telefones' => 'nullable',
-                                       'model_doc_top' => 'nullable',
-                                       'model_doc_rodape' => 'nullable',
-                                       'contrato' => 'nullable',
-                                       'comprovante' => 'nullable',
-                                       'venc_plano' => 'nullable',
-                                       'plano_id' => 'nullable',
-                                       'plano_solicitado_id' => 'nullable',
-                                       'data_solicitacao_plano' => 'nullable',
-                                       'debito_automatico' => 'nullable',
-                                       'tipo_user' => 'nullable',
-                                       'quant_acesso' => 'nullable',
-                                       'ultimo_acesso' => 'nullable',
-                                       'config' => 'nullable',
-                                       'cpf' => 'nullable',
-                                       'endereco' => 'nullable',
-                                       'cartao' => 'nullable',
-                                       'empresa_id' => 'nullable',
-
-                                   ]);
+    //fixme TESTAR
+    public function excluidos(Request $request) {
+        return Responsavel::where([
+                                      ['user_id', '=', $request->user()->id], // do usuário
+                                      ['active', '=', 0], // excluidos
+                                  ])
+                          ->orderBy('updated_at', 'desc')
+                          ->get();
     }
+
+
+    // ============================
+
 
     protected function validateResponsavelRequest() {
         return request()->validate([
@@ -181,8 +166,7 @@ class ResponsavelController extends Controller {
                                        'cpf' => 'nullable',
                                        'rg' => 'nullable',
                                        'active' => 'nullable',
-                                       'user_id' => 'nullable',
-
+                                       'user_id' => 'nullable'
 
                                    ]);
     }

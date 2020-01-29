@@ -3,76 +3,65 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class UserController extends Controller {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
+
     public function index() {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
     public function create() {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return Response
-     */
-    public function store(Request $request) {
-        //
+    public function store() {
+        $user_json = User::create($this->validateUserRequest());
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param User $user
-     * @return Response
-     */
-    public function show(User $user) {
-        //
+    public function show(User $user_json) {
+        return $user = User::find($user_json->id);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param User $user
-     * @return Response
-     */
     public function edit(User $user) {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param User $user
-     * @return Response
-     */
-    public function update(Request $request, User $user) {
-        //
+    public function update(User $user_json) {
+        $user_json->update($this->validateUserRequest());
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param User $user
-     * @return Response
-     */
-    public function destroy(User $user) {
-        //
+    public function destroy(User $user_json) {
+        $user_json->delete();
+    }
+
+    protected function validateUserRequest() {
+        return request()->validate([
+                                       'name' => 'required',
+                                       'foto' => 'nullable',
+                                       'email' => 'required',
+                                       'password' => 'required',
+                                       'data_nasc' => 'nullable',
+                                       'formacao' => 'nullable',
+                                       'profissao' => 'nullable',
+                                       'telefones' => 'nullable',
+                                       'model_doc_top' => 'nullable',
+                                       'model_doc_rodape' => 'nullable',
+                                       'contrato' => 'nullable',
+                                       'comprovante' => 'nullable',
+                                       'venc_plano' => 'nullable',
+                                       'plano_id' => 'nullable',
+                                       'plano_solicitado_id' => 'nullable',
+                                       'data_solicitacao_plano' => 'nullable',
+                                       'debito_automatico' => 'nullable',
+                                       'tipo_user' => 'nullable',
+                                       'quant_acesso' => 'nullable',
+                                       'ultimo_acesso' => 'nullable',
+                                       'config' => 'nullable',
+                                       'cpf' => 'nullable',
+                                       'endereco' => 'nullable',
+                                       'cartao' => 'nullable',
+                                       'empresa_id' => 'nullable',
+
+                                   ]);
     }
 }

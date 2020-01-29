@@ -5,11 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
+
     public function up() {
         //fixme de criar para alterar
         Schema::create('users', function (Blueprint $table) {
@@ -70,7 +66,7 @@ class CreateUsersTable extends Migration {
             $table->timestamps();
         });
 
-        Schema::create('userpermissoes', function (Blueprint $table) {
+        Schema::create('userpermissao', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 45);
             $table->string('label', 45)->nullable();
@@ -79,8 +75,8 @@ class CreateUsersTable extends Migration {
 
         });
 
-        // tabela pivot | userperfil | > userperfil_userpermissoes < | userpermissoes |
-        Schema::create('userperfil_userpermissoes', function (Blueprint $table) {
+        // tabela pivot | userperfil | > userperfil_userpermissao < | userpermissao |
+        Schema::create('userperfil_userpermissao', function (Blueprint $table) {
 
             $table->integer('userperfil_id')->unsigned()->nullable();
             $table->foreign('userperfil_id')
@@ -88,10 +84,10 @@ class CreateUsersTable extends Migration {
                   ->on('userperfil')
                   ->onDelete('cascade');
 
-            $table->integer('userpermissoes_id')->unsigned()->nullable();
-            $table->foreign('userpermissoes_id')
+            $table->integer('userpermissao_id')->unsigned()->nullable();
+            $table->foreign('userpermissao_id')
                   ->references('id')
-                  ->on('userpermissoes')
+                  ->on('userpermissao')
                   ->onDelete('cascade');
             $table->timestamps();
         });
@@ -140,8 +136,8 @@ class CreateUsersTable extends Migration {
         Schema::dropIfExists('users');
         Schema::dropIfExists('users_userperfil');
         Schema::dropIfExists('userperfil');
-        Schema::dropIfExists('userperfil_userpermissoes');
-        Schema::dropIfExists('userpermissoes');
+        Schema::dropIfExists('userperfil_userpermissao');
+        Schema::dropIfExists('userpermissao');
         Schema::dropIfExists('responsavel');
 
     }

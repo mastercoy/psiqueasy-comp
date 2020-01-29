@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Responsavel;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,12 +15,12 @@ class ResponsavelTest extends TestCase {
 
 
     /** @test */ //obs SUCESSO
-    public function um_user_pode_ser_adicionado() {
+    public function um_responsavel_pode_ser_adicionado() {
 
         $response = $this->post('/api/responsavel-json', [
             'name' => 'obrigatorio',
             'parentesco' => 'irmão',
-            'end' => 'endereço teste'
+            'end' => 'endereço teste',
         ]);
 
         $responsavel = Responsavel::first();
@@ -40,10 +41,10 @@ class ResponsavelTest extends TestCase {
 
     }
 
-    /** @test */ //obs SUCESSO
+    /** @test */ //obs SUCESSO fixme sem gate
     public function responsavel_pode_ser_atualizado() {
 
-        $this->withoutExceptionHandling();
+//        $this->withoutExceptionHandling();
         $response = $this->post('/api/responsavel-json', [
             'name' => 'obrigatorio',
             'parentesco' => 'irmão',
@@ -62,7 +63,33 @@ class ResponsavelTest extends TestCase {
 
     }
 
-    /** @test */ //obs SUCESSO
+    /** @test */ //afazer
+    public function retorna_responsaveis_soft_delete() {
+
+        $response = $this->post('/api/user-json', [
+            'name' => 'obrigatorio',
+            'email' => 'test@test.com',
+            'password' => '123456'
+        ]);
+
+        $user = User::first();
+        //        dd($user);
+        $response = $this->post('/api/responsavel-json', [
+            'name' => 'obrigatorio',
+            'parentesco' => 'irmão',
+            'end' => 'endereço teste',
+            'active' => false,
+            'user_id' => $user->id
+
+        ]);
+
+        $responsavel = Responsavel::first();
+        //        dd(Responsavel::first());
+
+
+    }
+
+    /** @test */ //obs SUCESSO fixme sem gate
     public function responsável_pode_ser_destruido() {
 
         $response = $this->post('/api/responsavel-json', [
