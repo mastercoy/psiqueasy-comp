@@ -50,7 +50,7 @@
           <div class="row">          
             <div class="col-md-8"></div>
             <div class="col-md-4">
-               <button to="/usuarios" type="button" class="btn btn-default mr-1" >Cancelar</button>
+              <router-link to="/usuarios" type="button" class="btn btn-default mr-1">Cancelar</router-link>
                <button type="button" class="btn btn-success" @click="editUser"><i aria-hidden="true" class="fa fa-floppy-o"></i> <b>Atualizar</b></button>
             </div>
           </div>
@@ -65,7 +65,7 @@ export default {
   methods: {
     editUser() {
       console.log("Usuário editado com Sucesso");
-       this.$router.push("/usuarios");
+      this.$router.push("/usuarios");
     }
   }
 }

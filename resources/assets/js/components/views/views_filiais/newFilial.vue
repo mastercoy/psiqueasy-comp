@@ -37,6 +37,20 @@ export default {
       complemento: ''
      }
    }
+ },
+ methods: {
+   criarFilial() {
+     //Nome
+     //Empresa ID
+    /*
+     let nfilial = newFilial
+
+     axios.post("api/criar-filial-json", nfilial).then(({ data })  => {
+      this.listContas = data;
+      //console.log(this.listContas);      
+    });
+    */
+   }
  }
 }
 </script>

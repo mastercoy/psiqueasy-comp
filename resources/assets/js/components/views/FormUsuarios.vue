@@ -63,10 +63,23 @@
 
 <script>
 export default {
+  mounted(){
+    /* METODO INATIVO
+    *   Metodo que retorna todos os usuários cadastrado pela empresa
+    *
+    *   axios.get(`api/user`).then(({ data })  => {
+    *    Users = data;
+    *    
+    *  
+    *    });
+    * 
+    */
+  },
   data() {
     return {
       vefCadastro: false,
       editCadastro: false,
+      Users: [],
       User: {
         nome: 'Matheus Henrique',
         descricao: 'Estagiário de Ti',

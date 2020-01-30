@@ -1,6 +1,6 @@
 <template>
   <div class="form-temp">
-    <h4>Empresa</h4>
+    <h4>{{statusEmpresa}}</h4>
     <hr>
       <form @submit.prevent="cadastrarEmpresa">
         <div class="form-group">
@@ -57,6 +57,7 @@
 export default {
   data(){
     return {
+      statusEmpresa: 'Dados da Empresa',
       cadEmpresa: {
         nome: '',
         cnpj: '',
