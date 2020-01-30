@@ -3,10 +3,16 @@ import Filial from "./components/views/FormFilial"
 import CadastroEmpresa from "./components/views/FormEmpresa"
 import Usuarios from "./components/views/FormUsuarios"
 import newFilial from "./components/views/views_filiais/newFilial"
-import EditFilial from "./components/views/views_filiais/EditFilial";
+import EditFilial from "./components/views/views_filiais/EditFilial"
+import NewUser from "./components/views/views_usuarios/NewUser"
+import EditUser from "./components/views/views_usuarios/EditUser"
 
 
 const routes = [
+    {
+        path: "/cadastro",
+        component: CadastroEmpresa
+    },
     {
         path: "/filial",
         component: Filial,
@@ -25,12 +31,20 @@ const routes = [
         props: true
     },
     {
-        path: "/cadastro",
-        component: CadastroEmpresa
-    },
-    {
         path: "/usuarios",
         component: Usuarios
+    },
+    {
+        path: "/usuarios/new",
+        name: "NovoUsuario",
+        component: NewUser,
+        props: true
+    },
+    {
+        path: "/usuarios/edit",
+        name: "EditUsuario",
+        component: EditUser,
+        props: true
     }
 ];
 

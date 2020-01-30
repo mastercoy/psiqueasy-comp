@@ -18,10 +18,9 @@
             <div class="col-md-8"></div>
             <div class="col-md-4">
                <router-link to="/filial" type="button" class="btn btn-default mr-1">Cancelar</router-link>
-               <button type="submit" class="btn btn-success"><i aria-hidden="true" class="fa fa-floppy-o"></i> <b>Atualizar</b> </button>
+               <button type="button" class="btn btn-success" @click="editFilial"><i aria-hidden="true" class="fa fa-floppy-o"></i> <b>Atualizar</b> </button>
             </div>
-          </div>
-          <br>
+          </div>        
       </form>
     </div>
 </div>
@@ -29,7 +28,14 @@
 
 <script>
 export default {
-  props: ['filial']
+  props: ['filial'],
+  methods: {
+    editFilial() {
+      console.log("Filial editada com Sucesso");
+
+       this.$router.push("/usuarios");
+    }
+  }
 }
 </script>
 

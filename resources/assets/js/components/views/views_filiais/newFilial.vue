@@ -6,19 +6,19 @@
       <form >
         <div class="form-group">
           <label for="nome"><strong>Nome: </strong></label>
-          <input type="text" class="form-control" id="nome" v-model="filial.nome" placeholder="Digite o nome da Filial">
+          <input type="text" class="form-control" id="nome" v-model="newFilial.nome" placeholder="Digite o nome da Filial">
         </div>
 
         <div class="form-group">
           <label for="CNPJ"><strong>localidade: </strong></label>
-          <input type="text" class="form-control" id="CNPJ" v-model="filial.localidade" placeholder="Digite a localidade da Filial">
+          <input type="text" class="form-control" id="CNPJ" v-model="newFilial.localidade" placeholder="Digite a localidade da Filial">
         </div>
 
           <hr />
           <div class="row">          
             <div class="col-md-8"></div>
             <div class="col-md-4">
-               <router-link :to="{name:'filial', params: {filial} }" type="button" class="btn btn-default mr-1">Cancelar</router-link>
+               <router-link to="/filial" type="button" class="btn btn-default mr-1">Cancelar</router-link>
                <button type="submit" class="btn btn-primary"><i aria-hidden="true" class="fa fa-floppy-o"></i> <b>Salvar</b> </button>
             </div>
           </div>
@@ -29,7 +29,15 @@
 
 <script>
 export default {
-  props: ['filial']
+ data() {
+   return {
+     newFilial: {
+      nome: '',
+      localidade: '',
+      complemento: ''
+     }
+   }
+ }
 }
 </script>
 

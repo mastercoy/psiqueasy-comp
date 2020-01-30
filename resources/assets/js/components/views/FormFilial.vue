@@ -4,45 +4,21 @@
       <hr>
       <div class="row">
           <div class="col-md-4">
-            <router-link :to="{name:'NovaFilial', params: {filial} }"><button class="btn btn-primary btn-lg mb-3">
-              <i class="fa fa-plus-square" aria-hidden="true"></i> Adicionar Filial
-            </button></router-link>
+            <router-link :to="{name:'NovaFilial', params: {filial} }" class="btn btn-primary btn-lg mb-3">
+              <i class="fa fa-plus-square" aria-hidden="true"></i> Nova Filial
+            </router-link>
           </div>
         </div>
-   
-    <!-- <div v-if="vefEditFilial" class="container container-new">
-       <form >
-        <div class="form-group">
-          <label for="nome"><strong>Nome: </strong></label>
-          <input type="text" class="form-control" id="nome" v-model="filial.nome" >
-        </div>
-
-        <div class="form-group">
-          <label for="CNPJ"><strong>localidade: </strong></label>
-          <input type="text" class="form-control" id="CNPJ" v-model="filial.localidade" >
-        </div>
-
-          <hr />
-          <div class="row">          
-            <div class="col-md-8"></div>
-            <div class="col-md-4">
-               <button type="button" class="btn btn-default mr-1"  @click="vefEditFilial = false">Cancelar</button>
-               <button type="submit" class="btn btn-success" @click="atualizaFilial"><i aria-hidden="true" class="fa fa-floppy-o"></i>  <b>Atualizar</b> </button>
-            </div>
-          </div>
-          <br>
-      </form>
-    </div><br> -->
 
      <div class="container">
          <table class="table table-sm">
            <thead>
               <tr>
-              <th scope="col">Código</th>
-              <th scope="col">Nome</th>              
-              <th scope="col">Localidade/UF</th>
-              <th scope="col"> Editar </th>
-              <th scope="col"> Deletar </th>
+              <th class="th-lg" scope="col">Código</th>
+              <th class="th-lg" scope="col">Nome</th>              
+              <th class="th-lg" scope="col">Localidade/UF</th>
+              <th class="th-lg" scope="col"> Editar </th>
+              <th class="th-lg" scope="col"> Deletar </th>
             </tr>
            </thead>          
           <tbody>
@@ -90,8 +66,8 @@ export default {
       // vefNewFilial: false,
       // vefEditFilial: false,
       filial: {
-      nome: 'Loja 2',
-      localidade: 'Salvador/BA',
+      nome: '',
+      localidade: '',
       complemento: ''
     }
     }
