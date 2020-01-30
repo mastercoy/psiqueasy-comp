@@ -14,7 +14,7 @@ class ResponsavelTest extends TestCase {
     //        $this->withoutExceptionHandling();
 
 
-    /** @test */ //obs SUCESSO
+    /** @test */ //SUCESSO
     public function um_responsavel_pode_ser_adicionado() {
 
         $response = $this->post('/api/responsavel-json', [
@@ -28,7 +28,7 @@ class ResponsavelTest extends TestCase {
         $this->assertCount(1, Responsavel::all());
     }
 
-    /** @test */ //obs SUCESSO
+    /** @test */ //SUCESSO
     public function nome_responsavel_deve_ser_obrigatorio() {
 
         $response = $this->post('/api/responsavel-json', [
@@ -41,7 +41,7 @@ class ResponsavelTest extends TestCase {
 
     }
 
-    /** @test */ //obs SUCESSO fixme sem gate
+    /** @test */ //SUCESSO
     public function responsavel_pode_ser_atualizado() {
 
 //        $this->withoutExceptionHandling();
@@ -63,7 +63,7 @@ class ResponsavelTest extends TestCase {
 
     }
 
-    /** @test */ //afazer
+    /** @test */ //SUCESSO
     public function retorna_responsaveis_soft_delete() {
 
         $response = $this->post('/api/user-json', [
@@ -89,7 +89,7 @@ class ResponsavelTest extends TestCase {
 
     }
 
-    /** @test */ //obs SUCESSO fixme sem gate
+    /** @test */ //SUCESSO
     public function responsável_pode_ser_destruido() {
 
         $response = $this->post('/api/responsavel-json', [

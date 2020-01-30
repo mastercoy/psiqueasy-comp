@@ -18,15 +18,6 @@ class EmpresaController extends Controller {
         $empresa_json = Empresa::create($this->validateEmpresaRequest());
     }
 
-    protected function validateEmpresaRequest() {
-        return request()->validate([
-                                       'cpf_cnpj' => 'required',
-                                       'logo_marca' => 'nullable',
-                                       'active' => 'nullable',
-                                       'empresa_categoria_id' => 'nullable'
-                                   ]);
-    }
-
     public function show(Empresa $empresa_json) {
         return $empresa = Empresa::find($empresa_json->id);
     }
@@ -41,5 +32,16 @@ class EmpresaController extends Controller {
 
     public function destroy(Empresa $empresa_json) {
         $empresa_json->delete();
+    }
+
+    // =========================================== protected
+
+    protected function validateEmpresaRequest() {
+        return request()->validate([
+                                       'cpf_cnpj' => 'required',
+                                       'logo_marca' => 'nullable',
+                                       'active' => 'nullable',
+                                       'empresa_categoria_id' => 'nullable'
+                                   ]);
     }
 }
