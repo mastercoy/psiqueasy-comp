@@ -266,4 +266,6 @@ Gate::define('pertence-usuario-logado-e-active', function($user, $objeto){
 
 */
 
+//afazer PERMISSÃO , MODELO DOCS
+
 

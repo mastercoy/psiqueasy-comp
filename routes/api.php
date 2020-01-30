@@ -50,6 +50,9 @@ Route::patch('desativar-empresa-categoria-json/{empresa_categoria_json}', 'Empre
 Route::get('show-user-perfil-json/{user_perfil_json}', 'UserController@showUserPerfil');
 Route::post('criar-user-perfil-json', 'UserController@criarUserPerfil');
 Route::patch('editar-user-perfil-json/{user_perfil_json}', 'UserController@updateUserPerfil');
+Route::delete('destruir-user-perfil-json/{user_perfil_json}', 'UserController@destruirUserPerfil');
+Route::patch('desativar-user-perfil-json/{user_perfil_json}', 'UserController@desativarUserPerfil');
+
 
 /*
  +--------+-----------+-------------------------------------------------+--------------------------+--------------------------------------------------------+--------------+

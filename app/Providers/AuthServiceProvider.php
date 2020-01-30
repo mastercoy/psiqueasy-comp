@@ -23,6 +23,8 @@ class AuthServiceProvider extends ServiceProvider {
         // Schema::defaultStringLength(191);
         $this->registerPolicies();
 
+        //afazer os GATES
+        // definição, closing
 
         /*
         |--------------------------------------------------------------------------

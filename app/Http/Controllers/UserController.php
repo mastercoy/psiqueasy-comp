@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserPerfil;
+use App\Models\UserPermissao;
 use App\User;
 
 class UserController extends Controller {
@@ -57,8 +58,49 @@ class UserController extends Controller {
         $user_perfil_json->update($this->validateUserPerfilRequest());
     }
 
+    public function destruirUserPerfil(UserPerfil $user_perfil_json) {
+        $user_perfil_json->delete();
+    }
+
+    public function desativarUserPerfil(UserPerfil $user_perfil_json) {
+        $perfil         = UserPerfil::find($user_perfil_json->id);
+        $perfil->active = false;
+        $perfil->save();
+    }
+
+    // ========================= PERMISSÕES
+
+    public function criarPermissao() {
+        $permissao = UserPermissao::create($this->validatePermissaoRequest());
+    }
+
+    public function showPermissao(UserPermissao $user_permissao_json) {
+        return $perfil = UserPermissao::find($user_permissao_json->id);
+    }
+
+    public function updatePermissao(UserPerfil $user_perfil_json) {
+        $user_perfil_json->update($this->validatePermissaoRequest());
+    }
+
+    public function destruirPermissao(UserPerfil $user_perfil_json) {
+
+    }
+
+
+    public function desativarPermissao(UserPerfil $user_perfil_json) {
+
+    }
+
 
     // ========================= protected
+
+    protected function validatePermissaoRequest() {
+        return request()->validate([
+                                       'name' => 'required',
+                                       'label' => 'nullable',
+                                       'active' => 'nullable'
+                                   ]);
+    }
 
     protected function validateUserPerfilRequest() {
         return request()->validate([

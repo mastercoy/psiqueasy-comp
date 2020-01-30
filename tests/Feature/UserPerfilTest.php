@@ -35,7 +35,7 @@ class UserPerfilTest extends TestCase {
         $response->assertSessionHasErrors('name');
     }
 
-    /** @test */
+    /** @test */ //SUCESSO
     public function user_perfil_pode_ser_atualizado() {
 
         $response = $this->post('/api/criar-user-perfil-json', [
@@ -53,7 +53,34 @@ class UserPerfilTest extends TestCase {
 
     }
 
-    //afazer a partir daqui
+    /** @test */ //SUCESSO
+    public function user_perfil_pode_ser_destruido() {
+
+        $response = $this->post('/api/criar-user-perfil-json', [
+            'name' => 'nome obrigatorio',
+        ]);
+
+        $this->assertCount(1, UserPerfil::all());
+
+        $perfil   = UserPerfil::first();
+        $response = $this->delete('/api/destruir-user-perfil-json/' . $perfil->id);
+
+        $this->assertCount(0, UserPerfil::all());
+    }
+
+    /** @test */
+    public function user_perfil_soft_delete() {
+
+        $response = $this->post('/api/criar-user-perfil-json', [
+            'name' => 'nome obrigatorio',
+        ]);
+
+        $perfil   = UserPerfil::first();
+        $response = $this->patch('/api/desativar-user-perfil-json/' . $perfil->id);
+        $this->assertEquals(0, UserPerfil::first()->active);
+    }
+
+
 }
 
 
