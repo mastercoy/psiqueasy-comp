@@ -20,16 +20,36 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::resource('responsavel-json', 'ResponsavelController');
 Route::resource('user-json', 'UserController');
+Route::patch('desativar-user-json/{user_json}', 'UserController@desativarUser');
 Route::resource('paciente-json', 'PacienteController');
 Route::resource('empresa-json', 'EmpresaController');
+Route::patch('desativar-empresa-json/{empresa_json}', 'EmpresaController@desativarEmpresa');
 
 /// rotas para FILIAL
+Route::get('show-filial-json/{empresa_filial_json}', 'EmpresaController@showFilial');
 Route::post('criar-filial-json', 'EmpresaController@criarFilial');
 Route::patch('editar-filial-json/{empresa_filial_json}', 'EmpresaController@updateFilial');
 Route::delete('destruir-filial-json/{empresa_filial_json}', 'EmpresaController@destruirFilial');
 Route::patch('desativar-filial-json/{empresa_filial_json}', 'EmpresaController@desativarFilial');
-Route::get('show-filial-json/{empresa_filial_json}', 'EmpresaController@showFilial');
 
+// rotas para EMPRESA MODELO DOCS
+Route::get('show-empresa-modelos-json/{empresa_modelo_json}', 'EmpresaController@showModeloDocs');
+Route::post('criar-empresa-modelos-json', 'EmpresaController@criarModeloDocs');
+Route::patch('editar-empresa-modelos-json/{empresa_modelo_json}', 'EmpresaController@updateModeloDocs');
+Route::delete('destruir-empresa-modelos-json/{empresa_modelo_json}', 'EmpresaController@destruirModeloDocs');
+Route::patch('desativar-empresa-modelos-json/{empresa_modelo_json}', 'EmpresaController@desativarModeloDocs');
+
+// rotas para EMPRESA CATEGORIAS
+Route::get('show-empresa-categoria-json/{empresa_categoria_json}', 'EmpresaController@showCategoria');
+Route::post('criar-empresa-categoria-json', 'EmpresaController@criarCategoria');
+Route::patch('editar-empresa-categoria-json/{empresa_categoria_json}', 'EmpresaController@updateCategoria');
+Route::delete('destruir-empresa-categoria-json/{empresa_categoria_json}', 'EmpresaController@destruirCategoria');
+Route::patch('desativar-empresa-categoria-json/{empresa_categoria_json}', 'EmpresaController@desativarCategoria');
+
+// rotas para USER PERFIL
+Route::get('show-user-perfil-json/{user_perfil_json}', 'UserController@showUserPerfil');
+Route::post('criar-user-perfil-json', 'UserController@criarUserPerfil');
+Route::patch('editar-user-perfil-json/{user_perfil_json}', 'UserController@updateUserPerfil');
 
 /*
  +--------+-----------+-------------------------------------------------+--------------------------+--------------------------------------------------------+--------------+

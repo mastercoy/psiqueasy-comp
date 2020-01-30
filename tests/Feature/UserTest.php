@@ -12,7 +12,7 @@ class UserTest extends TestCase {
 
     //        $this->withoutExceptionHandling();
 
-    /** @test */ //obs SUCESSO
+    /** @test */ //SUCESSO
     public function user_pode_ser_adicionado() { //name e pass
 
         $response = $this->post('/api/user-json', [
@@ -26,7 +26,7 @@ class UserTest extends TestCase {
 
     }
 
-    /** @test */ //obs SUCESSO
+    /** @test */ //SUCESSO
     public function campos_sao_obrigatorios() {
 
         $response = $this->post('/api/user-json', [
@@ -44,7 +44,7 @@ class UserTest extends TestCase {
 
     }
 
-    /** @test */ //obs SUCESSO
+    /** @test */ //SUCESSO
     public function user_pode_ser_atualizado() {
 
         $response = $this->post('/api/user-json', [
@@ -65,7 +65,7 @@ class UserTest extends TestCase {
 
     }
 
-    /** @test */ //obs SUCESSO
+    /** @test */ //SUCESSO
     public function user_pode_ser_destruido() {
 
         $response = $this->post('/api/user-json', [
@@ -80,5 +80,19 @@ class UserTest extends TestCase {
         $this->assertCount(0, User::all());
     }
 
+    /** @test */
+    public function user_soft_delete() {
+
+        $response = $this->post('/api/user-json', [
+            'name' => 'obrigatorio',
+            'email' => 'test@test.com',
+            'password' => '123456'
+        ]);
+
+        $user     = User::first();
+        $response = $this->patch('/api/desativar-user-json/' . $user->id);
+        $this->assertEquals(0, User::first()->active);
+
+    }
 
 }

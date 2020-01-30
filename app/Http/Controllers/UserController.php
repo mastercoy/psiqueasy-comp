@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserPerfil;
 use App\User;
 
 class UserController extends Controller {
+
+    // ========================= USER
 
     public function index() {
         //
@@ -32,6 +35,39 @@ class UserController extends Controller {
 
     public function destroy(User $user_json) {
         $user_json->delete();
+    }
+
+    public function desativarUser(User $user_json) {
+        $user         = User::find($user_json->id);
+        $user->active = false;
+        $user->save();
+    }
+
+    // ========================= PERFIL
+
+    public function criarUserPerfil() {
+        $perfil = UserPerfil::create($this->validateUserPerfilRequest());
+    }
+
+    public function showUserPerfil(UserPerfil $user_perfil_json) {
+        return $perfil = UserPerfil::find($user_perfil_json->id);
+    }
+
+    public function updateUserPerfil(UserPerfil $user_perfil_json) {
+        $user_perfil_json->update($this->validateUserPerfilRequest());
+    }
+
+
+    // ========================= protected
+
+    protected function validateUserPerfilRequest() {
+        return request()->validate([
+                                       'name' => 'required',
+                                       'label' => 'nullable',
+                                       'active' => 'nullable'
+                                   ]);
+
+
     }
 
     protected function validateUserRequest() {

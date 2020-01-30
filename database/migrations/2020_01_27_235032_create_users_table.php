@@ -30,6 +30,7 @@ class CreateUsersTable extends Migration {
             $table->integer('plano_solicitado_id')->nullable();
             $table->dateTime('data_solicitacao_plano')->nullable();
             $table->tinyInteger('debito_automatico')->nullable();
+            $table->tinyInteger('active')->default(true);
             $table->string('tipo_user', 191)->nullable();
             $table->integer('quant_acesso')->nullable()->default('0');
             $table->dateTime('ultimo_acesso')->nullable();
