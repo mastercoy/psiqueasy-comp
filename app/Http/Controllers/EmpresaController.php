@@ -42,6 +42,10 @@ class EmpresaController extends Controller {
 
     }
 
+    public function showFilial(EmpresaFilial $empresa_filial_json) {
+        return $filial = EmpresaFilial::find($empresa_filial_json->id);
+    }
+
     public function updateFilial(EmpresaFilial $empresa_filial_json) {
         $empresa_filial_json->update($this->validateFilialRequest());
 
@@ -64,6 +68,12 @@ class EmpresaController extends Controller {
 
     // =========================== protected
 
+    protected function validateModeloDocsRequest() {
+        return request()->validate([
+                                       'name' => 'required',
+                                       'conteudo'
+                                   ]);
+    }
 
     protected function validateFilialRequest() { //fixme como pegar o id da empresa
         return request()->validate([
