@@ -31,8 +31,12 @@ export default {
   props: ['filial'],
   methods: {
     editFilial() {
-      console.log("Filial editada com Sucesso");
-
+     /* let cFilial = this.filial
+     
+       axios.post(`api/editar-filial-json/${cFilial}`).then(({ data })  => {
+       console.log("Filial editada com Sucesso");    
+        });
+    */
        this.$router.push("/usuarios");
     }
   }

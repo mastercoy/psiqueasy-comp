@@ -52,7 +52,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                  <button type="button" class="btn btn-danger">Continuar</button>
+                  <button type="button" class="btn btn-danger" @click="delUser">Continuar</button>
                 </div>
               </div>
             </div>
@@ -67,7 +67,7 @@ export default {
     /* METODO INATIVO
     *   Metodo que retorna todos os usuários cadastrado pela empresa
     *
-    *   axios.get(`api/user`).then(({ data })  => {
+    *   axios.get(`api/user-json`).then(({ data })  => {
     *    Users = data;
     *    
     *  
@@ -89,23 +89,10 @@ export default {
     }
   },
   methods: {
-    // addUser() {
-    //   console.log(this.newUser)
-    //   this.vefCadastro = false
-    // },
-    // editarCadastro() {
-    //   let userEdit = {
-    //     nome: 'Matheus Henrique',
-    //     descricao: 'Estagiário de Ti',
-    //     atribuicoes: ['Financas'],
-    //     aloc: 'Matriz'
-    //   }
-    //   this.newUser = userEdit
-    //   this.editCadastro = true;
-
-    // }
+    delUser() {
+      
+    }
   }
-
 }
 </script>
 

@@ -61,10 +61,14 @@
 
 <script>
 export default {
+  mounted(){
+   /* axios.get('api/show-filial-json').then(({data}) => {
+        console.log("Filiais montadas com sucesso")
+    });
+    */
+  },
   data() {
     return {
-      // vefNewFilial: false,
-      // vefEditFilial: false,
       filial: {
       nome: '',
       localidade: '',
