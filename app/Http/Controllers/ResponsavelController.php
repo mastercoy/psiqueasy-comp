@@ -111,7 +111,7 @@ class ResponsavelController extends Controller {
 
 class ResponsavelController extends Controller {
 
-    public function index() {
+    public function index() { //fixme
         return User::find(auth()->user()->id)->responsavel()->get();
     }
 

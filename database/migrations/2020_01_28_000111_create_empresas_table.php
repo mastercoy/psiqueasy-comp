@@ -17,6 +17,7 @@ class CreateEmpresasTable extends Migration {
      * empresa_categoria_id int
      * active tinyinteger
      */
+    //fixme verificar campos nullable
     public function up() {
         Schema::create('empresas', function (Blueprint $table) {
             $table->increments('id');
@@ -37,7 +38,7 @@ class CreateEmpresasTable extends Migration {
         Schema::create('empresa_filiais', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 191);
-            $table->tinyInteger('active');
+            $table->tinyInteger('active')->default(true);
             $table->integer('empresa_id')->unsigned()->nullable();
             $table->foreign('empresa_id')
                   ->references('id')

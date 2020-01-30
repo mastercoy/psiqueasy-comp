@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
+use App\Models\EmpresaFilial;
 
 class EmpresaController extends Controller {
 
@@ -34,7 +35,44 @@ class EmpresaController extends Controller {
         $empresa_json->delete();
     }
 
-    // =========================================== protected
+    // =============================== CRIAR FILIAIS
+
+    public function criarFilial() {
+        $criar_filial_json = EmpresaFilial::create($this->validateFilialRequest());
+
+    }
+
+    public function updateFilial(EmpresaFilial $empresa_filial_json) {
+        $empresa_filial_json->update($this->validateFilialRequest());
+
+    }
+
+    public function destruirFilial(EmpresaFilial $empresa_filial_json) {
+        $empresa_filial_json->delete();
+    }
+
+    public function desativarFilial(EmpresaFilial $empresa_filial_json) {
+
+        $filial         = EmpresaFilial::find($empresa_filial_json->id);
+        $filial->active = false;
+        $filial->save();
+//        dd(EmpresaFilial::first());
+
+
+    }
+
+
+    // =========================== protected
+
+
+    protected function validateFilialRequest() { //fixme como pegar o id da empresa
+        return request()->validate([
+                                       'name' => 'required',
+                                       'active' => 'nullable',
+                                       'empresa_id' => 'nullable',
+                                   ]);
+
+    }
 
     protected function validateEmpresaRequest() {
         return request()->validate([
@@ -44,4 +82,6 @@ class EmpresaController extends Controller {
                                        'empresa_categoria_id' => 'nullable'
                                    ]);
     }
+
+
 }

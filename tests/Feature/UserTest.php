@@ -60,7 +60,7 @@ class UserTest extends TestCase {
             'password' => $user->password
         ]);
 
-        dd(User::first());
+//        dd(User::first());
         $this->assertEquals('novo nome', User::first()->name);
 
     }
