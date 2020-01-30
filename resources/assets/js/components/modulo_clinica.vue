@@ -1,10 +1,11 @@
 <template>
   <div class="container">
-    <h2>Componente - Clinica</h2> 
+    <h2>Modulo - Clinica</h2> 
 
-    <p>Ipsum do dolore aute qui mollit consectetur aliquip consectetur irure Lorem.
-       Irure occaecat culpa quis esse proident labore exercitation irure.
-        Consectetur deserunt cupidatat aliquip sint labore commodo sint labore ea qui qui Lorem magna velit.
+    <p>
+      Implementação do Módulo Clínica para a aplicação Psiqueasy em um sistems SPA. 
+      Módulo implementado com duas colunas principais, com a coluna da esquerda relacionado aos menus, implementado o recurso do <i>router-link</i> e a coluna da direita
+      implementa o recurso <i>router-view</i> para exibição dos conteúdos.
     </p>  
 
     <div class="row">
@@ -49,6 +50,17 @@ export default {
 <style >
   body {
     background-color: #e5edfa;
+  }
+
+  ul {
+    width: 150px;
+    background: #fff;
+    border-radius: 5px;
+    padding: 20px 10px;
+  }
+
+  li {
+    margin-left: 20px;
   }
 
 </style>

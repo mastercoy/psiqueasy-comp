@@ -4,34 +4,35 @@
       <hr>
       <div class="row">
           <div class="col-md-4">
-            <button class="btn btn-primary btn-lg mb-3" @click="vefNewFilial = true">
+            <router-link :to="{name:'NovaFilial', params: {filial} }"><button class="btn btn-primary btn-lg mb-3">
               <i class="fa fa-plus-square" aria-hidden="true"></i> Adicionar Filial
-            </button>
+            </button></router-link>
           </div>
         </div>
-    <div v-if="vefNewFilial" class="container container-new">
-      <form >
+   
+    <!-- <div v-if="vefEditFilial" class="container container-new">
+       <form >
         <div class="form-group">
           <label for="nome"><strong>Nome: </strong></label>
-          <input type="text" class="form-control" id="nome" v-model="filial.nome" placeholder="Digite o nome da Filial">
+          <input type="text" class="form-control" id="nome" v-model="filial.nome" >
         </div>
 
         <div class="form-group">
           <label for="CNPJ"><strong>localidade: </strong></label>
-          <input type="text" class="form-control" id="CNPJ" v-model="filial.localidade" placeholder="Digite a localidade da Filia">
+          <input type="text" class="form-control" id="CNPJ" v-model="filial.localidade" >
         </div>
 
           <hr />
           <div class="row">          
             <div class="col-md-8"></div>
             <div class="col-md-4">
-               <button type="button" class="btn btn-default mr-1"  @click="vefNewFilial = false">Cancelar</button>
-               <button type="submit" class="btn btn-success"><i aria-hidden="true" class="fa fa-floppy-o"></i>  <b>Salvar</b> </button>
+               <button type="button" class="btn btn-default mr-1"  @click="vefEditFilial = false">Cancelar</button>
+               <button type="submit" class="btn btn-success" @click="atualizaFilial"><i aria-hidden="true" class="fa fa-floppy-o"></i>  <b>Atualizar</b> </button>
             </div>
           </div>
           <br>
       </form>
-    </div> <br>
+    </div><br> -->
 
      <div class="container">
          <table class="table table-sm">
@@ -49,7 +50,7 @@
               <td> 001 </td>
               <td> Loja 2</td>
               <td> Salvador/BA</td>
-              <td><a class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></td>  
+              <td><router-link :to="{name:'EditFilial', params: {filial} }" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td>  
               <td><a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter" ><i class="fa fa-trash" aria-hidden="true"></i></a></td>              
             </tr>
           </tbody>
@@ -62,7 +63,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                  <h5 class="modal-title" id="exampleModalLongTitle">Deleter Filial</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -86,14 +87,26 @@
 export default {
   data() {
     return {
-      vefNewFilial: false,
+      // vefNewFilial: false,
+      // vefEditFilial: false,
       filial: {
-      nome: '',
-      localidade: '',
+      nome: 'Loja 2',
+      localidade: 'Salvador/BA',
       complemento: ''
     }
     }
     
+  },
+  methods: {
+    editarFilial() {
+      this.filial.nome = "Loja 2";
+      this.filial.localidade = "Salvador/BA";
+
+      this.vefEditFilial = true;
+    },
+    atualizaFilial() {
+      console.log("Filial Atualizada!")
+    }
   }
 }
 </script>
@@ -102,7 +115,7 @@ export default {
 <style scoped>
   .form-temp {
    padding: 20px;
-   background-color: rgb(250, 250, 250);
+   background-color: #fff;
    border-radius: 5px;
   }
 

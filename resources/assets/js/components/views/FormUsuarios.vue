@@ -70,8 +70,74 @@
             </div>
           </div>
           <br>
+      </form><br>
+    </div>
+
+    <div v-if="editCadastro" class="container container-new">
+      <form>
+         <div class="form-group">
+          <label for="nome"><strong>Nome: </strong></label>
+          <input type="text" class="form-control" id="nome" v-model="newUser.nome" >
+        </div>
+
+        <div class="form-group">
+          <label for="descricao"><strong>Descrição: </strong></label>
+          <input type="text" class="form-control" id="descricao" v-model="newUser.descricao">
+        </div>
+
+         <div class="form-group">
+          <label for="alocacao"><strong>Alocação: </strong></label>
+          <select class="form-control" v-model="newUser.aloc">
+            <option disable value=""> </option>
+            <option> Matriz </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+
+          <!-- <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div> -->
+  
+          <div class="container">
+            <h5><strong>Atribuições: </strong></h5>
+                <div class="row">
+                  <div class="col-md-3">
+                    <input class="magic-checkbox" type="checkbox" id="Agendamentos" value="Agendamentos" v-model="newUser.atribuicoes" /> 
+                    <label for="Agendamentos">Agendamentos</label>
+                  </div>
+                  <div class="col-md-3">
+                    <input class="magic-checkbox" type="checkbox" id="Financas"  value="Financas" v-model="newUser.atribuicoes"/> 
+                    <label for="Financas">Financas</label>
+                  </div>
+                  <div class="col-md-3">
+                    <input class="magic-checkbox" type="checkbox" id="cadastros" value="cadastros" v-model="newUser.atribuicoes"/> 
+                    <label for="cadastros">Cadastros</label>
+                  </div>
+                  <div class="col-md-3">
+                    <input class="magic-checkbox" type="checkbox" id="Admin" value="admin"  v-model="newUser.atribuicoes"/> 
+                     <label for="Admin">Admin</label>
+                  </div>
+                </div>   
+          </div>       
+        </div>
+
+         <hr />
+          <div class="row">          
+            <div class="col-md-8"></div>
+            <div class="col-md-4">
+               <button type="button" class="btn btn-default mr-1" @click="editCadastro = false">Cancelar</button>
+               <button type="button" class="btn btn-success" @click="addUser"><i aria-hidden="true" class="fa fa-floppy-o"></i> <b>Atualizar</b></button>
+            </div>
+          </div>
+          <!-- <br> -->
       </form>
-    </div><br>
+    </div>
+
+
     <div class="container">
          <table class="table table-sm">
            <thead>
@@ -93,7 +159,7 @@
               <td>Estagiário do setor de TI</td>
               <td>3</td>
               <td>Matriz</td>
-              <td><a class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></td>  
+              <td><a class="btn btn-warning btn-sm" @click="editarCadastro"><i class="fa fa-pencil-square" aria-hidden="true"></i></a></td>  
               <td><a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a></td>                
             </tr>
           </tbody>
@@ -105,13 +171,13 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                  <h5 class="modal-title" id="exampleModalLongTitle">Deletar Usuário</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
                 <div class="modal-body">
-                  <h5>Voce tem certeza de que deseja deletar a filial selecionada?</h5>
+                  <h5>Voce tem certeza de que deseja deletar o usuário selecionado?</h5>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -129,6 +195,7 @@ export default {
   data() {
     return {
       vefCadastro: false,
+      editCadastro: false,
       newUser: {
         nome: '',
         descricao: '',
@@ -141,6 +208,17 @@ export default {
     addUser() {
       console.log(this.newUser)
       this.vefCadastro = false
+    },
+    editarCadastro() {
+      let userEdit = {
+        nome: 'Matheus Henrique',
+        descricao: 'Estagiário de Ti',
+        atribuicoes: ['Financas'],
+        aloc: 'Matriz'
+      }
+      this.newUser = userEdit
+      this.editCadastro = true;
+
     }
   }
 
@@ -161,5 +239,6 @@ export default {
     border: 1px solid rgb(202, 202, 202);
     border-radius: 5px;
     padding: 10px;
+    margin-bottom: 20px;
   }
 </style>
