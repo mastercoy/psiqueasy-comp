@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 
 use App\Models\UserPerfil;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -78,6 +79,35 @@ class UserPerfilTest extends TestCase {
         $perfil   = UserPerfil::first();
         $response = $this->patch('/api/desativar-user-perfil-json/' . $perfil->id);
         $this->assertEquals(0, UserPerfil::first()->active);
+    }
+
+    /** @test */
+    public function update_obedece_gate() {
+        $this->withoutExceptionHandling();
+
+        $response = $this->post('/api/user-json', [
+            'name' => 'obrigatorio',
+            'email' => 'test@test.com',
+            'password' => '123456'
+        ]);
+
+        $this->assertCount(1, User::all());
+
+
+        $response = $this->post('/api/criar-user-perfil-json', [
+            'name' => 'nome obrigatorio',
+            'user_id' => 1
+        ]);
+        $user     = User::find(1);
+        $perfil   = UserPerfil::first();
+
+        $response = $this->actingAs($user)->patch('/api/editar-user-perfil-json/' . $perfil->id, [
+            'name' => 'novo nome',
+
+        ]);
+
+        $this->assertEquals('novo nome', UserPerfil::first()->name);
+
     }
 
 

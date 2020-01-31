@@ -147,8 +147,6 @@ class ResponsavelController extends Controller {
         $responsavel->save();
     }
 
-    //fixme TESTAR
-    //afazer criar rota post
     public function excluidosResponsavel(Responsavel $responsavel_json) {
 
         $user = User::find($responsavel_json->id);

@@ -118,11 +118,11 @@ class ResponsavelController extends Controller {
     }
 }
 
-//fixme relações
+//
 // Um usuario pode ter muitos user_modelos_docs
 // Um usuário só pode ter um perfil
-// um perfil pode pertencer a varios usuarios obs model perfil
-// um perfil tem varias permissões obs model permissoes
+// um perfil pode pertencer a varios usuarios
+// um perfil tem varias permissões
 // uma permissão pode pertencer a varios perfis
 
 // TABELA RESPONSAVEL

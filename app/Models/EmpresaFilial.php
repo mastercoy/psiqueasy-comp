@@ -9,4 +9,6 @@ class EmpresaFilial extends Model {
 
     protected $guarded = [];
     protected $table   = 'empresa_filiais';
+
+
 }

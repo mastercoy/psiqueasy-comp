@@ -6,6 +6,7 @@ use App\Models\UserModeloDocs;
 use App\Models\UserPerfil;
 use App\Models\UserPermissao;
 use App\User;
+use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller {
 
@@ -55,7 +56,13 @@ class UserController extends Controller {
         return $perfil = UserPerfil::find($user_perfil_json->id);
     }
 
+    //fixme
     public function updateUserPerfil(UserPerfil $user_perfil_json) {
+
+        if (Gate::denies('pertence-usuario-logado', $user_perfil_json)) {
+            abort(403, 'Não encontrado!');
+        }
+
         $user_perfil_json->update($this->validateUserPerfilRequest());
     }
 
