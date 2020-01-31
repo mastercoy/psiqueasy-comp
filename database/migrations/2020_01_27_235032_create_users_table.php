@@ -98,7 +98,7 @@ class CreateUsersTable extends Migration {
             $table->string('name');
             $table->longText('conteudo')->nullable();
             $table->boolean('active')->default(true);
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')
                   ->references('id')
                   ->on('users')

@@ -65,32 +65,60 @@ class ResponsavelTest extends TestCase {
 
     /** @test */ //SUCESSO
     public function retorna_responsaveis_soft_delete() {
-
+        $this->withoutExceptionHandling();
         $response = $this->post('/api/user-json', [
-            'name' => 'obrigatorio',
+            'name' => 'user 1',
             'email' => 'test@test.com',
             'password' => '123456'
         ]);
 
-        $user = User::first();
-        //        dd($user);
         $response = $this->post('/api/responsavel-json', [
-            'name' => 'obrigatorio',
+            'name' => 'responsavel 1 falso',
             'parentesco' => 'irmão',
             'end' => 'endereço teste',
             'active' => false,
-            'user_id' => $user->id
-
+            'user_id' => '1'
         ]);
 
-        $responsavel = Responsavel::first();
-        //        dd(Responsavel::first());
+        $response = $this->post('/api/responsavel-json', [
+            'name' => 'responsavel 2 falso',
+            'parentesco' => 'irmão',
+            'end' => 'endereço teste',
+            'active' => false,
+            'user_id' => '1'
+        ]);
+
+        $response = $this->post('/api/responsavel-json', [
+            'name' => 'responsavel 3 falso',
+            'parentesco' => 'mae',
+            'end' => 'endereço teste',
+            'active' => false,
+            'user_id' => '1'
+        ]);
+
+        $response = $this->post('/api/responsavel-json', [
+            'name' => 'responsavel 4 true',
+            'parentesco' => 'pai',
+            'end' => 'endereço teste',
+            'active' => true,
+            'user_id' => '1'
+        ]);
+
+        $user = User::first();
+
+
+        $test = $this->getJson($this->post('/api/excluidos-responsavel-json', [
+            'id' => '1'
+        ]))->content();
+        dd($test);
+        //afazer
 
 
     }
 
-    /** @test */ //SUCESSO
+    /** @test */
     public function responsável_pode_ser_destruido() {
+
 
         $response = $this->post('/api/responsavel-json', [
             'name' => 'obrigatorio',
@@ -100,8 +128,25 @@ class ResponsavelTest extends TestCase {
 
         $this->assertCount(1, Responsavel::all());
         $responsavel = Responsavel::first();
-        $response    = $this->delete('/api/responsavel-json/' . $responsavel->id);
-        $this->assertCount(0, Responsavel::all());
+
+
+    }
+
+    /** @test */ //SUCESSO
+    public function responsavel_soft_delete() {
+
+        $response = $this->post('/api/responsavel-json', [
+            'name' => 'obrigatorio',
+            'parentesco' => 'irmão',
+            'end' => 'endereço teste',
+        ]);
+
+
+        $responsavel = Responsavel::first();
+        $response    = $this->patch('/api/desativar-responsavel-json/' . $responsavel->id);
+
+        $this->assertEquals(0, Responsavel::first()->active);
+
 
     }
 }

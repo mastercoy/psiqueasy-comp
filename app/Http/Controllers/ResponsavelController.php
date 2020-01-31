@@ -8,7 +8,7 @@ use App\User;
 use Gate;
 use http\Client\Request;
 
-//afazer CLASSE CONTROLLER
+// CLASSE CONTROLLER
 /*namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -142,11 +142,20 @@ class ResponsavelController extends Controller {
         $responsavel_json->delete();
     }
 
+    public function desativarResponsavel(Responsavel $responsavel_json) {
+        $responsavel         = Responsavel::find($responsavel_json->id);
+        $responsavel->active = false;
+        $responsavel->save();
+    }
+
     //fixme TESTAR
     //afazer criar rota post
-    public function excluidos(Request $request) {
+    public function excluidosResponsavel(Request $request) {
+
+        $user = User::find($request->user_id);
+
         return Responsavel::where([
-                                      ['user_id', '=', $request->user()->id], // do usuário
+                                      ['user_id', '=', $user->id], // do usuário
                                       ['active', '=', 0], // excluidos
                                   ])
                           ->orderBy('updated_at', 'desc')
