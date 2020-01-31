@@ -72,8 +72,9 @@ Route::patch('editar-empresa-categoria-json/{empresa_categoria_json}', 'EmpresaC
 Route::delete('destruir-empresa-categoria-json/{empresa_categoria_json}', 'EmpresaController@destruirCategoria');
 Route::patch('desativar-empresa-categoria-json/{empresa_categoria_json}', 'EmpresaController@desativarCategoria');
 
-//Route::resource('paciente-json', 'PacienteController');
-
+// rotas para PACIENTE
+Route::resource('paciente-json', 'PacienteController');
+Route::patch('desativar-paciente-json/{paciente_json}', 'PacienteController@desativarPaciente');
 
 
 /*
@@ -91,6 +92,7 @@ Route::patch('desativar-empresa-categoria-json/{empresa_categoria_json}', 'Empre
 |        | PATCH     | api/desativar-empresa-json/{empresa_json}                     |                          | App\Http\Controllers\EmpresaController@desativarEmpresa         | api          |
 |        | PATCH     | api/desativar-empresa-modelos-json/{empresa_modelo_json}      |                          | App\Http\Controllers\EmpresaController@desativarModeloDocs      | api          |
 |        | PATCH     | api/desativar-filial-json/{empresa_filial_json}               |                          | App\Http\Controllers\EmpresaController@desativarFilial          | api          |
+|        | PATCH     | api/desativar-paciente-json/{paciente_json}                   |                          | App\Http\Controllers\PacienteController@desativarPaciente       | api          |
 |        | PATCH     | api/desativar-responsavel-json/{responsavel_json}             |                          | App\Http\Controllers\ResponsavelController@desativarResponsavel | api          |
 |        | PATCH     | api/desativar-user-json/{user_json}                           |                          | App\Http\Controllers\UserController@desativarUser               | api          |
 |        | PATCH     | api/desativar-user-modelos-json/{user_modelo_json}            |                          | App\Http\Controllers\UserController@desativarModeloDocs         | api          |
@@ -112,23 +114,23 @@ Route::patch('desativar-empresa-categoria-json/{empresa_categoria_json}', 'Empre
 |        | POST      | api/empresa-json                                              | empresa-json.store       | App\Http\Controllers\EmpresaController@store                    | api          |
 |        | GET|HEAD  | api/empresa-json/create                                       | empresa-json.create      | App\Http\Controllers\EmpresaController@create                   | api          |
 |        | GET|HEAD  | api/empresa-json/{empresa_json}                               | empresa-json.show        | App\Http\Controllers\EmpresaController@show                     | api          |
-|        | PUT|PATCH | api/empresa-json/{empresa_json}                               | empresa-json.update      | App\Http\Controllers\EmpresaController@update                   | api          |
 |        | DELETE    | api/empresa-json/{empresa_json}                               | empresa-json.destroy     | App\Http\Controllers\EmpresaController@destroy                  | api          |
+|        | PUT|PATCH | api/empresa-json/{empresa_json}                               | empresa-json.update      | App\Http\Controllers\EmpresaController@update                   | api          |
 |        | GET|HEAD  | api/empresa-json/{empresa_json}/edit                          | empresa-json.edit        | App\Http\Controllers\EmpresaController@edit                     | api          |
-|        | POST      | api/excluidos-responsavel-json                                |                          | App\Http\Controllers\ResponsavelController@excluidosResponsavel | api          |
-|        | POST      | api/paciente-json                                             | paciente-json.store      | App\Http\Controllers\PacienteController@store                   | api          |
+|        | GET|HEAD  | api/excluidos-responsavel-json/{responsavel_json}             |                          | App\Http\Controllers\ResponsavelController@excluidosResponsavel | api          |
 |        | GET|HEAD  | api/paciente-json                                             | paciente-json.index      | App\Http\Controllers\PacienteController@index                   | api          |
+|        | POST      | api/paciente-json                                             | paciente-json.store      | App\Http\Controllers\PacienteController@store                   | api          |
 |        | GET|HEAD  | api/paciente-json/create                                      | paciente-json.create     | App\Http\Controllers\PacienteController@create                  | api          |
-|        | PUT|PATCH | api/paciente-json/{paciente_json}                             | paciente-json.update     | App\Http\Controllers\PacienteController@update                  | api          |
 |        | GET|HEAD  | api/paciente-json/{paciente_json}                             | paciente-json.show       | App\Http\Controllers\PacienteController@show                    | api          |
+|        | PUT|PATCH | api/paciente-json/{paciente_json}                             | paciente-json.update     | App\Http\Controllers\PacienteController@update                  | api          |
 |        | DELETE    | api/paciente-json/{paciente_json}                             | paciente-json.destroy    | App\Http\Controllers\PacienteController@destroy                 | api          |
 |        | GET|HEAD  | api/paciente-json/{paciente_json}/edit                        | paciente-json.edit       | App\Http\Controllers\PacienteController@edit                    | api          |
-|        | GET|HEAD  | api/responsavel-json                                          | responsavel-json.index   | App\Http\Controllers\ResponsavelController@index                | api          |
 |        | POST      | api/responsavel-json                                          | responsavel-json.store   | App\Http\Controllers\ResponsavelController@store                | api          |
+|        | GET|HEAD  | api/responsavel-json                                          | responsavel-json.index   | App\Http\Controllers\ResponsavelController@index                | api          |
 |        | GET|HEAD  | api/responsavel-json/create                                   | responsavel-json.create  | App\Http\Controllers\ResponsavelController@create               | api          |
+|        | DELETE    | api/responsavel-json/{responsavel_json}                       | responsavel-json.destroy | App\Http\Controllers\ResponsavelController@destroy              | api          |
 |        | PUT|PATCH | api/responsavel-json/{responsavel_json}                       | responsavel-json.update  | App\Http\Controllers\ResponsavelController@update               | api          |
 |        | GET|HEAD  | api/responsavel-json/{responsavel_json}                       | responsavel-json.show    | App\Http\Controllers\ResponsavelController@show                 | api          |
-|        | DELETE    | api/responsavel-json/{responsavel_json}                       | responsavel-json.destroy | App\Http\Controllers\ResponsavelController@destroy              | api          |
 |        | GET|HEAD  | api/responsavel-json/{responsavel_json}/edit                  | responsavel-json.edit    | App\Http\Controllers\ResponsavelController@edit                 | api          |
 |        | GET|HEAD  | api/show-empresa-categoria-json/{empresa_categoria_json}      |                          | App\Http\Controllers\EmpresaController@showCategoria            | api          |
 |        | GET|HEAD  | api/show-empresa-modelos-json/{empresa_modelo_json}           |                          | App\Http\Controllers\EmpresaController@showModeloDocs           | api          |
@@ -140,11 +142,9 @@ Route::patch('desativar-empresa-categoria-json/{empresa_categoria_json}', 'Empre
 |        | GET|HEAD  | api/user-json                                                 | user-json.index          | App\Http\Controllers\UserController@index                       | api          |
 |        | POST      | api/user-json                                                 | user-json.store          | App\Http\Controllers\UserController@store                       | api          |
 |        | GET|HEAD  | api/user-json/create                                          | user-json.create         | App\Http\Controllers\UserController@create                      | api          |
+|        | GET|HEAD  | api/user-json/{user_json}                                     | user-json.show           | App\Http\Controllers\UserController@show                        | api          |
 |        | PUT|PATCH | api/user-json/{user_json}                                     | user-json.update         | App\Http\Controllers\UserController@update                      | api          |
 |        | DELETE    | api/user-json/{user_json}                                     | user-json.destroy        | App\Http\Controllers\UserController@destroy                     | api          |
-|        | GET|HEAD  | api/user-json/{user_json}                                     | user-json.show           | App\Http\Controllers\UserController@show                        | api          |
 |        | GET|HEAD  | api/user-json/{user_json}/edit                                | user-json.edit           | App\Http\Controllers\UserController@edit                        | api          |
 +--------+-----------+---------------------------------------------------------------+--------------------------+-----------------------------------------------------------------+--------------+
-
-
 */

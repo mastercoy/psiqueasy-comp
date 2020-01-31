@@ -14,7 +14,7 @@ class CreatePacientesTables extends Migration {
         //
         Schema::create('pacientes', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nome');
+            $table->string('name');
             $table->dateTime('data_nasc')->nullable();
             $table->string('serie')->nullable();
             $table->mediumText('end')->nullable();
@@ -29,7 +29,7 @@ class CreatePacientesTables extends Migration {
             $table->longText('informe_social')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
-            $table->integer('user_id')->unsigned();
+            $table->integer('user_id')->unsigned()->nullable();
         });
     }
 

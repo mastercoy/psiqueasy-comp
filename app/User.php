@@ -8,22 +8,16 @@ use Illuminate\Notifications\Notifiable;
 class User extends Authenticatable {
     use Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    //nenhum guardado = todos permitidos
     protected $guarded = [];
-
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
+    protected $hidden  = [
         'password', 'remember_token',
     ];
-//afazer relações
+
+    public function modelos() {
+        return $this->hasMany('App\Models\UserModeloDocs')
+                    ->where('active', 1)
+                    ->orderBy('data', 'asc');
+    }
+
 
 }
