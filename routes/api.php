@@ -17,16 +17,37 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+// rotas para USER
+Route::resource('user-json', 'UserController');
+Route::patch('desativar-user-json/{user_json}', 'UserController@desativarUser');
+
+// rotas para USER PERFIL
+Route::get('show-user-perfil-json/{user_perfil_json}', 'UserController@showUserPerfil');
+Route::post('criar-user-perfil-json', 'UserController@criarUserPerfil');
+Route::patch('editar-user-perfil-json/{user_perfil_json}', 'UserController@updateUserPerfil');
+Route::delete('destruir-user-perfil-json/{user_perfil_json}', 'UserController@destruirUserPerfil');
+Route::patch('desativar-user-perfil-json/{user_perfil_json}', 'UserController@desativarUserPerfil');
+
+// rotas para USER PERMISSÃO
+Route::get('show-user-permissao-json/{user_permissao_json}', 'UserController@showPermissao');
+Route::post('criar-user-permissao-json', 'UserController@criarPermissao');
+Route::patch('editar-user-permissao-json/{user_permissao_json}', 'UserController@updatePermissao');
+Route::delete('destruir-user-permissao-json/{user_permissao_json}', 'UserController@destruirPermissao');
+Route::patch('desativar-user-permissao-json/{user_permissao_json}', 'UserController@desativarPermissao');
+
+// rotas para USER MODELO DOCS
+Route::get('show-user-modelos-json/{user_modelo_json}', 'UserController@showModeloDocs');
+Route::post('criar-user-modelos-json', 'UserController@criarModeloDocs');
+Route::patch('editar-user-modelos-json/{user_modelo_json}', 'UserController@updateModeloDocs');
+Route::delete('destruir-user-modelos-json/{user_modelo_json}', 'UserController@destruirModeloDocs');
+Route::patch('desativar-user-modelos-json/{user_modelo_json}', 'UserController@desativarModeloDocs');
 
 // rotas para RESPONSAVEL
 Route::resource('responsavel-json', 'ResponsavelController');
 Route::patch('desativar-responsavel-json/{responsavel_json}', 'ResponsavelController@desativarResponsavel');
-Route::get('excluidos-responsavel-json/{user_json}', 'ResponsavelController@excluidosResponsavel');
+Route::get('excluidos-responsavel-json/{responsavel_json}', 'ResponsavelController@excluidosResponsavel');
 
-
-Route::resource('user-json', 'UserController');
-Route::patch('desativar-user-json/{user_json}', 'UserController@desativarUser');
-Route::resource('paciente-json', 'PacienteController');
+// rotas para EMPRESA
 Route::resource('empresa-json', 'EmpresaController');
 Route::patch('desativar-empresa-json/{empresa_json}', 'EmpresaController@desativarEmpresa');
 
@@ -51,26 +72,8 @@ Route::patch('editar-empresa-categoria-json/{empresa_categoria_json}', 'EmpresaC
 Route::delete('destruir-empresa-categoria-json/{empresa_categoria_json}', 'EmpresaController@destruirCategoria');
 Route::patch('desativar-empresa-categoria-json/{empresa_categoria_json}', 'EmpresaController@desativarCategoria');
 
-// rotas para USER PERFIL
-Route::get('show-user-perfil-json/{user_perfil_json}', 'UserController@showUserPerfil');
-Route::post('criar-user-perfil-json', 'UserController@criarUserPerfil');
-Route::patch('editar-user-perfil-json/{user_perfil_json}', 'UserController@updateUserPerfil');
-Route::delete('destruir-user-perfil-json/{user_perfil_json}', 'UserController@destruirUserPerfil');
-Route::patch('desativar-user-perfil-json/{user_perfil_json}', 'UserController@desativarUserPerfil');
+//Route::resource('paciente-json', 'PacienteController');
 
-// rotas para USER PERMISSÃO
-Route::get('show-user-permissao-json/{user_permissao_json}', 'UserController@showPermissao');
-Route::post('criar-user-permissao-json', 'UserController@criarPermissao');
-Route::patch('editar-user-permissao-json/{user_permissao_json}', 'UserController@updatePermissao');
-Route::delete('destruir-user-permissao-json/{user_permissao_json}', 'UserController@destruirPermissao');
-Route::patch('desativar-user-permissao-json/{user_permissao_json}', 'UserController@desativarPermissao');
-
-// rotas para USER MODELO DOCS
-Route::get('show-user-modelos-json/{user_modelo_json}', 'UserController@showModeloDocs');
-Route::post('criar-user-modelos-json', 'UserController@criarModeloDocs');
-Route::patch('editar-user-modelos-json/{user_modelo_json}', 'UserController@updateModeloDocs');
-Route::delete('destruir-user-modelos-json/{user_modelo_json}', 'UserController@destruirModeloDocs');
-Route::patch('desativar-user-modelos-json/{user_modelo_json}', 'UserController@desativarModeloDocs');
 
 
 /*

@@ -66,7 +66,6 @@ class ResponsavelTest extends TestCase {
     /** @test */
     public function responsável_pode_ser_destruido() {
 
-
         $response = $this->post('/api/responsavel-json', [
             'name' => 'obrigatorio',
             'parentesco' => 'irmão',
@@ -123,14 +122,6 @@ class ResponsavelTest extends TestCase {
         ]);
 
         $response = $this->post('/api/responsavel-json', [
-            'name' => 'responsavel 3 falso',
-            'parentesco' => 'mae',
-            'end' => 'endereço teste',
-            'active' => false,
-            'user_id' => '1'
-        ]);
-
-        $response = $this->post('/api/responsavel-json', [
             'name' => 'responsavel 4 true',
             'parentesco' => 'pai',
             'end' => 'endereço teste',
@@ -138,16 +129,14 @@ class ResponsavelTest extends TestCase {
             'user_id' => '1'
         ]);
 
-        $this->assertCount(4, Responsavel::all());
+        $this->assertCount(3, Responsavel::all());
         $this->assertCount(1, User::all());
 
         $user = User::first();
 
+        $response = $this->get('/api/excluidos-responsavel-json/' . $user->id);
 
-        $test = $this->getJson($this->get('/api/excluidos-responsavel-json', $user))->content();
-        dd($test);
-        //afazer
-
+        $response->assertJsonCount(2);
 
     }
 }
