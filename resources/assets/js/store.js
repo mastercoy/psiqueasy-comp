@@ -3,7 +3,7 @@ import Vuex from 'vuex';
 
 Vue.use(Vuex);
 
-export default new Vuex.Store({
+export default new Vuex.Store({ 
     state: {
         Empresa: {
             nome: "",
@@ -14,9 +14,14 @@ export default new Vuex.Store({
         },
         Filiais: [],
         usuários: [],
-        empresaStatus: 2        
+        Status: 2, //OK
+        statusEmpresa: false //OK
     },
-    mutations: {},
+    mutations: {
+        mudarStatus(state, payload) {
+            state.Status = payload
+        }
+    },
     actions: {},
     getters: {}
 });

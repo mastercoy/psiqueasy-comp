@@ -1,9 +1,9 @@
 <template>
 <div>
-  <div v-if="statusEmpresa" class="form-temp">
+  <div v-if="this.$store.state.statusEmpresa" class="form-temp">
     <h4>Empresa</h4>
     <hr>
-      <form @submit="createEmpresa">
+      <form @submit.prevent="createEmpresa">
         <div class="form-group">
           <label for="nome"><strong>Nome: </strong></label>
           <input type="text" class="form-control" id="nome" v-model="cadEmpresa.nome" placeholder="Digite o nome do responsável pela empresa">
@@ -115,7 +115,7 @@ export default {
   },
   data(){
     return {
-      statusEmpresa: true,
+      //statusEmpresa: true,
       cadEmpresa: {
         nome: '',
         cnpj: '',
@@ -139,9 +139,12 @@ export default {
       }
      axios.post('api/empresa-json', empresa).then(({ data })  => {
       console.log(empresa);
-      this.$store.state.empresaStatus = 2
-      this.statusEmpresa = false      
+      this.$store.state.Status = 2
+      this.$store.state.statusEmpresa = false      
     });
+
+     this.$router.push("/");
+     store.commit('mudarStatus', 2);
 
     //this.getEmpresa();
     },

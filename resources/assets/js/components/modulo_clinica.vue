@@ -13,7 +13,7 @@
       <div class="col-md-3">
 
 
-         <ul v-if="this.$store.state.empresaStatus === 0">
+         <ul v-if="this.$store.state.Status === 0">
             <li> Perfil </li>
             <li> Configurações </li>
             <li> E-Mail </li>
@@ -21,7 +21,7 @@
             <li> Idioma </li>
           </ul>  
         
-          <ul v-else-if="this.$store.state.empresaStatus === 1">
+          <ul v-else-if="this.$store.state.Status === 1">
             <li><router-link to="/cadastro">Empresa</router-link></li>
             <!-- <li @click="imprimir"> <router-link to="/filial">Filiais</router-link></li> 
             <li><router-link to="/usuarios">Usuários</router-link></li> -->
@@ -32,7 +32,7 @@
             <li> Idioma </li>
           </ul>  
 
-          <ul v-else-if="this.$store.state.empresaStatus === 2">
+          <ul v-else-if="this.$store.state.Status === 2">
             <li><router-link to="/cadastro">Empresa</router-link></li>
             <li> <router-link to="/filial">Filiais</router-link></li>
             <li><router-link to="/usuarios">Usuários</router-link></li>
