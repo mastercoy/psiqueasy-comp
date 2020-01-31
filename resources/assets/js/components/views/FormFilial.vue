@@ -1,15 +1,16 @@
 <template>
   <div class="form-temp">
-    <h4>Filiais</h4>
-      <hr>
-      <div class="row">
-          <div class="col-md-4">
-            <router-link :to="{name:'NovaFilial', params: {filial} }" class="btn btn-primary btn-lg mb-3">
+    <div class="row">
+      <div class="col-md-9">
+        <h4><i class="fa fa-building" aria-hidden="true"></i> Filiais</h4>
+      </div>
+      <div class="col-md-3">
+         <router-link :to="{name:'NovaFilial', params: {filial} }" class="btn btn-primary">
               <i class="fa fa-plus-square" aria-hidden="true"></i> Nova Filial
-            </router-link>
-          </div>
-        </div>
-
+         </router-link>
+      </div>
+    </div>   
+      <hr>
      <div class="container">
          <table class="table table-sm">
            <thead>

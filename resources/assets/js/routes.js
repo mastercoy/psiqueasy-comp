@@ -5,12 +5,19 @@ import newFilial from "./components/views/views_filiais/newFilial"
 import EditFilial from "./components/views/views_filiais/EditFilial"
 import NewUser from "./components/views/views_usuarios/NewUser"
 import EditUser from "./components/views/views_usuarios/EditUser"
+import EditEmpresa from "./components/views/views_empresa/editEmpresa"
 
 
 const routes = [
     {
         path: "/cadastro",
         component: CadastroEmpresa
+    },
+    {
+        path: "/cadastro/edit",
+        component: EditEmpresa,
+        name: "EditarCadastro",
+        props: true
     },
     {
         path: "/filial",

@@ -1,14 +1,15 @@
 <template>
-  <div class="form-temp">
-    <h4>Usuários</h4>
-    <hr>
+  <div class="form-temp">  
     <div class="row">
-      <div class="col-md-4">
-       <router-link to="/usuarios/new" class="btn btn-primary btn-lg mb-3">
-          <i class="fa fa-plus-square" aria-hidden="true"></i> Novo Usuário
+      <div class="col-md-9">
+          <h4> <i class="fa fa-users" aria-hidden="true"></i> Usuários</h4> 
+      </div>
+      <div class="col-md-3">
+       <router-link to="/usuarios/new" class="btn btn-primary">
+          <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i> Novo Usuário
         </router-link>
       </div>
-    </div>
+    </div>  <hr>
     <div class="container">
          <table class="table table-sm">
            <thead>
@@ -36,6 +37,35 @@
           </tbody>
          </table>
     </div>
+
+    <!-- <div class="container">
+   
+    <div class="row">
+      <div class="card mb-2 mr-2" style="width: 20rem" >
+        <div class="card-body">
+          <h5 class="card-title"><strong> Nylo Pinto </strong></h5>
+          <h6 class="card-subtitle mb-2 text text-muted">Estagiário do setor de TI</h6>
+          <p class="card-text">Nisi ea cillum veniam dolor pariatur sunt ad reprehenderit. 
+            Anim cupidatat exercitation quis aliquip aliquip eiusmod nulla ea amet commodo irure ullamco aliqua dolore.
+          </p><hr>
+            <router-link :to="{name:'EditUsuario', params: {User} }" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td>  
+            <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a>    
+        </div>        
+      </div>
+
+       <div class="card mb-2 mr-2" style="width: 20rem">
+        <div class="card-body">         
+          <h5 class="card-title"> <strong>Matheus Henrique Oliveira Santos </strong></h5>
+          <h6 class="card-subtitle mb-2 text text-muted">Estagiário do setor de TI</h6>
+          <p class="card-text">Nisi ea cillum veniam dolor pariatur sunt ad reprehenderit. 
+            Anim cupidatat exercitation quis aliquip aliquip eiusmod nulla ea amet commodo irure ullamco aliqua dolore.
+          </p><hr>
+            <router-link :to="{name:'EditUsuario', params: {User} }" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td>  
+            <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a>    
+        </div>        
+      </div>
+      </div>
+    </div> -->
 
     <!-- Modal para comfirmação de deletar -->
           <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">

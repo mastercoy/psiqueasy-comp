@@ -52,7 +52,7 @@
       </form>    
   </div>
 
-   <div v-else class="form-temp">
+   <!-- <div v-else class="form-temp">
     <h4>Dados da Empresa</h4>
     <hr>
       <form @submit.prevent="atualizarEmpresa">
@@ -102,8 +102,35 @@
             </div>
           </div>        
       </form>    
-  </div>  
+  </div>   -->
 
+  <div v-else class="form-temp">
+    <div class="row">
+      <div class="col-md-9">
+         <h4>Dados da Empresa</h4>
+      </div>
+      <div class="col-md-3">
+         <router-link :to="{name:'EditarCadastro', params: {cadEmpresa} }" class="btn btn-success"><i class="fa fa-pencil-square" aria-hidden="true"></i> Editar</router-link>
+      </div>
+    </div>
+   
+    <hr>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+             <label><strong>Nome da Empresa: </strong></label> {{cadEmpresa.NomeEmp }}
+          </div>
+          <div class="col-md-6"></div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6">
+             <label><strong>CNPJ: </strong></label> {{cadEmpresa.cnpj }}
+          </div>
+          <div class="col-md-6"></div>
+        </div>
+        </div>        
+  </div>
 
 </div>  
 </template>
@@ -130,7 +157,9 @@ export default {
   },
   methods: {
      getEmpresa() {
-       axios.get(`api/empresa-json/${this.$store.state.empresaId}`).then(({ data }) => {
+       let id = this.$store.state.empresaId
+       id = 6 //  TEMPORÁRIO
+       axios.get(`api/empresa-json/${id}`).then(({ data }) => {
          this.cadEmpresa.NomeEmp = data.logo_marca
          this.cadEmpresa.cnpj = data.cpf_cnpj
        });
