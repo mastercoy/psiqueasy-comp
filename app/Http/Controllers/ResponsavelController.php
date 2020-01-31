@@ -124,7 +124,7 @@ class ResponsavelController extends Controller {
     }
 
     public function show(Responsavel $responsavel_json) {
-        return $responsavel = Responsavel::find($responsavel_json->id);
+        return $responsavel = Responsavel::find($responsavel_json->user_id);
     }
 
     public function edit(Responsavel $responsavel) {
@@ -149,9 +149,9 @@ class ResponsavelController extends Controller {
 
     //fixme TESTAR
     //afazer criar rota post
-    public function excluidosResponsavel() {
+    public function excluidosResponsavel(Responsavel $responsavel_json) {
 
-        $user = User::find(request()->id);
+        $user = User::find($responsavel_json->id);
 
         return Responsavel::where([
                                       ['user_id', '=', $user->id], // do usuário
