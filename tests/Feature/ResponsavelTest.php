@@ -63,6 +63,40 @@ class ResponsavelTest extends TestCase {
 
     }
 
+    /** @test */
+    public function responsável_pode_ser_destruido() {
+
+
+        $response = $this->post('/api/responsavel-json', [
+            'name' => 'obrigatorio',
+            'parentesco' => 'irmão',
+            'end' => 'endereço teste'
+        ]);
+
+        $this->assertCount(1, Responsavel::all());
+        $responsavel = Responsavel::first();
+
+
+    }
+
+    /** @test */ //SUCESSO
+    public function responsavel_soft_delete() {
+
+        $response = $this->post('/api/responsavel-json', [
+            'name' => 'obrigatorio',
+            'parentesco' => 'irmão',
+            'end' => 'endereço teste',
+        ]);
+
+
+        $responsavel = Responsavel::first();
+        $response    = $this->patch('/api/desativar-responsavel-json/' . $responsavel->id);
+
+        $this->assertEquals(0, Responsavel::first()->active);
+
+
+    }
+
     /** @test */ //SUCESSO
     public function retorna_responsaveis_soft_delete() {
         $this->withoutExceptionHandling();
@@ -110,45 +144,9 @@ class ResponsavelTest extends TestCase {
         $user = User::first();
 
 
-        $test = $this->getJson($this->post('/api/excluidos-responsavel-json', [
-            'id' => '1'
-        ]))->content();
+        $test = $this->getJson($this->get('/api/excluidos-responsavel-json', $user))->content();
         dd($test);
         //afazer
-
-
-    }
-
-    /** @test */
-    public function responsável_pode_ser_destruido() {
-
-
-        $response = $this->post('/api/responsavel-json', [
-            'name' => 'obrigatorio',
-            'parentesco' => 'irmão',
-            'end' => 'endereço teste'
-        ]);
-
-        $this->assertCount(1, Responsavel::all());
-        $responsavel = Responsavel::first();
-
-
-    }
-
-    /** @test */ //SUCESSO
-    public function responsavel_soft_delete() {
-
-        $response = $this->post('/api/responsavel-json', [
-            'name' => 'obrigatorio',
-            'parentesco' => 'irmão',
-            'end' => 'endereço teste',
-        ]);
-
-
-        $responsavel = Responsavel::first();
-        $response    = $this->patch('/api/desativar-responsavel-json/' . $responsavel->id);
-
-        $this->assertEquals(0, Responsavel::first()->active);
 
 
     }

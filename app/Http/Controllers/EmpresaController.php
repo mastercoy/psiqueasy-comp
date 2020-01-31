@@ -21,6 +21,9 @@ class EmpresaController extends Controller {
 
     public function store() {
         $empresa_json = Empresa::create($this->validateEmpresaRequest());
+
+        return response()->json(array('success' => true, 'last_insert_id' => $empresa_json->id), 200);
+
     }
 
     public function show(Empresa $empresa_json) {

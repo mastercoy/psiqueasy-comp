@@ -19,7 +19,6 @@ class FilialTest extends TestCase {
         $response = $this->post('/api/criar-filial-json', [
             'name' => 'nome obrigatorio',
             'empresa_id' => ''
-
         ]);
 
         $this->assertCount(1, EmpresaFilial::all());
