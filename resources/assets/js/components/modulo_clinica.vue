@@ -11,18 +11,37 @@
     <div class="row">
 
       <div class="col-md-3">
+
+
+         <ul v-if="this.$store.state.empresaStatus === 0">
+            <li> Perfil </li>
+            <li> Configurações </li>
+            <li> E-Mail </li>
+            <li> Senha </li>
+            <li> Idioma </li>
+          </ul>  
         
-          <ul>
+          <ul v-else-if="this.$store.state.empresaStatus === 1">
             <li><router-link to="/cadastro">Empresa</router-link></li>
-            <li @click="imprimir"> <router-link to="/filial">Filiais</router-link></li>
+            <!-- <li @click="imprimir"> <router-link to="/filial">Filiais</router-link></li> 
+            <li><router-link to="/usuarios">Usuários</router-link></li> -->
+            <li> Perfil </li>
+            <li> Configurações </li>
+            <li> E-Mail </li>
+            <li> Senha </li>
+            <li> Idioma </li>
+          </ul>  
+
+          <ul v-else-if="this.$store.state.empresaStatus === 2">
+            <li><router-link to="/cadastro">Empresa</router-link></li>
+            <li> <router-link to="/filial">Filiais</router-link></li>
             <li><router-link to="/usuarios">Usuários</router-link></li>
             <li> Perfil </li>
             <li> Configurações </li>
             <li> E-Mail </li>
-             <li> Senha </li>
-             <li> Idioma </li>
-          </ul>
-       
+            <li> Senha </li>
+            <li> Idioma </li>
+          </ul>                  
         
       </div> <!-- FIM DA DIV DA COL MD-3 -->
 
@@ -39,6 +58,11 @@
 
 export default {
   name: "modulo_clinica",
+  data() {
+    return {
+      nivelPermissao: 0
+    }
+  },
   methods: {
     imprimir(){
       console.log("OK!")
