@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserModeloDocs;
 use App\Models\UserPerfil;
 use App\Models\UserPermissao;
 use App\User;
@@ -92,8 +93,42 @@ class UserController extends Controller {
         $perfil->save();
     }
 
+    // ========================= MODELO DOCS
+
+    public function showModeloDocs(UserModeloDocs $user_modelo_json) {
+        return $modelo = UserModeloDocs::find($user_modelo_json->id);
+    }
+
+    public function criarModeloDocs() {
+        $modelo = UserModeloDocs::create($this->validateModeloDocsRequest());
+    }
+
+    public function updateModeloDocs(UserModeloDocs $user_modelo_json) {
+        $user_modelo_json->update($this->validateModeloDocsRequest());
+
+    }
+
+    public function destruirModeloDocs(UserModeloDocs $user_modelo_json) {
+        $user_modelo_json->delete();
+    }
+
+    public function desativarModeloDocs(UserModeloDocs $user_modelo_json) {
+        $modelo         = UserModeloDocs::find($user_modelo_json->id);
+        $modelo->active = false;
+        $modelo->save();
+    }
+
 
     // ========================= protected
+
+    protected function validateModeloDocsRequest() {
+        return request()->validate([
+                                       'name' => 'required',
+                                       'conteudo' => 'nullable',
+                                       'active' => 'nullable',
+                                       'user_id' => 'nullable'
+                                   ]);
+    }
 
     protected function validatePermissaoRequest() {
         return request()->validate([
