@@ -3,10 +3,10 @@
     <h4>Nova Filial</h4>
       <hr>
   <div class="container container-new">
-      <form >
+      <form @submit.prevent="criarFilial">
         <div class="form-group">
           <label for="nome"><strong>Nome: </strong></label>
-          <input type="text" class="form-control" id="nome" v-model="newFilial.nome" placeholder="Digite o nome da Filial">
+          <input type="text" class="form-control" id="nome" v-model="newFilial.name" placeholder="Digite o nome da Filial">
         </div>
 
         <div class="form-group">
@@ -32,9 +32,10 @@ export default {
  data() {
    return {
      newFilial: {
-      nome: '',
+      name: '',
       localidade: '',
-      complemento: ''
+      complemento: '',
+      active:1
      }
    }
  },
@@ -42,14 +43,17 @@ export default {
    criarFilial() {
      //Nome
      //Empresa ID
-    /*
-     let nfilial = newFilial
+     let nfilial = {
+       name: '',
+       active: 1
+     }
+    
+     nfilial.name = this.newFilial.name
 
-     axios.post("api/criar-filial-json", nfilial).then(({ data })  => {
-      this.listContas = data;
-      //console.log(this.listContas);      
+     axios.post('/api/criar-filial-json', nfilial).then(({ data })  => {      
+      console.log(data);      
     });
-    */
+    
    }
  }
 }

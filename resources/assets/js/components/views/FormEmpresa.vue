@@ -97,7 +97,7 @@
           <div class="row">          
             <div class="col-md-8"></div>
             <div class="col-md-4">
-               <button type="button" class="btn btn-default mr-1">Cancelar</button>
+               <router-link to="/" type="button" class="btn btn-default mr-1">Voltar</router-link>
                <button type="submit" class="btn btn-success"><i aria-hidden="true" class="fa fa-floppy-o"></i>  <b>Atualizar</b> </button>
             </div>
           </div>        
@@ -111,7 +111,10 @@
 <script>
 export default {
   mounted() {
-    //this.getEmpresa();
+    if( this.$store.state.Status === 2){
+      this.getEmpresa();
+    }
+      
   },
   data(){
     return {
@@ -127,8 +130,9 @@ export default {
   },
   methods: {
      getEmpresa() {
-       axios.get('api/empresa-json').then(({ data }) => {
-         console.log(data);
+       axios.get(`api/empresa-json/${this.$store.state.empresaId}`).then(({ data }) => {
+         this.cadEmpresa.NomeEmp = data.logo_marca
+         this.cadEmpresa.cnpj = data.cpf_cnpj
        });
     },
     createEmpresa() {
@@ -138,13 +142,14 @@ export default {
         active: 1
       }
      axios.post('api/empresa-json', empresa).then(({ data })  => {
-      console.log(empresa);
+      this.$store.commit('salvarIdEmp', data.last_id)
       this.$store.state.Status = 2
       this.$store.state.statusEmpresa = false      
     });
 
+     this.$store.commit('mudarStatus', 2);
      this.$router.push("/");
-     store.commit('mudarStatus', 2);
+     
 
     //this.getEmpresa();
     },

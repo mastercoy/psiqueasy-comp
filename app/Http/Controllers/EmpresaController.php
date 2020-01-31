@@ -22,7 +22,7 @@ class EmpresaController extends Controller {
     public function store() {
         $empresa_json = Empresa::create($this->validateEmpresaRequest());
 
-        return redirect()->action('EmpresaController@show', ['id' => $empresa_json->id]);
+       // return redirect()->action('EmpresaController@show', ['id' => $empresa_json->id]);
 
         return response()->json(array('success' => true, 'last_id' => $empresa_json->id), 200);
 

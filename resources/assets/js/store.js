@@ -15,11 +15,16 @@ export default new Vuex.Store({
         Filiais: [],
         usuários: [],
         Status: 2, //OK
-        statusEmpresa: false //OK
+        statusEmpresa: true, //OK
+        empresaId: 0
+        
     },
     mutations: {
         mudarStatus(state, payload) {
             state.Status = payload
+        },
+        salvarIdEmp(state, payload) {
+            state.empresaId = payload
         }
     },
     actions: {},
