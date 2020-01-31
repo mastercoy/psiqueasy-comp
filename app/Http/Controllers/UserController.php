@@ -78,17 +78,18 @@ class UserController extends Controller {
         return $perfil = UserPermissao::find($user_permissao_json->id);
     }
 
-    public function updatePermissao(UserPerfil $user_perfil_json) {
-        $user_perfil_json->update($this->validatePermissaoRequest());
+    public function updatePermissao(UserPermissao $user_permissao_json) {
+        $user_permissao_json->update($this->validatePermissaoRequest());
     }
 
-    public function destruirPermissao(UserPerfil $user_perfil_json) {
-
+    public function destruirPermissao(UserPermissao $user_permissao_json) {
+        $user_permissao_json->delete();
     }
 
-
-    public function desativarPermissao(UserPerfil $user_perfil_json) {
-
+    public function desativarPermissao(UserPermissao $user_permissao_json) {
+        $perfil         = UserPermissao::find($user_permissao_json->id);
+        $perfil->active = false;
+        $perfil->save();
     }
 
 

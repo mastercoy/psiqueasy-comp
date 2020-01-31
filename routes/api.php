@@ -53,6 +53,13 @@ Route::patch('editar-user-perfil-json/{user_perfil_json}', 'UserController@updat
 Route::delete('destruir-user-perfil-json/{user_perfil_json}', 'UserController@destruirUserPerfil');
 Route::patch('desativar-user-perfil-json/{user_perfil_json}', 'UserController@desativarUserPerfil');
 
+// rotas para USER PERMISSÃO
+Route::get('show-user-permissao-json/{user_permissao_json}', 'UserController@showPermissao');
+Route::post('criar-user-permissao-json', 'UserController@criarPermissao');
+Route::patch('editar-user-permissao-json/{user_permissao_json}', 'UserController@updatePermissao');
+Route::delete('destruir-user-permissao-json/{user_permissao_json}', 'UserController@destruirPermissao');
+Route::patch('desativar-user-permissao-json/{user_permissao_json}', 'UserController@desativarPermissao');
+
 
 /*
  +--------+-----------+-------------------------------------------------+--------------------------+--------------------------------------------------------+--------------+
