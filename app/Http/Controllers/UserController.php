@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Gate;
 
 class UserController extends Controller {
 
+
     // ========================= USER
 
     public function index() {
@@ -47,6 +48,11 @@ class UserController extends Controller {
     }
 
     // ========================= PERFIL
+    //fixme transferir pro próprio controller
+    /*public function __construct() {
+        //afazer middleware
+        $this->middleware();
+    }*/
 
     public function criarUserPerfil() {
         $perfil = UserPerfil::create($this->validateUserPerfilRequest());
@@ -55,7 +61,6 @@ class UserController extends Controller {
     public function showUserPerfil(UserPerfil $user_perfil_json) {
         return $perfil = UserPerfil::find($user_perfil_json->id);
     }
-
 
     public function updateUserPerfil(UserPerfil $user_perfil_json) {
 
@@ -128,7 +133,6 @@ class UserController extends Controller {
         $modelo->active = false;
         $modelo->save();
     }
-
 
     // ========================= protected
 

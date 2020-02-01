@@ -88,7 +88,7 @@ class UserPerfilTest extends TestCase {
         $this->assertEquals(0, UserPerfil::first()->active);
     }
 
-    /** @test */ //fixme
+    /** @test */ //SUCESSO
     public function update_obedece_gate() {
         $this->withoutExceptionHandling();
 

@@ -267,5 +267,5 @@ Gate::define('pertence-usuario-logado-e-active', function($user, $objeto){
 */
 
 
-
-
+//afazer middleware com uma checagem IF user->id == this->user_id
+// dai passa pro controller
