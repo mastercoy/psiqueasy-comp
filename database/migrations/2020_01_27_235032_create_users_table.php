@@ -47,6 +47,10 @@ class CreateUsersTable extends Migration {
             $table->string('label', 45)->nullable();
             $table->tinyInteger('active')->default(true);
             $table->timestamps();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users');
 
         });
 

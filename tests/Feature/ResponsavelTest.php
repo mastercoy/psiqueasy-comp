@@ -96,7 +96,7 @@ class ResponsavelTest extends TestCase {
 
     /** @test */ //SUCESSO
     public function retorna_responsaveis_soft_delete() {
-        $this->withoutExceptionHandling();
+//        $this->withoutExceptionHandling();
         $response = $this->post('/api/user-json', [
             'name' => 'user 1',
             'email' => 'test@test.com',

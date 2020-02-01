@@ -39,13 +39,20 @@ class UserPerfilTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_perfil_pode_ser_atualizado() {
 
-        $response = $this->post('/api/criar-user-perfil-json', [
-            'name' => 'nome obrigatorio',
+        $response = $this->post('/api/user-json', [
+            'name' => 'obrigatorio',
+            'email' => 'test@test.com',
+            'password' => '123456'
         ]);
 
-        $perfil = UserPerfil::first();
+        $response = $this->post('/api/criar-user-perfil-json', [
+            'name' => 'nome obrigatorio',
+            'user_id' => '1'
+        ]);
 
-        $response = $this->patch('/api/editar-user-perfil-json/' . $perfil->id, [
+        $perfil   = UserPerfil::first();
+        $user     = User::first();
+        $response = $this->actingAs($user)->patch('/api/editar-user-perfil-json/' . $perfil->id, [
             'name' => 'novo nome',
 
         ]);
@@ -69,7 +76,7 @@ class UserPerfilTest extends TestCase {
         $this->assertCount(0, UserPerfil::all());
     }
 
-    /** @test */
+    /** @test */ //SUCESSO
     public function user_perfil_soft_delete() {
 
         $response = $this->post('/api/criar-user-perfil-json', [
@@ -81,7 +88,7 @@ class UserPerfilTest extends TestCase {
         $this->assertEquals(0, UserPerfil::first()->active);
     }
 
-    /** @test */
+    /** @test */ //fixme
     public function update_obedece_gate() {
         $this->withoutExceptionHandling();
 
@@ -98,9 +105,13 @@ class UserPerfilTest extends TestCase {
             'name' => 'nome obrigatorio',
             'user_id' => 1
         ]);
-        $user     = User::find(1);
-        $perfil   = UserPerfil::first();
 
+        $user   = User::first();
+        $perfil = UserPerfil::first();
+
+
+//        dd($perfil);
+        //fixme
         $response = $this->actingAs($user)->patch('/api/editar-user-perfil-json/' . $perfil->id, [
             'name' => 'novo nome',
 

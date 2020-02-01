@@ -56,14 +56,18 @@ class UserController extends Controller {
         return $perfil = UserPerfil::find($user_perfil_json->id);
     }
 
-    //fixme
+
     public function updateUserPerfil(UserPerfil $user_perfil_json) {
 
-        if (Gate::denies('pertence-usuario-logado', $user_perfil_json)) {
+        $perfil = UserPerfil::find($user_perfil_json->id);
+
+        if (Gate::allows('pertence-usuario-logado', $perfil)) {
+            $user_perfil_json->update($this->validateUserPerfilRequest());
+        } else {
             abort(403, 'Não encontrado!');
         }
 
-        $user_perfil_json->update($this->validateUserPerfilRequest());
+
     }
 
     public function destruirUserPerfil(UserPerfil $user_perfil_json) {
@@ -149,7 +153,8 @@ class UserController extends Controller {
         return request()->validate([
                                        'name' => 'required',
                                        'label' => 'nullable',
-                                       'active' => 'nullable'
+                                       'active' => 'nullable',
+                                       'user_id' => 'nullable'
                                    ]);
 
 

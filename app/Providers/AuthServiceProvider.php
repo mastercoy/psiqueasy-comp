@@ -4,7 +4,6 @@ namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Schema;
 
 class AuthServiceProvider extends ServiceProvider {
     /**
@@ -22,7 +21,7 @@ class AuthServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        Schema::defaultStringLength(191);
+//        Schema::defaultStringLength(191);
         $this->registerPolicies();
 
 
