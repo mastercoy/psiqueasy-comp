@@ -16,7 +16,7 @@ class FilialTest extends TestCase {
     /** @test */ //SUCESSO
     public function filial_pode_ser_criada() {
 
-        $response = $this->post('/api/criar-filial-json', [
+        $response = $this->post('/api/empresa-filial-json', [
             'name' => 'nome obrigatorio',
             'empresa_id' => ''
         ]);
@@ -28,7 +28,7 @@ class FilialTest extends TestCase {
     /** @test */ //SUCESSO
     public function filial_tem_campos_obrigatorios() {
 
-        $response = $this->post('/api/criar-filial-json', [
+        $response = $this->post('/api/empresa-filial-json', [
             'name' => ''
 
         ]);
@@ -39,14 +39,14 @@ class FilialTest extends TestCase {
     /** @test */ //SUCESSO
     public function filial_pode_ser_atualizada() {
 
-        $response = $this->post('/api/criar-filial-json', [
+        $response = $this->post('/api/empresa-filial-json', [
             'name' => 'nome obrigatorio',
             'empresa_id' => ''
 
         ]);
 
         $filial   = EmpresaFilial::first();
-        $response = $this->patch('/api/editar-filial-json/' . $filial->id, [
+        $response = $this->patch('/api/empresa-filial-json/' . $filial->id, [
             'name' => 'novo nome',
             'empresa_id' => '1'
         ]);
@@ -58,7 +58,7 @@ class FilialTest extends TestCase {
     /** @test */ //SUCESSO
     public function filial_pode_ser_destruida() {
 
-        $response = $this->post('/api/criar-filial-json', [
+        $response = $this->post('/api/empresa-filial-json', [
             'name' => 'nome obrigatorio',
             'empresa_id' => ''
 
@@ -66,7 +66,7 @@ class FilialTest extends TestCase {
 
         $this->assertCount(1, EmpresaFilial::all());
         $filial   = EmpresaFilial::first();
-        $response = $this->delete('/api/destruir-filial-json/' . $filial->id);
+        $response = $this->delete('/api/empresa-filial-json/' . $filial->id);
         $this->assertCount(0, EmpresaFilial::all());
 
 
@@ -75,14 +75,14 @@ class FilialTest extends TestCase {
     /** @test */ //SUCESSO
     public function filial_soft_delete() {
 
-        $response = $this->post('/api/criar-filial-json', [
+        $response = $this->post('/api/empresa-filial-json', [
             'name' => 'nome obrigatorio',
             'empresa_id' => '1',
 
         ]);
 
         $filial   = EmpresaFilial::first();
-        $response = $this->patch('/api/desativar-filial-json/' . $filial->id);
+        $response = $this->patch('/api/desativar-empresa-filial-json/' . $filial->id);
 
 //        dd(EmpresaFilial::first());
         $this->assertEquals(0, EmpresaFilial::first()->active);

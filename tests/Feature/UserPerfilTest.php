@@ -18,7 +18,7 @@ class UserPerfilTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_perfil_pode_ser_criado() {
 
-        $response = $this->post('/api/criar-user-perfil-json', [
+        $response = $this->post('/api/user-perfil-json', [
             'name' => 'nome obrigatorio',
         ]);
 
@@ -29,7 +29,7 @@ class UserPerfilTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_perfil_tem_campos_obrigatorios() {
 
-        $response = $this->post('/api/criar-user-perfil-json', [
+        $response = $this->post('/api/user-perfil-json', [
             'name' => '',
         ]);
 
@@ -45,14 +45,14 @@ class UserPerfilTest extends TestCase {
             'password' => '123456'
         ]);
 
-        $response = $this->post('/api/criar-user-perfil-json', [
+        $response = $this->post('/api/user-perfil-json', [
             'name' => 'nome obrigatorio',
             'user_id' => '1'
         ]);
 
         $perfil   = UserPerfil::first();
         $user     = User::first();
-        $response = $this->actingAs($user)->patch('/api/editar-user-perfil-json/' . $perfil->id, [
+        $response = $this->actingAs($user)->patch('/api/user-perfil-json/' . $perfil->id, [
             'name' => 'novo nome',
 
         ]);
@@ -64,14 +64,14 @@ class UserPerfilTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_perfil_pode_ser_destruido() {
 
-        $response = $this->post('/api/criar-user-perfil-json', [
+        $response = $this->post('/api/user-perfil-json', [
             'name' => 'nome obrigatorio',
         ]);
 
         $this->assertCount(1, UserPerfil::all());
 
         $perfil   = UserPerfil::first();
-        $response = $this->delete('/api/destruir-user-perfil-json/' . $perfil->id);
+        $response = $this->delete('/api/user-perfil-json/' . $perfil->id);
 
         $this->assertCount(0, UserPerfil::all());
     }
@@ -79,7 +79,7 @@ class UserPerfilTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_perfil_soft_delete() {
 
-        $response = $this->post('/api/criar-user-perfil-json', [
+        $response = $this->post('/api/user-perfil-json', [
             'name' => 'nome obrigatorio',
         ]);
 
@@ -101,7 +101,7 @@ class UserPerfilTest extends TestCase {
         $this->assertCount(1, User::all());
 
 
-        $response = $this->post('/api/criar-user-perfil-json', [
+        $response = $this->post('/api/user-perfil-json', [
             'name' => 'nome obrigatorio',
             'user_id' => 1
         ]);
@@ -112,7 +112,7 @@ class UserPerfilTest extends TestCase {
 
 //        dd($perfil);
         //fixme
-        $response = $this->actingAs($user)->patch('/api/editar-user-perfil-json/' . $perfil->id, [
+        $response = $this->actingAs($user)->patch('/api/user-perfil-json/' . $perfil->id, [
             'name' => 'novo nome',
 
         ]);

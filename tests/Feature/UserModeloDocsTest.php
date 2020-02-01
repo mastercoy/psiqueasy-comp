@@ -16,7 +16,7 @@ class UserModeloDocsTest extends TestCase {
     /** @test */ //SUCESSO
     public function modelo_user_pode_ser_criado() {
 
-        $response = $this->post('/api/criar-user-modelos-json', [
+        $response = $this->post('/api/user-modelo-docs-json', [
             'name' => 'nome modelo',
             'conteudo' => '',
             'active' => '1',
@@ -30,7 +30,7 @@ class UserModeloDocsTest extends TestCase {
     /** @test */ //SUCESSO
     public function modelo_users_tem_campos_obrigatorios() {
 
-        $response = $this->post('/api/criar-user-modelos-json', [
+        $response = $this->post('/api/user-modelo-docs-json', [
             'name' => '',
 
         ]);
@@ -40,7 +40,7 @@ class UserModeloDocsTest extends TestCase {
     /** @test */ //SUCESSO
     public function modelo_user_pode_ser_atualizado() {
 
-        $response = $this->post('/api/criar-user-modelos-json', [
+        $response = $this->post('/api/user-modelo-docs-json', [
             'name' => 'nome modelo',
             'conteudo' => '',
             'active' => '1',
@@ -48,7 +48,7 @@ class UserModeloDocsTest extends TestCase {
         ]);
 
         $modelo   = UserModeloDocs::first();
-        $response = $this->patch('/api/editar-user-modelos-json/' . $modelo->id, [
+        $response = $this->patch('/api/user-modelo-docs-json/' . $modelo->id, [
             'name' => 'novo nome',
             'conteudo' => '',
             'active' => '1',
@@ -62,7 +62,7 @@ class UserModeloDocsTest extends TestCase {
     /** @test */ //SUCESSO
     public function modelo_pode_ser_destruido() {
 
-        $response = $this->post('/api/criar-user-modelos-json', [
+        $response = $this->post('/api/user-modelo-docs-json', [
             'name' => 'nome modelo',
             'conteudo' => '',
             'active' => '1',
@@ -72,14 +72,14 @@ class UserModeloDocsTest extends TestCase {
         $this->assertCount(1, UserModeloDocs::all());
 
         $modelo   = UserModeloDocs::first();
-        $response = $this->delete('/api/destruir-user-modelos-json/' . $modelo->id);
+        $response = $this->delete('/api/user-modelo-docs-json/' . $modelo->id);
         $this->assertCount(0, UserModeloDocs::all());
     }
 
     /** @test */ //SUCESSO
     public function modelo_soft_delete() {
 
-        $response = $this->post('/api/criar-user-modelos-json', [
+        $response = $this->post('/api/user-modelo-docs-json', [
             'name' => 'nome modelo',
             'conteudo' => '',
             'active' => '1',
@@ -88,7 +88,7 @@ class UserModeloDocsTest extends TestCase {
         ]);
 
         $modelo   = UserModeloDocs::first();
-        $response = $this->patch('/api/desativar-user-modelos-json/' . $modelo->id);
+        $response = $this->patch('/api/desativar-user-modelo-docs-json/' . $modelo->id);
 
         $this->assertEquals(0, UserModeloDocs::first()->active);
 
