@@ -110,8 +110,6 @@ class UserPerfilTest extends TestCase {
         $perfil = UserPerfil::first();
 
 
-//        dd($perfil);
-        //fixme
         $response = $this->actingAs($user)->patch('/api/user-perfil-json/' . $perfil->id, [
             'name' => 'novo nome',
 
@@ -123,7 +121,6 @@ class UserPerfilTest extends TestCase {
 
 
 }
-
 
 
 
