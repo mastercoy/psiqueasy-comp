@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Gate;
 class UserPerfilController extends Controller {
 
     public function index() {
-        //
+        //afazer
     }
 
     public function create() {
@@ -21,11 +21,11 @@ class UserPerfilController extends Controller {
     }
 
     public function show(UserPerfil $user_perfil_json) {
-
+        //
         $perfil = UserPerfil::find($user_perfil_json->id);
 
         if (Gate::allows('pertence-usuario-logado', $perfil)) {
-            return $perfil = UserPerfil::find($user_perfil_json->id);
+            return $perfil;
         } else {
             abort(403, 'Não encontrado!');
         }
@@ -46,6 +46,7 @@ class UserPerfilController extends Controller {
         } else {
             abort(403, 'Não encontrado!');
         }
+
     }
 
     public function destroy(UserPerfil $user_perfil_json) {
@@ -53,7 +54,7 @@ class UserPerfilController extends Controller {
         $perfil = UserPerfil::find($user_perfil_json->id);
 
         if (Gate::allows('pertence-usuario-logado', $perfil)) {
-            $user_perfil_json->delete();
+            $perfil->delete();
         } else {
             abort(403, 'Não encontrado!');
         }
@@ -71,11 +72,9 @@ class UserPerfilController extends Controller {
             abort(403, 'Não encontrado!');
         }
 
-
     }
 
     // ========================= protected
-
 
     protected function validateUserPerfilRequest() {
         return request()->validate([

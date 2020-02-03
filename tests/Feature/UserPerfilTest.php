@@ -9,8 +9,6 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class UserPerfilTest extends TestCase {
-
-
     use RefreshDatabase;
 
     //        $this->withoutExceptionHandling();
