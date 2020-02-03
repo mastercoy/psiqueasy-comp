@@ -58,6 +58,9 @@ export default {
 
     this.$router.push("/filial");
     
+   },
+   verificaNomeF() {
+     console.log('teste');
    }
  }
 }

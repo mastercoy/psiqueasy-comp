@@ -63,7 +63,7 @@ export default {
         active: 1,
         user_id: 1
       }
-      axios.put(`api/empresa-json/${1}`, empresa).then(({data}) => {
+      axios.patch(`/api/empresa-json/${1}`, empresa).then(({data}) => {
          console.log("Dados da empresa editados com sucesso")
        });
     }
