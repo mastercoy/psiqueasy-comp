@@ -62,12 +62,12 @@
 
 <script>
 export default {
-  mounted(){
-   /* axios.get('api/show-filial-json').then(({data}) => {
-        console.log("Filiais montadas com sucesso")
-    });
-    */
-  },
+  // mounted(){
+  //   axios.get('api/empresa-filial-json').then(({data}) => {
+  //       console.log("Filiais montadas com sucesso")
+  //   });
+    
+  // },
   data() {
     return {
       filial: {

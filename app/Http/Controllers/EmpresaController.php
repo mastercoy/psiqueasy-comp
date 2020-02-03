@@ -18,14 +18,10 @@ class EmpresaController extends Controller {
 
     public function store() {
         $empresa_json = Empresa::create($this->validateEmpresaRequest());
-<<<<<<< HEAD
 
        // return redirect()->action('EmpresaController@show', ['id' => $empresa_json->id]);
 
         return response()->json(array('success' => true, 'last_id' => $empresa_json->id), 200);
-=======
-        //return response()->json(array('success' => true, 'last_id' => $empresa_json->id), 200);
->>>>>>> cb7ad53aa67373234e47243d9ed631cc5ddef2ac
 
     }
 

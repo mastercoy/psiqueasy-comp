@@ -35,7 +35,8 @@ export default {
       name: '',
       localidade: '',
       complemento: '',
-      active:1
+      active:1,
+    
      }
    }
  },
@@ -45,14 +46,17 @@ export default {
      //Empresa ID
      let nfilial = {
        name: '',
-       active: 1
+       active: 1,  
+       empresa_id:  this.$store.state.empresaId
      }
     
      nfilial.name = this.newFilial.name
 
-     axios.post('/api/criar-filial-json', nfilial).then(({ data })  => {      
+     axios.post('/api/empresa-filial-json', nfilial).then(({ data })  => {      
       console.log(data);      
     });
+
+    this.$router.push("/filial");
     
    }
  }

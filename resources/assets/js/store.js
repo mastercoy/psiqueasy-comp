@@ -14,9 +14,9 @@ export default new Vuex.Store({
         },
         Filiais: [],
         usuários: [],
-        Status: 1, //OK
-        statusEmpresa: true, //OK
-        empresaId: 0
+        Status: 2, //OK
+        statusEmpresa: false, //OK
+        empresaId: 1
         
     },
     mutations: {
