@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+//namespace Tests\Feature;
 
 
 use App\Models\UserModeloDocs;
@@ -16,13 +16,7 @@ class UserModeloDocsTest extends TestCase {
     /** @test */ //SUCESSO
     public function modelo_user_pode_ser_criado() {
 
-        $response = $this->post('/api/user-modelo-docs-json', [
-            'name' => 'nome modelo',
-            'conteudo' => '',
-            'active' => '1',
-            'user_id' => ''
-        ]);
-
+        $user_model = factory(App\Models\UserModeloDocs::class, 1)->create();
         $this->assertCount(1, UserModeloDocs::all());
 
     }
@@ -32,22 +26,17 @@ class UserModeloDocsTest extends TestCase {
 
         $response = $this->post('/api/user-modelo-docs-json', [
             'name' => '',
-
         ]);
+
         $response->assertSessionHasErrors('name');
     }
 
     /** @test */ //SUCESSO
     public function modelo_user_pode_ser_atualizado() {
 
-        $response = $this->post('/api/user-modelo-docs-json', [
-            'name' => 'nome modelo',
-            'conteudo' => '',
-            'active' => '1',
-            'user_id' => ''
-        ]);
+        $user_model = factory(App\Models\UserModeloDocs::class, 1)->create();
+        $modelo     = UserModeloDocs::first();
 
-        $modelo   = UserModeloDocs::first();
         $response = $this->patch('/api/user-modelo-docs-json/' . $modelo->id, [
             'name' => 'novo nome',
             'conteudo' => '',
@@ -62,16 +51,10 @@ class UserModeloDocsTest extends TestCase {
     /** @test */ //SUCESSO
     public function modelo_pode_ser_destruido() {
 
-        $response = $this->post('/api/user-modelo-docs-json', [
-            'name' => 'nome modelo',
-            'conteudo' => '',
-            'active' => '1',
-            'user_id' => ''
-        ]);
-
+        $user_model = factory(App\Models\UserModeloDocs::class, 1)->create();
         $this->assertCount(1, UserModeloDocs::all());
-
         $modelo   = UserModeloDocs::first();
+
         $response = $this->delete('/api/user-modelo-docs-json/' . $modelo->id);
         $this->assertCount(0, UserModeloDocs::all());
     }
@@ -79,17 +62,10 @@ class UserModeloDocsTest extends TestCase {
     /** @test */ //SUCESSO
     public function modelo_soft_delete() {
 
-        $response = $this->post('/api/user-modelo-docs-json', [
-            'name' => 'nome modelo',
-            'conteudo' => '',
-            'active' => '1',
-            'user_id' => ''
+        $user_model = factory(App\Models\UserModeloDocs::class, 1)->create();
+        $modelo     = UserModeloDocs::first();
 
-        ]);
-
-        $modelo   = UserModeloDocs::first();
         $response = $this->patch('/api/desativar-user-modelo-docs-json/' . $modelo->id);
-
         $this->assertEquals(0, UserModeloDocs::first()->active);
 
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+//namespace Tests\Feature;
 
 
 use App\Models\EmpresaCategoria;
@@ -16,12 +16,7 @@ class EmpresaCategoriaTest extends TestCase {
     /** @test */ //SUCESSO
     public function categoria_empresa_pode_ser_criada() {
 
-        $response = $this->post('/api/empresa-categoria-json', [
-            'name' => 'nome obrigatorio',
-            'descricao' => 'descricao obrigatoria',
-            'active' => '1'
-        ]);
-
+        $categoria = factory(App\Models\EmpresaCategoria::class, 1)->create();
         $this->assertCount(1, EmpresaCategoria::all());
 
     }
@@ -41,12 +36,7 @@ class EmpresaCategoriaTest extends TestCase {
     /** @test */ //SUCESSO
     public function categoria_empresa_pode_ser_atualizada() {
 
-        $response = $this->post('/api/empresa-categoria-json', [
-            'name' => 'nome obrigatorio',
-            'descricao' => 'descricao obrigatoria',
-            'active' => '1'
-        ]);
-
+        $categoria = factory(App\Models\EmpresaCategoria::class, 1)->create();
         $categoria = EmpresaCategoria::first();
 
         $response = $this->patch('/api/empresa-categoria-json/' . $categoria->id, [
@@ -61,12 +51,8 @@ class EmpresaCategoriaTest extends TestCase {
 
     /** @test */ //SUCESSO
     public function categoria_pode_ser_destruida() {
-        $response = $this->post('/api/empresa-categoria-json', [
-            'name' => 'nome obrigatorio',
-            'descricao' => 'descricao obrigatoria',
-            'active' => '1'
-        ]);
 
+        $categoria = factory(App\Models\EmpresaCategoria::class, 1)->create();
         $this->assertCount(1, EmpresaCategoria::all());
 
         $categoria = EmpresaCategoria::first();
@@ -78,13 +64,9 @@ class EmpresaCategoriaTest extends TestCase {
     /** @test */ //SUCESSO
     public function categoria_soft_delete() {
 
-        $response = $this->post('/api/empresa-categoria-json', [
-            'name' => 'nome obrigatorio',
-            'descricao' => 'descricao obrigatoria',
-            'active' => '1'
-        ]);
-
+        $categoria = factory(App\Models\EmpresaCategoria::class, 1)->create();
         $categoria = EmpresaCategoria::first();
+
         $response  = $this->patch('/api/desativar-empresa-categoria-json/' . $categoria->id);
         $this->assertEquals(0, EmpresaCategoria::first()->active);
     }

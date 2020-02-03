@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Gate;
 class UserPerfilController extends Controller {
 
     public function index() {
-        //afazer
+        //afazer retornar todos?
     }
 
     public function create() {
@@ -31,7 +31,6 @@ class UserPerfilController extends Controller {
         }
 
     }
-
 
     public function edit(UserPerfil $user_perfil_json) {
         //

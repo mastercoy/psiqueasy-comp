@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Feature;
+//namespace Tests\Feature;
 
-use App\Responsavel;
+use App\Models\Responsavel;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -10,19 +10,13 @@ use Tests\TestCase;
 class ResponsavelTest extends TestCase {
 
     use RefreshDatabase;
+
     //        $this->withoutExceptionHandling();
 
     /** @test */ //SUCESSO
     public function um_responsavel_pode_ser_adicionado() {
 
-        $response = $this->post('/api/responsavel-json', [
-            'name' => 'obrigatorio',
-            'parentesco' => 'irmão',
-            'end' => 'endereço teste',
-        ]);
-
-        $responsavel = Responsavel::first();
-//        dd($responsavel);
+        $responsavel = factory(App\Models\Responsavel::class, 1)->create();
         $this->assertCount(1, Responsavel::all());
     }
 
@@ -31,7 +25,7 @@ class ResponsavelTest extends TestCase {
 
         $response = $this->post('/api/responsavel-json', [
             'name' => '',
-            'parentesco' => 'irmão',
+            'parentesco' => 'irmão'
         ]);
 
         $response->assertSessionHasErrors('name');
@@ -42,36 +36,25 @@ class ResponsavelTest extends TestCase {
     /** @test */ //SUCESSO
     public function responsavel_pode_ser_atualizado() {
 
-//        $this->withoutExceptionHandling();
-        $response = $this->post('/api/responsavel-json', [
-            'name' => 'obrigatorio',
-            'parentesco' => 'irmão',
-            'end' => 'endereço teste'
-        ]);
-
+        $responsavel = factory(App\Models\Responsavel::class, 1)->create();
         $responsavel = Responsavel::first();
-        $response    = $this->patch('/api/responsavel-json/' . $responsavel->id, [
+
+        $response = $this->patch('/api/responsavel-json/' . $responsavel->id, [
             'name' => 'novo nome',
             'parentesco' => 'pai',
             'end' => 'novo endereço'
         ]);
 
-//        dd(Responsavel::first());
         $this->assertEquals('novo nome', Responsavel::first()->name);
 
     }
 
     /** @test */
-    public function responsável_pode_ser_destruido() {
+    public function responsavel_pode_ser_destruido() {
 
-        $response = $this->post('/api/responsavel-json', [
-            'name' => 'obrigatorio',
-            'parentesco' => 'irmão',
-            'end' => 'endereço teste'
-        ]);
+        $responsavel = factory(App\Models\Responsavel::class, 1)->create();
 
         $this->assertCount(1, Responsavel::all());
-        $responsavel = Responsavel::first();
 
 
     }
@@ -79,16 +62,10 @@ class ResponsavelTest extends TestCase {
     /** @test */ //SUCESSO
     public function responsavel_soft_delete() {
 
-        $response = $this->post('/api/responsavel-json', [
-            'name' => 'obrigatorio',
-            'parentesco' => 'irmão',
-            'end' => 'endereço teste',
-        ]);
-
-
+        $responsavel = factory(App\Models\Responsavel::class, 1)->create();
         $responsavel = Responsavel::first();
-        $response    = $this->patch('/api/desativar-responsavel-json/' . $responsavel->id);
 
+        $response = $this->patch('/api/desativar-responsavel-json/' . $responsavel->id);
         $this->assertEquals(0, Responsavel::first()->active);
 
 
@@ -97,35 +74,10 @@ class ResponsavelTest extends TestCase {
     /** @test */ //SUCESSO
     public function retorna_responsaveis_soft_delete() {
 //        $this->withoutExceptionHandling();
-        $response = $this->post('/api/user-json', [
-            'name' => 'user 1',
-            'email' => 'test@test.com',
-            'password' => '123456'
-        ]);
 
-        $response = $this->post('/api/responsavel-json', [
-            'name' => 'responsavel 1 falso',
-            'parentesco' => 'irmão',
-            'end' => 'endereço teste',
-            'active' => false,
-            'user_id' => '1'
-        ]);
-
-        $response = $this->post('/api/responsavel-json', [
-            'name' => 'responsavel 2 falso',
-            'parentesco' => 'irmão',
-            'end' => 'endereço teste',
-            'active' => false,
-            'user_id' => '1'
-        ]);
-
-        $response = $this->post('/api/responsavel-json', [
-            'name' => 'responsavel 4 true',
-            'parentesco' => 'pai',
-            'end' => 'endereço teste',
-            'active' => true,
-            'user_id' => '1'
-        ]);
+        $user        = factory(App\User::class, 1)->create();
+        $responsavel = factory(App\Models\Responsavel::class, 2)->create(['active' => false]);
+        $responsavel = factory(App\Models\Responsavel::class, 1)->create();
 
         $this->assertCount(3, Responsavel::all());
         $this->assertCount(1, User::all());

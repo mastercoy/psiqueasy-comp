@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+//namespace Tests\Feature;
 
 
 use App\Models\Paciente;
@@ -15,11 +15,8 @@ class PacienteTest extends TestCase {
 
     /** @test */
     public function paciente_pode_ser_adicionado() {
-        $this->withoutExceptionHandling();
-        $response = $this->post('/api/paciente-json', [
-            'name' => 'obrigatorio'
-        ]);
 
+        $paciente = factory(App\Models\Paciente::class, 1)->create();
         $this->assertCount(1, Paciente::all());
 
     }
@@ -39,10 +36,7 @@ class PacienteTest extends TestCase {
     /** @test */ //
     public function paciente_pode_ser_atualizada() {
 
-        $response = $this->post('/api/paciente-json', [
-            'name' => 'obrigatorio'
-        ]);
-
+        $paciente = factory(App\Models\Paciente::class, 1)->create();
         $paciente = Paciente::first();
 
         $response = $this->patch('/api/paciente-json/' . $paciente->id, [
@@ -57,13 +51,10 @@ class PacienteTest extends TestCase {
     /** @test */ //
     public function paciente_pode_ser_destruida() {
 
-        $response = $this->post('/api/paciente-json', [
-            'name' => 'obrigatorio'
-        ]);
-
+        $paciente = factory(App\Models\Paciente::class, 1)->create();
         $this->assertCount(1, Paciente::all());
-
         $paciente = Paciente::first();
+
         $response = $this->delete('/api/paciente-json/' . $paciente->id);
         $this->assertCount(0, Paciente::all());
     }
@@ -71,11 +62,9 @@ class PacienteTest extends TestCase {
     /** @test */ //
     public function paciente_soft_delete() {
 
-        $response = $this->post('/api/paciente-json', [
-            'name' => 'obrigatorio'
-        ]);
-
+        $paciente = factory(App\Models\Paciente::class, 1)->create();
         $paciente = Paciente::first();
+
         $response = $this->patch('/api/desativar-paciente-json/' . $paciente->id);
         $this->assertEquals(0, Paciente::first()->active);
 

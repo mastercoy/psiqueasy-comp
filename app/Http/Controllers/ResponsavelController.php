@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Responsavel;
+use App\Models\Responsavel;
 use App\User;
 use Gate;
 

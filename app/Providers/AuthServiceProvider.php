@@ -21,9 +21,8 @@ class AuthServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-//        Schema::defaultStringLength(191);
+//        Schema::defaultStringLength(191); //fixme why
         $this->registerPolicies();
-
 
         /*------------------------------------------------------------------------
         | VERIFICAR SE O OBJETO PASSADO PERTENCE A USUÁRIO LOGADO
