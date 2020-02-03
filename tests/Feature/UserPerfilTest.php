@@ -64,14 +64,23 @@ class UserPerfilTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_perfil_pode_ser_destruido() {
 
+        $response = $this->post('/api/user-json', [
+            'name' => 'obrigatorio',
+            'email' => 'test@test.com',
+            'password' => '123456'
+        ]);
+
         $response = $this->post('/api/user-perfil-json', [
             'name' => 'nome obrigatorio',
+            'user_id' => '1'
         ]);
 
         $this->assertCount(1, UserPerfil::all());
 
-        $perfil   = UserPerfil::first();
-        $response = $this->delete('/api/user-perfil-json/' . $perfil->id);
+        $user   = User::first();
+        $perfil = UserPerfil::first();
+
+        $response = $this->actingAs($user)->delete('/api/user-perfil-json/' . $perfil->id);
 
         $this->assertCount(0, UserPerfil::all());
     }
@@ -79,12 +88,21 @@ class UserPerfilTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_perfil_soft_delete() {
 
-        $response = $this->post('/api/user-perfil-json', [
-            'name' => 'nome obrigatorio',
+        $response = $this->post('/api/user-json', [
+            'name' => 'obrigatorio',
+            'email' => 'test@test.com',
+            'password' => '123456'
         ]);
 
+        $response = $this->post('/api/user-perfil-json', [
+            'name' => 'nome obrigatorio',
+            'user_id' => '1'
+        ]);
+
+        $user = User::first();
+
         $perfil   = UserPerfil::first();
-        $response = $this->patch('/api/desativar-user-perfil-json/' . $perfil->id);
+        $response = $this->actingAs($user)->patch('/api/desativar-user-perfil-json/' . $perfil->id);
         $this->assertEquals(0, UserPerfil::first()->active);
     }
 

@@ -21,9 +21,17 @@ class UserPerfilController extends Controller {
     }
 
     public function show(UserPerfil $user_perfil_json) {
-        //
-        return $perfil = UserPerfil::find($user_perfil_json->id);
+
+        $perfil = UserPerfil::find($user_perfil_json->id);
+
+        if (Gate::allows('pertence-usuario-logado', $perfil)) {
+            return $perfil = UserPerfil::find($user_perfil_json->id);
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
     }
+
 
     public function edit(UserPerfil $user_perfil_json) {
         //
@@ -41,13 +49,29 @@ class UserPerfilController extends Controller {
     }
 
     public function destroy(UserPerfil $user_perfil_json) {
-        $user_perfil_json->delete();
+        //
+        $perfil = UserPerfil::find($user_perfil_json->id);
+
+        if (Gate::allows('pertence-usuario-logado', $perfil)) {
+            $user_perfil_json->delete();
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
     }
 
     public function desativarUserPerfil(UserPerfil $user_perfil_json) {
-        $perfil         = UserPerfil::find($user_perfil_json->id);
-        $perfil->active = false;
-        $perfil->save();
+        //
+        $perfil = UserPerfil::find($user_perfil_json->id);
+
+        if (Gate::allows('pertence-usuario-logado', $perfil)) {
+            $perfil->active = false;
+            $perfil->save();
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
+
     }
 
     // ========================= protected
