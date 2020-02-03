@@ -168,7 +168,8 @@ export default {
       let empresa = {
         cpf_cnpj: this.cadEmpresa.cnpj,
         logo_marca: this.cadEmpresa.NomeEmp,
-        active: 1
+        active: 1,
+        user_id: 1
       }
      axios.post('api/empresa-json', empresa).then(({ data })  => {
       this.$store.commit('salvarIdEmp', data.last_id)

@@ -58,9 +58,20 @@
 
 export default {
   name: "modulo_clinica",
+  // mounted() {
+  //   let newUser = this.user
+  //   axios.post('api/user-json', newUser).then(({ data }) => {
+  //        console.log("Usuário criado com sucesso!");
+  //      });
+  //   },
   data() {
     return {
-      nivelPermissao: 0
+      nivelPermissao: 0,
+      user: {
+        name: 'Matheus Henrique',
+        email: 'teteu@gmail.com',
+        password: 'teteu'
+      }
     }
   },
   methods: {
