@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider {
     /**
@@ -20,38 +21,24 @@ class AuthServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-        // Schema::defaultStringLength(191);
+//        Schema::defaultStringLength(191); //fixme why
         $this->registerPolicies();
 
-        //afazer os GATES
-        // definição, closing
-
-        /*
-        |--------------------------------------------------------------------------
+        /*------------------------------------------------------------------------
         | VERIFICAR SE O OBJETO PASSADO PERTENCE A USUÁRIO LOGADO
-        |--------------------------------------------------------------------------
-        |
-        |
+        |------------------------------------------------------------------------*/
 
+        Gate::define('pertence-usuario-logado', function ($user, $objeto) {
+            return $user->id == $objeto->user_id;
+        });
 
-Gate::define('pertence-usuario-logado', function($user, $objeto){
-    return $user->id == $objeto->user_id;
-});
-/*
-|--------------------------------------------------------------------------
-| VERIFICAR SE O PACIENTE PASSADO PERTENCE A USUÁRIO LOGADO E ESTÁ ATIVO
-|--------------------------------------------------------------------------
-|
-|
+        /*------------------------------------------------------------------------
+        | VERIFICAR SE O PACIENTE PASSADO PERTENCE A USUÁRIO LOGADO E ESTÁ ATIVO
+        |------------------------------------------------------------------------*/
 
+        Gate::define('pertence-usuario-logado-e-active', function ($user, $objeto) {
+            return $user->id == $objeto->user_id && $objeto->active == 1;
+        });
 
-Gate::define('pertence-usuario-logado-e-active', function($user, $objeto){
-    return $user->id == $objeto->user_id && $objeto->active == 1;
-});
-
-        //
-    }
-}
-*/
     }
 }

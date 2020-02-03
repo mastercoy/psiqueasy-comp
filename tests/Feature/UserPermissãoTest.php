@@ -1,13 +1,13 @@
 <?php
 
-namespace Tests\Feature;
+//namespace Tests\Feature;
 
 
 use App\Models\Userpermissao;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class UserPermissãoTest extends TestCase {
+class UserPermissaoTest extends TestCase {
 
 
     use RefreshDatabase;
@@ -17,10 +17,7 @@ class UserPermissãoTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_permissao_pode_ser_criada() {
 
-        $response = $this->post('/api/criar-user-permissao-json', [
-            'name' => 'nome obrigatorio',
-        ]);
-
+        $permissao = factory(App\Models\UserPermissao::class, 1)->create();
         $this->assertCount(1, UserPermissao::all());
 
     }
@@ -28,7 +25,7 @@ class UserPermissãoTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_permissao_tem_campos_obrigatorios() {
 
-        $response = $this->post('/api/criar-user-permissao-json', [
+        $response = $this->post('/api/user-permissao-json', [
             'name' => '',
         ]);
 
@@ -38,21 +35,14 @@ class UserPermissãoTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_permissao_pode_ser_atualizada() {
 
-        $response = $this->post('/api/criar-user-permissao-json', [
-            'name' => 'nome obrigatorio',
-            'active' => '1',
-
-        ]);
+        $permissao = factory(App\Models\UserPermissao::class, 1)->create();
         $this->assertCount(1, UserPermissao::all());
         $permissao = UserPermissao::first();
 
-        $response = $this->patch('/api/editar-user-permissao-json/' . $permissao->id, [
+        $response = $this->patch('/api/user-permissao-json/' . $permissao->id, [
             'name' => 'novo nome',
             'active' => '1',
-
         ]);
-
-//        dd(UserPermissao::first());
 
         $this->assertEquals('novo nome', Userpermissao::first()->name);
 
@@ -61,26 +51,20 @@ class UserPermissãoTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_permissao_pode_ser_destruida() {
 
-        $response = $this->post('/api/criar-user-permissao-json', [
-            'name' => 'nome obrigatorio',
-        ]);
-
+        $permissao = factory(App\Models\UserPermissao::class, 1)->create();
         $this->assertCount(1, UserPermissao::all());
-
         $permissao = UserPermissao::first();
-        $response  = $this->delete('/api/destruir-user-permissao-json/' . $permissao->id);
 
+        $response  = $this->delete('/api/user-permissao-json/' . $permissao->id);
         $this->assertCount(0, UserPermissao::all());
     }
 
     /** @test */ //SUCESSO
     public function user_permissao_soft_delete() {
 
-        $response = $this->post('/api/criar-user-permissao-json', [
-            'name' => 'nome obrigatorio',
-        ]);
-
+        $permissao = factory(App\Models\UserPermissao::class, 1)->create();
         $permissao = UserPermissao::first();
+
         $response  = $this->patch('/api/desativar-user-permissao-json/' . $permissao->id);
         $this->assertEquals(0, UserPermissao::first()->active);
     }

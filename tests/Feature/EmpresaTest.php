@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+//namespace Tests\Feature;
 
 
 use App\Models\Empresa;
@@ -16,11 +16,7 @@ class EmpresaTest extends TestCase {
     /** @test */
     public function empresa_pode_ser_adicionada() {
 
-        $response = $this->post('/api/empresa-json', [
-            'cpf_cnpj' => '123456789',
-            'logo_marca' => 'logo marca obrigatorio'
-        ]);
-
+        $empresa = factory(App\Models\Empresa::class, 1)->create();
         $this->assertCount(1, Empresa::all());
 
     }
@@ -42,11 +38,7 @@ class EmpresaTest extends TestCase {
     /** @test */ //SUCESSO
     public function empresa_pode_ser_atualizada() {
 
-        $response = $this->post('/api/empresa-json', [
-            'cpf_cnpj' => '123456789',
-            'logo_marca' => 'logo marca obrigatorio'
-        ]);
-
+        $empresa = factory(App\Models\Empresa::class, 1)->create();
         $empresa = Empresa::first();
 
         $response = $this->patch('/api/empresa-json/' . $empresa->id, [
@@ -62,14 +54,10 @@ class EmpresaTest extends TestCase {
     /** @test */ //SUCESSO
     public function empresa_pode_ser_destruida() {
 
-        $response = $this->post('/api/empresa-json', [
-            'cpf_cnpj' => '123456789',
-            'logo_marca' => 'logo marca obrigatorio'
-        ]);
-
+        $empresa = factory(App\Models\Empresa::class, 1)->create();
         $this->assertCount(1, Empresa::all());
-
         $empresa  = Empresa::first();
+
         $response = $this->delete('/api/empresa-json/' . $empresa->id);
         $this->assertCount(0, Empresa::all());
     }
@@ -77,12 +65,9 @@ class EmpresaTest extends TestCase {
     /** @test */ //SUCESSO
     public function empresa_soft_delete() {
 
-        $response = $this->post('/api/empresa-json', [
-            'cpf_cnpj' => '123456789',
-            'logo_marca' => 'logo marca obrigatorio'
-        ]);
+        $empresa = factory(App\Models\Empresa::class, 1)->create();
+        $empresa = Empresa::first();
 
-        $empresa  = Empresa::first();
         $response = $this->patch('/api/desativar-empresa-json/' . $empresa->id);
         $this->assertEquals(0, Empresa::first()->active);
 

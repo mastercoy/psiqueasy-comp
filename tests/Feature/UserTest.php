@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature;
+//namespace Tests\Feature;
 
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -13,14 +13,9 @@ class UserTest extends TestCase {
     //        $this->withoutExceptionHandling();
 
     /** @test */ //SUCESSO
-    public function user_pode_ser_adicionado() { //name e pass
+    public function user_pode_ser_adicionado() {
 
-        $response = $this->post('/api/user-json', [
-            'name' => 'obrigatorio',
-            'email' => 'test@test.com',
-            'password' => '123456'
-        ]);
-
+        $user = factory(App\User::class, 1)->create();
         $user = User::first();
         $this->assertCount(1, User::all());
 
@@ -36,31 +31,24 @@ class UserTest extends TestCase {
             'formacao' => 'estudante'
         ]);
 
-
         $response->assertSessionHasErrors('name');
         $response->assertSessionHasErrors('email');
         $response->assertSessionHasErrors('password');
-
 
     }
 
     /** @test */ //SUCESSO
     public function user_pode_ser_atualizado() {
 
-        $response = $this->post('/api/user-json', [
-            'name' => 'obrigatorio',
-            'email' => 'test@test.com',
-            'password' => '123456'
-        ]);
+        $user = factory(App\User::class, 1)->create();
+        $user = User::first();
 
-        $user     = User::first();
         $response = $this->patch('/api/user-json/' . $user->id, [
             'name' => 'novo nome',
             'email' => $user->email,
             'password' => $user->password
         ]);
 
-//        dd(User::first());
         $this->assertEquals('novo nome', User::first()->name);
 
     }
@@ -68,14 +56,10 @@ class UserTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_pode_ser_destruido() {
 
-        $response = $this->post('/api/user-json', [
-            'name' => 'obrigatorio',
-            'email' => 'test@test.com',
-            'password' => '123456'
-        ]);
-
+        $user = factory(App\User::class, 1)->create();
         $this->assertCount(1, User::all());
         $user     = User::first();
+
         $response = $this->delete('/api/user-json/' . $user->id);
         $this->assertCount(0, User::all());
     }
@@ -83,13 +67,9 @@ class UserTest extends TestCase {
     /** @test */
     public function user_soft_delete() {
 
-        $response = $this->post('/api/user-json', [
-            'name' => 'obrigatorio',
-            'email' => 'test@test.com',
-            'password' => '123456'
-        ]);
-
+        $response = factory(App\User::class, 1)->create();
         $user     = User::first();
+
         $response = $this->patch('/api/desativar-user-json/' . $user->id);
         $this->assertEquals(0, User::first()->active);
 

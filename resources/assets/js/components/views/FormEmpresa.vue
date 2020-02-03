@@ -159,7 +159,7 @@ export default {
      getEmpresa() {
        let id = this.$store.state.empresaId
        id = 6 //  TEMPORÁRIO
-       axios.get(`api/empresa-json/${id}`).then(({ data }) => {
+       axios.get('api/empresa-json').then(({ data }) => {
          this.cadEmpresa.NomeEmp = data.logo_marca
          this.cadEmpresa.cnpj = data.cpf_cnpj
        });
