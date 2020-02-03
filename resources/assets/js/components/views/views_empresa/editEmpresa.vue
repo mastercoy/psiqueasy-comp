@@ -64,8 +64,9 @@ export default {
         user_id: 1
       }
       axios.patch(`/api/empresa-json/${1}`, empresa).then(({data}) => {
-         console.log("Dados da empresa editados com sucesso")
+         console.log("Dados da empresa editados com sucesso!!");
        });
+       this.$router.push("/cadastro");
     }
   }
 
@@ -82,6 +83,7 @@ export default {
   h4 {
     color: rgb(112, 112, 112);
   }
+  
   .container-new {
     border: 1px solid rgb(202, 202, 202);
     border-radius: 5px;

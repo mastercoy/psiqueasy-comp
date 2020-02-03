@@ -33,14 +33,14 @@
                   <div class="col-md-3">
                     <input class="magic-checkbox" type="checkbox" id="Financas"  value="Financas" v-model="newUser.atribuicoes"/> 
                     <label for="Financas">Finanças</label>
-                  </div>
-                  <div class="col-md-3">
-                    <input class="magic-checkbox" type="checkbox" id="cadastros" value="cadastros" v-model="newUser.atribuicoes"/> 
-                    <label for="cadastros">Cadastros</label>
-                  </div>
+                  </div>                 
                   <div class="col-md-3">
                     <input class="magic-checkbox" type="checkbox" id="Admin" value="admin"  v-model="newUser.atribuicoes"/> 
                      <label for="Admin">Admin</label>
+                  </div>
+                   <div class="col-md-3">
+                    <input class="magic-checkbox" type="checkbox" id="cadastros" value="cadastros" v-model="newUser.atribuicoes"/> 
+                    <label for="cadastros">Outros</label>
                   </div>
                 </div>   
           </div>       
@@ -60,8 +60,12 @@
 
 <script>
 export default {
+  mounted() {
+   //this.carregarLoad()
+  },
   data() {
     return {
+      loading: false,
       newUser: {
         nome: '',
         descricao: '',
@@ -75,7 +79,15 @@ export default {
       console.log("+++");
 
       this.$router.push("/usuarios");
-    }
+     }
+    // carregarLoad() {
+
+    //  setTimeout(this.carregarLoading(), 2000);
+      
+    // },
+    // carregarLoading() {
+    //     this.loading = true;
+    //   }
   }
 }
 </script>

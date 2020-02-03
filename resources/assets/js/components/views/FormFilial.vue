@@ -74,7 +74,7 @@ export default {
       nome: '',
       localidade: '',
       complemento: ''
-    }
+      }
     }
     
   },
