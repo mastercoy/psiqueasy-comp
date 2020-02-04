@@ -92,7 +92,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
   .form-temp {
    padding: 20px;

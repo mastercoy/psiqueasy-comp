@@ -29,10 +29,12 @@
     "dependencies": {
         "axios": "^0.19.1",
         "font-awesome": "^4.7.0",
-        "magic-check": "^1.0.3",
         "jquery": "^3.4.1",
+        "magic-check": "^1.0.3",
         "popper.js": "^1.16.0",
         "vue-router": "^3.1.5",
+        "vue-toasted": "^1.1.27",
+        "vuelidate": "^0.7.5",
         "vuex": "^3.1.2"
     }
 }
