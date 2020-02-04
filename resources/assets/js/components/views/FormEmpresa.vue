@@ -147,9 +147,8 @@
 export default {
   mounted() {
     if( this.$store.state.Status === 2){
-      this.getEmpresa();
-    }
-      
+      this.getEmpresa();     
+    }     
   },
   data(){
     return {

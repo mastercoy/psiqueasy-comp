@@ -67,6 +67,12 @@ export default {
          console.log("Dados da empresa editados com sucesso!!");
        });
        this.$router.push("/cadastro");
+
+       let toast = this.$toasted.show("Dados atualizados com Sucesso!!", { 
+          theme: "toasted-primary", 
+          position: "bottom-right", 
+          duration : 1500
+        });
     }
   }
 
@@ -83,7 +89,7 @@ export default {
   h4 {
     color: rgb(112, 112, 112);
   }
-  
+
   .container-new {
     border: 1px solid rgb(202, 202, 202);
     border-radius: 5px;

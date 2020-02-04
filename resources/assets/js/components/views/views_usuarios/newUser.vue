@@ -1,5 +1,6 @@
 <template>
 <div class="form-temp">
+  
     <h4>Novo Usuário</h4>
       <hr>
    <div class="container container-new">
@@ -28,15 +29,29 @@
                 <div class="row">
                   <div class="col-md-3">
                     <input class="magic-checkbox" type="checkbox" id="Agendamentos" value="Agendamentos" v-model="newUser.atribuicoes" /> 
-                    <label for="Agendamentos">Agendamentos</label>
+                    <label for="Agendamentos">Agendamentos
+                    <a href="#" for="Agendamentos" data-toggle="popover" data-trigger="hover" title="Atendimentos" data-placement="top"
+                       data-content="Essa atribuição da acesso aos relatórios de agendamentos, pacientes e atendimentos">
+                       <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+                    </a></label>
                   </div>
+
                   <div class="col-md-3">
                     <input class="magic-checkbox" type="checkbox" id="Financas"  value="Financas" v-model="newUser.atribuicoes"/> 
-                    <label for="Financas">Finanças</label>
-                  </div>                 
+                    <label for="Financas">Finanças
+                    <a href="#" for="Financas" data-toggle="popover" data-trigger="hover" title="Finanças" data-placement="top"
+                       data-content="Essa atribuição permite ao usuário gerenciar registros fiscais, pagamentos e  arquivos de contabilidade">
+                       <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+                    </a></label>
+                  </div>    
+
                   <div class="col-md-3">
                     <input class="magic-checkbox" type="checkbox" id="Admin" value="admin"  v-model="newUser.atribuicoes"/> 
-                     <label for="Admin">Admin</label>
+                     <label for="Admin">Admin
+                       <a href="#" for="Admin" data-toggle="popover" data-trigger="hover" title="Finanças" data-placement="top"
+                       data-content="Essa atribuição permite ao usuário gerenciar registros fiscais, pagamentos e  arquivos de contabilidade">
+                       <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+                    </a></label>
                   </div>
                    <div class="col-md-3">
                     <input class="magic-checkbox" type="checkbox" id="cadastros" value="cadastros" v-model="newUser.atribuicoes"/> 
@@ -62,6 +77,9 @@
 export default {
   mounted() {
    //this.carregarLoad()
+    $(document).ready(function(){
+      $('[data-toggle="popover"]').popover();
+    });
   },
   data() {
     return {
@@ -77,6 +95,7 @@ export default {
   methods: {
     addUser() {
       console.log("+++");
+
 
       this.$router.push("/usuarios");
      }
