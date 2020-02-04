@@ -4,6 +4,7 @@
 
 
 use App\Models\EmpresaModeloDocs;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -34,12 +35,13 @@ class EmpresaModeloDocsTest extends TestCase {
     /** @test */ //SUCESSO
     public function modelo_empresa_pode_ser_atualizado() {
 
-        $emp_modelo = factory(App\Models\EmpresaModeloDocs::class, 1)->create();
-        $modelo     = EmpresaModeloDocs::first();
+        $modelo = factory(App\Models\EmpresaModeloDocs::class, 1)->create();
+        $modelo = EmpresaModeloDocs::first();
+        $user   = factory(App\User::class, 1)->create();
+        $user   = User::first();
 
-        $response = $this->patch('/api/empresa-modelo-docs-json/' . $modelo->id, [
-            'name' => 'novo nome',
-            'empresa_id' => '1'
+        $response = $this->actingAs($user)->patch('/api/empresa-modelo-docs-json/' . $modelo->id, [
+            'name' => 'novo nome'
         ]);
 
         $this->assertEquals('novo nome', EmpresaModeloDocs::first()->name);
@@ -50,21 +52,25 @@ class EmpresaModeloDocsTest extends TestCase {
     public function modelo_pode_ser_destruido() {
 
         $emp_modelo = factory(App\Models\EmpresaModeloDocs::class, 1)->create();
+        $modelo     = EmpresaModeloDocs::first();
         $this->assertCount(1, EmpresaModeloDocs::all());
-        $modelo   = EmpresaModeloDocs::first();
 
-        $response = $this->delete('/api/empresa-modelo-docs-json/' . $modelo->id);
+        $user = factory(App\User::class, 1)->create();
+        $user = User::first();
+
+        $response = $this->actingAs($user)->delete('/api/empresa-modelo-docs-json/' . $modelo->id);
         $this->assertCount(0, EmpresaModeloDocs::all());
     }
 
     /** @test */ //SUCESSO
     public function modelo_soft_delete() {
 
-        $emp_modelo = factory(App\Models\EmpresaModeloDocs::class, 1)->create();
+        $modelo = factory(App\Models\EmpresaModeloDocs::class, 1)->create();
+        $modelo = EmpresaModeloDocs::first();
+        $user   = factory(App\User::class, 1)->create();
+        $user   = User::first();
 
-        $modelo   = EmpresaModeloDocs::first();
-        $response = $this->patch('/api/desativar-empresa-modelo-docs-json/' . $modelo->id);
-
+        $response = $this->actingAs($user)->patch('/api/desativar-empresa-modelo-docs-json/' . $modelo->id);
         $this->assertEquals(0, EmpresaModeloDocs::first()->active);
 
     }

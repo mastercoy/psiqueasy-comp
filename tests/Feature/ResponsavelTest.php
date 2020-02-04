@@ -30,7 +30,6 @@ class ResponsavelTest extends TestCase {
 
         $response->assertSessionHasErrors('name');
 
-
     }
 
     /** @test */ //SUCESSO
@@ -38,8 +37,10 @@ class ResponsavelTest extends TestCase {
 
         $responsavel = factory(App\Models\Responsavel::class, 1)->create();
         $responsavel = Responsavel::first();
+        $user        = factory(App\User::class, 1)->create();
+        $user        = User::first();
 
-        $response = $this->patch('/api/responsavel-json/' . $responsavel->id, [
+        $response = $this->actingAs($user)->patch('/api/responsavel-json/' . $responsavel->id, [
             'name' => 'novo nome',
             'parentesco' => 'pai',
             'end' => 'novo endereço'
@@ -53,8 +54,14 @@ class ResponsavelTest extends TestCase {
     public function responsavel_pode_ser_destruido() {
 
         $responsavel = factory(App\Models\Responsavel::class, 1)->create();
-
+        $responsavel = Responsavel::first();
         $this->assertCount(1, Responsavel::all());
+
+        $user = factory(App\User::class, 1)->create();
+        $user = User::first();
+
+        $response = $this->actingAs($user)->delete('/api/responsavel-json/' . $responsavel->id);
+        $this->assertCount(0, Responsavel::all());
 
 
     }
@@ -64,8 +71,10 @@ class ResponsavelTest extends TestCase {
 
         $responsavel = factory(App\Models\Responsavel::class, 1)->create();
         $responsavel = Responsavel::first();
+        $user        = factory(App\User::class, 1)->create();
+        $user        = User::first();
 
-        $response = $this->patch('/api/desativar-responsavel-json/' . $responsavel->id);
+        $response = $this->actingAs($user)->patch('/api/desativar-responsavel-json/' . $responsavel->id);
         $this->assertEquals(0, Responsavel::first()->active);
 
 

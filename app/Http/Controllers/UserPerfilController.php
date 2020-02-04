@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Gate;
 class UserPerfilController extends Controller {
 
     public function index() {
-        //afazer retornar todos?
+        //afazer retornar todos os perfis
     }
 
     public function create() {
@@ -23,7 +23,6 @@ class UserPerfilController extends Controller {
     public function show(UserPerfil $user_perfil_json) {
         //
         $perfil = UserPerfil::find($user_perfil_json->id);
-
         if (Gate::allows('pertence-usuario-logado', $perfil)) {
             return $perfil;
         } else {
@@ -39,7 +38,6 @@ class UserPerfilController extends Controller {
     public function update(UserPerfil $user_perfil_json) {
         //
         $perfil = UserPerfil::find($user_perfil_json->id);
-
         if (Gate::allows('pertence-usuario-logado', $perfil)) {
             $user_perfil_json->update($this->validateUserPerfilRequest());
         } else {
@@ -51,9 +49,8 @@ class UserPerfilController extends Controller {
     public function destroy(UserPerfil $user_perfil_json) {
         //
         $perfil = UserPerfil::find($user_perfil_json->id);
-
         if (Gate::allows('pertence-usuario-logado', $perfil)) {
-            $perfil->delete();
+            $user_perfil_json->delete();
         } else {
             abort(403, 'Não encontrado!');
         }
@@ -63,7 +60,6 @@ class UserPerfilController extends Controller {
     public function desativarUserPerfil(UserPerfil $user_perfil_json) {
         //
         $perfil = UserPerfil::find($user_perfil_json->id);
-
         if (Gate::allows('pertence-usuario-logado', $perfil)) {
             $perfil->active = false;
             $perfil->save();

@@ -32,6 +32,10 @@ class CreateEmpresasTable extends Migration {
             $table->string('name', 191);
             $table->string('descricao', 191);
             $table->tinyInteger('active')->default(true);
+            $table->integer('empresa_id')->unsigned()->nullable();
+            $table->foreign('empresa_id')
+                  ->references('id')
+                  ->on('empresas');
             $table->timestamps();
         });
 

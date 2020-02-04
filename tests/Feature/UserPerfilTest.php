@@ -15,7 +15,6 @@ class UserPerfilTest extends TestCase {
     public function user_perfil_pode_ser_criado() {
 
         $user = factory(App\Models\UserPerfil::class, 1)->create();
-
         $this->assertCount(1, UserPerfil::all());
 
     }
@@ -33,12 +32,11 @@ class UserPerfilTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_perfil_pode_ser_atualizado() {
 
-        $user = factory(App\User::class, 1)->create();
-
+        $user   = factory(App\User::class, 1)->create();
         $perfil = factory(App\Models\UserPerfil::class, 1)->create();
+        $perfil = UserPerfil::first();
+        $user   = User::first();
 
-        $perfil   = UserPerfil::first();
-        $user     = User::first();
         $response = $this->actingAs($user)->patch('/api/user-perfil-json/' . $perfil->id, [
             'name' => 'novo nome',
 

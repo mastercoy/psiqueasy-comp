@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Paciente;
+use Illuminate\Support\Facades\Gate;
 
 class PacienteController extends Controller {
 
     public function index() {
-        //
+        //afazer mostrar todos os pacientes
     }
 
     public function create() {
@@ -19,7 +20,13 @@ class PacienteController extends Controller {
     }
 
     public function show(Paciente $paciente_json) {
-        return $paciente = Paciente::find($paciente_json->id);
+        //
+        $paciente = Paciente::find($paciente_json->id);
+        if (Gate::allows('pertence-usuario-logado', $paciente)) {
+            return $paciente;
+        } else {
+            abort(403, 'Não encontrado!');
+        }
     }
 
     public function edit($id) {
@@ -27,17 +34,37 @@ class PacienteController extends Controller {
     }
 
     public function update(Paciente $paciente_json) {
-        $paciente_json->update($this->validatePacienteRequest());
+        //
+        $paciente = Paciente::find($paciente_json->id);
+        if (Gate::allows('pertence-usuario-logado', $paciente)) {
+            $paciente_json->update($this->validatePacienteRequest());
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
     }
 
     public function destroy(Paciente $paciente_json) {
-        $paciente_json->delete();
+        //
+        $paciente = Paciente::find($paciente_json->id);
+        if (Gate::allows('pertence-usuario-logado', $paciente)) {
+            $paciente_json->delete();
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
     }
 
     public function desativarPaciente(Paciente $paciente_json) {
-        $paciente         = Paciente::find($paciente_json->id);
-        $paciente->active = false;
-        $paciente->save();
+        //
+        $paciente = Paciente::find($paciente_json->id);
+        if (Gate::allows('pertence-usuario-logado', $paciente)) {
+            $paciente->active = false;
+            $paciente->save();
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
     }
 
     // ========================= protected

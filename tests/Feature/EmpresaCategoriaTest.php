@@ -4,6 +4,7 @@
 
 
 use App\Models\EmpresaCategoria;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -38,8 +39,10 @@ class EmpresaCategoriaTest extends TestCase {
 
         $categoria = factory(App\Models\EmpresaCategoria::class, 1)->create();
         $categoria = EmpresaCategoria::first();
+        $user      = factory(App\User::class, 1)->create();
+        $user      = User::first();
 
-        $response = $this->patch('/api/empresa-categoria-json/' . $categoria->id, [
+        $response = $this->actingAs($user)->patch('/api/empresa-categoria-json/' . $categoria->id, [
             'name' => 'novo nome',
             'descricao' => 'nova descricao',
         ]);
@@ -53,10 +56,13 @@ class EmpresaCategoriaTest extends TestCase {
     public function categoria_pode_ser_destruida() {
 
         $categoria = factory(App\Models\EmpresaCategoria::class, 1)->create();
+        $categoria = EmpresaCategoria::first();
         $this->assertCount(1, EmpresaCategoria::all());
 
-        $categoria = EmpresaCategoria::first();
-        $response  = $this->delete('/api/empresa-categoria-json/' . $categoria->id);
+        $user = factory(App\User::class, 1)->create();
+        $user = User::first();
+
+        $response = $this->actingAs($user)->delete('/api/empresa-categoria-json/' . $categoria->id);
         $this->assertCount(0, EmpresaCategoria::all());
 
     }
@@ -66,8 +72,10 @@ class EmpresaCategoriaTest extends TestCase {
 
         $categoria = factory(App\Models\EmpresaCategoria::class, 1)->create();
         $categoria = EmpresaCategoria::first();
+        $user      = factory(App\User::class, 1)->create();
+        $user      = User::first();
 
-        $response  = $this->patch('/api/desativar-empresa-categoria-json/' . $categoria->id);
+        $response = $this->actingAs($user)->patch('/api/desativar-empresa-categoria-json/' . $categoria->id);
         $this->assertEquals(0, EmpresaCategoria::first()->active);
     }
 

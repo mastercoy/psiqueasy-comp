@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 
 use App\Models\Responsavel;
 use App\User;
-use Gate;
+use Illuminate\Support\Facades\Gate;
 
 class ResponsavelController extends Controller {
 
     public function index() { //fixme
+        //afazer retornar os responsaveis
         return User::find(auth()->user()->id)->responsavel()->get();
     }
 
@@ -23,7 +24,13 @@ class ResponsavelController extends Controller {
     }
 
     public function show(Responsavel $responsavel_json) {
-        return $responsavel = Responsavel::find($responsavel_json->user_id);
+        //
+        $responsavel = Responsavel::find($responsavel_json->id);
+        if (Gate::allows('pertence-usuario-logado', $responsavel)) {
+            return $responsavel;
+        } else {
+            abort(403, 'Não encontrado!');
+        }
     }
 
     public function edit(Responsavel $responsavel) {
@@ -31,17 +38,36 @@ class ResponsavelController extends Controller {
     }
 
     public function update(Responsavel $responsavel_json) {
-        $responsavel_json->update($this->validateResponsavelRequest());
+        //
+        $responsavel = Responsavel::find($responsavel_json->id);
+        if (Gate::allows('pertence-usuario-logado', $responsavel)) {
+            $responsavel_json->update($this->validateResponsavelRequest());
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
     }
 
     public function destroy(Responsavel $responsavel_json) {
-        $responsavel_json->delete();
+        //
+        $responsavel = Responsavel::find($responsavel_json->id);
+        if (Gate::allows('pertence-usuario-logado', $responsavel)) {
+            $responsavel_json->delete();
+        } else {
+            abort(403, 'Não encontrado!');
+        }
     }
 
     public function desativarResponsavel(Responsavel $responsavel_json) {
-        $responsavel         = Responsavel::find($responsavel_json->id);
-        $responsavel->active = false;
-        $responsavel->save();
+        //
+        $responsavel = Responsavel::find($responsavel_json->id);
+        if (Gate::allows('pertence-usuario-logado', $responsavel)) {
+            $responsavel->active = false;
+            $responsavel->save();
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
     }
 
     public function excluidosResponsavel(Responsavel $responsavel_json) {
@@ -72,4 +98,6 @@ class ResponsavelController extends Controller {
 
                                    ]);
     }
+
+
 }

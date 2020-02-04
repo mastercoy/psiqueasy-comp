@@ -3,21 +3,72 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmpresaModeloDocs;
+use Illuminate\Support\Facades\Gate;
 
 class EmpresaModeloDocsController extends Controller {
 
     public function index() {
-
+        //afazer mostrar todos os modelos de documentos
     }
 
-
     public function create() {
-
+        //
     }
 
     public function store() {
         $modelo = EmpresaModeloDocs::create($this->validateModeloDocsRequest());
     }
+
+    public function show(EmpresaModeloDocs $empresa_modelo_docs_json) {
+        //
+        $modelo = EmpresaModeloDocs::find($empresa_modelo_docs_json->id);
+        if (Gate::allows('pertence-mesma-empresa', $modelo)) {
+            return $modelo;
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+    }
+
+    public function edit(EmpresaModeloDocs $empresa_modelo_docs_json) {
+        //
+    }
+
+    public function update(EmpresaModeloDocs $empresa_modelo_docs_json) {
+        //
+        $modelo = EmpresaModeloDocs::find($empresa_modelo_docs_json->id);
+        if (Gate::allows('pertence-mesma-empresa', $modelo)) {
+            $empresa_modelo_docs_json->update($this->validateModeloDocsRequest());
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
+    }
+
+    public function destroy(EmpresaModeloDocs $empresa_modelo_docs_json) {
+        //
+        $modelo = EmpresaModeloDocs::find($empresa_modelo_docs_json->id);
+        if (Gate::allows('pertence-mesma-empresa', $modelo)) {
+            $empresa_modelo_docs_json->delete();
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
+    }
+
+
+    public function desativarModeloDocs(EmpresaModeloDocs $empresa_modelo_docs_json) {
+        //
+        $modelo = EmpresaModeloDocs::find($empresa_modelo_docs_json->id);
+        if (Gate::allows('pertence-mesma-empresa', $modelo)) {
+            $modelo->active = false;
+            $modelo->save();
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
+    }
+
+    // ========================= protected
 
     protected function validateModeloDocsRequest() {
         return request()->validate([
@@ -28,27 +79,5 @@ class EmpresaModeloDocsController extends Controller {
                                    ]);
     }
 
-    public function show(EmpresaModeloDocs $empresa_modelo_docs_json) {
-        return $modelo = EmpresaModeloDocs::find($empresa_modelo_docs_json->id);
-    }
 
-    public function edit(EmpresaModeloDocs $empresa_modelo_docs_json) {
-
-    }
-
-    public function update(EmpresaModeloDocs $empresa_modelo_docs_json) {
-        $empresa_modelo_docs_json->update($this->validateModeloDocsRequest());
-    }
-
-    public function destroy(EmpresaModeloDocs $empresa_modelo_docs_json) {
-        $empresa_modelo_docs_json->delete();
-    }
-
-    // ========================= protected
-
-    public function desativarModeloDocs(EmpresaModeloDocs $empresa_modelo_docs_json) {
-        $modelo         = EmpresaModeloDocs::find($empresa_modelo_docs_json->id);
-        $modelo->active = false;
-        $modelo->save();
-    }
 }

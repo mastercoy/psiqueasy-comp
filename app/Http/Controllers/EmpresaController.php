@@ -9,7 +9,7 @@ class EmpresaController extends Controller {
     // ========================= EMPRESA
 
     public function index() {
-        //
+        //afazer mostrar todas as empresas
     }
 
     public function create() {

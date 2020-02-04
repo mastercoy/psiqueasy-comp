@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class UserPermissaoController extends Controller {
 
     public function index() {
-        //
+        //retornar todas as permissoes
     }
 
 

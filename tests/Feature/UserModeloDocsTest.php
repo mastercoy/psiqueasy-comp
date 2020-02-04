@@ -4,6 +4,7 @@
 
 
 use App\Models\UserModeloDocs;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -34,14 +35,16 @@ class UserModeloDocsTest extends TestCase {
     /** @test */ //SUCESSO
     public function modelo_user_pode_ser_atualizado() {
 
-        $user_model = factory(App\Models\UserModeloDocs::class, 1)->create();
-        $modelo     = UserModeloDocs::first();
+        $modelo = factory(App\Models\UserModeloDocs::class, 1)->create();
+        $modelo = UserModeloDocs::first();
+        $user   = factory(App\User::class, 1)->create();
+        $user   = User::first();
 
-        $response = $this->patch('/api/user-modelo-docs-json/' . $modelo->id, [
+        $response = $this->actingAs($user)->patch('/api/user-modelo-docs-json/' . $modelo->id, [
             'name' => 'novo nome',
             'conteudo' => '',
             'active' => '1',
-            'user_id' => ''
+            'user_id' => '1'
         ]);
 
         $this->assertEquals('novo nome', UserModeloDocs::first()->name);
@@ -51,21 +54,26 @@ class UserModeloDocsTest extends TestCase {
     /** @test */ //SUCESSO
     public function modelo_pode_ser_destruido() {
 
-        $user_model = factory(App\Models\UserModeloDocs::class, 1)->create();
+        $modelo = factory(App\Models\UserModeloDocs::class, 1)->create();
+        $modelo = UserModeloDocs::first();
         $this->assertCount(1, UserModeloDocs::all());
-        $modelo   = UserModeloDocs::first();
 
-        $response = $this->delete('/api/user-modelo-docs-json/' . $modelo->id);
+        $user = factory(App\User::class, 1)->create();
+        $user = User::first();
+
+        $response = $this->actingAs($user)->delete('/api/user-modelo-docs-json/' . $modelo->id);
         $this->assertCount(0, UserModeloDocs::all());
     }
 
     /** @test */ //SUCESSO
     public function modelo_soft_delete() {
 
-        $user_model = factory(App\Models\UserModeloDocs::class, 1)->create();
-        $modelo     = UserModeloDocs::first();
+        $modelo = factory(App\Models\UserModeloDocs::class, 1)->create();
+        $modelo = UserModeloDocs::first();
+        $user   = factory(App\User::class, 1)->create();
+        $user   = User::first();
 
-        $response = $this->patch('/api/desativar-user-modelo-docs-json/' . $modelo->id);
+        $response = $this->actingAs($user)->patch('/api/desativar-user-modelo-docs-json/' . $modelo->id);
         $this->assertEquals(0, UserModeloDocs::first()->active);
 
     }

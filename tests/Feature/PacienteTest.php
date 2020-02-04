@@ -4,6 +4,7 @@
 
 
 use App\Models\Paciente;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -38,8 +39,10 @@ class PacienteTest extends TestCase {
 
         $paciente = factory(App\Models\Paciente::class, 1)->create();
         $paciente = Paciente::first();
+        $user     = factory(App\User::class, 1)->create();
+        $user     = User::first();
 
-        $response = $this->patch('/api/paciente-json/' . $paciente->id, [
+        $response = $this->actingAs($user)->patch('/api/paciente-json/' . $paciente->id, [
             'name' => 'novo nome'
         ]);
 
@@ -52,10 +55,13 @@ class PacienteTest extends TestCase {
     public function paciente_pode_ser_destruida() {
 
         $paciente = factory(App\Models\Paciente::class, 1)->create();
-        $this->assertCount(1, Paciente::all());
         $paciente = Paciente::first();
+        $this->assertCount(1, Paciente::all());
 
-        $response = $this->delete('/api/paciente-json/' . $paciente->id);
+        $user = factory(App\User::class, 1)->create();
+        $user = User::first();
+
+        $response = $this->actingAs($user)->delete('/api/paciente-json/' . $paciente->id);
         $this->assertCount(0, Paciente::all());
     }
 
@@ -64,8 +70,10 @@ class PacienteTest extends TestCase {
 
         $paciente = factory(App\Models\Paciente::class, 1)->create();
         $paciente = Paciente::first();
+        $user     = factory(App\User::class, 1)->create();
+        $user     = User::first();
 
-        $response = $this->patch('/api/desativar-paciente-json/' . $paciente->id);
+        $response = $this->actingAs($user)->patch('/api/desativar-paciente-json/' . $paciente->id);
         $this->assertEquals(0, Paciente::first()->active);
 
     }

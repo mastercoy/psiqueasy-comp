@@ -7,6 +7,6 @@ $factory->define(App\Models\EmpresaModeloDocs::class, function (Faker $faker) {
         'name' => $faker->name,
         'conteudo' => $faker->paragraph,
         'active' => '1',
-        'empresa_id' => ''
+        'empresa_id' => '1'
     ];
 });

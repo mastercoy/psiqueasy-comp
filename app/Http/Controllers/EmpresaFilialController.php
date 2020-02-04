@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmpresaFilial;
+use Illuminate\Support\Facades\Gate;
 
 class EmpresaFilialController extends Controller {
 
     public function index() {
-
+        //afazer mostrar todas as filiais
     }
 
     public function create() {
@@ -18,17 +19,14 @@ class EmpresaFilialController extends Controller {
         $criar_filial_json = EmpresaFilial::create($this->validateFilialRequest());
     }
 
-    protected function validateFilialRequest() { //fixme como pegar o id da empresa
-        return request()->validate([
-                                       'name' => 'required',
-                                       'active' => 'nullable',
-                                       'empresa_id' => 'nullable',
-                                   ]);
-
-    }
-
     public function show(EmpresaFilial $empresa_filial_json) {
-        return $filial = EmpresaFilial::find($empresa_filial_json->id);
+        //
+        $filial = EmpresaFilial::find($empresa_filial_json->id);
+        if (Gate::allows('pertence-mesma-empresa', $filial)) {
+            return $filial;
+        } else {
+            abort(403, 'Não encontrado!');
+        }
     }
 
     public function edit(EmpresaFilial $empresa_filial_json) {
@@ -36,21 +34,48 @@ class EmpresaFilialController extends Controller {
     }
 
     public function update(EmpresaFilial $empresa_filial_json) {
-        $empresa_filial_json->update($this->validateFilialRequest());
+        //
+        $filial = EmpresaFilial::find($empresa_filial_json->id);
+        if (Gate::allows('pertence-mesma-empresa', $filial)) {
+            $empresa_filial_json->update($this->validateFilialRequest());
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
     }
 
     public function destroy(EmpresaFilial $empresa_filial_json) {
-        $empresa_filial_json->delete();
+        //
+        $filial = EmpresaFilial::find($empresa_filial_json->id);
+        if (Gate::allows('pertence-mesma-empresa', $filial)) {
+            $empresa_filial_json->delete();
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+    }
+
+
+    public function desativarFilial(EmpresaFilial $empresa_filial_json) {
+        //
+        $filial = EmpresaFilial::find($empresa_filial_json->id);
+        if (Gate::allows('pertence-mesma-empresa', $filial)) {
+            $filial->active = false;
+            $filial->save();
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
+
     }
 
     // ========================= protected
 
-    public function desativarFilial(EmpresaFilial $empresa_filial_json) {
-
-        $filial         = EmpresaFilial::find($empresa_filial_json->id);
-        $filial->active = false;
-        $filial->save();
-
+    protected function validateFilialRequest() {
+        return request()->validate([
+                                       'name' => 'required',
+                                       'active' => 'nullable',
+                                       'empresa_id' => 'nullable',
+                                   ]);
 
     }
 }

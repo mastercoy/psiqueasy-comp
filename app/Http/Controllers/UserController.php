@@ -13,7 +13,7 @@ class UserController extends Controller {
     }*/
 
     public function index() {
-        //
+        //afazer retornar todos os usuarios
     }
 
     public function create() {

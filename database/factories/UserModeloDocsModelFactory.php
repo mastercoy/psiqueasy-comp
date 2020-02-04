@@ -7,6 +7,6 @@ $factory->define(App\Models\UserModeloDocs::class, function (Faker $faker) {
         'name' => $faker->name,
         'conteudo' => $faker->paragraph,
         'active' => '1',
-        'user_id' => ''
+        'user_id' => '1'
     ];
 });
