@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 
 class EmpresaController extends Controller {
 
     // ========================= EMPRESA
-
+    // ao criar, empresa->user_id == user->id
+    // gate utiliza o user
     public function index() {
         //
         $empresa = Empresa::all();
@@ -22,14 +24,20 @@ class EmpresaController extends Controller {
     public function store() {
         $empresa_json = Empresa::create($this->validateEmpresaRequest());
 
-       // return redirect()->action('EmpresaController@show', ['id' => $empresa_json->id]);
+        // return redirect()->action('EmpresaController@show', ['id' => $empresa_json->id]);
 
-        return response()->json(array('success' => true, 'last_id' => $empresa_json->id), 200);
 
     }
 
     public function show(Empresa $empresa_json) {
-        return $empresa = Empresa::find($empresa_json->id);
+        //
+        $empresa = Empresa::find($empresa_json->id);
+        if (Gate::allows('pertence-usuario-logado', $empresa)) {
+            return $empresa;
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
     }
 
     public function edit($id) {
@@ -37,17 +45,37 @@ class EmpresaController extends Controller {
     }
 
     public function update(Empresa $empresa_json) {
-        $empresa_json->update($this->validateEmpresaRequest());
+        //
+        $empresa = Empresa::find($empresa_json->id);
+        if (Gate::allows('pertence-usuario-logado', $empresa)) {
+            $empresa_json->update($this->validateEmpresaRequest());
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
     }
 
     public function destroy(Empresa $empresa_json) {
-        $empresa_json->delete();
+        //
+        $empresa = Empresa::find($empresa_json->id);
+        if (Gate::allows('pertence-usuario-logado', $empresa)) {
+            $empresa_json->delete();
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
     }
 
     public function desativarEmpresa(Empresa $empresa_json) {
-        $empresa         = Empresa::find($empresa_json->id);
-        $empresa->active = false;
-        $empresa->save();
+        //
+        $empresa = Empresa::find($empresa_json->id);
+        if (Gate::allows('pertence-usuario-logado', $empresa)) {
+            $empresa->active = false;
+            $empresa->save();
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
     }
 
     // ========================= protected
@@ -57,7 +85,8 @@ class EmpresaController extends Controller {
                                        'cpf_cnpj' => 'required',
                                        'logo_marca' => 'required',
                                        'active' => 'nullable',
-                                       'empresa_categoria_id' => 'nullable'
+                                       'empresa_categoria_id' => 'nullable',
+                                       'user_id' => 'nullable'
                                    ]);
     }
 

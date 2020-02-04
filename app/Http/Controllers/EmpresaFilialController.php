@@ -78,6 +78,7 @@ class EmpresaFilialController extends Controller {
                                        'name' => 'required',
                                        'active' => 'nullable',
                                        'empresa_id' => 'nullable',
+                                       'user_id' => 'nullable'
                                    ]);
 
     }
