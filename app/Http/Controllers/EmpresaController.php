@@ -23,12 +23,8 @@ class EmpresaController extends Controller {
 
     public function store() {
         $empresa_json = Empresa::create($this->validateEmpresaRequest());
-
-        // return redirect()->action('EmpresaController@show', ['id' => $empresa_json->id]);
-
-
     }
-
+    //afazer testar métodos show
     public function show(Empresa $empresa_json) {
         //
         $empresa = Empresa::find($empresa_json->id);
@@ -85,7 +81,6 @@ class EmpresaController extends Controller {
                                        'cpf_cnpj' => 'required',
                                        'logo_marca' => 'required',
                                        'active' => 'nullable',
-                                       'empresa_categoria_id' => 'nullable',
                                        'user_id' => 'nullable'
                                    ]);
     }

@@ -15,8 +15,6 @@ class EmpresaTest extends TestCase {
     //        $this->withoutExceptionHandling();
 
     /** @test */
-
-    /** @test */
     public function retorna_todas_empresas() {
         //
         $empresa = factory(App\Models\Empresa::class, 5)->create();
@@ -26,10 +24,13 @@ class EmpresaTest extends TestCase {
         $response->assertJsonCount(5);
     }
 
-
+    /** @test */
     public function empresa_pode_ser_criada() {
-
-        $empresa = factory(App\Models\Empresa::class, 1)->create();
+        //fixme
+        $response = $this->post('/api/empresa-json', [
+            'cpf_cnpj' => 'teste',
+            'logo_marca' => 'teste'
+        ]);
         $this->assertCount(1, Empresa::all());
 
     }
