@@ -14,9 +14,20 @@ class EmpresaCategoriaTest extends TestCase {
 
     //        $this->withoutExceptionHandling();
 
+    /** @test */
+    public function retorna_todas_categorias() {
+        //
+        $categoria = factory(App\Models\EmpresaCategoria::class, 5)->create();
+        $this->assertCount(5, EmpresaCategoria::all());
+
+        $response = $this->get('/api/empresa-categoria-json');
+        $response->assertJsonCount(5);
+
+    }
+
     /** @test */ //SUCESSO
     public function categoria_empresa_pode_ser_criada() {
-
+        //
         $categoria = factory(App\Models\EmpresaCategoria::class, 1)->create();
         $this->assertCount(1, EmpresaCategoria::all());
 

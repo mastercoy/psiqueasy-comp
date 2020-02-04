@@ -3,19 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserPermissao;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
 
 class UserPermissaoController extends Controller {
 
     public function index() {
-        //retornar todas as permissoes
+        //
+        $permissao = UserPermissao::all();
+        return Response::json($permissao);
     }
 
 
     public function create() {
         //
     }
-
 
     public function store() {
         $permissao = UserPermissao::create($this->validatePermissaoRequest());
@@ -37,7 +38,7 @@ class UserPermissaoController extends Controller {
         //
     }
 
-    public function update(Request $request, UserPermissao $user_permissao_json) {
+    public function update(UserPermissao $user_permissao_json) {
         $user_permissao_json->update($this->validatePermissaoRequest());
     }
 

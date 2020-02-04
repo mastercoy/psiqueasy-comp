@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\Paciente;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Response;
 
 class PacienteController extends Controller {
 
     public function index() {
-        //afazer mostrar todos os pacientes
+        //
+        $paciente = Paciente::all();
+        return Response::json($paciente);
     }
 
     public function create() {

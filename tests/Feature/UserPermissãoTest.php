@@ -14,6 +14,16 @@ class UserPermissaoTest extends TestCase {
 
     //        $this->withoutExceptionHandling();
 
+    /** @test */
+    public function retorna_todas_permissoes_usuario() {
+        //
+        $permissao = factory(App\Models\UserPermissao::class, 5)->create();
+        $this->assertCount(5, UserPermissao::all());
+
+        $response = $this->get('/api/user-permissao-json');
+        $response->assertJsonCount(5);
+    }
+
     /** @test */ //SUCESSO
     public function user_permissao_pode_ser_criada() {
 

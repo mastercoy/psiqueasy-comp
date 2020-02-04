@@ -12,6 +12,16 @@ class UserTest extends TestCase {
 
     //        $this->withoutExceptionHandling();
 
+    /** @test */
+    public function retorna_todos_usuarios() {
+        //
+        $user = factory(App\User::class, 5)->create();
+        $this->assertCount(5, User::all());
+
+        $response = $this->get('/api/user-json');
+        $response->assertJsonCount(5);
+    }
+
     /** @test */ //SUCESSO
     public function user_pode_ser_adicionado() {
 

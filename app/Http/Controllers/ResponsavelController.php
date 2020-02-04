@@ -6,12 +6,14 @@ namespace App\Http\Controllers;
 use App\Models\Responsavel;
 use App\User;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Response;
 
 class ResponsavelController extends Controller {
 
     public function index() { //fixme
-        //afazer retornar os responsaveis
-        return User::find(auth()->user()->id)->responsavel()->get();
+        //
+        $responsavel = Responsavel::all();
+        return Response::json($responsavel);
     }
 
     public function create() {

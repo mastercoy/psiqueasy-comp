@@ -11,6 +11,16 @@ class UserPerfilTest extends TestCase {
 
     //        $this->withoutExceptionHandling();
 
+    /** @test */
+    public function retorna_todos_perfis_usuario() {
+        //
+        $perfil = factory(App\Models\UserPerfil::class, 5)->create();
+        $this->assertCount(5, UserPerfil::all());
+
+        $response = $this->get('/api/user-perfil-json');
+        $response->assertJsonCount(5);
+    }
+
     /** @test */ //SUCESSO
     public function user_perfil_pode_ser_criado() {
 

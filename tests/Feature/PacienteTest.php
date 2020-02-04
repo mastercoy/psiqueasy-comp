@@ -15,6 +15,16 @@ class PacienteTest extends TestCase {
     //        $this->withoutExceptionHandling();
 
     /** @test */
+    public function retorna_todos_pacientes() {
+        //
+        $paciente = factory(App\Models\Paciente::class, 5)->create();
+        $this->assertCount(5, Paciente::all());
+
+        $response = $this->get('/api/paciente-json');
+        $response->assertJsonCount(5);
+    }
+
+    /** @test */
     public function paciente_pode_ser_adicionado() {
 
         $paciente = factory(App\Models\Paciente::class, 1)->create();

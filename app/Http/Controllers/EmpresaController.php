@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
+use Illuminate\Support\Facades\Response;
 
 class EmpresaController extends Controller {
 
     // ========================= EMPRESA
 
     public function index() {
-        //afazer mostrar todas as empresas
+        //
+        $empresa = Empresa::all();
+        return Response::json($empresa);
     }
 
     public function create() {

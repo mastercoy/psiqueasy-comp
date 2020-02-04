@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\UserModeloDocs;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Response;
 
 class UserModeloDocsController extends Controller {
 
     public function index() {
-        //afazer retornar todos os modelos
+        //
+        $modelo = UserModeloDocs::all();
+        return Response::json($modelo);
     }
 
     public function create() {

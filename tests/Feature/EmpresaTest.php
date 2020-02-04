@@ -14,6 +14,18 @@ class EmpresaTest extends TestCase {
     //        $this->withoutExceptionHandling();
 
     /** @test */
+
+    /** @test */
+    public function retorna_todas_empresas() {
+        //
+        $empresa = factory(App\Models\Empresa::class, 5)->create();
+        $this->assertCount(5, Empresa::all());
+
+        $response = $this->get('/api/empresa-json');
+        $response->assertJsonCount(5);
+    }
+
+
     public function empresa_pode_ser_adicionada() {
 
         $empresa = factory(App\Models\Empresa::class, 1)->create();
@@ -56,7 +68,7 @@ class EmpresaTest extends TestCase {
 
         $empresa = factory(App\Models\Empresa::class, 1)->create();
         $this->assertCount(1, Empresa::all());
-        $empresa  = Empresa::first();
+        $empresa = Empresa::first();
 
         $response = $this->delete('/api/empresa-json/' . $empresa->id);
         $this->assertCount(0, Empresa::all());

@@ -14,6 +14,15 @@ class EmpresaModeloDocsTest extends TestCase {
 
     //        $this->withoutExceptionHandling();
 
+    /** @test */
+    public function retorna_todos_modelos_empresa() {
+        $modelo = factory(App\Models\EmpresaModeloDocs::class, 5)->create();
+        $this->assertCount(5, EmpresaModeloDocs::all());
+
+        $response = $this->get('/api/empresa-modelo-docs-json');
+        $response->assertJsonCount(5);
+    }
+
     /** @test */ //SUCESSO
     public function modelo_empresa_pode_ser_criado() {
 

@@ -13,6 +13,16 @@ class ResponsavelTest extends TestCase {
 
     //        $this->withoutExceptionHandling();
 
+    /** @test */
+    public function retorna_todos_responsaveis() {
+        //
+        $responsavel = factory(App\Models\Responsavel::class, 5)->create();
+        $this->assertCount(5, Responsavel::all());
+
+        $response = $this->get('/api/responsavel-json');
+        $response->assertJsonCount(5);
+    }
+
     /** @test */ //SUCESSO
     public function um_responsavel_pode_ser_adicionado() {
 

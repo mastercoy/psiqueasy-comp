@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\EmpresaModeloDocs;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Response;
 
 class EmpresaModeloDocsController extends Controller {
 
     public function index() {
-        //afazer mostrar todos os modelos de documentos
+        //
+        $modelo = EmpresaModeloDocs::all();
+        return Response::json($modelo);
     }
 
     public function create() {

@@ -12,6 +12,16 @@ class FilialTest extends TestCase {
 
     //        $this->withoutExceptionHandling();
 
+    /** @test */
+    public function retorna_todas_filiais() {
+        //
+        $filial = factory(App\Models\EmpresaFilial::class, 5)->create();
+        $this->assertCount(5, EmpresaFilial::all());
+
+        $response = $this->get('/api/empresa-filial-json');
+        $response->assertJsonCount(5);
+    }
+
     /** @test */ //SUCESSO
     public function filial_pode_ser_criada() {
 

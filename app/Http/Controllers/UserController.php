@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use Illuminate\Support\Facades\Response;
 
 class UserController extends Controller {
 
@@ -13,7 +14,9 @@ class UserController extends Controller {
     }*/
 
     public function index() {
-        //afazer retornar todos os usuarios
+        //
+        $user = User::all();
+        return Response::json($user);
     }
 
     public function create() {

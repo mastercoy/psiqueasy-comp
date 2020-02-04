@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\EmpresaCategoria;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Response;
 
 class EmpresaCategoriaController extends Controller {
 
     public function index() {
-        //afazer mostrar todas as categorias disponiveis
+        //
+        $categoria = EmpresaCategoria::all();
+        return Response::json($categoria);
     }
 
     public function create() {

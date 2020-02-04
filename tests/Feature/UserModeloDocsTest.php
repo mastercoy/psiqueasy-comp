@@ -14,6 +14,17 @@ class UserModeloDocsTest extends TestCase {
 
     //        $this->withoutExceptionHandling();
 
+    /** @test */
+    public function retorna_todos_modelos_user() {
+        //
+        $modelo = factory(App\Models\UserModeloDocs::class, 5)->create();
+        $this->assertCount(5, UserModeloDocs::all());
+
+        $response = $this->get('/api/user-modelo-docs-json');
+        $response->assertJsonCount(5);
+
+    }
+
     /** @test */ //SUCESSO
     public function modelo_user_pode_ser_criado() {
 

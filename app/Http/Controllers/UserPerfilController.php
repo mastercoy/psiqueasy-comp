@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\UserPerfil;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Response;
 
 class UserPerfilController extends Controller {
 
     public function index() {
-        //afazer retornar todos os perfis
+        //
+        $perfil = UserPerfil::all();
+        return Response::json($perfil);
     }
 
     public function create() {

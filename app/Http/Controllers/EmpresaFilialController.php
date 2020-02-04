@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\EmpresaFilial;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Response;
 
 class EmpresaFilialController extends Controller {
 
     public function index() {
-        //afazer mostrar todas as filiais
+        //
+        $filial = EmpresaFilial::all();
+        return Response::json($filial);
     }
 
     public function create() {
