@@ -52,58 +52,6 @@
       </form>    
   </div>
 
-   <!-- <div v-else class="form-temp">
-    <h4>Dados da Empresa</h4>
-    <hr>
-      <form @submit.prevent="atualizarEmpresa">
-        <div class="form-group">
-          <label for="nome"><strong>Nome: </strong></label>
-          <input type="text" class="form-control" id="nome" v-model="cadEmpresa.nome">
-        </div>
-
-        <div class="form-group">
-          <label for="CNPJ"><strong>CNPJ: </strong></label>
-          <input type="text" class="form-control" id="CNPJ" v-model="cadEmpresa.cnpj" >
-        </div>
-
-        <div class="form-group">
-          <label for="empNome"><strong>Nome Empresarial: </strong></label>
-          <input type="text" class="form-control" id="empNome" v-model="cadEmpresa.NomeEmp">
-        </div>
-
-        <div class="form-group">
-          <label for="natJuridica"><strong>Natureza Jurídica(Grupo): </strong></label>
-          <select class="form-control" id="natJuridica" v-model="cadEmpresa.naturezaJuridica">
-            <option disabled value="">Selecione uma opção </option>
-            <option>PESSOAS FÍSICAS</option>
-            <option>ADMINISTRAÇÃO PÚBLICA</option>
-            <option>ENTIDADES EMPRESARIAIS</option>
-            <option>ENTIDADE SEM FINS LUCRATIVOS</option>
-            <option>ORGANIZAÇÕES INTERNACIONAIS</option>            
-          </select>
-        </div>
-
-         <div class="form-group">
-          <label for="gestao"><strong>Gestão: </strong></label>
-          <select class="form-control" id="gestao" v-model="cadEmpresa.gestao">
-            <option disabled value="">Selecione uma opção </option>
-            <option>PRIVADA</option>
-            <option>MUNICIPAL</option>
-            <option>ESTADUAL</option>
-            <option>DUPLA</option>           
-          </select>
-        </div>
-        <hr />
-          <div class="row">          
-            <div class="col-md-8"></div>
-            <div class="col-md-4">
-               <router-link to="/" type="button" class="btn btn-default mr-1">Voltar</router-link>
-               <button type="submit" class="btn btn-success"><i aria-hidden="true" class="fa fa-floppy-o"></i>  <b>Atualizar</b> </button>
-            </div>
-          </div>        
-      </form>    
-  </div>   -->
-
   <div v-else class="form-temp">
     <div class="row">
       <div class="col-md-9">
@@ -129,6 +77,7 @@
           </div>
           <div class="col-md-6"></div>
         </div>
+        
         </div>
         <hr>
         <div class="row">
@@ -164,12 +113,21 @@ export default {
   },
   methods: {
      getEmpresa() {
+       /*let usuario = {
+         name: 'Matheus',
+         email: 'teteu22@gamil.com',
+         password: '1234'
+       }
+        axios.post('api/user-json',usuario).then(({ data }) => {
+          console.log('Funcionou!')
+        })
+
        let id = this.$store.state.empresaId
-       //id = 6 //  TEMPORÁRIO
+       id = 1 //  TEMPORÁRIO
        axios.get(`api/empresa-json/${id}`).then(({ data }) => {
          this.cadEmpresa.NomeEmp = data.logo_marca
          this.cadEmpresa.cnpj = data.cpf_cnpj
-       });
+       });*/
     },
     createEmpresa() {
       let empresa = {

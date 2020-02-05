@@ -63,6 +63,12 @@ export default {
         });
 
         this.$router.push("/filial");
+
+        let toast = this.$toasted.show("Filial Adicionada com Sucesso!!", { 
+          theme: "toasted-primary", 
+          position: "bottom-right", 
+          duration : 1500
+        });
     
       }
 

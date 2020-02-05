@@ -16,7 +16,7 @@ export default new Vuex.Store({
         usuários: [],
         Status: 2, //OK
         statusEmpresa: false, //OK
-        empresaId: 1
+        empresaId: 1    //Precisa ser revisado
         
     },
     mutations: {
