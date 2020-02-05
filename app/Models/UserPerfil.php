@@ -9,14 +9,14 @@ class UserPerfil extends Model {
     protected $guarded = [];
     protected $table   = 'userperfil';
 
-    public function permissoes() {
-        return $this->hasMany('App\Models\UserPermissao')
+    public function user_pivot() {
+        return $this->belongsToMany('App\Models\UserPerfilPivot')
                     ->where('active', 1)
                     ->orderBy('data', 'asc');
     }
 
-    public function usuarios() {
-        return $this->belongsToMany('App\Models\User')
+    public function permissoes_pivot() {
+        return $this->belongsToMany('App\Models\PerfilPermissaoPivot')
                     ->where('active', 1)
                     ->orderBy('data', 'asc');
     }

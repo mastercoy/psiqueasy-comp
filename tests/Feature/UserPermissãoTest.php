@@ -3,7 +3,9 @@
 //namespace Tests\Feature;
 
 
+use App\Models\UserPerfil;
 use App\Models\Userpermissao;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -27,8 +29,50 @@ class UserPermissaoTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_permissao_pode_ser_criada() {
 
-        $permissao = factory(App\Models\UserPermissao::class, 1)->create();
-        $this->assertCount(1, UserPermissao::all());
+        //cria um user
+        $response = $this->post('/api/user-json', [
+            'name' => 'Nylo',
+            'email' => 'nylo@nylo.com',
+            'password' => '123456',
+            'formacao' => 'estudante'
+        ]);
+        $user     = User::first();
+        $this->assertCount(1, User::all());
+
+        //cria um perfil
+        $response = $this->post('/api/user-perfil-json', [
+            'name' => 'Master',
+            'label' => 'Master',
+            'active' => '1',
+            'user_id' => '1',
+
+        ]);
+        $perfil   = UserPerfil::first();
+        $this->assertCount(1, UserPerfil::all());
+
+        //cria uma permissão
+        $response = $this->post('/api/user-permissao-json', [
+            'name' => 'paciente_in',
+            'label' => 'Cadastrar Paciente',
+            'active' => 1
+        ]);
+        $response = $this->post('/api/user-permissao-json', [
+            'name' => 'paciente_out',
+            'label' => 'Remover Paciente',
+            'active' => 1
+        ]);
+        $response = $this->post('/api/user-permissao-json', [
+            'name' => 'paciente_edit',
+            'label' => 'Editar Paciente',
+            'active' => 1
+        ]);
+//        $permissao = Userpermissao::first();
+        $this->assertCount(3, Userpermissao::all());
+
+        /*$permissao = Userpermissao::first();
+        dd($permissao);*/
+        /*$permissao = factory(App\Models\UserPermissao::class, 1)->create();
+        $this->assertCount(1, UserPermissao::all());*/
 
     }
 
