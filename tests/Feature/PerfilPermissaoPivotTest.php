@@ -44,7 +44,6 @@ class PerfilPermissaoPivotTest extends TestCase {
 
     }
 
-
     public function pivot_permissao_show() {
         //
         $response = $this->post('/api/perfil-permissao-pivot-json', [

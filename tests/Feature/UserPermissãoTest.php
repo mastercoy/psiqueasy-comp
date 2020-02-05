@@ -26,10 +26,10 @@ class UserPermissaoTest extends TestCase {
         $response->assertJsonCount(5);
     }
 
-    //fixme
+    /** @test */
     public function user_permissao_pode_ser_criada() {
-
-        //cria um user
+        //afazer continuar o teste
+        //cria um user user->id = 1 , NYLO
         $response = $this->post('/api/user-json', [
             'name' => 'Nylo',
             'email' => 'nylo@nylo.com',
@@ -39,7 +39,7 @@ class UserPermissaoTest extends TestCase {
         $user     = User::first();
         $this->assertCount(1, User::all());
 
-        //cria um perfil
+        //cria um perfil user_id-> = 1, MASTER
         $response = $this->post('/api/user-perfil-json', [
             'name' => 'Master',
             'label' => 'Master',
@@ -50,7 +50,7 @@ class UserPermissaoTest extends TestCase {
         $perfil   = UserPerfil::first();
         $this->assertCount(1, UserPerfil::all());
 
-        //cria uma permissão
+        //cria três permissões ID 1-2-3
         $response = $this->post('/api/user-permissao-json', [
             'name' => 'paciente_in',
             'label' => 'Cadastrar Paciente',
@@ -66,13 +66,37 @@ class UserPermissaoTest extends TestCase {
             'label' => 'Editar Paciente',
             'active' => 1
         ]);
-//        $permissao = Userpermissao::first();
         $this->assertCount(3, Userpermissao::all());
 
-        /*$permissao = Userpermissao::first();
-        dd($permissao);*/
-        /*$permissao = factory(App\Models\UserPermissao::class, 1)->create();
-        $this->assertCount(1, UserPermissao::all());*/
+        // NYLO É MASTER
+        $response = $this->post('/api/user-perfil-pivot-json', [
+            'user_id' => '1',
+            'userperfil_id' => '1'
+        ]);
+
+        //MASTER TEM 3 PERMISSOES
+        $response = $this->post('/api/perfil-permissao-pivot-json', [
+            'userperfil_id' => '1',
+            'userpermissao_id' => '1'
+        ]);
+        $response = $this->post('/api/perfil-permissao-pivot-json', [
+            'userperfil_id' => '1',
+            'userpermissao_id' => '2'
+        ]);
+        $response = $this->post('/api/perfil-permissao-pivot-json', [
+            'userperfil_id' => '1',
+            'userpermissao_id' => '3'
+        ]);
+
+        // pegar id do usuario
+        // ver qual o perfil
+        // ver quais permissões
+        //
+        $usuario    = User::first();
+        $json       = $usuario->toJson();
+        $array      = $usuario->toArray();
+        $serialized = serialize($usuario);
+        dd($serialized);
 
     }
 
