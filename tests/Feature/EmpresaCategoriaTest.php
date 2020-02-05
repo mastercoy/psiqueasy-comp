@@ -35,7 +35,7 @@ class EmpresaCategoriaTest extends TestCase {
 
     /** @test */ //SUCESSO
     public function categoria_empresa_tem_campos_obrigatorios() {
-
+        //
         $response = $this->post('/api/empresa-categoria-json', [
             'name' => '',
             'descricao' => 'descricao obrigatoria',
@@ -47,7 +47,7 @@ class EmpresaCategoriaTest extends TestCase {
 
     /** @test */ //SUCESSO
     public function categoria_empresa_pode_ser_atualizada() {
-
+        //
         $categoria = factory(App\Models\EmpresaCategoria::class, 1)->create();
         $categoria = EmpresaCategoria::first();
         $user      = factory(App\User::class, 1)->create();
@@ -65,7 +65,7 @@ class EmpresaCategoriaTest extends TestCase {
 
     /** @test */ //SUCESSO
     public function categoria_pode_ser_destruida() {
-
+        //
         $categoria = factory(App\Models\EmpresaCategoria::class, 1)->create();
         $categoria = EmpresaCategoria::first();
         $this->assertCount(1, EmpresaCategoria::all());
@@ -80,7 +80,7 @@ class EmpresaCategoriaTest extends TestCase {
 
     /** @test */ //SUCESSO
     public function categoria_soft_delete() {
-
+        //
         $categoria = factory(App\Models\EmpresaCategoria::class, 1)->create();
         $categoria = EmpresaCategoria::first();
         $user      = factory(App\User::class, 1)->create();

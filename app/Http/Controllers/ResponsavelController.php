@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Response;
 
 class ResponsavelController extends Controller {
 
-    public function index() { //fixme
+    public function index() {
         //
         $responsavel = Responsavel::all();
         return Response::json($responsavel);

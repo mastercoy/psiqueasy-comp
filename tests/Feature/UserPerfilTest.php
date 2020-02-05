@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class UserPerfilTest extends TestCase {
+
     use RefreshDatabase;
 
     //        $this->withoutExceptionHandling();
@@ -23,8 +24,9 @@ class UserPerfilTest extends TestCase {
 
     /** @test */ //SUCESSO
     public function user_perfil_pode_ser_criado() {
-
-        $user = factory(App\Models\UserPerfil::class, 1)->create();
+        $response = $this->post('/api/user-perfil-json', [
+            'name' => 'teste',
+        ]);
         $this->assertCount(1, UserPerfil::all());
 
     }
@@ -84,27 +86,6 @@ class UserPerfilTest extends TestCase {
 
         $response = $this->actingAs($user)->patch('/api/desativar-user-perfil-json/' . $perfil->id);
         $this->assertEquals(0, UserPerfil::first()->active);
-    }
-
-    /** @test */ //SUCESSO
-    public function update_obedece_gate_recusado() {
-//        $this->withoutExceptionHandling();
-
-        $user   = factory(App\User::class, 2)->create();
-        $perfil = factory(App\Models\UserPerfil::class, 1)->create();
-
-        $this->assertCount(2, User::all());
-
-        $user   = User::find(2);
-        $perfil = UserPerfil::first();
-
-        $response = $this->actingAs($user)->patch('/api/user-perfil-json/' . $perfil->id, [
-            'name' => 'novo nome',
-
-        ]);
-
-        $this->assertNotEquals('novo nome', UserPerfil::first()->name);
-
     }
 
 }
