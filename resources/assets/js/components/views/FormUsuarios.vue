@@ -25,13 +25,13 @@
            </thead>
           
           <tbody>
-            <tr>
+            <tr v-for="user in users" :key="user.id">
               <td></td>
-              <td> Matheus Henrique</td>
-              <td>Estagiário do setor de TI</td>
+              <td> {{ user.nome }}</td>
+              <td>{{ user.descricao }}</td>
               <td>3</td>
-              <td>Matriz</td>
-              <td><router-link :to="{name:'EditUsuario', params: {User} }" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td>  
+              <td>{{ user.aloc }}</td>
+              <td><router-link :to="{name:'EditUsuario', params: {user} }" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td>  
               <td><a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a></td>                
             </tr>
           </tbody>
@@ -94,28 +94,34 @@
 <script>
 export default {
   mounted(){
-    /* METODO INATIVO
-    *   Metodo que retorna todos os usuários cadastrado pela empresa
-    *
-    *   axios.get(`api/user-json`).then(({ data })  => {
-    *    Users = data;
-    *    
-    *  
-    *    });
-    * 
-    */
   },
   data() {
     return {
       vefCadastro: false,
       editCadastro: false,
-      Users: [],
-      User: {
+      users: [
+        {
+        id: 1,
         nome: 'Matheus Henrique',
         descricao: 'Estagiário de Ti',
         atribuicoes: ['Financas'],
         aloc: 'Matriz'
-      }
+        },
+        {
+        id: 2,
+        nome: 'Nylo Pinto',
+        descricao: 'Estagiário de Ti',
+        atribuicoes: ['Financas'],
+        aloc: 'Matriz'
+        },
+        {
+        id: 3,
+        nome: 'Joãozin Pedrosa',
+        descricao: 'Estagiário de Ti',
+        atribuicoes: ['Financas'],
+        aloc: 'Matriz'
+        }
+      ] 
     }
   },
   methods: {

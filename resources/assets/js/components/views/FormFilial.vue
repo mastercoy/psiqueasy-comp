@@ -23,10 +23,10 @@
             </tr>
            </thead>          
           <tbody>
-            <tr>              
-              <td> 001 </td>
-              <td> Loja 2</td>
-              <td> Salvador/BA</td>
+            <tr v-for="filial in filiais" :key="filial.id">              
+              <td> {{ filial.id }} </td>
+              <td> {{ filial.nome }}</td>
+              <td> {{ filial.localidade }}</td>
               <td><router-link :to="{name:'EditFilial', params: {filial} }" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td>  
               <td><a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter" ><i class="fa fa-trash" aria-hidden="true"></i></a></td>              
             </tr>
@@ -74,7 +74,33 @@ export default {
       nome: '',
       localidade: '',
       complemento: ''
-      }
+      },
+      filiais: [
+        {
+          id: 1,
+          nome: "Loja 1",
+          localidade: "Vitoria da Conquista - BA"
+
+        },
+         {
+           id: 2,
+          nome: "Loja 2",
+          localidade: "Firmino Alves - BA"
+
+        },
+         {
+           id: 3,
+          nome: "Loja 3",
+          localidade: "Guanambi - BA"
+
+        },
+         {
+           id: 4,
+          nome: "Loja 4",
+          localidade: "Salvador - BA"
+
+        }
+      ]
     }
     
   },

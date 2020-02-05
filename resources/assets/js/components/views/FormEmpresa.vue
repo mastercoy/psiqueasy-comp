@@ -5,13 +5,15 @@
     <hr>
       <form @submit.prevent="createEmpresa">
         <div class="form-group">
-          <label for="nome"><strong>Nome: </strong></label>
-          <input type="text" class="form-control" id="nome" v-model="cadEmpresa.nome" placeholder="Digite o nome do responsável pela empresa">
+         <label for="nomeEmpresa"><strong>Nome Empresarial: </strong></label>
+          <input type="text" class="form-control" v-bind:class="{ 'is-invalid': $v.nomeEmpresa.$error}" id="nomeEmpresa" v-model="$v.nomeEmpresa.$model">
+          <p v-if="$v.nomeEmpresa.$error">Este campo é obrigatório</p>
         </div>
 
         <div class="form-group">
           <label for="CNPJ"><strong>CNPJ: </strong></label>
-          <input type="text" class="form-control" id="CNPJ" v-model="cadEmpresa.cnpj" placeholder="Digite o CNPJ da empresa">
+          <the-mask type="text" class="form-control" :mask="['##.###.###/####-##']" maxlength="18" placeholder="Digite o CNPJ da empresa" v-bind:class="{ 'is-invalid': $v.cnpj.$error}" id="CNPJ" v-model="$v.cnpj.$model" />
+           <p v-if="$v.cnpj.$error">Este campo não foi preenchido corretamente</p>  
         </div>
 
         <div class="form-group">
@@ -93,19 +95,21 @@
 </template>
 
 <script>
+import { required, minLength, numeric } from 'vuelidate/lib/validators';
 export default {
   mounted() {
     if( this.$store.state.Status === 2){
-      this.getEmpresa();     
+      //this.getEmpresa();     
     }     
   },
   data(){
     return {
-      //statusEmpresa: true,
+      cnpj: '',
+      nomeEmpresa: '',
       cadEmpresa: {
-        nome: '',
-        cnpj: '',
-        NomeEmp: '',
+        nome: 'Nylo Pinto Figueira',
+        cnpj: '54.643.512/0001-03',
+        NomeEmp: 'Nylus Enterprise LTDA',
         naturezaJuridica: '',
         gestao: ''
       }
@@ -120,19 +124,19 @@ export default {
        }
         axios.post('api/user-json',usuario).then(({ data }) => {
           console.log('Funcionou!')
-        })
+        })*/
 
        let id = this.$store.state.empresaId
        id = 1 //  TEMPORÁRIO
        axios.get(`api/empresa-json/${id}`).then(({ data }) => {
          this.cadEmpresa.NomeEmp = data.logo_marca
          this.cadEmpresa.cnpj = data.cpf_cnpj
-       });*/
+       });
     },
     createEmpresa() {
       let empresa = {
-        cpf_cnpj: this.cadEmpresa.cnpj,
-        logo_marca: this.cadEmpresa.NomeEmp,
+        cpf_cnpj: this.cnpj,
+        logo_marca: this.nomeEmpresa,
         active: 1,
         user_id: 1
       }
@@ -151,6 +155,10 @@ export default {
     atualizarEmpresa() {
       console.log("empresa Atualizada")
     }
+  },
+  validations: {
+    nomeEmpresa: {required},
+    cnpj: {numeric, required}    
   }
 }
 </script>
