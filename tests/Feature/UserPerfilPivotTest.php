@@ -46,7 +46,7 @@ class UserPerfilPivotTest extends TestCase {
 
     }
 
-    /** @test */
+
     public function pivot_perfil_show() {
         //
         $response = $this->post('/api/user-perfil-pivot-json', [
