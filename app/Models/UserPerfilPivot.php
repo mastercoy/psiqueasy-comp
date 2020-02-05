@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class UserPerfilPivot extends Model {
     //
-
-    protected $table = 'users_userperfil';
+    protected $guarded = [];
+    protected $table   = 'users_userperfil';
 
     public function users() {
         return $this->hasMany('App\User')

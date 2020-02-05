@@ -2,7 +2,6 @@
 
 
 use App\Models\UserPerfil;
-use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -43,13 +42,14 @@ class UserPerfilTest extends TestCase {
 
     /** @test */ //SUCESSO
     public function user_perfil_pode_ser_atualizado() {
-
-        $user   = factory(App\User::class, 1)->create();
+//        $this->withoutExceptionHandling();
+//        $user   = factory(App\User::class, 1)->create();
+//        $user   = User::first();
         $perfil = factory(App\Models\UserPerfil::class, 1)->create();
         $perfil = UserPerfil::first();
-        $user   = User::first();
 
-        $response = $this->actingAs($user)->patch('/api/user-perfil-json/' . $perfil->id, [
+
+        $response = $this->patch('/api/user-perfil-json/' . $perfil->id, [
             'name' => 'novo nome',
 
         ]);
@@ -61,16 +61,16 @@ class UserPerfilTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_perfil_pode_ser_destruido() {
 
-        $user   = factory(App\User::class, 1)->create();
+//        $user   = factory(App\User::class, 1)->create();
         $perfil = factory(App\Models\UserPerfil::class, 1)->create();
 
-        $this->assertCount(1, User::all());
+//        $this->assertCount(1, User::all());
         $this->assertCount(1, UserPerfil::all());
 
-        $user   = User::first();
+//        $user   = User::first();
         $perfil = UserPerfil::first();
 
-        $response = $this->actingAs($user)->delete('/api/user-perfil-json/' . $perfil->id);
+        $response = $this->delete('/api/user-perfil-json/' . $perfil->id);
 
         $this->assertCount(0, UserPerfil::all());
     }
@@ -78,13 +78,13 @@ class UserPerfilTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_perfil_soft_delete() {
 
-        $user   = factory(App\User::class, 1)->create();
+//        $user   = factory(App\User::class, 1)->create();
         $perfil = factory(App\Models\UserPerfil::class, 1)->create();
 
-        $user   = User::first();
+//        $user   = User::first();
         $perfil = UserPerfil::first();
 
-        $response = $this->actingAs($user)->patch('/api/desativar-user-perfil-json/' . $perfil->id);
+        $response = $this->patch('/api/desativar-user-perfil-json/' . $perfil->id);
         $this->assertEquals(0, UserPerfil::first()->active);
     }
 

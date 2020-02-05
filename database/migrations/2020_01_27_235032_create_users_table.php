@@ -57,9 +57,9 @@ class CreateUsersTable extends Migration {
 
         // tabela pivot | users | > users_userperfil <  | userperfil |
         Schema::create('users_userperfil', function (Blueprint $table) {
-
-            $table->integer('users_id')->unsigned()->nullable();
-            $table->foreign('users_id')
+            $table->increments('id'); //necessária
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')
                   ->references('id')
                   ->on('users')
                   ->onDelete('cascade');
@@ -83,7 +83,7 @@ class CreateUsersTable extends Migration {
 
         // tabela pivot | userperfil | > userperfil_userpermissao < | userpermissao |
         Schema::create('userperfil_userpermissao', function (Blueprint $table) {
-
+            $table->increments('id');
             $table->integer('userperfil_id')->unsigned()->nullable();
             $table->foreign('userperfil_id')
                   ->references('id')

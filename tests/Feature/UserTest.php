@@ -31,6 +31,26 @@ class UserTest extends TestCase {
 
     }
 
+    /** @test */
+    public function user_show() {
+        //
+        $response = $this->post('/api/user-json', [
+            'name' => 'nylo',
+            'email' => 'teste@test',
+            'password' => '1111111',
+            'formacao' => 'estudante'
+        ]);
+        $this->assertCount(1, User::all());
+
+        $user_json = User::first();
+
+        $response = $this->get('api/user-json/' . $user_json->id);
+//        dd($response);
+//        $response->assertJsonCount(1);
+
+
+    }
+
     /** @test */ //SUCESSO
     public function campos_sao_obrigatorios() {
 

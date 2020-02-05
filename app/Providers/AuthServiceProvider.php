@@ -44,5 +44,7 @@ class AuthServiceProvider extends ServiceProvider {
             return $user->empresa_id == $objeto->empresa_id;
         });
 
+        //
+
     }
 }

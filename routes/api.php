@@ -59,9 +59,12 @@ Route::patch('desativar-empresa-categoria-json/{empresa_categoria_json}', 'Empre
 Route::resource('paciente-json', 'PacienteController');
 Route::patch('desativar-paciente-json/{paciente_json}', 'PacienteController@desativarPaciente');
 
+// rotas para USER PERFIL PIVOT
+Route::resource('user-perfil-pivot-json', 'UserPerfilPivotController');
+//Route::get('user-perfil-pivot-json/{user_perfil_pivot_json} ', 'UserPerfilPivotController@show');
 
 /*
- +--------+-----------+-------------------------------------------------------------------+----------------------------------+----------------------------------------------------------------------+--------------+
++--------+-----------+-------------------------------------------------------------------+----------------------------------+----------------------------------------------------------------------+--------------+
 | Domain | Method    | URI                                                               | Name                             | Action                                                               | Middleware   |
 +--------+-----------+-------------------------------------------------------------------+----------------------------------+----------------------------------------------------------------------+--------------+
 |        | GET|HEAD  | /                                                                 |                                  | Closure                                                              | web          |
@@ -78,8 +81,8 @@ Route::patch('desativar-paciente-json/{paciente_json}', 'PacienteController@desa
 |        | POST      | api/empresa-categoria-json                                        | empresa-categoria-json.store     | App\Http\Controllers\EmpresaCategoriaController@store                | api          |
 |        | GET|HEAD  | api/empresa-categoria-json                                        | empresa-categoria-json.index     | App\Http\Controllers\EmpresaCategoriaController@index                | api          |
 |        | GET|HEAD  | api/empresa-categoria-json/create                                 | empresa-categoria-json.create    | App\Http\Controllers\EmpresaCategoriaController@create               | api          |
-|        | PUT|PATCH | api/empresa-categoria-json/{empresa_categoria_json}               | empresa-categoria-json.update    | App\Http\Controllers\EmpresaCategoriaController@update               | api          |
 |        | GET|HEAD  | api/empresa-categoria-json/{empresa_categoria_json}               | empresa-categoria-json.show      | App\Http\Controllers\EmpresaCategoriaController@show                 | api          |
+|        | PUT|PATCH | api/empresa-categoria-json/{empresa_categoria_json}               | empresa-categoria-json.update    | App\Http\Controllers\EmpresaCategoriaController@update               | api          |
 |        | DELETE    | api/empresa-categoria-json/{empresa_categoria_json}               | empresa-categoria-json.destroy   | App\Http\Controllers\EmpresaCategoriaController@destroy              | api          |
 |        | GET|HEAD  | api/empresa-categoria-json/{empresa_categoria_json}/edit          | empresa-categoria-json.edit      | App\Http\Controllers\EmpresaCategoriaController@edit                 | api          |
 |        | GET|HEAD  | api/empresa-filial-json                                           | empresa-filial-json.index        | App\Http\Controllers\EmpresaFilialController@index                   | api          |
@@ -92,12 +95,12 @@ Route::patch('desativar-paciente-json/{paciente_json}', 'PacienteController@desa
 |        | POST      | api/empresa-json                                                  | empresa-json.store               | App\Http\Controllers\EmpresaController@store                         | api          |
 |        | GET|HEAD  | api/empresa-json                                                  | empresa-json.index               | App\Http\Controllers\EmpresaController@index                         | api          |
 |        | GET|HEAD  | api/empresa-json/create                                           | empresa-json.create              | App\Http\Controllers\EmpresaController@create                        | api          |
-|        | PUT|PATCH | api/empresa-json/{empresa_json}                                   | empresa-json.update              | App\Http\Controllers\EmpresaController@update                        | api          |
 |        | DELETE    | api/empresa-json/{empresa_json}                                   | empresa-json.destroy             | App\Http\Controllers\EmpresaController@destroy                       | api          |
+|        | PUT|PATCH | api/empresa-json/{empresa_json}                                   | empresa-json.update              | App\Http\Controllers\EmpresaController@update                        | api          |
 |        | GET|HEAD  | api/empresa-json/{empresa_json}                                   | empresa-json.show                | App\Http\Controllers\EmpresaController@show                          | api          |
 |        | GET|HEAD  | api/empresa-json/{empresa_json}/edit                              | empresa-json.edit                | App\Http\Controllers\EmpresaController@edit                          | api          |
-|        | GET|HEAD  | api/empresa-modelo-docs-json                                      | empresa-modelo-docs-json.index   | App\Http\Controllers\EmpresaModeloDocsController@index               | api          |
 |        | POST      | api/empresa-modelo-docs-json                                      | empresa-modelo-docs-json.store   | App\Http\Controllers\EmpresaModeloDocsController@store               | api          |
+|        | GET|HEAD  | api/empresa-modelo-docs-json                                      | empresa-modelo-docs-json.index   | App\Http\Controllers\EmpresaModeloDocsController@index               | api          |
 |        | GET|HEAD  | api/empresa-modelo-docs-json/create                               | empresa-modelo-docs-json.create  | App\Http\Controllers\EmpresaModeloDocsController@create              | api          |
 |        | GET|HEAD  | api/empresa-modelo-docs-json/{empresa_modelo_docs_json}           | empresa-modelo-docs-json.show    | App\Http\Controllers\EmpresaModeloDocsController@show                | api          |
 |        | PUT|PATCH | api/empresa-modelo-docs-json/{empresa_modelo_docs_json}           | empresa-modelo-docs-json.update  | App\Http\Controllers\EmpresaModeloDocsController@update              | api          |
@@ -107,45 +110,52 @@ Route::patch('desativar-paciente-json/{paciente_json}', 'PacienteController@desa
 |        | POST      | api/paciente-json                                                 | paciente-json.store              | App\Http\Controllers\PacienteController@store                        | api          |
 |        | GET|HEAD  | api/paciente-json                                                 | paciente-json.index              | App\Http\Controllers\PacienteController@index                        | api          |
 |        | GET|HEAD  | api/paciente-json/create                                          | paciente-json.create             | App\Http\Controllers\PacienteController@create                       | api          |
-|        | DELETE    | api/paciente-json/{paciente_json}                                 | paciente-json.destroy            | App\Http\Controllers\PacienteController@destroy                      | api          |
 |        | PUT|PATCH | api/paciente-json/{paciente_json}                                 | paciente-json.update             | App\Http\Controllers\PacienteController@update                       | api          |
 |        | GET|HEAD  | api/paciente-json/{paciente_json}                                 | paciente-json.show               | App\Http\Controllers\PacienteController@show                         | api          |
+|        | DELETE    | api/paciente-json/{paciente_json}                                 | paciente-json.destroy            | App\Http\Controllers\PacienteController@destroy                      | api          |
 |        | GET|HEAD  | api/paciente-json/{paciente_json}/edit                            | paciente-json.edit               | App\Http\Controllers\PacienteController@edit                         | api          |
-|        | POST      | api/responsavel-json                                              | responsavel-json.store           | App\Http\Controllers\ResponsavelController@store                     | api          |
 |        | GET|HEAD  | api/responsavel-json                                              | responsavel-json.index           | App\Http\Controllers\ResponsavelController@index                     | api          |
+|        | POST      | api/responsavel-json                                              | responsavel-json.store           | App\Http\Controllers\ResponsavelController@store                     | api          |
 |        | GET|HEAD  | api/responsavel-json/create                                       | responsavel-json.create          | App\Http\Controllers\ResponsavelController@create                    | api          |
+|        | GET|HEAD  | api/responsavel-json/{responsavel_json}                           | responsavel-json.show            | App\Http\Controllers\ResponsavelController@show                      | api          |
 |        | DELETE    | api/responsavel-json/{responsavel_json}                           | responsavel-json.destroy         | App\Http\Controllers\ResponsavelController@destroy                   | api          |
 |        | PUT|PATCH | api/responsavel-json/{responsavel_json}                           | responsavel-json.update          | App\Http\Controllers\ResponsavelController@update                    | api          |
-|        | GET|HEAD  | api/responsavel-json/{responsavel_json}                           | responsavel-json.show            | App\Http\Controllers\ResponsavelController@show                      | api          |
 |        | GET|HEAD  | api/responsavel-json/{responsavel_json}/edit                      | responsavel-json.edit            | App\Http\Controllers\ResponsavelController@edit                      | api          |
 |        | GET|HEAD  | api/user                                                          |                                  | Closure                                                              | api,auth:api |
-|        | GET|HEAD  | api/user-json                                                     | user-json.index                  | App\Http\Controllers\UserController@index                            | api          |
 |        | POST      | api/user-json                                                     | user-json.store                  | App\Http\Controllers\UserController@store                            | api          |
+|        | GET|HEAD  | api/user-json                                                     | user-json.index                  | App\Http\Controllers\UserController@index                            | api          |
 |        | GET|HEAD  | api/user-json/create                                              | user-json.create                 | App\Http\Controllers\UserController@create                           | api          |
-|        | DELETE    | api/user-json/{user_json}                                         | user-json.destroy                | App\Http\Controllers\UserController@destroy                          | api          |
 |        | GET|HEAD  | api/user-json/{user_json}                                         | user-json.show                   | App\Http\Controllers\UserController@show                             | api          |
+|        | DELETE    | api/user-json/{user_json}                                         | user-json.destroy                | App\Http\Controllers\UserController@destroy                          | api          |
 |        | PUT|PATCH | api/user-json/{user_json}                                         | user-json.update                 | App\Http\Controllers\UserController@update                           | api          |
 |        | GET|HEAD  | api/user-json/{user_json}/edit                                    | user-json.edit                   | App\Http\Controllers\UserController@edit                             | api          |
 |        | POST      | api/user-modelo-docs-json                                         | user-modelo-docs-json.store      | App\Http\Controllers\UserModeloDocsController@store                  | api          |
 |        | GET|HEAD  | api/user-modelo-docs-json                                         | user-modelo-docs-json.index      | App\Http\Controllers\UserModeloDocsController@index                  | api          |
 |        | GET|HEAD  | api/user-modelo-docs-json/create                                  | user-modelo-docs-json.create     | App\Http\Controllers\UserModeloDocsController@create                 | api          |
-|        | PUT|PATCH | api/user-modelo-docs-json/{user_modelo_docs_json}                 | user-modelo-docs-json.update     | App\Http\Controllers\UserModeloDocsController@update                 | api          |
 |        | GET|HEAD  | api/user-modelo-docs-json/{user_modelo_docs_json}                 | user-modelo-docs-json.show       | App\Http\Controllers\UserModeloDocsController@show                   | api          |
 |        | DELETE    | api/user-modelo-docs-json/{user_modelo_docs_json}                 | user-modelo-docs-json.destroy    | App\Http\Controllers\UserModeloDocsController@destroy                | api          |
+|        | PUT|PATCH | api/user-modelo-docs-json/{user_modelo_docs_json}                 | user-modelo-docs-json.update     | App\Http\Controllers\UserModeloDocsController@update                 | api          |
 |        | GET|HEAD  | api/user-modelo-docs-json/{user_modelo_docs_json}/edit            | user-modelo-docs-json.edit       | App\Http\Controllers\UserModeloDocsController@edit                   | api          |
 |        | POST      | api/user-perfil-json                                              | user-perfil-json.store           | App\Http\Controllers\UserPerfilController@store                      | api          |
 |        | GET|HEAD  | api/user-perfil-json                                              | user-perfil-json.index           | App\Http\Controllers\UserPerfilController@index                      | api          |
 |        | GET|HEAD  | api/user-perfil-json/create                                       | user-perfil-json.create          | App\Http\Controllers\UserPerfilController@create                     | api          |
-|        | PUT|PATCH | api/user-perfil-json/{user_perfil_json}                           | user-perfil-json.update          | App\Http\Controllers\UserPerfilController@update                     | api          |
 |        | DELETE    | api/user-perfil-json/{user_perfil_json}                           | user-perfil-json.destroy         | App\Http\Controllers\UserPerfilController@destroy                    | api          |
+|        | PUT|PATCH | api/user-perfil-json/{user_perfil_json}                           | user-perfil-json.update          | App\Http\Controllers\UserPerfilController@update                     | api          |
 |        | GET|HEAD  | api/user-perfil-json/{user_perfil_json}                           | user-perfil-json.show            | App\Http\Controllers\UserPerfilController@show                       | api          |
 |        | GET|HEAD  | api/user-perfil-json/{user_perfil_json}/edit                      | user-perfil-json.edit            | App\Http\Controllers\UserPerfilController@edit                       | api          |
-|        | GET|HEAD  | api/user-permissao-json                                           | user-permissao-json.index        | App\Http\Controllers\UserPermissaoController@index                   | api          |
+|        | GET|HEAD  | api/user-perfil-pivot-json                                        | user-perfil-pivot-json.index     | App\Http\Controllers\UserPerfilPivotController@index                 | api          |
+|        | POST      | api/user-perfil-pivot-json                                        | user-perfil-pivot-json.store     | App\Http\Controllers\UserPerfilPivotController@store                 | api          |
+|        | GET|HEAD  | api/user-perfil-pivot-json/create                                 | user-perfil-pivot-json.create    | App\Http\Controllers\UserPerfilPivotController@create                | api          |
+|        | GET|HEAD  | api/user-perfil-pivot-json/{user_perfil_pivot_json}               | user-perfil-pivot-json.show      | App\Http\Controllers\UserPerfilPivotController@show                  | api          |
+|        | DELETE    | api/user-perfil-pivot-json/{user_perfil_pivot_json}               | user-perfil-pivot-json.destroy   | App\Http\Controllers\UserPerfilPivotController@destroy               | api          |
+|        | PUT|PATCH | api/user-perfil-pivot-json/{user_perfil_pivot_json}               | user-perfil-pivot-json.update    | App\Http\Controllers\UserPerfilPivotController@update                | api          |
+|        | GET|HEAD  | api/user-perfil-pivot-json/{user_perfil_pivot_json}/edit          | user-perfil-pivot-json.edit      | App\Http\Controllers\UserPerfilPivotController@edit                  | api          |
 |        | POST      | api/user-permissao-json                                           | user-permissao-json.store        | App\Http\Controllers\UserPermissaoController@store                   | api          |
+|        | GET|HEAD  | api/user-permissao-json                                           | user-permissao-json.index        | App\Http\Controllers\UserPermissaoController@index                   | api          |
 |        | GET|HEAD  | api/user-permissao-json/create                                    | user-permissao-json.create       | App\Http\Controllers\UserPermissaoController@create                  | api          |
+|        | DELETE    | api/user-permissao-json/{user_permissao_json}                     | user-permissao-json.destroy      | App\Http\Controllers\UserPermissaoController@destroy                 | api          |
 |        | PUT|PATCH | api/user-permissao-json/{user_permissao_json}                     | user-permissao-json.update       | App\Http\Controllers\UserPermissaoController@update                  | api          |
 |        | GET|HEAD  | api/user-permissao-json/{user_permissao_json}                     | user-permissao-json.show         | App\Http\Controllers\UserPermissaoController@show                    | api          |
-|        | DELETE    | api/user-permissao-json/{user_permissao_json}                     | user-permissao-json.destroy      | App\Http\Controllers\UserPermissaoController@destroy                 | api          |
 |        | GET|HEAD  | api/user-permissao-json/{user_permissao_json}/edit                | user-permissao-json.edit         | App\Http\Controllers\UserPermissaoController@edit                    | api          |
 +--------+-----------+-------------------------------------------------------------------+----------------------------------+----------------------------------------------------------------------+--------------+
- */
+*/

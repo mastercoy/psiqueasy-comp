@@ -28,7 +28,8 @@ class UserController extends Controller {
     }
 
     public function show(User $user_json) {
-        return $user = User::find($user_json->id);
+        $user = User::find($user_json->id);
+        return Response::json($user);
     }
 
     public function edit(User $user) {

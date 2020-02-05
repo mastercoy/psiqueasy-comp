@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserPerfil;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 
 class UserPerfilController extends Controller {
@@ -24,13 +23,9 @@ class UserPerfilController extends Controller {
     }
 
     public function show(UserPerfil $user_perfil_json) {
-        //
+        //fixme usar novo GATE
         $perfil = UserPerfil::find($user_perfil_json->id);
-        if (Gate::allows('pertence-usuario-logado', $perfil)) {
-            return $perfil;
-        } else {
-            abort(403, 'Não encontrado!');
-        }
+        return Response::json($perfil);
 
     }
 
@@ -40,35 +35,22 @@ class UserPerfilController extends Controller {
 
     public function update(UserPerfil $user_perfil_json) {
         //
-        $perfil = UserPerfil::find($user_perfil_json->id);
-        if (Gate::allows('pertence-usuario-logado', $perfil)) {
-            $user_perfil_json->update($this->validateUserPerfilRequest());
-        } else {
-            abort(403, 'Não encontrado!');
-        }
+        $user_perfil_json->update($this->validateUserPerfilRequest());
 
     }
 
     public function destroy(UserPerfil $user_perfil_json) {
         //
-        $perfil = UserPerfil::find($user_perfil_json->id);
-        if (Gate::allows('pertence-usuario-logado', $perfil)) {
-            $user_perfil_json->delete();
-        } else {
-            abort(403, 'Não encontrado!');
-        }
+        $user_perfil_json->delete();
 
     }
 
     public function desativarUserPerfil(UserPerfil $user_perfil_json) {
         //
-        $perfil = UserPerfil::find($user_perfil_json->id);
-        if (Gate::allows('pertence-usuario-logado', $perfil)) {
-            $perfil->active = false;
-            $perfil->save();
-        } else {
-            abort(403, 'Não encontrado!');
-        }
+        $perfil         = UserPerfil::find($user_perfil_json->id);
+        $perfil->active = false;
+        $perfil->save();
+
 
     }
 
@@ -79,7 +61,6 @@ class UserPerfilController extends Controller {
                                        'name' => 'required',
                                        'label' => 'nullable',
                                        'active' => 'nullable',
-                                       'user_id' => 'nullable'
                                    ]);
 
 

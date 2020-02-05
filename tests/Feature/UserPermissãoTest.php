@@ -26,7 +26,7 @@ class UserPermissaoTest extends TestCase {
         $response->assertJsonCount(5);
     }
 
-    /** @test */ //SUCESSO
+    //fixme
     public function user_permissao_pode_ser_criada() {
 
         //cria um user
