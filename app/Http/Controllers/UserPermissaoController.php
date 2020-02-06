@@ -9,6 +9,7 @@ class UserPermissaoController extends Controller {
 
     public function index() {
         //
+
         $permissao = UserPermissao::all();
         return Response::json($permissao);
     }
@@ -33,6 +34,7 @@ class UserPermissaoController extends Controller {
 
     public function update(UserPermissao $user_permissao_json) {
         $user_permissao_json->update($this->validatePermissaoRequest());
+
     }
 
     public function destroy(UserPermissao $user_permissao_json) {

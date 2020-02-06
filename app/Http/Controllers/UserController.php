@@ -7,94 +7,17 @@ use App\Models\UserPerfil;
 use App\Models\UserPerfilPivot;
 use App\Models\UserPermissao;
 use App\User;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Response;
 
 class UserController extends Controller {
 
-//fixme transferir pro próprio controller
-    /*public function __construct() {
-        //afazer middleware
-        $this->middleware();
-    }*/
-
     public function index() {
-        //afazer começo da logica de permissões
+        $user = User::first();
+        dd($this->verificarPermissao($user, 'paciente_in'));
 
-        $user = User::find(1);
-        $this->verificarPermissao($user, 'Paciente_in');
+        $user = User::all();
+        return Response::json($user);
 
-        // pega o usuário
-//        dd($user);
-        // pelo ID do usuário, se acha o pivot comparando id com user_id
-        $userPerfilPivot = UserPerfilPivot::whereUserId($user->id);
-//        dd($userPerfilPivot->get());
-        // pelo pivot se acha o perfil
-//        dd($userPerfilPivot->get());
-        $perfil = UserPerfil::find($userPerfilPivot->get()->pluck('userperfil_id')->toArray()[0]);
-        dd($perfil->name); // MASTER
-        //pelo perfil se acha o pivot
-        $perfilPermissaoPivot = PerfilPermissaoPivot::whereUserperfilId($perfil->id);
-//        dd($perfilPermissaoPivot);
-        // no pivot se acha o id das  permissões
-        $arrayPermissoes = $perfilPermissaoPivot->get()->toArray();
-//        dd($arrayPermissoes);
-//
-
-        foreach ($arrayPermissoes as $permissao) {
-            $permissao2 = UserPermissao::whereId($permissao['userpermissao_id'])->first()->toArray();
-//            dd($permissao2['name']);
-//            $json = $permissao->get()->toJson();
-////            dd($json);
-//            $decode = json_decode($json, true);
-//            dd($decode['key']);
-//            dd($permissao->get()->pluck('name')->toArray());
-            $nomes[] = $permissao2['name'];
-//            dd($permissao->get()->pluck('name')->toJson());
-        }
-//        dd($nomes);
-//
-//        $teste = json_encode($nomes);
-//        dd($teste);
-
-        foreach ($nomes as $nome) {
-            if ($nome == 'Paciente_in') {
-                dd('true');
-            }
-        }
-        $contem = Arr::has($nomes, 'Paciente_in');
-        dd($contem);
-        dd($nomes);
-
-
-        /*$pivot           = $user->perfilpivot()->get()->pluck('userperfil_id')->toArray();
-        $userPerfilPivot = UserPerfilPivot::find($pivot[0]);
-
-        dd($userPerfilPivot->perfis()->get());
-//        dd($user->perfilpivot()->get()->perfis()->toArray());
-        return 'em construção';
-        // pegar id do user
-        // comparar se tem um perfil onde userperfil_id = user->id
-        // encadear relacionamentos com get() no final
-        $perfilpivot = UserPerfilPivot::whereUserId($user->id)->get();*/
-
-        /*if ($user->perfilpivot()->where('user_id', '=', $user->id) && ()) {
-        }*/
-        //obs mudar nome das tabelas 'perfil tem permissoes' 'user tem perfil'
-
-//        dd($perfilpivot->toJson());
-//        dd($user);
-//        dd($user->toArray());
-//        dd($perfilpivot->toArray());
-//        return 'Esse é o pivot';
-//        dd($user->toJson());
-//        return Response::json($user);
-
-        /*
-         * $article = Article::with(['category', 'author'])->first();
-$article->getRelations(); // get all the related models
-$article->getRelation('author'); // to get only related author model
-         */
     }
 
     public function create() {
@@ -129,19 +52,33 @@ $article->getRelation('author'); // to get only related author model
     }
 
     public function verificarPermissao(User $user_json, $string) {
-        $usuario         = User::find($user_json->id);
+        // cada método do crud terá um nome de permissão
+        // criar_paciente, remover_paciente, editar_paciente, gerar_relat_financeiro, gerar_relat_atendimentos
+        // usuario
+        $usuario = User::find($user_json->id);
+        // tabela pivot  user >< perfil
         $userPerfilPivot = UserPerfilPivot::whereUserId($usuario->id);
-        //perfil bonitinho
-        $perfil               = UserPerfil::find($userPerfilPivot->get()->pluck('userperfil_id')->toArray()[0]);
+        // perfil bonitinho
+        $perfil = UserPerfil::find($userPerfilPivot->get()->pluck('userperfil_id')->toArray()[0]);
+        // tabela pivot  perfil >< permissoes
         $perfilPermissaoPivot = PerfilPermissaoPivot::whereUserperfilId($perfil->id)->get()->toArray();
-//        dd($perfilPermissaoPivot);
 
+        // confere permissões através da tabela pivot e salva os nomes em um array
         foreach ($perfilPermissaoPivot as $pivot) {
             $permissao       = UserPermissao::whereId($pivot['userpermissao_id'])->first()->toArray();
             $nomePermissao[] = $permissao['name'];
         }
-        dd($nomePermissao);
+        dd($nomePermissao); // mostra array com as permissões
 
+        // verifica se existe a permissão questionada no array de permissões do usuário
+        return in_array($string, $nomePermissao);
+
+        /*foreach ($nomePermissao as $nome) {
+            if ($nome == $string) {
+                return true;
+            }
+        }
+        return false;*/
 
     }
 

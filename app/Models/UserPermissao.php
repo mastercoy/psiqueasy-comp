@@ -10,7 +10,7 @@ class UserPermissao extends Model {
     protected $table   = 'userpermissao';
 
     public function getNameAttribute($value) {
-        return ucfirst($value);
+        return $value;
     }
 
     public function perfis_pivot() {
