@@ -9,11 +9,13 @@ require("./bootstrap");
 window.Vue = require("vue");
 
 import VueRouter from "vue-router";
+import Vue from "vue";
 import routes from "./routes";
 import store from "./store";
+//  BIBLIOTECAS ESTRAS PARA O PROJETO
 import Toasted from "vue-toasted";
-import Vue from "vue";
 import Vuelidate from "vuelidate";
+import VueTheMask from "vue-the-mask";
 
 
 
@@ -25,6 +27,7 @@ import Vuelidate from "vuelidate";
 Vue.use(Vuelidate);
 Vue.use(Toasted);
 Vue.use(VueRouter);
+Vue.use(VueTheMask);
 
 const router = new VueRouter({
     mode: "history",

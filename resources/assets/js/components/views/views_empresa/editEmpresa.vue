@@ -1,6 +1,6 @@
 <template>
    <div  class="form-temp">
-    <h4>Dados da Empresa</h4> {{ message }}
+    <h4>Dados da Empresa</h4> 
     <hr>
       <form @submit.prevent="atualizarEmpresa">
         <div class="form-group">
@@ -11,8 +11,8 @@
 
         <div class="form-group">  
           <label for="CNPJ"><strong>CNPJ: </strong></label>
-          <input type="text" class="form-control"  v-on:keydown="FormataCnpj"  maxlength="18" v-bind:class="{ 'is-invalid': $v.cnpj.$error}" id="CNPJ" v-model="$v.cnpj.$model" >
-          <p v-if="$v.cnpj.$error">Este campo é obrigatório</p>
+          <the-mask type="text" class="form-control" :mask="['##.###.###/####-##']" maxlength="18" v-bind:class="{ 'is-invalid': $v.cnpj.$error}" id="CNPJ" v-model="$v.cnpj.$model" />
+           <p v-if="$v.cnpj.$error">Este campo não foi preenchido corretamente</p>  
         </div>
 
         <div class="form-group">
@@ -55,7 +55,8 @@
 </template>
 
 <script>
-import { required, maxLength } from 'vuelidate/lib/validators'
+import { required, minLength, numeric } from 'vuelidate/lib/validators';
+
 export default {
   data() {
     return {
@@ -75,49 +76,68 @@ export default {
       if (this.$v.$invalid) {
         console.log("Preencha os campos necessários!")
       } else {
-        console.log("funciona")
-      /*let empresa = {
-        cpf_cnpj: this.cnpj,
-        logo_marca: this.n_empresa,
-        active: 1,
-        user_id: 1
-      }
-      axios.patch(`/api/empresa-json/${1}`, empresa).then(({data}) => {
-         console.log("Dados da empresa editados com sucesso!!");
-       });
-       this.$router.push("/cadastro");
-
-       let toast = this.$toasted.show("Dados atualizados com Sucesso!!", { 
-          theme: "toasted-primary", 
-          position: "bottom-right", 
-          duration : 1500
-        });*/
+        console.log(this.cnpj)
+     
       }      
     },
-    FormataCnpj(event)
-			{
-				var tecla = event.keyCode;
-				var vr = new String(this.cnpj);
-				vr = vr.replace(".", "");
-				vr = vr.replace("/", "");
-				vr = vr.replace("-", "");
-				let tam = vr.length + 1;
-				if (tecla != 14)
-				{
-					if (tam == 3)
-						this.cnpj = vr.substr(0, 2) + '.';
-					if (tam == 6)
-						this.cnpj = vr.substr(0, 2) + '.' + vr.substr(2, 5) + '.';
-					if (tam == 10)
-						this.cnpj = vr.substr(0, 2) + '.' + vr.substr(2, 3) + '.' + vr.substr(6, 3) + '/';
-					if (tam == 15)
-					  this.cnpj = vr.substr(0, 2) + '.' + vr.substr(2, 3) + '.' + vr.substr(6, 3) + '/' + vr.substr(9, 4) + '-' + vr.substr(13, 2);
-				}
-			}
+    validarCnpj() {     
+      let cnpj = this.cnpj
+            cnpj = cnpj.replace(/[^\d]+/g,'');
+        
+            if(cnpj == '') return false;
+            
+            if (cnpj.length != 14)
+                return false;
+        
+            // Elimina CNPJs invalidos conhecidos
+            if (cnpj == "00000000000000" || 
+                cnpj == "11111111111111" || 
+                cnpj == "22222222222222" || 
+                cnpj == "33333333333333" || 
+                cnpj == "44444444444444" || 
+                cnpj == "55555555555555" || 
+                cnpj == "66666666666666" || 
+                cnpj == "77777777777777" || 
+                cnpj == "88888888888888" || 
+                cnpj == "99999999999999")
+                return false;
+                
+            // Valida DVs
+            tamanho = cnpj.length - 2
+            numeros = cnpj.substring(0,tamanho);
+            digitos = cnpj.substring(tamanho);
+            soma = 0;
+            pos = tamanho - 7;
+            for (i = tamanho; i >= 1; i--) {
+              soma += numeros.charAt(tamanho - i) * pos--;
+              if (pos < 2)
+                    pos = 9;
+            }
+            resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+            if (resultado != digitos.charAt(0))
+                return false;
+                
+            tamanho = tamanho + 1;
+            numeros = cnpj.substring(0,tamanho);
+            soma = 0;
+            pos = tamanho - 7;
+            for (i = tamanho; i >= 1; i--) {
+              soma += numeros.charAt(tamanho - i) * pos--;
+              if (pos < 2)
+                    pos = 9;
+            }
+            resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+            if (resultado != digitos.charAt(1))
+                  return false;
+                  
+            return true;
+            
+        }
+    
   },
   validations: {
     nomeEmpresa: {required},
-    cnpj: {required}    
+    cnpj: {numeric, required}    
   }
 
 }

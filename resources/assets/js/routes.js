@@ -6,6 +6,7 @@ import EditFilial from "./components/views/views_filiais/EditFilial"
 import NewUser from "./components/views/views_usuarios/NewUser"
 import EditUser from "./components/views/views_usuarios/EditUser"
 import EditEmpresa from "./components/views/views_empresa/editEmpresa"
+import newInvite from "./components/views/views_covite/newInvite"
 
 
 const routes = [
@@ -41,10 +42,9 @@ const routes = [
         component: Usuarios
     },
     {
-        path: "/usuarios/new",
+        path: "/usuarios/invite",
         name: "NovoUsuario",
-        component: NewUser,
-        props: true
+        component: newInvite,
     },
     {
         path: "/usuarios/edit",

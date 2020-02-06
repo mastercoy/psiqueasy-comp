@@ -6,17 +6,17 @@
       <form>
          <div class="form-group">
           <label for="nome"><strong>Nome: </strong></label>
-          <input type="text" class="form-control" id="nome" v-model="User.nome" >
+          <input type="text" class="form-control" id="nome" v-model="user.nome" >
         </div>
 
         <div class="form-group">
           <label for="descricao"><strong>Descrição: </strong></label>
-          <input type="text" class="form-control" id="descricao" v-model="User.descricao">
+          <input type="text" class="form-control" id="descricao" v-model="user.descricao">
         </div>
 
          <div class="form-group">
           <label for="alocacao"><strong>Alocação: </strong></label>
-          <select class="form-control" v-model="User.aloc">
+          <select class="form-control" v-model="user.aloc">
             <option disable value=""> </option>
             <option> Matriz </option>
           </select>
@@ -27,19 +27,19 @@
             <h5><strong>Atribuições: </strong></h5>
                 <div class="row">
                   <div class="col-md-3">
-                    <input class="magic-checkbox" type="checkbox" id="Agendamentos" value="Agendamentos" v-model="User.atribuicoes" /> 
+                    <input class="magic-checkbox" type="checkbox" id="Agendamentos" value="Agendamentos" v-model="user.atribuicoes" /> 
                     <label for="Agendamentos">Agendamentos</label>
                   </div>
                   <div class="col-md-3">
-                    <input class="magic-checkbox" type="checkbox" id="Financas"  value="Financas" v-model="User.atribuicoes"/> 
+                    <input class="magic-checkbox" type="checkbox" id="Financas"  value="Financas" v-model="user.atribuicoes"/> 
                     <label for="Financas">Financas</label>
                   </div>
                   <div class="col-md-3">
-                    <input class="magic-checkbox" type="checkbox" id="cadastros" value="cadastros" v-model="User.atribuicoes"/> 
+                    <input class="magic-checkbox" type="checkbox" id="cadastros" value="cadastros" v-model="user.atribuicoes"/> 
                     <label for="cadastros">Cadastros</label>
                   </div>
                   <div class="col-md-3">
-                    <input class="magic-checkbox" type="checkbox" id="Admin" value="admin"  v-model="User.atribuicoes"/> 
+                    <input class="magic-checkbox" type="checkbox" id="Admin" value="admin"  v-model="user.atribuicoes"/> 
                      <label for="Admin">Admin</label>
                   </div>
                 </div>   
@@ -61,7 +61,7 @@
 
 <script>
 export default {
-  props: ['User'],
+  props: ['user'],
   methods: {
     editUser() {
       console.log("Usuário editado com Sucesso");
