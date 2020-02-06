@@ -21,14 +21,18 @@ class UserController extends Controller {
     public function index() {
         //afazer começo da logica de permissões
 
-        // pega o usuário
         $user = User::find(1);
+        $this->verificarPermissao($user, 'Paciente_in');
+
+        // pega o usuário
 //        dd($user);
         // pelo ID do usuário, se acha o pivot comparando id com user_id
         $userPerfilPivot = UserPerfilPivot::whereUserId($user->id);
 //        dd($userPerfilPivot->get());
         // pelo pivot se acha o perfil
+//        dd($userPerfilPivot->get());
         $perfil = UserPerfil::find($userPerfilPivot->get()->pluck('userperfil_id')->toArray()[0]);
+        dd($perfil->name); // MASTER
         //pelo perfil se acha o pivot
         $perfilPermissaoPivot = PerfilPermissaoPivot::whereUserperfilId($perfil->id);
 //        dd($perfilPermissaoPivot);
@@ -122,6 +126,23 @@ $article->getRelation('author'); // to get only related author model
         $user         = User::find($user_json->id);
         $user->active = false;
         $user->save();
+    }
+
+    public function verificarPermissao(User $user_json, $string) {
+        $usuario         = User::find($user_json->id);
+        $userPerfilPivot = UserPerfilPivot::whereUserId($usuario->id);
+        //perfil bonitinho
+        $perfil               = UserPerfil::find($userPerfilPivot->get()->pluck('userperfil_id')->toArray()[0]);
+        $perfilPermissaoPivot = PerfilPermissaoPivot::whereUserperfilId($perfil->id)->get()->toArray();
+//        dd($perfilPermissaoPivot);
+
+        foreach ($perfilPermissaoPivot as $pivot) {
+            $permissao       = UserPermissao::whereId($pivot['userpermissao_id'])->first()->toArray();
+            $nomePermissao[] = $permissao['name'];
+        }
+        dd($nomePermissao);
+
+
     }
 
     // ========================= protected
