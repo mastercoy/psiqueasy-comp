@@ -10,14 +10,10 @@ class UserPerfilPivot extends Model {
     protected $table   = 'users_userperfil';
 
     public function users() {
-        return $this->hasMany('App\User')
-                    ->where('active', 1)
-                    ->orderBy('data', 'asc');
+        return $this->hasMany('App\User');
     }
 
     public function perfis() {
-        return $this->hasMany('App\Models\UserPerfil')
-                    ->where('active', 1)
-                    ->orderBy('data', 'asc');
+        return $this->hasMany('App\Models\UserPerfil');
     }
 }

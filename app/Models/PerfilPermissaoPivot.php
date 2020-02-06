@@ -11,15 +11,11 @@ class PerfilPermissaoPivot extends Model {
     protected $guarded = [];
 
     public function perfis() {
-        return $this->hasMany('App\Models\UserPerfil')
-                    ->where('active', 1)
-                    ->orderBy('data', 'asc');
+        return $this->hasMany('App\Models\UserPerfil');
     }
 
     public function permissoes() {
-        return $this->hasMany('App\Models\UserPermissoes')
-                    ->where('active', 1)
-                    ->orderBy('data', 'asc');
+        return $this->hasMany('App\Models\UserPermissoes');
     }
 
 }

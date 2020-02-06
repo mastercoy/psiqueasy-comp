@@ -10,8 +10,6 @@ class UserPermissao extends Model {
     protected $table   = 'userpermissao';
 
     public function perfis_pivot() {
-        return $this->belongsToMany('App\Models\PerfilPermissao')
-                    ->where('active', 1)
-                    ->orderBy('data', 'asc');
+        return $this->belongsToMany('App\Models\PerfilPermissao');
     }
 }

@@ -14,9 +14,7 @@ class User extends Authenticatable {
     ];
 
     public function modelos() {
-        return $this->hasMany('App\Models\UserModeloDocs')
-                    ->where('active', 1)
-                    ->orderBy('data', 'asc');
+        return $this->hasMany('App\Models\UserModeloDocs');
 
     }
 
