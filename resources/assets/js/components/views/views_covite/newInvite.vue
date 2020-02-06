@@ -23,8 +23,8 @@
           <div class="row">     
           <div class="col-md-8"></div>
           <div class="col-md-4">
-              <router-link to="/usuarios" type="button" class="btn btn-default mr-1"> Voltar </router-link>
-              <router-link :to="{name:'convitePermissoes', params: {userEmail} }" :disabled="$v.userEmail.$model === '' " class="btn btn-primary"> Continuar <i class="fa fa-arrow-right" aria-hidden="true"></i> </router-link>
+            <router-link to="/usuarios" type="button" class="btn btn-default mr-1"> Voltar </router-link>           
+            <button class="btn btn-primary" @click="atualizaRota"> Continuar <i class="fa fa-arrow-right" aria-hidden="true"></i> </button>            
           </div>
         </div>
     </div>
@@ -40,11 +40,26 @@ export default {
   name: 'NewColaborador',
   data() {
     return {
-      userEmail: ''
+      userEmail: '',
+      user: {
+        nome: 'joao'
+      }
     }
   },
   validations: {
     userEmail: {required, email}
+    //:to="{name:'convitePermissoes', params: {userEmail} }"
+  },
+  methods: {
+    atualizaRota() {
+      let user = this.userEmail
+      this.$v.$touch()
+      if (this.$v.$invalid) {
+        console.log("Preencha os campos necessários!")
+      } else {
+        this.$router.push({ name: 'convitePermissoes', params: { user } })
+      }
+    }
   }
 }
 </script>

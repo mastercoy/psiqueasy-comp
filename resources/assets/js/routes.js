@@ -45,7 +45,8 @@ const routes = [
     {
         path: "/usuarios/invite",
         name: "NovoUsuario",
-        component: newInvite
+        component: newInvite,
+        props: true
     },
     {
         path: "/usuarios/invite/permissions",
