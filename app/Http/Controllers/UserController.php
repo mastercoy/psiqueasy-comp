@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\PerfilPermissaoPivot;
+use App\Models\UserPerfil;
 use App\Models\UserPerfilPivot;
+use App\Models\UserPermissao;
 use App\User;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Response;
 
 class UserController extends Controller {
@@ -16,8 +20,50 @@ class UserController extends Controller {
 
     public function index() {
         //afazer começo da logica de permissões
-        $user            = User::find(1);
-        $pivot           = $user->perfilpivot()->get()->pluck('userperfil_id')->toArray();
+
+        // pega o usuário
+        $user = User::find(1);
+//        dd($user);
+        // pelo ID do usuário, se acha o pivot comparando id com user_id
+        $userPerfilPivot = UserPerfilPivot::whereUserId($user->id);
+//        dd($userPerfilPivot->get());
+        // pelo pivot se acha o perfil
+        $perfil = UserPerfil::find($userPerfilPivot->get()->pluck('userperfil_id')->toArray()[0]);
+        //pelo perfil se acha o pivot
+        $perfilPermissaoPivot = PerfilPermissaoPivot::whereUserperfilId($perfil->id);
+//        dd($perfilPermissaoPivot);
+        // no pivot se acha o id das  permissões
+        $arrayPermissoes = $perfilPermissaoPivot->get()->toArray();
+//        dd($arrayPermissoes);
+//
+
+        foreach ($arrayPermissoes as $permissao) {
+            $permissao2 = UserPermissao::whereId($permissao['userpermissao_id'])->first()->toArray();
+//            dd($permissao2['name']);
+//            $json = $permissao->get()->toJson();
+////            dd($json);
+//            $decode = json_decode($json, true);
+//            dd($decode['key']);
+//            dd($permissao->get()->pluck('name')->toArray());
+            $nomes[] = $permissao2['name'];
+//            dd($permissao->get()->pluck('name')->toJson());
+        }
+//        dd($nomes);
+//
+//        $teste = json_encode($nomes);
+//        dd($teste);
+
+        foreach ($nomes as $nome) {
+            if ($nome == 'Paciente_in') {
+                dd('true');
+            }
+        }
+        $contem = Arr::has($nomes, 'Paciente_in');
+        dd($contem);
+        dd($nomes);
+
+
+        /*$pivot           = $user->perfilpivot()->get()->pluck('userperfil_id')->toArray();
         $userPerfilPivot = UserPerfilPivot::find($pivot[0]);
 
         dd($userPerfilPivot->perfis()->get());
@@ -26,7 +72,7 @@ class UserController extends Controller {
         // pegar id do user
         // comparar se tem um perfil onde userperfil_id = user->id
         // encadear relacionamentos com get() no final
-        $perfilpivot = UserPerfilPivot::whereUserId($user->id)->get();
+        $perfilpivot = UserPerfilPivot::whereUserId($user->id)->get();*/
 
         /*if ($user->perfilpivot()->where('user_id', '=', $user->id) && ()) {
         }*/
