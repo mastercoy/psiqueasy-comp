@@ -27,17 +27,6 @@
           <label for="21">Apenas o usuário atual</label>
         </div>
       </div>
-
-      <div class="container container-new">
-        <h4>Teste</h4>
-
-        <p>
-          Adipisicing in reprehenderit amet dolore est et et ex tempor mollit sit in minim. Nisi eu ut aliquip aliqua.
-          Ea nostrud tempor excepteur magna dolore occaecat ullamco elit reprehenderit tempor do.
-          Exercitation consectetur ut ex ipsum velit consectetur dolor ex ut eiusmod.
-          Sit cupidatat aliquip sunt irure laboris Lorem aliquip tempor consequat anim.
-        </p>
-      </div>
     </div>
 
     <div class="form-temp">
@@ -68,9 +57,27 @@
             <div class="container">
               <div class="row">
                 <input class="magic-checkbox" type="checkbox" id="teste" value="teste" />
-                <label for="teste">Teste</label>
+                <label for="teste">Teste11</label>
+              </div>
+              <div class="container">
+                <div>
+                  <input class="magic-checkbox" type="checkbox" id="Teste1" value="teste1" />
+                  <label for="teste1">Teste1</label>
+                </div>
+                <div>
+                  <input class="magic-checkbox" type="checkbox" id="Teste2" value="Teste2" />
+                  <label for="Teste2">Teste2</label>
+                </div>
+                <div>
+                  <input class="magic-checkbox" type="checkbox" id="Teste3" value="Teste3" />
+                  <label for="Teste3">Teste3</label>
+                </div>
               </div>
               <br />
+              <div class="row">
+                <input class="magic-checkbox" type="checkbox" id="teste21" value="teste21" />
+                <label for="teste21">Teste21</label>
+              </div>
               <div class="container">
                 <div>
                   <input class="magic-checkbox" type="checkbox" id="Teste1" value="teste1" />
@@ -86,6 +93,19 @@
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </div>
+      <hr />
+
+      <div class="container">
+        <div class="row">
+          <div class="col-md-8">
+            <input class="magic-checkbox" type="checkbox" id="Pacientes" value="Pacientes" />
+            <label for="Pacientes">Pacientes</label>
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-default">Teste</button>
           </div>
         </div>
       </div>
