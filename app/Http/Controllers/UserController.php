@@ -20,16 +20,18 @@ class UserController extends Controller {
         $user = User::first();
         // pegar id do user
         // comparar se tem um perfil onde userperfil_id = user->id
-
+        // encadear relacionamentos com get() no final
         $perfilpivot = UserPerfilPivot::whereUserId($user->id)->get();
 
         /*if ($user->perfilpivot()->where('user_id', '=', $user->id) && ()) {
         }*/
+        //obs mudar nome das tabelas 'perfil tem permissoes' 'user tem perfil'
 
 //        dd($perfilpivot->toJson());
 //        dd($user);
 //        dd($user->toArray());
-        dd($perfilpivot->toArray());
+//        dd($perfilpivot->toArray());
+//        return 'Esse é o pivot';
 //        dd($user->toJson());
 //        return Response::json($user);
 

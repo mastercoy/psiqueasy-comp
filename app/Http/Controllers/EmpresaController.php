@@ -11,7 +11,7 @@ class EmpresaController extends Controller {
     // ========================= EMPRESA
     // ao criar, empresa->user_id == user->id
     // gate utiliza o user
-    public function index() {
+    public function index() { //fixme guard nos index
         //
         $empresa = Empresa::all();
         return Response::json($empresa);
@@ -23,6 +23,7 @@ class EmpresaController extends Controller {
 
     public function store() {
         $empresa_json = Empresa::create($this->validateEmpresaRequest());
+        return 'Ok'; //obs Ok
     }
     //afazer testar métodos show
     public function show(Empresa $empresa_json) {
@@ -50,6 +51,7 @@ class EmpresaController extends Controller {
         }
 
     }
+
 
     public function destroy(Empresa $empresa_json) {
         //

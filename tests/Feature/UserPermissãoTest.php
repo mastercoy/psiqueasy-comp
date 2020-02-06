@@ -97,7 +97,7 @@ class UserPermissaoTest extends TestCase {
         $json       = $usuario->toJson();
         $array      = $usuario->toArray();
         $serialized = serialize($usuario);
-        dd($serialized);
+//        dd($serialized);
 
     }
 
