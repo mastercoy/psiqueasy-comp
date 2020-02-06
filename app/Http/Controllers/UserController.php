@@ -16,8 +16,13 @@ class UserController extends Controller {
 
     public function index() {
         //afazer começo da logica de permissões
+        $user            = User::find(1);
+        $pivot           = $user->perfilpivot()->get()->pluck('userperfil_id')->toArray();
+        $userPerfilPivot = UserPerfilPivot::find($pivot[0]);
+
+        dd($userPerfilPivot->perfis()->get());
+//        dd($user->perfilpivot()->get()->perfis()->toArray());
         return 'em construção';
-        $user = User::first();
         // pegar id do user
         // comparar se tem um perfil onde userperfil_id = user->id
         // encadear relacionamentos com get() no final
