@@ -19,6 +19,7 @@
               <th class="th-lg" scope="col">Nome</th>
               <th class="th-lg" scope="col">Email</th>
               <th class="th-lg" scope="col">Status de Verificação</th>
+              <th class="th-lg" scope="col"> Editar </th>
               <th class="th-lg" scope="col"> Deletar </th>
             </tr>
            </thead>
@@ -29,7 +30,7 @@
               <td> {{ user.nome }}</td>
               <td>{{ user.email }}</td>
               <td v-bind:class="{'ativo': user.emailStatus, 'pendente': !user.emailStatus}">{{ user.vefEmail}}</td>
-              <!-- <td><router-link :to="{name:'EditUsuario', params: {user} }" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td>   -->
+               <td><router-link :to="{name:'EditUsuario', params: {user} }" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td> 
               <td><a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a></td>                
             </tr>
           </tbody>
@@ -133,7 +134,7 @@ export default {
 </script>
 
 <style scoped>
-  .form-temp {
+  /* .form-temp {
    padding: 20px;
    background-color:#fff;
    border-radius: 5px;
@@ -147,7 +148,7 @@ export default {
     border-radius: 5px;
     padding: 10px;
     margin-bottom: 20px;
-  }
+  } */
 
   .ativo {
     font-weight: bold;

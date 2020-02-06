@@ -7,6 +7,7 @@ import NewUser from "./components/views/views_usuarios/NewUser"
 import EditUser from "./components/views/views_usuarios/EditUser"
 import EditEmpresa from "./components/views/views_empresa/editEmpresa"
 import newInvite from "./components/views/views_covite/newInvite"
+import newInviteP from "./components/views/views_covite/newInvitePermissions"
 
 
 const routes = [
@@ -44,7 +45,13 @@ const routes = [
     {
         path: "/usuarios/invite",
         name: "NovoUsuario",
-        component: newInvite,
+        component: newInvite
+    },
+    {
+        path: "/usuarios/invite/permissions",
+        name: "convitePermissoes",
+        component: newInviteP,
+        props: true
     },
     {
         path: "/usuarios/edit",

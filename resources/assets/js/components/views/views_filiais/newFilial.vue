@@ -7,7 +7,7 @@
         <div class="form-group">
           <label for="nome"><strong>Nome: </strong></label>
           <input type="text" class="form-control" v-bind:class="{ 'is-invalid': $v.name.$error}" id="nome" v-model="$v.name.$model" placeholder="Digite o nome da Filial">
-          <p v-if="$v.name.$error">Este campo é obrigatório</p>
+          <span v-if="$v.name.$error">Este campo é obrigatório</span>
         </div>
 
         <div class="form-group">
@@ -105,7 +105,7 @@ export default {
 </script>
 
 <style scoped>
-  .form-temp {
+  /* .form-temp {
    padding: 20px;
    background-color: #fff;
    border-radius: 5px;
@@ -122,5 +122,5 @@ export default {
 
   p {
     color: red;
-  }
+  } */
 </style>

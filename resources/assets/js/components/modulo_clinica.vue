@@ -98,5 +98,24 @@ export default {
     margin-left: 20px;
   }
 
+  .form-temp {
+   padding: 20px;
+   background-color: #fff;
+   border-radius: 5px;
+  }
+
+  h4 {
+    color: rgb(112, 112, 112);
+  }
+  .container-new {
+    border: 1px solid rgb(202, 202, 202);
+    border-radius: 5px;
+    padding: 10px;
+  }
+   span {
+    color: red;
+    font-weight: bold
+  }
+
 </style>
 

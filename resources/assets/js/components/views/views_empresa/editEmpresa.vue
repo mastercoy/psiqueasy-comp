@@ -6,13 +6,13 @@
         <div class="form-group">
           <label for="nomeEmpresa"><strong>Nome Empresarial: </strong></label>
           <input type="text" class="form-control" v-bind:class="{ 'is-invalid': $v.nomeEmpresa.$error}" id="nomeEmpresa" v-model="$v.nomeEmpresa.$model">
-          <p v-if="$v.nomeEmpresa.$error">Este campo é obrigatório</p>
+          <span v-if="$v.nomeEmpresa.$error">Este campo é obrigatório</span>
         </div>
 
         <div class="form-group">  
           <label for="CNPJ"><strong>CNPJ: </strong></label>
           <the-mask type="text" class="form-control" :mask="['##.###.###/####-##']" maxlength="18" v-bind:class="{ 'is-invalid': $v.cnpj.$error}" id="CNPJ" v-model="$v.cnpj.$model" />
-           <p v-if="$v.cnpj.$error">Este campo não foi preenchido corretamente</p>  
+           <span v-if="$v.cnpj.$error">Este campo não foi preenchido corretamente</span>  
         </div>
 
         <div class="form-group">
@@ -144,7 +144,7 @@ export default {
 </script>
 
 <style scoped>
-  .form-temp {
+  /* .form-temp {
    padding: 20px;
    background-color: #fff;
    border-radius: 5px;
@@ -162,5 +162,5 @@ export default {
 
   p {
     color: red;
-  }
+  } */
 </style>
