@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\UserPerfilPivot;
 use App\User;
 use Illuminate\Support\Facades\Response;
 
@@ -14,9 +15,29 @@ class UserController extends Controller {
     }*/
 
     public function index() {
-        //
-        $user = User::all();
-        return Response::json($user);
+        //afazer começo da logica de permissões
+        return 'em construção';
+        $user = User::first();
+        // pegar id do user
+        // comparar se tem um perfil onde userperfil_id = user->id
+
+        $perfilpivot = UserPerfilPivot::whereUserId($user->id)->get();
+
+        /*if ($user->perfilpivot()->where('user_id', '=', $user->id) && ()) {
+        }*/
+
+//        dd($perfilpivot->toJson());
+//        dd($user);
+//        dd($user->toArray());
+        dd($perfilpivot->toArray());
+//        dd($user->toJson());
+//        return Response::json($user);
+
+        /*
+         * $article = Article::with(['category', 'author'])->first();
+$article->getRelations(); // get all the related models
+$article->getRelation('author'); // to get only related author model
+         */
     }
 
     public function create() {

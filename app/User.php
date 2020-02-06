@@ -17,7 +17,12 @@ class User extends Authenticatable {
         return $this->hasMany('App\Models\UserModeloDocs')
                     ->where('active', 1)
                     ->orderBy('data', 'asc');
+
     }
 
 
+    public function perfilpivot() {
+        return $this->hasOne('App\Models\UserPerfilPivot');
+
+    }
 }

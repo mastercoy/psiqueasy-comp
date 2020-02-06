@@ -29,6 +29,7 @@ class UserPermissaoTest extends TestCase {
     /** @test */
     public function user_permissao_pode_ser_criada() {
         //afazer continuar o teste
+
         //cria um user user->id = 1 , NYLO
         $response = $this->post('/api/user-json', [
             'name' => 'Nylo',
