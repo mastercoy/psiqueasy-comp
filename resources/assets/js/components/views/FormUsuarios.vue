@@ -5,21 +5,20 @@
           <h4> <i class="fa fa-users" aria-hidden="true"></i> Usuários</h4> 
       </div>
       <div class="col-md-3">
-       <router-link to="/usuarios/new" class="btn btn-primary">
+       <router-link to="/usuarios/invite" class="btn btn-primary">
           <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i> Novo Usuário
         </router-link>
       </div>
     </div>  <hr>
     <div class="container">
+      <div class="table-responsive">
          <table class="table table-sm">
            <thead>
               <tr>
               <th class="th-lg" scope="col">#</th>
               <th class="th-lg" scope="col">Nome</th>
-              <th class="th-lg" scope="col">Descrição</th>
-              <th class="th-lg" scope="col">Nível de Acesso</th>
-              <th class="th-lg" scope="col">Alocação</th>
-              <th class="th-lg" scope="col"> Editar </th>
+              <th class="th-lg" scope="col">Email</th>
+              <th class="th-lg" scope="col">Status de Verificação</th>
               <th class="th-lg" scope="col"> Deletar </th>
             </tr>
            </thead>
@@ -28,14 +27,14 @@
             <tr v-for="user in users" :key="user.id">
               <td></td>
               <td> {{ user.nome }}</td>
-              <td>{{ user.descricao }}</td>
-              <td>3</td>
-              <td>{{ user.aloc }}</td>
-              <td><router-link :to="{name:'EditUsuario', params: {user} }" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td>  
+              <td>{{ user.email }}</td>
+              <td v-bind:class="{'ativo': user.emailStatus, 'pendente': !user.emailStatus}">{{ user.vefEmail}}</td>
+              <!-- <td><router-link :to="{name:'EditUsuario', params: {user} }" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td>   -->
               <td><a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a></td>                
             </tr>
           </tbody>
          </table>
+        </div>
     </div>
 
     <!-- <div class="container">
@@ -103,23 +102,24 @@ export default {
         {
         id: 1,
         nome: 'Matheus Henrique',
-        descricao: 'Estagiário de Ti',
-        atribuicoes: ['Financas'],
-        aloc: 'Matriz'
+        email: 'teteu@gmail.com',
+        emailStatus: true,
+        vefEmail: 'verified'
         },
         {
         id: 2,
         nome: 'Nylo Pinto',
-        descricao: 'Estagiário de Ti',
-        atribuicoes: ['Financas'],
-        aloc: 'Matriz'
+        email: 'nylus_nograu@gmail.com',
+        emailStatus: true,
+        vefEmail: 'verified'
         },
         {
         id: 3,
         nome: 'Joãozin Pedrosa',
-        descricao: 'Estagiário de Ti',
-        atribuicoes: ['Financas'],
-        aloc: 'Matriz'
+        email: 'johndoe@hotmail.com',
+        emailStatus: false,
+        vefEmail: 'pendent'
+
         }
       ] 
     }
@@ -148,4 +148,15 @@ export default {
     padding: 10px;
     margin-bottom: 20px;
   }
+
+  .ativo {
+    font-weight: bold;
+    color: greenyellow;
+  }
+
+  .pendente {
+    font-weight: bold;
+    color: red;
+  }
+  
 </style>

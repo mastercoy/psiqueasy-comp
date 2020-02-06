@@ -13,7 +13,8 @@
            <div class="col-md-9">
              <div class="form-group">
               <label for="email"><strong>E-mail: </strong></label>
-              <input type="text" class="form-control" id="email" >
+              <input type="text" class="form-control" v-bind:class="{ 'is-invalid': $v.email.$error}" id="email" v-model="$v.email.$model" >
+               <span v-if="$v.email.$error"> Digite um e-mail válido!! </span>
             </div>
              <div class="col-md-3"></div>
            </div>         
@@ -22,8 +23,8 @@
           <div class="row">     
           <div class="col-md-8"></div>
           <div class="col-md-4">
-              <button class="btn btn-default mr-1"> Cancelar </button>
-              <button class="btn btn-primary"> Continuar </button>
+              <router-link to="/usuarios" type="button" class="btn btn-default mr-1"> Voltar </router-link>
+              <button :disabled="$v.email.$model === '' " class="btn btn-primary"> Continuar <i class="fa fa-arrow-right" aria-hidden="true"></i> </button>
           </div>
         </div>
     </div>
@@ -41,6 +42,9 @@ export default {
     return {
       email: ''
     }
+  },
+  validations: {
+    email: {required, email}
   }
 }
 </script>
@@ -60,5 +64,9 @@ export default {
     border: 1px solid rgb(202, 202, 202);
     border-radius: 5px;
     padding: 10px;
+  }
+   span {
+    color: red;
+    font-weight: bold
   }
 </style>

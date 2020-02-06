@@ -12,6 +12,7 @@
     </div>   
       <hr>
      <div class="container">
+       <div class="table-responsive">
          <table class="table table-sm">
            <thead>
               <tr>
@@ -32,6 +33,7 @@
             </tr>
           </tbody>
          </table>
+       </div>
     </div>
 
 

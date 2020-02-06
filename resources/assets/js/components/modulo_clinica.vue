@@ -36,7 +36,6 @@
             <li><router-link to="/cadastro">Empresa</router-link></li>
             <li> <router-link to="/filial">Filiais</router-link></li>
             <li><router-link to="/usuarios">Usuários</router-link></li>
-            <li><router-link to="/colaborador"> Colaborador </router-link></li>
             <li> Perfil </li>
             <li> Configurações </li>
             <li> E-Mail </li>
