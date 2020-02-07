@@ -2,13 +2,13 @@
   <div class="container">
     <div class="form-temp">
       <div class="row">
-        <div class="col-md-2">
+        <div class="docker">
           <i class="fa fa-user-circle-o fa-4x" aria-hidden="true"></i>
-        </div>
-        <div class="col-md-8">
+        
+        
           <label>{{ user }}</label>
-        </div>
-        <div class="col-md-2">
+        
+        
           <router-link to="/usuarios/invite">Alterar</router-link>
         </div>
       </div>
@@ -32,28 +32,20 @@
     <div class="form-temp">
       <h4>Selecione as permissões de acesso do usuário</h4>
       <hr />
-      <label>Marcas todos</label>
+      <!-- <label>Marcas todos</label><br> -->
+      <button type="button" class="btn btn-link mb-1">Marcas todos</button>
       <br />
       <div class="container">
-        <div class="row">
-          <div class="col-md-8">
+        <div class="parent">         
             <input class="magic-checkbox" type="checkbox" id="Financas" value="Financas" />
-            <label for="Financas">Finanças</label>
-          </div>
-          <div class="col-md-4">
-            <button
-              class="btn btn-default"
-              type="button"
-              data-toggle="collapse"
-              data-target="#collapseExample"
-              aria-expanded="false"
-              aria-controls="collapseExample"
-            >+</button>
-          </div>
+            <label for="Financas">Financeiro</label>       
+            <a class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+               <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </a>          
         </div>
         <br />
         <div class="collapse" id="collapseExample">
-          <div class="container container-new">
+          <div class="container vl">
             <div class="container">
               <div class="row">
                 <input class="magic-checkbox" type="checkbox" id="teste" value="teste" />
@@ -95,25 +87,130 @@
             </div>
           </div>
         </div>
-      </div>
-      <hr />
+      </div> 
 
-      <div class="container">
-        <div class="row">
-          <div class="col-md-8">
-            <input class="magic-checkbox" type="checkbox" id="Pacientes" value="Pacientes" />
-            <label for="Pacientes">Pacientes</label>
+       <div class="container">
+        <div class="parent">         
+            <input class="magic-checkbox" type="checkbox" id="Agendamentos" value="Agendamentos" />
+            <label for="Agendamentos">Agendamentos</label>       
+            <a class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseAgendamentos" aria-expanded="false" aria-controls="collapseAgendamentos">
+               <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </a>          
+        </div>
+        <br />
+        <div class="collapse" id="collapseAgendamentos">
+          <div class="container vl">
+            <div class="container">
+              <div class="row">
+                <input class="magic-checkbox" type="checkbox" id="teste" value="teste" />
+                <label for="teste">Teste11</label>
+              </div>
+              <div class="container">
+                <div>
+                  <input class="magic-checkbox" type="checkbox" id="Teste1" value="teste1" />
+                  <label for="teste1">Teste1</label>
+                </div>
+                <div>
+                  <input class="magic-checkbox" type="checkbox" id="Teste2" value="Teste2" />
+                  <label for="Teste2">Teste2</label>
+                </div>
+                <div>
+                  <input class="magic-checkbox" type="checkbox" id="Teste3" value="Teste3" />
+                  <label for="Teste3">Teste3</label>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <input class="magic-checkbox" type="checkbox" id="teste21" value="teste21" />
+                <label for="teste21">Teste21</label>
+              </div>
+              <div class="container">
+                <div>
+                  <input class="magic-checkbox" type="checkbox" id="Teste1" value="teste1" />
+                  <label for="teste1">Teste1</label>
+                </div>
+                <div>
+                  <input class="magic-checkbox" type="checkbox" id="Teste2" value="Teste2" />
+                  <label for="Teste2">Teste2</label>
+                </div>
+                <div>
+                  <input class="magic-checkbox" type="checkbox" id="Teste3" value="Teste3" />
+                  <label for="Teste3">Teste3</label>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="col-md-4">
-            <button class="btn btn-default">Teste</button>
+        </div>
+      </div>   
+
+     
+
+       <div class="collapse" id="collapseExample1">
+          <div class="container vl">
+            <div class="container">
+              <div class="row">
+                <input class="magic-checkbox" type="checkbox" id="teste" value="teste" />
+                <label for="teste">Teste11</label>
+              </div>
+              <div class="container">
+                <div>
+                  <input class="magic-checkbox" type="checkbox" id="Teste1" value="teste1" />
+                  <label for="teste1">Teste1</label>
+                </div>
+                <div>
+                  <input class="magic-checkbox" type="checkbox" id="Teste2" value="Teste2" />
+                  <label for="Teste2">Teste2</label>
+                </div>
+                <div>
+                  <input class="magic-checkbox" type="checkbox" id="Teste3" value="Teste3" />
+                  <label for="Teste3">Teste3</label>
+                </div>
+              </div>
+              <br />
+              <div class="row">
+                <input class="magic-checkbox" type="checkbox" id="teste21" value="teste21" />
+                <label for="teste21">Teste21</label>
+              </div>
+              <div class="container">
+                <div>
+                  <input class="magic-checkbox" type="checkbox" id="Teste1" value="teste1" />
+                  <label for="teste1">Teste1</label>
+                </div>
+                <div>
+                  <input class="magic-checkbox" type="checkbox" id="Teste2" value="Teste2" />
+                  <label for="Teste2">Teste2</label>
+                </div>
+                <div>
+                  <input class="magic-checkbox" type="checkbox" id="Teste3" value="Teste3" />
+                  <label for="Teste3">Teste3</label>
+                </div>
+              </div>
+            </div>
           </div>
+        </div>
+
+       <div class="container">
+        <div class="parent">         
+            <input class="magic-checkbox" type="checkbox" id="Agendamentos" value="Agendamentos" />
+            <label for="Agendamentos">Pacientes</label>       
+            <!-- <a class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+               <i class="fa fa-chevron-down" aria-hidden="true"></i>
+            </a>           -->
         </div>
       </div>
     </div>
 
     <div class="form-temp">
-      <h4>Testando...</h4>
+      <h4>Crie um perfil com essas permissões</h4><hr>
 
+     <div class="container">
+        <div class="form-group">
+          <label for="Perfil" class="pf">Nome do Perfil: </label>
+          <input type="text" class="form-control" id="Perfil" placeholder="Exemplo: Secretária, Administração Financeira">
+           <small id="perfilHelp" class="form-text text-muted">Esse campo é opcional.</small>
+        </div>
+     </div>
+      <hr>
       <div class="row">
         <div class="col-md-8"></div>
         <div class="col-md-4">
@@ -140,9 +237,35 @@ export default {
   margin-bottom: 30px;
 }
 
-#wrapper {
-  background: #ccc;
-  overflow: hidden;
-  transition: height 200ms;
+.parent {
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #eee;
+  border-radius: 5px;
 }
+
+.vl {
+  border-left: 3px solid #eee;
+  height: 300px;
+  margin-bottom: 30px;
+}
+
+.container-n1 {
+  padding: 20px;
+} 
+
+.pf {
+  color: rgb(112, 112, 112);
+}
+
+.docker {
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+}
+
 </style>
