@@ -9,11 +9,16 @@ class UserPermissao extends Model {
     protected $guarded = [];
     protected $table   = 'userpermissao';
 
-    public function getNameAttribute($value) {
+    /*public function getNameAttribute($value) {
         return $value;
+    }*/
+
+    public function perfil() {
+        return $this->belongsToMany('App\Models\UserPerfil', 'userperfil_userpermissao',
+                                    'userpermissao_id', 'userperfil_id');
     }
 
-    public function perfis_pivot() {
+    /*public function perfis_pivot() {
         return $this->belongsToMany('App\Models\PerfilPermissao');
-    }
+    }*/
 }

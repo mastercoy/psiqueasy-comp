@@ -18,7 +18,6 @@ import Vuelidate from "vuelidate";
 import VueTheMask from "vue-the-mask";
 
 
-
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -36,7 +35,7 @@ const router = new VueRouter({
 });
 
 
- Vue.component("modulo-clinica", require("./components/modulo_clinica.vue"));
+Vue.component("modulo-clinica", require("./components/modulo_clinica.vue"));
 
 
 const app = new Vue({

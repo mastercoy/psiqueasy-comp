@@ -25,6 +25,7 @@ class EmpresaController extends Controller {
         $empresa_json = Empresa::create($this->validateEmpresaRequest());
         return 'Ok'; //obs Ok
     }
+
     //afazer testar métodos show
     public function show(Empresa $empresa_json) {
         //

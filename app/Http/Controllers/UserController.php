@@ -12,11 +12,58 @@ use Illuminate\Support\Facades\Response;
 class UserController extends Controller {
 
     public function index() {
-//        $user = User::first();
+        /*//        $user  = User::first();
+        //        $teste = $user->perfil()->get();
+                //        dd($teste);
+                //        $perfil = UserPerfil::first();
+                //        $perfil = UserPerfil::with('user')->get();
+                //        dd($perfil);
+
+        //        $perfil = UserPerfil::whereName(User::with('perfil')->get()->toArray()[0]['perfil'][0]['name']);
+        //        dd($perfil);
+                //        $teste = serialize($user);
+                //        $unserialize = unserialize($teste);
+                //        $user = User::with('perfil')->get()->toArray()[0]['perfil'][0]['name'];
+        //        $user = User::with('perfil')->get()->toArray();
+
+        //        $perfil = UserPerfil::with('permissoes')->get();
+
+
+                $user = User::find('1')->perfil()->get()->toArray()[0]['name'];
+        //        dd('Master');
+        //        dd($user);
+        //        $perfil = UserPerfil::where('name' , '=' , 'Master')->get()->toArray();*/
+//fixme
+        $perfil = UserPerfil::with('permissao')->get();
+//        $perfill = UserPerfil::whereName($perfil)->get()->toArray()[0]['name'];
+//        dd($perfil);
+//        $perfil = UserPerfil::with('permissao')->get()->toArray();
+        $permissao = UserPermissao::with('perfil')->get();
+        dd($permissao);
+        /*$perfil = UserPerfil::first(); // acha o perfil
+        $teste = $perfil->permissoes()->get()->toArray(); // pega as permissões do perfil
+        dd($teste);*/
+
+
+        /*$permissoes = UserPermissao::all();
+        foreach ($permissoes as $permissao) {
+            $listaPermissoes[] = $permissao->perfil();
+        }
+        dd($listaPermissoes);*/
+//        dd($user->perfil()->get()->toArray());
+
+
+//        listar permissões
+//UserPermissao::with('perfis')->get();
+//        dd($user);
+//        dd($perfil->toArray()['created_at']);
+//        dd($perfil->toArray()['created_at']);
+//        dd($perfil->user()->get());
+//        dd($user->perfil()->get());
 //        dd($this->verificarPermissao($user, 'paciente_in'));
 
-        $user = User::all();
-        return Response::json($user);
+        /*$user = User::all();
+        return Response::json($user);*/
 
     }
 
@@ -25,6 +72,7 @@ class UserController extends Controller {
     }
 
     public function store() {
+        //
         $user_json = User::create($this->validateUserRequest());
     }
 
