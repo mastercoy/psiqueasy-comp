@@ -12,8 +12,8 @@ use Illuminate\Support\Facades\Response;
 class UserController extends Controller {
 
     public function index() {
-        $user = User::first();
-        dd($this->verificarPermissao($user, 'paciente_in'));
+//        $user = User::first();
+//        dd($this->verificarPermissao($user, 'paciente_in'));
 
         $user = User::all();
         return Response::json($user);

@@ -129,7 +129,7 @@ class UserPermissaoTest extends TestCase {
             'active' => '1'
         ]);
 
-        $this->assertEquals('Teste', UserPermissao::first()->name);
+        $this->assertEquals('teste', UserPermissao::first()->name);
 
     }
 
