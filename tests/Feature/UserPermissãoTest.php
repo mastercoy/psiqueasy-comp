@@ -3,9 +3,7 @@
 //namespace Tests\Feature;
 
 
-use App\Models\UserPerfil;
 use App\Models\Userpermissao;
-use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -28,9 +26,14 @@ class UserPermissaoTest extends TestCase {
 
     /** @test */
     public function user_permissao_pode_ser_criada() {
-        //afazer continuar o teste
+        $response = $this->post('/api/user-permissao-json', [
+            'name' => 'paciente_edit',
+            'label' => 'Editar Paciente',
+            'active' => 1
+        ]);
+        $this->assertCount(1, Userpermissao::all());
 
-        //cria um user user->id = 1 , NYLO
+        /*//cria um user user->id = 1 , NYLO
         $response = $this->post('/api/user-json', [
             'name' => 'Nylo',
             'email' => 'nylo@nylo.com',
@@ -97,7 +100,7 @@ class UserPermissaoTest extends TestCase {
         $json       = $usuario->toJson();
         $array      = $usuario->toArray();
         $serialized = serialize($usuario);
-//        dd($serialized);
+//        dd($serialized);*/
 
     }
 
@@ -114,16 +117,19 @@ class UserPermissaoTest extends TestCase {
     /** @test */ //SUCESSO
     public function user_permissao_pode_ser_atualizada() {
 
+        $this->withoutExceptionHandling();
         $permissao = factory(App\Models\UserPermissao::class, 1)->create();
         $this->assertCount(1, UserPermissao::all());
         $permissao = UserPermissao::first();
+//        dd($permissao->get()->toArray());
 
         $response = $this->patch('/api/user-permissao-json/' . $permissao->id, [
-            'name' => 'novo nome',
-            'active' => '1',
+            'name' => 'teste',
+            'label' => '',
+            'active' => '1'
         ]);
 
-        $this->assertEquals('novo nome', Userpermissao::first()->name);
+        $this->assertEquals('teste', UserPermissao::first()->name);
 
     }
 
