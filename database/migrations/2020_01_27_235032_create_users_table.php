@@ -41,7 +41,7 @@ class CreateUsersTable extends Migration {
 
         });
 
-        Schema::create('userperfil', function (Blueprint $table) {
+        Schema::create('userperfil', function (Blueprint $table) { //perfil
             $table->increments('id');
             $table->string('name', 45);
             $table->string('label', 45)->nullable();
@@ -56,8 +56,8 @@ class CreateUsersTable extends Migration {
         });
 
         // tabela pivot | users | > users_userperfil <  | userperfil |
-        Schema::create('users_userperfil', function (Blueprint $table) {
-            $table->increments('id'); //necessária
+        Schema::create('users_userperfil', function (Blueprint $table) { //user_perfil
+            $table->increments('id');                                    //necessária
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')
                   ->references('id')
@@ -72,7 +72,7 @@ class CreateUsersTable extends Migration {
             $table->timestamps();
         });
 
-        Schema::create('userpermissao', function (Blueprint $table) {
+        Schema::create('userpermissao', function (Blueprint $table) { //permissao
             $table->increments('id');
             $table->string('name', 45);
             $table->string('label', 45)->nullable();
@@ -82,7 +82,7 @@ class CreateUsersTable extends Migration {
         });
 
         // tabela pivot | userperfil | > userperfil_userpermissao < | userpermissao |
-        Schema::create('userperfil_userpermissao', function (Blueprint $table) {
+        Schema::create('userperfil_userpermissao', function (Blueprint $table) { //perfil_permissao
             $table->increments('id');
             $table->integer('userperfil_id')->unsigned()->nullable();
             $table->foreign('userperfil_id')

@@ -13,12 +13,13 @@ class User extends Authenticatable {
         'password', 'remember_token',
     ];
 
+
     public function modelos() {
         return $this->hasMany('App\Models\UserModeloDocs');
 
     }
 
-
+    //
     public function perfilpivot() {
         return $this->hasOne('App\Models\UserPerfilPivot');
 
