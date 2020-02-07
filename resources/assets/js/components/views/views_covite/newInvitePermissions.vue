@@ -37,8 +37,8 @@
       <br />
       <div class="container">
         <div class="parent">         
-            <input class="magic-checkbox" type="checkbox" id="check" value="Financas" />
-            <label for="Financas">Financeiro</label>       
+            <input class="magic-checkbox" type="checkbox" id="Financeiro" value="Financeiro" @click="checkAll" v-model="checkF"/>
+            <label for="Financeiro">Financeiro</label>       
             <a class="btn btn-default" @click="iconF = !iconF" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                <i :class="[iconF ? 'fa-chevron-up' : 'fa-chevron-down', 'fa']" />
             </a>          
@@ -48,39 +48,39 @@
           <div class="container vl">
             <div class="container">
               <div class="row">
-                <input class="magic-checkbox" type="checkbox" id="teste" value="Relatórios Financeiros" @click="checkAll" v-model="isCheckAll"/>
+                <input class="magic-checkbox" type="checkbox" id="teste" value="Relatórios Financeiros" @click="checkAll" v-model="checkRF"/>
                 <label for="teste"> Relatórios Financeiros</label>
               </div>
               <div class="container">
                 <div>
-                  <input class="magic-checkbox" type="checkbox" id="op1" value="op1"  v-model="permissoes" @change="updateCheckall"/>
+                  <input class="magic-checkbox" type="checkbox" id="op1" value="op1"  v-model="permissoesRF1" @change="updateCheckRF1"/>
                   <label for="op1">Cadastrar relatórios financeiros</label>
                 </div>
                 <div>
-                  <input class="magic-checkbox" type="checkbox" id="op2" value="op2" v-model="permissoes" @change="updateCheckall" />
+                  <input class="magic-checkbox" type="checkbox" id="op2" value="op2" v-model="permissoesRF1" @change="updateCheckRF1" />
                   <label for="op2">Editar relatórios financeiros</label>
                 </div>
                 <div>
-                  <input class="magic-checkbox" type="checkbox" id="op3" value="op3" v-model="permissoes" @change="updateCheckall"/>
+                  <input class="magic-checkbox" type="checkbox" id="op3" value="op3" v-model="permissoesRF1" @change="updateCheckRF1"/>
                   <label for="op3">Deletar relatórios financeiros</label>
                 </div>
               </div>
               <br />
               <div class="row">
-                <input class="magic-checkbox" type="checkbox" id="teste21" value="Pagamentos"  @click="checkAll"/>
+                <input class="magic-checkbox" type="checkbox" id="teste21" value="Pagamentos"  @click="checkAll" v-model="checkRF1"/>
                 <label for="teste21">Pagamentos</label>
               </div>
                 <div class="container">
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="Teste1" value="teste1" />
+                    <input class="magic-checkbox" type="checkbox" id="Teste1" value="teste1"  v-model="permissoesRF2" @change="updateCheckRF2"/>
                     <label for="teste1">Visualizar Pagamentos</label>
                   </div>
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="Teste2" value="Teste2" />
+                    <input class="magic-checkbox" type="checkbox" id="Teste2" value="teste2"  v-model="permissoesRF2"  @change="updateCheckRF2"/>
                     <label for="Teste2">Agendar Pagamentos</label>
                   </div>
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="Teste3" value="Teste3" />
+                    <input class="magic-checkbox" type="checkbox" id="Teste3" value="teste3"  v-model="permissoesRF2"  @change="updateCheckRF2"/>
                     <label for="Teste3">Gerar relaórios de pagamentos</label>
                   </div>
                 </div>
@@ -229,8 +229,11 @@ export default {
     return { 
       iconF: false,
       iconE: false,
-      isCheckAll: false,
-      permissoes: []
+      checkRF: false,
+      checkRF1: false,
+      checkF: false,
+      permissoesRF1: [],
+      permissoesRF2: []
        
     };
   },
@@ -244,33 +247,59 @@ export default {
       // this.isCheckAll = !this.isCheckAll;
       // this.permissoes = [];
       // if (this.isCheckAll) {
-      //   this.permissoes = ["op1", "op2", "op3"]
+      //   this.permissoes = ["op1", "op2", "op3"] 
       // }
 
       switch (e.target.value) {
+        case 'Financeiro' :
+          this.checkF = !this.checkF;
+          if(this.checkF) {
+          this.checkRF = !this.checkRF;
+          this.checkRF1 = !this.checkRF1;
+          this.permissoesRF1 = [];
+          this.permissoesRF2 = [];
+           if (this.checkRF && this.checkRF1) {
+            this.permissoesRF1 = ["op1", "op2", "op3"];
+            this.permissoesRF2 = ["teste1", "teste2", "teste3"];
+          }
+          }
+          break;
         case 'Relatórios Financeiros' :
           //console.log("Relatórios Financeiros");
-          this.isCheckAll = !this.isCheckAll;
-          this.permissoes = [];
-          if (this.isCheckAll) {
-            this.permissoes = ["op1", "op2", "op3"]
+          this.checkRF = !this.checkRF;
+          this.permissoesRF1 = [];
+          if (this.checkRF) {
+            this.permissoesRF1 = ["op1", "op2", "op3"]
           }
           break;
         case 'Pagamentos' :
           console.log('Pagamentos');
+           this.checkRF1 = !this.checkRF1;
+          this.permissoesRF2 = [];
+          if (this.checkRF1) {
+            this.permissoesRF2 = ["teste1", "teste2", "teste3"]
+          }
           break;
         default :
           console.log('Nenhuma opção');
       }
     },
-    updateCheckall() {
+    updateCheckRF1() {
       //Método para verificar todas as chechboxs
-      if (this.permissoes  == 3) {
-        this.isCheckAll = true;
+      if (this.permissoesRF1  == 3) {
+        this.checkRF = true;
       } else {
-        this.isCheckAll = false;
+        this.checkRF = false;
       }
-    }  
+    },
+    updateCheckRF2() {
+      //Método para verificar todas as chechboxs
+      if (this.permissoesRF2  == 3) {
+        this.checkRF1 = true;
+      } else {
+        this.checkRF1 = false;
+      }
+    }    
    }
 }
 </script>
