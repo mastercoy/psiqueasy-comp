@@ -40,6 +40,7 @@ router.beforeEach((to, from, next) => {
             next();
             return;
         }
+        console.log("Você não tem permissão para acessar essa página!");
         next("/login");
     } else {
         next();

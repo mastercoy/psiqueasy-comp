@@ -99,7 +99,7 @@ import { required, minLength, numeric } from 'vuelidate/lib/validators';
 export default {
   mounted() {
     if( this.$store.state.Status === 2){
-      //this.getEmpresa();     
+      this.getEmpresa();     
     }     
   },
   data(){
@@ -117,17 +117,17 @@ export default {
   },
   methods: {
      getEmpresa() {
-       /*let usuario = {
-         name: 'Matheus',
-         email: 'teteu22@gamil.com',
-         password: '1234'
-       }
-        axios.post('api/user-json',usuario).then(({ data }) => {
-          console.log('Funcionou!')
-        })*/
+      //  let usuario = {
+      //    name: 'Matheus Henrique',
+      //    email: 'teteu22@gamil.com',
+      //    password: '1234'
+      //  }
+      //   axios.post('api/user-json',usuario).then(({ data }) => {
+      //     console.log('Funcionou!')
+      //   })
 
        let id = this.$store.state.empresaId
-       id = 1 //  TEMPORÁRIO
+       id = 8 //  TEMPORÁRIO
        axios.get(`api/empresa-json/${id}`).then(({ data }) => {
          this.cadEmpresa.NomeEmp = data.logo_marca
          this.cadEmpresa.cnpj = data.cpf_cnpj
@@ -138,7 +138,7 @@ export default {
         cpf_cnpj: this.cnpj,
         logo_marca: this.nomeEmpresa,
         active: 1,
-        user_id: 1
+        user_id: 8
       }
      axios.post('api/empresa-json', empresa).then(({ data })  => {
       this.$store.commit('salvarIdEmp', data.last_id)

@@ -35,9 +35,9 @@ const routes = [
         name: "NovaFilial",
         component: newFilial,
         props: true,
-        meta: {
-            requiresAuth: true
-        }
+        // meta: {
+        //     requiresAuth: true
+        // }
     },
     {
         path: "/filial/edit",
@@ -48,9 +48,9 @@ const routes = [
     {
         path: "/usuarios",
         component: Usuarios,
-        meta: {
-            requiresAuth: true
-        }
+        // meta: {
+        //     requiresAuth: true
+        // }
     },
     {
         path: "/usuarios/invite",
@@ -70,11 +70,11 @@ const routes = [
         component: EditUser,
         props: true
     }
-];
+   ];
 //  routes.beforeEach((to, from, next) => {
 //      if (to.matched.some(record => record.meta.requiresAuth)) {
 //          if (store.getters.isLoggedIn) {
-//              next();
+//              next("/");
 //              return;
 //          }
 //          next("/login");
