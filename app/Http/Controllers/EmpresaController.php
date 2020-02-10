@@ -8,13 +8,17 @@ use Illuminate\Support\Facades\Response;
 
 class EmpresaController extends Controller {
 
-    // ========================= EMPRESA
-    // ao criar, empresa->user_id == user->id
-    // gate utiliza o user
-    public function index() { //fixme guard nos index
+    public function index() { //obs verificar se user->empresa_id == empresa->id
         //
-        $empresa = Empresa::all();
-        return Response::json($empresa);
+        $empresas     = Empresa::all();
+        $listaEmpresa = [];
+
+        foreach ($empresas as $empresa) {
+            if (Gate::allows('pertence-a-empresa', $empresa)) {
+                $listaEmpresa[] = $empresa;
+            }
+        }
+        return Response::json($listaEmpresa);
     }
 
     public function create() {
@@ -23,14 +27,12 @@ class EmpresaController extends Controller {
 
     public function store() {
         $empresa_json = Empresa::create($this->validateEmpresaRequest());
-        return 'Ok'; //obs Ok
     }
 
-    //afazer testar métodos show
     public function show(Empresa $empresa_json) {
         //
         $empresa = Empresa::find($empresa_json->id);
-        if (Gate::allows('pertence-usuario-logado', $empresa)) {
+        if (Gate::allows('pertence-a-empresa', $empresa)) {
             return $empresa;
         } else {
             abort(403, 'Não encontrado!');
@@ -45,7 +47,7 @@ class EmpresaController extends Controller {
     public function update(Empresa $empresa_json) {
         //
         $empresa = Empresa::find($empresa_json->id);
-        if (Gate::allows('pertence-usuario-logado', $empresa)) {
+        if (Gate::allows('pertence-a-empresa', $empresa)) {
             $empresa_json->update($this->validateEmpresaRequest());
         } else {
             abort(403, 'Não encontrado!');
@@ -57,7 +59,7 @@ class EmpresaController extends Controller {
     public function destroy(Empresa $empresa_json) {
         //
         $empresa = Empresa::find($empresa_json->id);
-        if (Gate::allows('pertence-usuario-logado', $empresa)) {
+        if (Gate::allows('pertence-a-empresa', $empresa)) {
             $empresa_json->delete();
         } else {
             abort(403, 'Não encontrado!');
@@ -68,7 +70,7 @@ class EmpresaController extends Controller {
     public function desativarEmpresa(Empresa $empresa_json) {
         //
         $empresa = Empresa::find($empresa_json->id);
-        if (Gate::allows('pertence-usuario-logado', $empresa)) {
+        if (Gate::allows('pertence-a-empresa', $empresa)) {
             $empresa->active = false;
             $empresa->save();
         } else {

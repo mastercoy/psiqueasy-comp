@@ -8,10 +8,17 @@ use Illuminate\Support\Facades\Response;
 
 class EmpresaFilialController extends Controller {
 
-    public function index() {
+    public function index() { //obs verificar se user->empresa_id filial->empresa_id
         //
-        $filial = EmpresaFilial::all();
-        return Response::json($filial);
+        $filiais      = EmpresaFilial::all();
+        $listaFiliais = [];
+
+        foreach ($filiais as $filial) {
+            if (Gate::allows('pertence-mesma-empresa', $filial)) {
+                $listaFiliais[] = $filial;
+            }
+        }
+        return Response::json($listaFiliais);
     }
 
     public function create() {

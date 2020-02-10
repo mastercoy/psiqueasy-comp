@@ -8,10 +8,17 @@ use Illuminate\Support\Facades\Response;
 
 class EmpresaModeloDocsController extends Controller {
 
-    public function index() {
+    public function index() { //obs verificar se user->empresa_id = objeto->empresa_id
         //
-        $modelo = EmpresaModeloDocs::all();
-        return Response::json($modelo);
+        $modelos      = EmpresaModeloDocs::all();
+        $listaModelos = [];
+
+        foreach ($modelos as $modelo) {
+            if (Gate::allows('pertence-mesma-empresa', $modelo)) {
+                $listaModelos[] = $modelo;
+            }
+        }
+        return Response::json($listaModelos);
     }
 
     public function create() {

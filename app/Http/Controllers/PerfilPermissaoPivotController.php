@@ -13,7 +13,6 @@ class PerfilPermissaoPivotController extends Controller {
         return Response::json($permissao);
     }
 
-
     public function create() {
         //
     }
@@ -28,7 +27,6 @@ class PerfilPermissaoPivotController extends Controller {
     public function show(PerfilPermissaoPivot $perfil_permissao_pivot_json) {
         //
         $permissao = PerfilPermissaoPivot::find($perfil_permissao_pivot_json->id);
-//        dd($permissao->toJson());
         return $permissao->toArray();
     }
 
