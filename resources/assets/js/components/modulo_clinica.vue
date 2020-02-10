@@ -59,10 +59,10 @@
 export default {
   name: "modulo_clinica",
   mounted() {
-    // let newUser = this.user
-    // axios.post('api/user-json', newUser).then(({ data }) => {
-    //      console.log("Usuário criado com sucesso!");
-    //    });
+    let newUser = this.user
+    axios.post('api/user-json', newUser).then(({ data }) => {
+         console.log("Usuário criado com sucesso!");
+       });
     },
   data() {
     return {
@@ -70,7 +70,7 @@ export default {
       user: {
         name: 'Matheus Henrique',
         email: 'teteu@gmail.com',
-        password: 'teteu'
+        password: '1234'
       }
     }
   },

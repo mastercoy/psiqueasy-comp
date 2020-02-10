@@ -7,7 +7,7 @@
         <div class="form-group">
          <label for="nomeEmpresa"><strong>Nome Empresarial: </strong></label>
           <input type="text" class="form-control" v-bind:class="{ 'is-invalid': $v.nomeEmpresa.$error}" id="nomeEmpresa" v-model="$v.nomeEmpresa.$model">
-          <p v-if="$v.nomeEmpresa.$error">Este campo é obrigatório</p>
+          <span v-if="$v.nomeEmpresa.$error">Este campo é obrigatório</span>
         </div>
 
         <div class="form-group">
@@ -119,15 +119,15 @@ export default {
      getEmpresa() {
       //  let usuario = {
       //    name: 'Matheus Henrique',
-      //    email: 'teteu22@gamil.com',
+      //    email: 'teteu22@gmail.com',
       //    password: '1234'
       //  }
       //   axios.post('api/user-json',usuario).then(({ data }) => {
       //     console.log('Funcionou!')
       //   })
 
-       let id = this.$store.state.empresaId
-       id = 8 //  TEMPORÁRIO
+       let id = this.$store.state.userID
+       //id = 9 //  TEMPORÁRIO
        axios.get(`api/empresa-json/${id}`).then(({ data }) => {
          this.cadEmpresa.NomeEmp = data.logo_marca
          this.cadEmpresa.cnpj = data.cpf_cnpj
@@ -138,7 +138,7 @@ export default {
         cpf_cnpj: this.cnpj,
         logo_marca: this.nomeEmpresa,
         active: 1,
-        user_id: 8
+        user_id: this.$store.state.userID
       }
      axios.post('api/empresa-json', empresa).then(({ data })  => {
       this.$store.commit('salvarIdEmp', data.last_id)
