@@ -36,7 +36,7 @@
             <li><router-link to="/cadastro">Empresa</router-link></li>
             <li> <router-link to="/filial">Filiais</router-link></li>
             <li><router-link to="/usuarios">Usuários</router-link></li>
-            <li><router-link to="/usuarios/invite/permissions"> Permissoes </router-link></li>
+            <li ><router-link to="/usuarios/invite/permissions"> Permissoes </router-link></li>
             <li> Configurações </li>
             <li> E-Mail </li>
             <li> Senha </li>
@@ -66,12 +66,12 @@ export default {
   //   },
   data() {
     return {
-      nivelPermissao: 0,
-      user: {
-        name: 'Matheus Henrique',
-        email: 'teteu@gmail.com',
-        password: 'teteu'
-      }
+      // nivelPermissao: 0,
+      // user: {
+      //   name: 'Matheus Henrique',
+      //   email: 'teteu@gmail.com',
+      //   password: 'teteu'
+      // }
     }
   },
   methods: {
