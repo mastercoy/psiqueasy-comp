@@ -7,9 +7,14 @@ import EditUser from "./components/views/views_usuarios/EditUser"
 import EditEmpresa from "./components/views/views_empresa/editEmpresa"
 import newInvite from "./components/views/views_covite/newInvite"
 import newInviteP from "./components/views/views_covite/newInvitePermissions"
+import login from "./components/auth/login"
 
 
 const routes = [
+    {
+        path: "/login",
+        component: login
+    },
     {
         path: "/cadastro",
         component: CadastroEmpresa
@@ -29,7 +34,10 @@ const routes = [
         path: "/filial/new",
         name: "NovaFilial",
         component: newFilial,
-        props: true
+        props: true,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: "/filial/edit",
@@ -39,7 +47,10 @@ const routes = [
     },
     {
         path: "/usuarios",
-        component: Usuarios
+        component: Usuarios,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: "/usuarios/invite",
@@ -60,7 +71,17 @@ const routes = [
         props: true
     }
 ];
-
+//  routes.beforeEach((to, from, next) => {
+//      if (to.matched.some(record => record.meta.requiresAuth)) {
+//          if (store.getters.isLoggedIn) {
+//              next();
+//              return;
+//          }
+//          next("/login");
+//      } else {
+//          next();
+//      }
+//  });
 
 export default routes;
 

@@ -16,17 +16,58 @@ export default new Vuex.Store({
         usuários: [],
         Status: 2, //OK
         statusEmpresa: false, //OK
-        empresaId: 1    //Precisa ser revisado
-
+        empresaId: 1,
+        token: localStorage.getItem("user-token") || "",
+        user: "" //Precisa ser revisado
     },
     mutations: {
         mudarStatus(state, payload) {
-            state.Status = payload
+            state.Status = payload;
         },
         salvarIdEmp(state, payload) {
-            state.empresaId = payload
+            state.empresaId = payload;
+        },
+        auth_request(state) {
+            state.status = "loading";
+        },
+        auth_success(state, token, user) {
+            state.status = "success";
+            state.token = token;
+            state.user = user;
+        },
+        auth_error(state) {
+            state.status = "error";
         }
     },
-    actions: {},
-    getters: {}
+    actions: {
+        login({ commit }, user) {
+            return new Promise((resolve, reject) => {
+                commit("auth_request");
+                axios({
+                    url: "", //Falta colocar a rota para teste
+                    data: user,
+                    method: "POST"
+                })
+                    .then(resp => {
+                        const token = resp.data.token;
+                        const user = resp.data.user;
+                        localStorage.setItem("token", token);
+                        // Add the following line:
+                        axios.defaults.headers.common["Authorization"] = token;
+                        commit("auth_success", token, user);
+                        resolve(resp);
+                    })
+                    .catch(err => {
+                        commit("auth_error");
+                        localStorage.removeItem("token");
+                        reject(err);
+                    });
+            });
+        }
+    },
+
+    getters: {
+        isLoggedIn: state => !!state.token,
+        authStatus: state => state.status
+    }
 });
