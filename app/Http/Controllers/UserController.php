@@ -12,34 +12,31 @@ use Illuminate\Support\Facades\Response;
 class UserController extends Controller {
 
     public function index() {
-        /*//        $user  = User::first();
-        //        $teste = $user->perfil()->get();
-                //        dd($teste);
-                //        $perfil = UserPerfil::first();
-                //        $perfil = UserPerfil::with('user')->get();
-                //        dd($perfil);
 
-        //        $perfil = UserPerfil::whereName(User::with('perfil')->get()->toArray()[0]['perfil'][0]['name']);
-        //        dd($perfil);
-                //        $teste = serialize($user);
-                //        $unserialize = unserialize($teste);
-                //        $user = User::with('perfil')->get()->toArray()[0]['perfil'][0]['name'];
-        //        $user = User::with('perfil')->get()->toArray();
+        //fixme criar outros usuários com outros relacionamentos
+        //afazer transformar no guard
 
-        //        $perfil = UserPerfil::with('permissoes')->get();
+        $id   = 1;
+        $user = User::findOrFail($id)->with('perfil.permissao')->get()->toArray()[0]['perfil'][0]['permissao']; // [0] = array dos resultados, primeira posição|throw erro quando n tem permissão
 
+        foreach ($user as $permissoes) {
+            $listaPermissoes[] = $permissoes['name'];
+        }
+        dd($listaPermissoes);
+        /*$perfil = UserPerfil::with( 'permissao.perfil')->get();
+        foreach ($perfil as $permissoes) {
+            $arrayPermissoes = $permissoes->permissao()->get()->toArray();
+//            dd($arrayPermissoes);
+            foreach ($arrayPermissoes as $permissao) {
+//                dd($permissao);
+                $listaPermissoes[] = $permissao['name'];
 
-                $user = User::find('1')->perfil()->get()->toArray()[0]['name'];
-        //        dd('Master');
-        //        dd($user);
-        //        $perfil = UserPerfil::where('name' , '=' , 'Master')->get()->toArray();*/
-//fixme
-        $perfil = UserPerfil::with('permissao')->get();
-//        $perfill = UserPerfil::whereName($perfil)->get()->toArray()[0]['name'];
-//        dd($perfil);
-//        $perfil = UserPerfil::with('permissao')->get()->toArray();
-        $permissao = UserPermissao::with('perfil')->get();
-        dd($permissao);
+            }
+        }
+//        dd($listaPermissoes);
+////        $perfil = UserPerfil::with('permissao')->get()->toArray();
+//        $permissao = UserPermissao::has('perfil')->get()->toArray();
+//        dd($permissao);
         /*$perfil = UserPerfil::first(); // acha o perfil
         $teste = $perfil->permissoes()->get()->toArray(); // pega as permissões do perfil
         dd($teste);*/
@@ -49,7 +46,7 @@ class UserController extends Controller {
         foreach ($permissoes as $permissao) {
             $listaPermissoes[] = $permissao->perfil();
         }
-        dd($listaPermissoes);*/
+        dd($listaPermissoes);
 //        dd($user->perfil()->get()->toArray());
 
 
