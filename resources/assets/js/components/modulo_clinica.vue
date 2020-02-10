@@ -1,11 +1,11 @@
 <template>
   <div class="container">
-    <h2>Modulo - Clinica</h2> 
+    <h2>Módulo - Clínica</h2> 
 
     <p>
       Implementação do Módulo Clínica para a aplicação Psiqueasy em um sistems SPA. 
       Módulo implementado com duas colunas principais, com a coluna da esquerda relacionado aos menus, implementado o recurso do <i>router-link</i> e a coluna da direita
-      implementa o recurso <i>router-view</i> para exibição dos conteúdos.
+      implementa o recurso <b><i>router-view</i></b> para exibição dos conteúdos.
     </p>  
 
     <div class="row">

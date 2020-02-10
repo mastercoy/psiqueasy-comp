@@ -201,12 +201,20 @@
     </div>
 
     <div class="form-temp">
-      <h4>Crie um perfil com essas permissões</h4><hr>
+      <h4>
+        Crie um perfil com essas permissões 
+        <a href="#" for="Admin" data-toggle="popover" data-trigger="hover" title="Finanças" data-placement="top"
+                data-content="Essa funcionalidade permite que voce salve as permissões selecionadas em um perfil, para que possa ser reutilizada posteriormente.">
+                 <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+             </a>
+      </h4><hr>
 
      <div class="container">
         <div class="form-group">
-          <label for="Perfil" class="pf">Nome do Perfil: </label>
-          <input type="text" class="form-control" id="Perfil" placeholder="Exemplo: Secretária, Administração Financeira">
+          <label for="Perfil" class="pf">
+            Nome do Perfil:              
+          </label>
+          <input type="text" class="form-control" id="Perfil" placeholder="Exemplo: Secretária, Administração Financeira" v-model="presetPerfil">
            <small id="perfilHelp" class="form-text text-muted">Esse campo é opcional.</small>
         </div>
      </div>
@@ -225,6 +233,11 @@
 <script>
 export default {
   props: ["user"],
+  mounted() {
+     $(document).ready(function(){
+      $('[data-toggle="popover"]').popover();
+    });
+  },
   data() {
     return { 
       iconF: false,
@@ -233,22 +246,22 @@ export default {
       checkRF1: false,
       checkF: false,
       permissoesRF1: [],
-      permissoesRF2: []
+      permissoesRF2: [],
+      presetPerfil: '',
        
     };
   },
   methods: {
     getPermissoes() {
-      console.log(this.permissoes);
+      let var1 = this.permissoesRF1;
+      let var2 = this.permissoesRF2
+      let arrayPermissoes = [];
+
+      arrayPermissoes = var1;
+      arrayPermissoes = [...arrayPermissoes, var2];
+      console.log(this.user + " " + arrayPermissoes + " " + this.presetPerfil );
     },
     checkAll(e) {
-
-      //console.log(e.target.value);      
-      // this.isCheckAll = !this.isCheckAll;
-      // this.permissoes = [];
-      // if (this.isCheckAll) {
-      //   this.permissoes = ["op1", "op2", "op3"] 
-      // }
 
       switch (e.target.value) {
         case 'Financeiro' :
@@ -256,8 +269,8 @@ export default {
           this.permissoesRF1 = [];
           this.permissoesRF2 = [];
           if(this.checkF) { 
-          this.checkRF1 = true;  
-          this.checkRF = true;                
+            this.checkRF1 = true;  
+            this.checkRF = true;                
             this.permissoesRF1 = ["op1", "op2", "op3"];
             this.permissoesRF2 = ["teste1", "teste2", "teste3"];        
           }else {

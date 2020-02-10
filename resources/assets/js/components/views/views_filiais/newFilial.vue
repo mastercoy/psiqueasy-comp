@@ -53,7 +53,7 @@ export default {
         let nfilial = {
           name: '',
           active: 1,  
-          empresa_id:  this.$store.state.empresaId
+          empresa_id:  3
         }
         
         nfilial.name = this.name
