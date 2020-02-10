@@ -24,7 +24,7 @@
           <ul v-else-if="this.$store.state.Status === 1">
             <li><router-link to="/cadastro">Empresa</router-link></li>
             <!-- <li @click="imprimir"> <router-link to="/filial">Filiais</router-link></li> 
-            <li><router-link to="/usuarios">Usuários</router-link></li> -->
+            <li><router-link to="/usuarios">Usuários</router-link></li> v-if="$store.getters.isLoggedIn"  -->
             <li> Perfil </li>
             <li> Configurações </li>
             <li> E-Mail </li>

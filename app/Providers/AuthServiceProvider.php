@@ -24,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider {
 //        Schema::defaultStringLength(191); //fixme why
         $this->registerPolicies();
 
+        //afazer vários guards. checar empresa, checar usuario, checar permissão
         /*------------------------------------------------------------------------
         | VERIFICAR SE O OBJETO PASSADO PERTENCE A USUÁRIO LOGADO
         |------------------------------------------------------------------------*/

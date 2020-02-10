@@ -140,7 +140,7 @@ class UserPermissaoTest extends TestCase {
         $this->assertCount(1, UserPermissao::all());
         $permissao = UserPermissao::first();
 
-        $response  = $this->delete('/api/user-permissao-json/' . $permissao->id);
+        $response = $this->delete('/api/user-permissao-json/' . $permissao->id);
         $this->assertCount(0, UserPermissao::all());
     }
 
@@ -150,7 +150,7 @@ class UserPermissaoTest extends TestCase {
         $permissao = factory(App\Models\UserPermissao::class, 1)->create();
         $permissao = UserPermissao::first();
 
-        $response  = $this->patch('/api/desativar-user-permissao-json/' . $permissao->id);
+        $response = $this->patch('/api/desativar-user-permissao-json/' . $permissao->id);
         $this->assertEquals(0, UserPermissao::first()->active);
     }
 

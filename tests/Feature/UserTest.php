@@ -88,7 +88,7 @@ class UserTest extends TestCase {
 
         $user = factory(App\User::class, 1)->create();
         $this->assertCount(1, User::all());
-        $user     = User::first();
+        $user = User::first();
 
         $response = $this->delete('/api/user-json/' . $user->id);
         $this->assertCount(0, User::all());

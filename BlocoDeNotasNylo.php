@@ -8,6 +8,74 @@
  */
 
 /*
+ *
+ *
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use App\Models\UserPerfil;
+
+class UserPermissao extends Model
+{
+    protected $table = 'user_permissoes';
+
+    public function perfis()
+    {
+        return $this->belongsToMany(\App\Models\UserPerfil::class,
+                                     'user_permissoes_itens',
+                                     'user_permissoes_id',
+                                     'user_perfis_id'
+                                   );
+    }
+listar permissões
+UserPermissao::with('perfis')->get();
+
+public function audioFiles()
+    {
+        return $this->hasManyThrough(
+            'App\AudioFiles',          // The model to access to
+            'App\Pivots\Subscription', // The intermediate table that connects the User with the Podcast.
+            'user_id',                 // The column of the intermediate table that connects to this model by its ID.
+            'podcast_id',              // The column of the intermediate table that connects the Podcast by its ID.
+            'id',                      // The column that connects this model with the intermediate model table.
+            'podcast_id'               // The column of the Audio Files table that ties it to the Podcast.
+        );
+    );
+
+}
+
+para o controller
+public function show($id)
+    {
+
+        // Exemplo de Restrições de Acesso para perfil de usuário
+        if( Gate::denies('ver_ficha_completa') ){
+            abort(403, 'Não Autorizado!');
+        }
+
+o nome ver_ficha_completa deve constar nas permissões do usuário
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+// use App\Models\UserPermissao;
+
+class UserPerfil extends Model
+{
+    protected $table = 'user_perfis';
+
+    public function permissoes()
+    {
+      return $this->belongsToMany(\App\Models\UserPermissao::class, //obs classe e chaves usadas
+                                  'user_permissoes_itens',
+                                  'user_perfis_id',
+                                  'user_permissoes_id');
+    }
+}
+
 
     ilustração de tabelas e pivots
 

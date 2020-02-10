@@ -12,11 +12,55 @@ use Illuminate\Support\Facades\Response;
 class UserController extends Controller {
 
     public function index() {
-//        $user = User::first();
+
+        //fixme criar outros usuários com outros relacionamentos
+        //afazer transformar no guard
+
+        $id   = 1;
+        $user = User::findOrFail($id)->with('perfil.permissao')->get()->toArray()[0]['perfil'][0]['permissao']; // [0] = array dos resultados, primeira posição|throw erro quando n tem permissão
+
+        foreach ($user as $permissoes) {
+            $listaPermissoes[] = $permissoes['name'];
+        }
+        dd($listaPermissoes);
+        /*$perfil = UserPerfil::with( 'permissao.perfil')->get();
+        foreach ($perfil as $permissoes) {
+            $arrayPermissoes = $permissoes->permissao()->get()->toArray();
+//            dd($arrayPermissoes);
+            foreach ($arrayPermissoes as $permissao) {
+//                dd($permissao);
+                $listaPermissoes[] = $permissao['name'];
+
+            }
+        }
+//        dd($listaPermissoes);
+////        $perfil = UserPerfil::with('permissao')->get()->toArray();
+//        $permissao = UserPermissao::has('perfil')->get()->toArray();
+//        dd($permissao);
+        /*$perfil = UserPerfil::first(); // acha o perfil
+        $teste = $perfil->permissoes()->get()->toArray(); // pega as permissões do perfil
+        dd($teste);*/
+
+
+        /*$permissoes = UserPermissao::all();
+        foreach ($permissoes as $permissao) {
+            $listaPermissoes[] = $permissao->perfil();
+        }
+        dd($listaPermissoes);
+//        dd($user->perfil()->get()->toArray());
+
+
+//        listar permissões
+//UserPermissao::with('perfis')->get();
+//        dd($user);
+//        dd($perfil->toArray()['created_at']);
+//        dd($perfil->toArray()['created_at']);
+//        dd($perfil->user()->get());
+//        dd($user->perfil()->get());
 //        dd($this->verificarPermissao($user, 'paciente_in'));
 
-        $user = User::all();
-        return Response::json($user);
+        /*$user = User::all();
+        return Response::json($user);*/
 
     }
 
@@ -25,6 +69,7 @@ class UserController extends Controller {
     }
 
     public function store() {
+        //
         $user_json = User::create($this->validateUserRequest());
     }
 
