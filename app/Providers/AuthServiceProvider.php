@@ -21,29 +21,31 @@ class AuthServiceProvider extends ServiceProvider {
      * @return void
      */
     public function boot() {
-//        Schema::defaultStringLength(191); //fixme why
         $this->registerPolicies();
 
         //afazer vários guards. checar empresa, checar usuario, checar permissão
-        /*------------------------------------------------------------------------
-        | VERIFICAR SE O OBJETO PASSADO PERTENCE A USUÁRIO LOGADO
-        |------------------------------------------------------------------------*/
 
         Gate::define('pertence-usuario-logado', function ($user, $objeto) {
             return $user->id == $objeto->user_id;
         });
-        /*------------------------------------------------------------------------
-        | VERIFICAR SE O PACIENTE PASSADO PERTENCE A USUÁRIO LOGADO E ESTÁ ATIVO
-        |------------------------------------------------------------------------*/
+
+        Gate::define('pertence-a-empresa', function ($user, $objeto) {
+            return $user->empresa_id == $objeto->id;
+        });
 
         Gate::define('pertence-usuario-logado-e-active', function ($user, $objeto) {
             return $user->id == $objeto->user_id && $objeto->active == 1;
         });
 
-        // verifica se pertence a mesma empresa
         Gate::define('pertence-mesma-empresa', function ($user, $objeto) {
             return $user->empresa_id == $objeto->empresa_id;
         });
+
+        Gate::define('tem-permissao', function ($user, $objeto, $nomePermissao) {
+
+        }
+
+        );
 
         //
 

@@ -8,10 +8,18 @@ use Illuminate\Support\Facades\Response;
 
 class EmpresaCategoriaController extends Controller {
 
-    public function index() {
+    public function index() { //obs verificar se user->empresa_id == objeto->empresa_id
         //
-        $categoria = EmpresaCategoria::all();
-        return Response::json($categoria);
+        $categorias      = EmpresaCategoria::all();
+        $listaCategorias = [];
+
+        foreach ($categorias as $categoria) {
+            if (Gate::allows('pertence-mesma-empresa', $categoria)) {
+                $listaCategorias[] = $categoria;
+            }
+        }
+        return Response::json($listaCategorias);
+
     }
 
     public function create() {
