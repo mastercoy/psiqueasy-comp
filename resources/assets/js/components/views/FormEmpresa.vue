@@ -127,10 +127,12 @@ export default {
       //   })
 
        let id = this.$store.state.userID
-       id = 9 //  TEMPORÁRIO
+       id = 10
+      
        axios.get(`api/empresa-json/${id}`).then(({ data }) => {
-         this.cadEmpresa.NomeEmp = data.logo_marca
-         this.cadEmpresa.cnpj = data.cpf_cnpj
+         console.log(data);
+        //  this.cadEmpresa.NomeEmp = data.logo_marca
+        //  this.cadEmpresa.cnpj = data.cpf_cnpj
        });
     },
     createEmpresa() {
@@ -138,7 +140,8 @@ export default {
         cpf_cnpj: this.cnpj,
         logo_marca: this.nomeEmpresa,
         active: 1,
-        user_id: this.$store.state.userID
+        user_id: null
+        // user_id: this.$store.state.userID
       }
      axios.post('api/empresa-json', empresa).then(({ data })  => {
       this.$store.commit('salvarIdEmp', data.last_id)
