@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Empresa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Response;
 
 class EmpresaController extends Controller {
