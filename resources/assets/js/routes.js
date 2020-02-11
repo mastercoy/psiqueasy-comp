@@ -70,7 +70,7 @@ const routes = [
         component: EditUser,
         props: true
     }
-   ];
+];
 //  routes.beforeEach((to, from, next) => {
 //      if (to.matched.some(record => record.meta.requiresAuth)) {
 //          if (store.getters.isLoggedIn) {
