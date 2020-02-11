@@ -40,7 +40,7 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        login({ commit }, user) {
+        login({commit}, user) {
             return new Promise((resolve, reject) => {
                 commit("auth_request");
                 axios({
