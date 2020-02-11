@@ -143,14 +143,6 @@ export default {
 
       }
      }
-    // carregarLoad() { 
-
-    //  setTimeout(this.carregarLoading(), 2000);
-      
-    // },
-    // carregarLoading() {
-    //     this.loading = true;
-    //   }
   },
   validations: {
     name: {

@@ -53,7 +53,7 @@ export default {
         let nfilial = {
           name: '',
           active: 1,  
-          empresa_id:  3
+          empresa_id:  7
         }
         
         nfilial.name = this.name
@@ -71,28 +71,6 @@ export default {
         });
     
       }
-
-
-    /*
-
-     if(this.name === ''){
-       console.log("Por Favor digite os campos corretamente!")
-     }else {
-     let nfilial = {
-       name: '',
-       active: 1,  
-       empresa_id:  this.$store.state.empresaId
-     }
-    
-     nfilial.name = this.name
-
-     axios.post('/api/empresa-filial-json', nfilial).then(({ data })  => {      
-      console.log(data);      
-    });
-
-    this.$router.push("/filial");
-    
-   }*/
    },
    verificaNomeF() {
      console.log('teste');

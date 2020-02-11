@@ -66,7 +66,8 @@
 export default {
    mounted(){
      axios.get('api/empresa-filial-json').then(({data}) => {
-       this.filiais = data;
+       //this.filiais = data;
+       console.log(data);
        console.log("Filiais montadas com sucesso");
      });
     
