@@ -1,6 +1,14 @@
 <template>
   <div class="container">
     <div class="form-temp">
+
+      <div v-if="vefAlerta" class="alert alert-warning alert-dismissible fade show" role="alert">
+        Voce não os campos corretamente, por favor complete o formulário e tente novamente!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+
       <div class="row">
         <div class="docker">
          <i class="fa fa-user fa-4x" aria-hidden="true"></i>
@@ -242,6 +250,7 @@ export default {
   },
   data() {
     return { 
+      vefAlerta: false,
       iconF: false,
       iconE: false,
       checkRF: false,
@@ -262,6 +271,12 @@ export default {
       arrayPermissoes = var1;
       arrayPermissoes = [...arrayPermissoes, var2];
       console.log(this.user + " " + arrayPermissoes + " " + this.presetPerfil );
+
+      if(arrayPermissoes === '') {
+       this.vefAlerta = true
+      }else {
+        this.$router.push("/usuarios");
+      }
     },
     checkAll(e) {
 
@@ -280,6 +295,7 @@ export default {
             this.checkRF1 = false;
           }
           break;
+
         case 'Relatórios Financeiros' :
           //console.log("Relatórios Financeiros");
           this.checkRF = !this.checkRF;
@@ -288,14 +304,16 @@ export default {
             this.permissoesRF1 = ["op1", "op2", "op3"]
           }
           break;
+
         case 'Pagamentos' :
           console.log('Pagamentos');
-           this.checkRF1 = !this.checkRF1;
+          this.checkRF1 = !this.checkRF1;
           this.permissoesRF2 = [];
           if (this.checkRF1) {
             this.permissoesRF2 = ["teste1", "teste2", "teste3"]
           }
           break;
+          
         default :
           console.log('Nenhuma opção');
       }

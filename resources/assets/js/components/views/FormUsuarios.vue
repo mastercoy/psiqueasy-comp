@@ -32,7 +32,7 @@
               <td>{{ user.email }}</td>
               <td v-bind:class="{'ativo': user.emailStatus, 'pendente': !user.emailStatus}">{{ user.vefEmail}}</td>
                <td><router-link :to="{name:'EditUsuario', params: {user} }" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td> 
-              <td><a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a></td>                
+              <td><a @click="selectUser = user.nome" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a></td>                
             </tr>
           </tbody>
          </table>
@@ -79,7 +79,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <h5>Voce tem certeza de que deseja deletar o usuário selecionado?</h5>
+                  <h5>Voce tem certeza de que deseja deletar o usuário {{ selectUser }} ?</h5>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -114,6 +114,7 @@ export default {
   },
   data() {
     return {
+      selectUser: '',
       vefCadastro: false,
       editCadastro: false,
       users: [
@@ -145,7 +146,7 @@ export default {
   },
   methods: {
     delUser() {
-      
+      console.log("Teste");
     }
   }
 }
