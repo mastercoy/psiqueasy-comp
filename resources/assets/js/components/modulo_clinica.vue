@@ -59,24 +59,24 @@
 export default {
   name: "modulo_clinica",
   mounted() {
-    let newUser = this.user
-    axios.post('api/user-json', newUser).then(({ data }) => {
-         console.log("Usuário criado com sucesso!");
-       });
-    },
+    // let newUser = this.user
+    // axios.post('api/user-json', newUser).then(({ data }) => {
+    //      console.log("Usuário criado com sucesso!");
+    //    });
+     },
   data() {
     return {
       nivelPermissao: 0,
-      user: {
-        name: 'Matheus Henrique',
-        email: 'teteu@gmail.com',
-        password: '1234'
-      }
+      // user: {
+      //   name: 'Matheus Henrique',
+      //   email: 'teteu@gmail.com',
+      //   password: '1234'
+      // }
     }
   },
   methods: {
     imprimir(){
-      console.log("OK!")
+      console.log("OK!"); 
     }
   }
 }
