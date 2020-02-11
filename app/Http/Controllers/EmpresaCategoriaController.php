@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Response;
 class EmpresaCategoriaController extends Controller {
 
     public function index() { //obs verificar se user->empresa_id == objeto->empresa_id
-        //
+        //obs index_cat
         $categorias      = EmpresaCategoria::all();
         $listaCategorias = [];
 
@@ -27,12 +27,13 @@ class EmpresaCategoriaController extends Controller {
     }
 
     public function store() {
+        //obs criar_cat
         $categoria = EmpresaCategoria::create($this->validateCategoriasRequest());
     }
 
 
     public function show(EmpresaCategoria $empresa_categoria_json) {
-        //
+        //obs show_cat
         $categoria = EmpresaCategoria::find($empresa_categoria_json->id);
         if (Gate::allows('pertence-mesma-empresa', $categoria)) {
             return $categoria;
@@ -46,7 +47,7 @@ class EmpresaCategoriaController extends Controller {
     }
 
     public function update(EmpresaCategoria $empresa_categoria_json) {
-        //
+        //obs update_cat
         $categoria = EmpresaCategoria::find($empresa_categoria_json->id);
         if (Gate::allows('pertence-mesma-empresa', $categoria)) {
             $empresa_categoria_json->update($this->validateCategoriasRequest());
@@ -57,7 +58,7 @@ class EmpresaCategoriaController extends Controller {
     }
 
     public function destroy(EmpresaCategoria $empresa_categoria_json) {
-        //
+        //obs destroy_cat
         $categoria = EmpresaCategoria::find($empresa_categoria_json->id);
         if (Gate::allows('pertence-mesma-empresa', $categoria)) {
             $empresa_categoria_json->delete();
@@ -68,7 +69,7 @@ class EmpresaCategoriaController extends Controller {
     }
 
     public function desativarCategoria(EmpresaCategoria $empresa_categoria_json) {
-        //
+        //obs desativar_cat
         $categoria = EmpresaCategoria::find($empresa_categoria_json->id);
         if (Gate::allows('pertence-mesma-empresa', $categoria)) {
             $categoria->active = false;

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Response;
 class EmpresaFilialController extends Controller {
 
     public function index() { //obs verificar se user->empresa_id filial->empresa_id
-        //
+        //obs index_filial
         $filiais      = EmpresaFilial::all();
         $listaFiliais = [];
 
@@ -26,12 +26,14 @@ class EmpresaFilialController extends Controller {
     }
 
     public function store() {
+        //obs criar_filial
         $criar_filial_json = EmpresaFilial::create($this->validateFilialRequest());
     }
 
     public function show(EmpresaFilial $empresa_filial_json) {
-        //
+        //obs show_filial
         $filial = EmpresaFilial::find($empresa_filial_json->id);
+        dd($filial);
         if (Gate::allows('pertence-mesma-empresa', $filial)) {
             return $filial;
         } else {
@@ -44,7 +46,7 @@ class EmpresaFilialController extends Controller {
     }
 
     public function update(EmpresaFilial $empresa_filial_json) {
-        //
+        //obs update_filial
         $filial = EmpresaFilial::find($empresa_filial_json->id);
         if (Gate::allows('pertence-mesma-empresa', $filial)) {
             $empresa_filial_json->update($this->validateFilialRequest());
@@ -55,7 +57,7 @@ class EmpresaFilialController extends Controller {
     }
 
     public function destroy(EmpresaFilial $empresa_filial_json) {
-        //
+        //obs destroy_filial
         $filial = EmpresaFilial::find($empresa_filial_json->id);
         if (Gate::allows('pertence-mesma-empresa', $filial)) {
             $empresa_filial_json->delete();
@@ -66,7 +68,7 @@ class EmpresaFilialController extends Controller {
 
 
     public function desativarFilial(EmpresaFilial $empresa_filial_json) {
-        //
+        //obs desativar_filial
         $filial = EmpresaFilial::find($empresa_filial_json->id);
         if (Gate::allows('pertence-mesma-empresa', $filial)) {
             $filial->active = false;

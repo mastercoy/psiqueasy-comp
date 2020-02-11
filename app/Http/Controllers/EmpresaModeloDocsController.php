@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Response;
 
 class EmpresaModeloDocsController extends Controller {
 
-    public function index() { //obs verificar se user->empresa_id = objeto->empresa_id
-        //
+    public function index() { //verificar se user->empresa_id = objeto->empresa_id
+        //obs index_emp_model
         $modelos      = EmpresaModeloDocs::all();
         $listaModelos = [];
 
@@ -26,11 +26,12 @@ class EmpresaModeloDocsController extends Controller {
     }
 
     public function store() {
+        //obs criar_emp_model
         $modelo = EmpresaModeloDocs::create($this->validateModeloDocsRequest());
     }
 
     public function show(EmpresaModeloDocs $empresa_modelo_docs_json) {
-        //
+        //obs show_emp_model
         $modelo = EmpresaModeloDocs::find($empresa_modelo_docs_json->id);
         if (Gate::allows('pertence-mesma-empresa', $modelo)) {
             return $modelo;
@@ -44,7 +45,7 @@ class EmpresaModeloDocsController extends Controller {
     }
 
     public function update(EmpresaModeloDocs $empresa_modelo_docs_json) {
-        //
+        //obs update_emp_model
         $modelo = EmpresaModeloDocs::find($empresa_modelo_docs_json->id);
         if (Gate::allows('pertence-mesma-empresa', $modelo)) {
             $empresa_modelo_docs_json->update($this->validateModeloDocsRequest());
@@ -55,7 +56,7 @@ class EmpresaModeloDocsController extends Controller {
     }
 
     public function destroy(EmpresaModeloDocs $empresa_modelo_docs_json) {
-        //
+        //obs destroy_emp_model
         $modelo = EmpresaModeloDocs::find($empresa_modelo_docs_json->id);
         if (Gate::allows('pertence-mesma-empresa', $modelo)) {
             $empresa_modelo_docs_json->delete();
@@ -67,7 +68,7 @@ class EmpresaModeloDocsController extends Controller {
 
 
     public function desativarModeloDocs(EmpresaModeloDocs $empresa_modelo_docs_json) {
-        //
+        //obs desativar_emp_model
         $modelo = EmpresaModeloDocs::find($empresa_modelo_docs_json->id);
         if (Gate::allows('pertence-mesma-empresa', $modelo)) {
             $modelo->active = false;

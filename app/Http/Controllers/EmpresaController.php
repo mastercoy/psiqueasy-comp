@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Response;
 class EmpresaController extends Controller {
 
     public function index() { //obs verificar se user->empresa_id == empresa->id
-        //
+        //obs index_empresa
         $empresas     = Empresa::all();
         $listaEmpresa = [];
 
@@ -26,11 +26,12 @@ class EmpresaController extends Controller {
     }
 
     public function store() {
+        //obs criar_empresa
         $empresa_json = Empresa::create($this->validateEmpresaRequest());
     }
 
     public function show(Empresa $empresa_json) {
-        //
+        //obs show_empresa
         $empresa = Empresa::find($empresa_json->id);
         if (Gate::allows('pertence-a-empresa', $empresa)) {
             return $empresa;
@@ -45,7 +46,7 @@ class EmpresaController extends Controller {
     }
 
     public function update(Empresa $empresa_json) {
-        //
+        //obs update_empresa
         $empresa = Empresa::find($empresa_json->id);
         if (Gate::allows('pertence-a-empresa', $empresa)) {
             $empresa_json->update($this->validateEmpresaRequest());
@@ -57,7 +58,7 @@ class EmpresaController extends Controller {
 
 
     public function destroy(Empresa $empresa_json) {
-        //
+        //obs destroy_empresa
         $empresa = Empresa::find($empresa_json->id);
         if (Gate::allows('pertence-a-empresa', $empresa)) {
             $empresa_json->delete();
@@ -68,7 +69,7 @@ class EmpresaController extends Controller {
     }
 
     public function desativarEmpresa(Empresa $empresa_json) {
-        //
+        //obs desativar_empresa
         $empresa = Empresa::find($empresa_json->id);
         if (Gate::allows('pertence-a-empresa', $empresa)) {
             $empresa->active = false;

@@ -6,12 +6,19 @@ use App\Models\UserModeloDocs;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 
-class UserModeloDocsController extends Controller {
+class UserModeloDocsController extends Controller { //verificar se user->id == objeto->user_id
 
     public function index() {
-        //
-        $modelo = UserModeloDocs::all();
-        return Response::json($modelo);
+        //obs index_user_model
+        $modelos      = UserModeloDocs::all();
+        $listaModelos = [];
+
+        foreach ($modelos as $modelo) {
+            if (Gate::allows('pertence-usuario-logado', $modelo)) {
+                $listaModelos[] = $modelo;
+            }
+        }
+        return Response::json($listaModelos);
     }
 
     public function create() {
@@ -19,11 +26,12 @@ class UserModeloDocsController extends Controller {
     }
 
     public function store() {
+        //obs criar_user_model
         $modelo = UserModeloDocs::create($this->validateModeloDocsRequest());
     }
 
     public function show(UserModeloDocs $user_modelo_docs_json) {
-        //
+        //obs show_user_model
         $modelo = UserModeloDocs::find($user_modelo_docs_json->id);
         if (Gate::allows('pertence-usuario-logado', $modelo)) {
             return $modelo;
@@ -37,18 +45,17 @@ class UserModeloDocsController extends Controller {
     }
 
     public function update(UserModeloDocs $user_modelo_docs_json) {
-        //
+        //obs update_user_model
         $modelo = UserModeloDocs::find($user_modelo_docs_json->id);
         if (Gate::allows('pertence-usuario-logado', $modelo)) {
             $user_modelo_docs_json->update($this->validateModeloDocsRequest());
         } else {
             abort(403, 'Não encontrado!');
         }
-
     }
 
     public function destroy(UserModeloDocs $user_modelo_docs_json) {
-        //
+        //obs destroy_user_model
         $modelo = UserModeloDocs::find($user_modelo_docs_json->id);
         if (Gate::allows('pertence-usuario-logado', $modelo)) {
             $user_modelo_docs_json->delete();
@@ -59,7 +66,7 @@ class UserModeloDocsController extends Controller {
     }
 
     public function desativarModeloDocs(UserModeloDocs $user_modelo_docs_json) {
-        //
+        //obs desativar_user_model
         $modelo = UserModeloDocs::find($user_modelo_docs_json->id);
         if (Gate::allows('pertence-usuario-logado', $modelo)) {
             $modelo->active = false;
