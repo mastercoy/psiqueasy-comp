@@ -24,12 +24,12 @@
             </tr>
            </thead>          
           <tbody>
-            <tr v-for="filial in filiais" :key="filial.id">              
+            <tr v-for="filial in filiais" :key="filial.id" >              
               <td> {{ filial.id }} </td>
               <td> {{ filial.nome }}</td>
               <td> {{ filial.localidade }}</td>
               <td><router-link :to="{name:'EditFilial', params: {filial} }" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td>  
-              <td><a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter" ><i class="fa fa-trash" aria-hidden="true"></i></a></td>              
+              <td><button class="btn btn-danger btn-sm" :selectContato="filial" data-toggle="modal" data-target="#exampleModalCenter" ><i class="fa fa-trash" aria-hidden="true"></i></button></td>              
             </tr>
           </tbody>
          </table>
@@ -48,7 +48,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <h5>Voce tem certeza de que deseja deletar a filial selecionada?</h5>
+                  <h5>Voce tem certeza de que deseja deletar a filial {{ selectContato }}?</h5>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -74,6 +74,7 @@ export default {
    },
   data() {
     return {
+      selectContato: '',
       filial: {
       nome: '',
       localidade: '',

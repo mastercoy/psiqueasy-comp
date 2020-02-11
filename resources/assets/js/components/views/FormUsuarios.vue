@@ -1,4 +1,5 @@
 <template>
+<div>
   <div class="form-temp">  
     <div class="row">
       <div class="col-md-9">
@@ -87,13 +88,29 @@
               </div>
             </div>
           </div>
+  </div><!-- fim form-temp -->
+  <br>
 
+  <div class="form-temp">
+    <h4><i class="fa fa-tasks" aria-hidden="true"></i> Perfis</h4>
+    <hr>
+    <div class="container">
+      <div class="row">
+      <div>
+        <strong> Não existem perfis cadastrados no momento... </strong>
+      </div>
+
+      </div>
+
+    </div>
+  </div>
   </div>
 </template>
 
 <script>
 export default {
   mounted(){
+    
   },
   data() {
     return {
@@ -122,7 +139,8 @@ export default {
         vefEmail: 'pendent'
 
         }
-      ] 
+      ],
+      perfis: [] 
     }
   },
   methods: {
