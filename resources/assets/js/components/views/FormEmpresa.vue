@@ -127,7 +127,7 @@ export default {
       //   })
 
        let id = this.$store.state.userID
-       id = 7 //  TEMPORÁRIO
+       id = 9 //  TEMPORÁRIO
        axios.get(`api/empresa-json/${id}`).then(({ data }) => {
          this.cadEmpresa.NomeEmp = data.logo_marca
          this.cadEmpresa.cnpj = data.cpf_cnpj

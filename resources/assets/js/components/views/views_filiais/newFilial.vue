@@ -48,21 +48,22 @@ export default {
 
       this.$v.$touch()
       if (this.$v.$invalid) {
-        console.log("Preencha os campos necessários!")
+        console.log("Preencha os campos necessários!");
       } else {
         let nfilial = {
           name: '',
           active: 1,  
-          empresa_id:  7
+          empresa_id:  this.$store.state.empresaID
         }
         
         nfilial.name = this.name
 
         axios.post('/api/empresa-filial-json', nfilial).then(({ data })  => {      
           console.log(data);      
+          this.$router.push("/filial");
         });
 
-        this.$router.push("/filial");
+        
 
         let toast = this.$toasted.show("Filial Adicionada com Sucesso!!", { 
           theme: "toasted-primary", 
