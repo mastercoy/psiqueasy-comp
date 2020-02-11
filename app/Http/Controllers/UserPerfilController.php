@@ -19,7 +19,6 @@ class UserPerfilController extends Controller { //afazer como verificar os perfi
         //vincula permissão ao perfil userperfil_id	userpermissao_id
         $conditions           = ['userperfil_id' => $user_perfil_json->id, 'userpermissao_id' => $user_permissao_json->id];
         $perfilPermissaoPivot = PerfilPermissaoPivot::where($conditions)->first();
-//        dd($perfilPermissaoPivot);
 
         if (isset($perfilPermissaoPivot)) {
             return 'Permissão "' . $user_permissao_json->name . '" já se encontra vinculada ao Perfil "' . $user_perfil_json->name . '"';
@@ -28,7 +27,20 @@ class UserPerfilController extends Controller { //afazer como verificar os perfi
             $perfil->permissao()->attach($user_permissao_json);
             return 'Permissão "' . $user_permissao_json->name . '" vinculada com sucesso ao Perfil "' . $user_perfil_json->name . '"';
         }
+    }
 
+    public function delPermissaoPerfil(UserPerfil $user_perfil_json, UserPermissao $user_permissao_json) {
+        //remove a permissão do perfil
+        $conditions           = ['userperfil_id' => $user_perfil_json->id, 'userpermissao_id' => $user_permissao_json->id];
+        $perfilPermissaoPivot = PerfilPermissaoPivot::where($conditions)->first();
+
+        if (isset($perfilPermissaoPivot)) {
+            $perfil = UserPerfil::find($user_perfil_json->id);
+            $perfil->permissao()->detach($user_permissao_json);
+            return 'Permissão "' . $user_permissao_json->name . '" desvinculada com sucesso do Perfil "' . $user_perfil_json->name . '"';
+        } else {
+            return 'Permissão "' . $user_permissao_json->name . '" não tem vínculo com o Perfil "' . $user_perfil_json->name . '"';
+        }
     }
 
     public function create() {

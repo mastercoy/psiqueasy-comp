@@ -33,7 +33,6 @@ class EmpresaFilialController extends Controller {
     public function show(EmpresaFilial $empresa_filial_json) {
         //obs show_filial
         $filial = EmpresaFilial::find($empresa_filial_json->id);
-        dd($filial);
         if (Gate::allows('pertence-mesma-empresa', $filial)) {
             return $filial;
         } else {
