@@ -40,9 +40,6 @@ class UserController extends Controller {
     }
 
     public function index() { //afazer mostrar todos users da mesma empresa
-        $user = User::first();
-        $user->perfil()->attach(1);
-        dd($user->perfil);
 
         //fixme
         //obs index_user

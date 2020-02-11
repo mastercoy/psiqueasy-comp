@@ -20,14 +20,4 @@ class User extends Authenticatable {
     }
 
 
-    /*public function modelos() {
-        return $this->hasMany('App\Models\UserModeloDocs');
-
-    }
-
-    //
-    public function perfilpivot() {
-        return $this->hasOne('App\Models\UserPerfilPivot');
-
-    }*/
 }
