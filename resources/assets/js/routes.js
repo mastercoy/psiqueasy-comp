@@ -5,8 +5,8 @@ import newFilial from "./components/views/views_filiais/newFilial"
 import EditFilial from "./components/views/views_filiais/EditFilial"
 import EditUser from "./components/views/views_usuarios/EditUser"
 import EditEmpresa from "./components/views/views_empresa/editEmpresa"
-import newInvite from "./components/views/views_covite/newInvite"
-import newInviteP from "./components/views/views_covite/newInvitePermissions"
+import newInvite from "./components/views/views_usuarios/newInvite";
+import newInviteP from "./components/views/views_usuarios/newInvitePermissions";
 import login from "./components/auth/login"
 
 
