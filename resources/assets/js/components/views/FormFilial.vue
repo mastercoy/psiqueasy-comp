@@ -65,7 +65,7 @@
 <script>
 export default {
    mounted(){
-     axios.get('api/empresa-filial-json').then(({data}) => {
+     axios.get('api/empresa-filial-json/').then(({data}) => {
        //this.filiais = data;
        console.log(data);
        console.log("Filiais montadas com sucesso");
@@ -95,7 +95,7 @@ export default {
          {
            id: 3,
           nome: "Loja 3",
-          localidade: "Guanambi - BA"
+          localidade: "Bom Jesus da Lapa - BA"
 
         },
          {

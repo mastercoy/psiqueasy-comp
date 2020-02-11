@@ -27,6 +27,22 @@
           <label for="21">Apenas o usuário atual</label>
         </div>
       </div>
+    </div><br>
+
+    <div class="form-temp">
+      <div class="container">
+        <h4>Utilzar um Perfil já cadastrado no sistema?</h4>
+        <hr>
+        <div class="row">          
+            <label for="exampleFormControlSelect1">Example select</label>
+            <select class="form-control" id="exampleFormControlSelect1">
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+            </select>
+          </div>
+        
+      </div>
     </div>
 
     <div class="form-temp">
@@ -236,6 +252,8 @@ export default {
   mounted() {
      $(document).ready(function(){
       $('[data-toggle="popover"]').popover();
+
+      //Metodo para carregar os perfis salvos!
     });
   },
   data() {
