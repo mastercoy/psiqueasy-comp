@@ -38,7 +38,10 @@
               </td> 
               <td 
                 v-else-if="user.emailStatus === 2">
-                <button class="btn btn-secondary btn-sm"> R </button>
+                <a @click="reenviarEmail" 
+                class="btn btn-secondary btn-sm" 
+                data-toggle="popover" data-trigger="hover" title="OBS" data-placement="bottom" data-content="Tempo expirado do convite, clique para enviar novamente"
+                ><i class="fa fa-refresh" aria-hidden="true"></i> </a>
               </td> 
               <td><a @click="selectUser = user.nome" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a></td>                
             </tr>
@@ -118,7 +121,11 @@
 <script>
 export default {
   mounted(){
-    
+    $(document).ready(function(){
+      $('[data-toggle="popover"]').popover();
+
+      //Metodo para carregar os perfis salvos!
+    });    
   },
   data() {
     return {
@@ -165,6 +172,9 @@ export default {
     },
     editUSer() {
       this.$router.push("/EditUsuario");
+    },
+    reenviarEmail() {
+      console.log("Funciona!");
     }
   }
 }

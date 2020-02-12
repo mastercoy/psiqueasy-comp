@@ -24,16 +24,20 @@
 
     <div class="form-temp">
       <div class="container ">
-        <h4>Quem terá acesso a esse usuário</h4>
+        <h4>Deseja utilizar um perfil que voce já criou?</h4>
         <hr />
-        <div>
-          <input class="magic-radio" type="radio" name="radio" id="11" />
-          <label for="11">Todos os usuários</label>
-        </div>
-        <div>
-          <input class="magic-radio" type="radio" name="radio" id="21" />
-          <label for="21">Apenas o usuário atual</label>
-        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <select class="form-control" v-model="userInvite.selectedPerfil">
+                <option selected disabled></option>
+                <option>Secretária</option>
+                <option>Psicólogo</option>
+                <option>Psicopedagogo</option>
+              </select>
+            </div>
+          </div>
+        </div>        
       </div>
     </div><br>
 
@@ -95,7 +99,7 @@
             </div>
           </div>
         </div>
-      </div> 
+      </div>
 
        <div class="container">
         <div class="parent">         
@@ -253,7 +257,8 @@ export default {
       userInvite: {
         email: '',
         permissoes: '',
-        label: ''
+        label: '',
+        selectedPerfil: ''
       },
       vefAlerta: false,
       iconF: false,
@@ -264,12 +269,12 @@ export default {
       permissoesRF1: [],
       permissoesRF2: [],
       presetPerfil: '',
-
        
     };
   },
   methods: {
     getPermissoes() {
+      
       let var1 = this.permissoesRF1;
       let var2 = this.permissoesRF2
       let arrayPermissoes = [];
@@ -281,11 +286,9 @@ export default {
       this.userInvite.label = this.presetPerfil;
       console.log(this.userInvite);
 
-      if(arrayPermissoes === '') {
-       this.vefAlerta = true
-      }else {
-        this.$router.push("/usuarios");
-      }
+
+      this.$router.push("/usuarios");
+     
     },
     checkAll(e) {
 
