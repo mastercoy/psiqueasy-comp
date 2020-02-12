@@ -13,7 +13,7 @@ class EmpresaController extends Controller {
         //obs index_empresa
         $empresas     = Empresa::all();
         $listaEmpresa = [];
-
+       
         foreach ($empresas as $empresa) {
             if (Gate::allows('pertence-a-empresa', $empresa)) {
                 $listaEmpresa[] = $empresa;
@@ -33,9 +33,9 @@ class EmpresaController extends Controller {
 
     public function show(Empresa $empresa_json) {
         //obs show_empresa
-        Auth::user();
+ 
         $empresa = Empresa::find($empresa_json->id);
-        //dd(Auth::user());
+        dd(Auth::user());
         if (Gate::allows('pertence-a-empresa', $empresa)) {
             return $empresa;
         } else {

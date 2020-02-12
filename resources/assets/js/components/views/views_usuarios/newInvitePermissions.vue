@@ -250,6 +250,11 @@ export default {
   },
   data() {
     return { 
+      userInvite: {
+        email: '',
+        permissoes: '',
+        label: ''
+      },
       vefAlerta: false,
       iconF: false,
       iconE: false,
@@ -259,6 +264,7 @@ export default {
       permissoesRF1: [],
       permissoesRF2: [],
       presetPerfil: '',
+
        
     };
   },
@@ -270,7 +276,10 @@ export default {
 
       arrayPermissoes = var1;
       arrayPermissoes = [...arrayPermissoes, var2];
-      console.log(this.user + " " + arrayPermissoes + " " + this.presetPerfil );
+      this.userInvite.email = this.user;
+      this.userInvite.permissoes = arrayPermissoes;
+      this.userInvite.label = this.presetPerfil;
+      console.log(this.userInvite);
 
       if(arrayPermissoes === '') {
        this.vefAlerta = true
