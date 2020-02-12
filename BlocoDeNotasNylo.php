@@ -12,43 +12,54 @@
  *
 <?php
 
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-use App\Models\UserPerfil;
-
-class UserPermissao extends Model
-{
-    protected $table = 'user_permissoes';
-
-    public function perfis()
-    {
-        return $this->belongsToMany(\App\Models\UserPerfil::class,
-                                     'user_permissoes_itens',
-                                     'user_permissoes_id',
-                                     'user_perfis_id'
-                                   );
-    }
-listar permissões
-UserPermissao::with('perfis')->get();
-
-public function audioFiles()
-    {
-        return $this->hasManyThrough(
-            'App\AudioFiles',          // The model to access to
-            'App\Pivots\Subscription', // The intermediate table that connects the User with the Podcast.
-            'user_id',                 // The column of the intermediate table that connects to this model by its ID.
-            'podcast_id',              // The column of the intermediate table that connects the Podcast by its ID.
-            'id',                      // The column that connects this model with the intermediate model table.
-            'podcast_id'               // The column of the Audio Files table that ties it to the Podcast.
-        );
-    );
-
-}
-
-para o controller
-public function show($id)
-    {
+obs lista de permissões do sistema
+=== USER CONTROLLER
+set_perfil - vincula perfil ao usuario
+del_perfil - desvincula perfil e usuario
+index_user - retorna todos usuários (pertencentes a mesma empresa)
+criar_user - cria novo usuário
+show_user - exibe usuário juntamente com array de permissões
+update_user - atualiza informações do usuário
+destroy_user - apaga por completo o usuário
+desativar_user - configura usuário como INATIVO
+=== EMPRESA MODELO DOCS CONTROLLER
+index_emp_model - retorna todos modelos de documentos da empresa
+criar_emp_model - cria modelo de documentos para a empresa
+show_emp_model - exibe modelo de documento da empresa
+update_emp_model - atualiza modelo de documento da empresa
+destroy_emp_model - apaga por completo o modelo de documento da empresa
+desativar_emp_model - configura modelo de documento como INATIVO
+=== USER PERMISSAO CONTROLLER
+index_permissao - lista todas permissões
+criar_permissao - cria uma nova permissão
+show_permissao - exibe permissão
+update_permissao - atualiza informaçõs da permissao
+destroy_permissao - apaga por completo a permissao
+desativar_permissao - configura permissao como INATIVA
+=== USER PERFIL CONTROLLER
+index_perfil - exibe todos os perfis
+set_permissao - vincula permissao ao perfil
+del_permissao - desvincula permissao ao perfil
+criar_perfil - Cria um novo perfil
+show_perfil - exibe perfil
+update_perfil - atualiza o perfil
+destroy_perfil - apaga por completo o perfil
+desativar_perfil - configura o perfil como INATIVO
+=== USER MODELO DOCS CONTROLLER
+index_user_model - exibe todos os modelos de documentos do usuario
+criar_user_model - cria um novo modelo de documento do usuário
+show_user_model - exibe o modelo de documento do usuário
+update_user_model - atualiza o modelo de documento do usuário
+destroy_user_model - apaga por completo o modelo de documento do usuário
+desativar_user_model - configura como INATIVO o modelo de documento do usuário
+=== RESPONSAVEL CONTROLLER
+index_responsavel - exibe todos os responsaveis
+criar_responsavel - cria um novo responsavel
+show_responsavel - exibe o responsavel
+update_responsavel - atualiza informações do responsavel
+destroy_responsavel - apaga por completo o responsavel
+desativar_responsavel - configura o responsavel como INATIVO
+listar_desat_resp - lista responsaveis desativados
 
         // Exemplo de Restrições de Acesso para perfil de usuário
         if( Gate::denies('ver_ficha_completa') ){
@@ -56,284 +67,7 @@ public function show($id)
         }
 
 o nome ver_ficha_completa deve constar nas permissões do usuário
-<?php
-
-namespace App\Models;
-
-use Illuminate\Database\Eloquent\Model;
-// use App\Models\UserPermissao;
-
-class UserPerfil extends Model
-{
-    protected $table = 'user_perfis';
-
-    public function permissoes()
-    {
-      return $this->belongsToMany(\App\Models\UserPermissao::class, //obs classe e chaves usadas
-                                  'user_permissoes_itens',
-                                  'user_perfis_id',
-                                  'user_permissoes_id');
-    }
-}
-
-
-    ilustração de tabelas e pivots
-
-| users | > users_usersperfis <  | usersperfis |
-| usersperfis | > usersperfis_userspermissoes | userspermissoes |
- *
-//afazer envio de email para confirmar conta
-// TABELA EMPRESA
-// TABELA USER PERMISSOES ITENS
-// RESPONSAVEL CONTROLLER
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use App\Models\Responsavel;
-use App\User;
-use Gate;
-
-class ResponsavelController extends Controller
-{
-class ResponsavelController extends Controller {
-
-    public function index() {
-        return User::find(auth()->user()->id)->responsaveis()->get();
-    }
-
-    public function store(Request $request) {
-        $this->validate($request, [
-            'nome' => 'required | max: 190',
-            'parentesco' => 'nullable | max: 190',
-            'data_nasc' => 'date | nullable',
-            'end' => 'nullable',
-            'tel' => 'nullable | max: 190',
-            'cpf' => 'nullable | cpf',
-            'rg' => 'nullable | max: 100',
-        ]);
-
-        $responsavel             = new Responsavel;
-        $responsavel->nome       = $request->nome;
-        $responsavel->parentesco = $request->parentesco;
-        $responsavel->data_nasc  = ($request->data_nasc) ? date('Y-m-d', strtotime($request->data_nasc)) : null;
-        $responsavel->user_id    = $request->user()->id;
-        $responsavel->end        = $request->end;
-        $responsavel->tel        = $request->tel;
-        $responsavel->cpf        = $request->cpf;
-        $responsavel->rg         = $request->rg;
-
-        $responsavel->save();
-        return Responsavel::find($responsavel->id);
-    }
-
-    public function show($id) {
-
-        $responsavel = Responsavel::find($id);
-        if (Gate::denies('pertence-usuario-logado', $responsavel)) {
-            abort(403, 'Não encontrado!');
-        }
-        return $responsavel;
-
-    }
-
-    public function update(Request $request, $id) {
-        $this->validate($request, [
-            'nome' => 'required | max: 190',
-            'parentesco' => 'nullable | max: 190',
-            'data_nasc' => 'date | nullable',
-            'end' => 'nullable',
-            'tel' => 'nullable | max: 190',
-            'cpf' => 'nullable | cpf',
-            'rg' => 'nullable | max: 100',
-        ]);
-
-        $responsavel = Responsavel::find($id);
-        if (Gate::denies('pertence-usuario-logado', $responsavel)) {
-            abort(403, 'Não encontrado!');
-        }
-        $responsavel->nome       = $request->nome;
-        $responsavel->parentesco = $request->parentesco;
-        $responsavel->data_nasc  = ($request->data_nasc) ? date('Y-m-d', strtotime($request->data_nasc)) : null;
-        $responsavel->user_id    = $request->user()->id;
-        $responsavel->end        = $request->end;
-        $responsavel->tel        = $request->tel;
-        $responsavel->cpf        = $request->cpf;
-        $responsavel->rg         = $request->rg;
-
-        $responsavel->save();
-
-        return $responsavel;
-    }
-
-    public function destroy($id) {
-
-        $responsavel = Responsavel::find($id);
-        if (Gate::denies('pertence-usuario-logado', $responsavel)) {
-            abort(403, 'Não encontrado!');
-        }
-        $responsavel->active = false;
-        $responsavel->save();
-        return $responsavel;
-    }
-
-    public function excluidos(Request $request) {
-        return Responsavel::where([
-                                      ['user_id', '=', $request->user()->id], // do usuário
-                                      ['active', '=', 0], // excluidos
-                                  ])
-                          ->orderBy('updated_at', 'desc')
-                          ->get();
-    }
-}
-
-//
-// Um usuario pode ter muitos user_modelos_docs
-// Um usuário só pode ter um perfil
-// um perfil pode pertencer a varios usuarios
-// um perfil tem varias permissões
-// uma permissão pode pertencer a varios perfis
-
-// TABELA RESPONSAVEL
-Schema::create('responsaveis', function(Blueprint $table){
-
-          $table->increments('id');
-          $table->string('nome');
-          $table->string('parentesco')->nullable();
-          $table->dateTime('data_nasc')->nullable();
-          $table->mediumText('end')->nullable();
-          $table->string('tel')->nullable();
-          $table->string('cpf')->nullable();
-          $table->string('rg')->nullable();
-          $table->boolean('active')->default(true);
-          $table->timestamps();
-          $table->integer('user_id')->unsigned();
-        });
-
-// TABELA EMPRESA CATEGORIAS
-Schema::create('empresa_categs', function(Blueprint $table){
-            $table->increments('id');
-            $table->string('nome');
-            $table->string('descricao')->nullable();
-            $table->boolean('active')->default(true);
-            $table->timestamps();
-        });
-
-        Schema::table('empresas', function(Blueprint $table){
-            $table->foreign('empresa_categ_id')
-                    ->references('id')
-                    ->on('empresa_categs')
-                    ->onDelete('cascade');
-        });
-
-// TABELA EMPRESA MODELO DOCUMENTOS
-Schema::create('empresa_modelos_docs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nome');
-            $table->longText('conteudo')->nullable();
-            $table->boolean('active')->default(true);
-            $table->timestamps();
-            $table->integer('empresa_id')->unsigned();
-            $table->foreign('empresa_id')
-                    ->references('id')
-                    ->on('empresas')
-                    ->onDelete('cascade');
-        });
-
-//TABELA USER MODELO DOCUMENTOS
-Schema::create('user_modelos_docs', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nome');
-            $table->longText('conteudo')->nullable();
-            $table->boolean('active')->default(true);
-            $table->timestamps();
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')
-                    ->references('id')
-                    ->on('users')
-                    ->onDelete('cascade');
-        });
-
-//TABELA USER PERFIS
-Schema::create('user_perfis', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nome');
-            $table->string('label');
-            $table->boolean('active')->default(true);
-            $table->timestamps();
-        });
-
-        Schema::create('user_permissoes', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('nome');
-            $table->string('label');
-            $table->boolean('active')->default(true);
-            $table->timestamps();
-        });
-
-        Schema::create('user_perfis_itens', function (Blueprint $table) {
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')
-                    ->references('id')
-                    ->on('users')
-                    ->onDelete('cascade');
-            $table->integer('user_perfis_id')->unsigned();
-            $table->foreign('user_perfis_id')
-                    ->references('id')
-                    ->on('user_perfis')
-                    ->onDelete('cascade');
-            $table->timestamps();
-        });
-
-        Schema::create('user_permissoes_itens', function (Blueprint $table) {
-            $table->integer('user_perfis_id')->unsigned();
-            $table->foreign('user_perfis_id')
-                    ->references('id')
-                    ->on('user_perfis')
-                    ->onDelete('cascade');
-            $table->integer('user_permissoes_id')->unsigned();
-            $table->foreign('user_permissoes_id')
-                    ->references('id')
-                    ->on('user_permissoes')
-                    ->onDelete('cascade');
-            $table->timestamps();
-        });
-
-//afazer VALIDATION
-use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use App\Models\UserPermissao;
-app/Providers/AuthServiceProvider.php
-Schema::defaultStringLength(191);
-        $this->registerPolicies();
-
-        /*
-        |--------------------------------------------------------------------------
-        | VERIFICAR SE O OBJETO PASSADO PERTENCE A USUÁRIO LOGADO
-        |--------------------------------------------------------------------------
-        |
-        |
-
-
-Gate::define('pertence-usuario-logado', function($user, $objeto){
-    return $user->id == $objeto->user_id;
-});
-/*
-|--------------------------------------------------------------------------
-| VERIFICAR SE O PACIENTE PASSADO PERTENCE A USUÁRIO LOGADO E ESTÁ ATIVO
-|--------------------------------------------------------------------------
-|
-|
-
-
-Gate::define('pertence-usuario-logado-e-active', function($user, $objeto){
-    return $user->id == $objeto->user_id && $objeto->active == 1;
-});
-
 
 
 */
 
-
-//afazer middleware com uma checagem IF user->id == this->user_id
-// dai passa pro controller

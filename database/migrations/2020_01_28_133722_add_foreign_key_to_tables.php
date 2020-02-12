@@ -19,14 +19,6 @@ class AddForeignKeyToTables extends Migration {
                   ->onDelete('cascade');
         });
 
-        /*Schema::table('empresas', function ($table) {
-            $table->integer('empresa_categoria_id')->unsigned()->nullable();
-            $table->foreign('empresa_categoria_id')
-                  ->references('id')
-                  ->on('empresa_categorias')
-                  ->onDelete('cascade');
-        });*/
-
         Schema::table('empresas', function ($table) {
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')
@@ -40,6 +32,20 @@ class AddForeignKeyToTables extends Migration {
             $table->foreign('responsavel_id')
                   ->references('id')
                   ->on('responsavel')
+                  ->onDelete('cascade');
+        });
+
+        Schema::table('perfil', function ($table) {
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')
+                  ->references('id')
+                  ->on('users')
+                  ->onDelete('cascade');
+
+            $table->integer('empresa_id')->unsigned()->nullable();
+            $table->foreign('empresa_id')
+                  ->references('id')
+                  ->on('empresas')
                   ->onDelete('cascade');
         });
 

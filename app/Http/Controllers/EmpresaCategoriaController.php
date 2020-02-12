@@ -31,7 +31,6 @@ class EmpresaCategoriaController extends Controller {
         $categoria = EmpresaCategoria::create($this->validateCategoriasRequest());
     }
 
-
     public function show(EmpresaCategoria $empresa_categoria_json) {
         //obs show_cat
         $categoria = EmpresaCategoria::find($empresa_categoria_json->id);

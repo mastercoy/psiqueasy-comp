@@ -41,38 +41,33 @@ class CreateUsersTable extends Migration {
 
         });
 
-        Schema::create('userperfil', function (Blueprint $table) { //perfil
+        Schema::create('perfil', function (Blueprint $table) { //perfil
             $table->increments('id');
             $table->string('name', 45);
             $table->string('label', 45)->nullable();
             $table->tinyInteger('active')->default(true);
             $table->timestamps();
-            //fixme tirar
-            /*$table->integer('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')
-                  ->references('id')
-                  ->on('users');*/
 
         });
 
-        // tabela pivot | users | > users_userperfil <  | userperfil |
-        Schema::create('users_userperfil', function (Blueprint $table) { //user_perfil
-            $table->increments('id');                                    //necessária
+        // tabela pivot | users | > perfil_user <  | perfil |
+        Schema::create('perfil_user', function (Blueprint $table) {      //user_perfil
+            $table->increments('id');                                    //fixme talvez tirar
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')
                   ->references('id')
                   ->on('users')
                   ->onDelete('cascade');
 
-            $table->integer('userperfil_id')->unsigned()->nullable();
-            $table->foreign('userperfil_id')
+            $table->integer('perfil_id')->unsigned()->nullable();
+            $table->foreign('perfil_id')
                   ->references('id')
-                  ->on('userperfil')
+                  ->on('perfil')
                   ->onDelete('cascade');
             $table->timestamps();
         });
 
-        Schema::create('userpermissao', function (Blueprint $table) { //permissao
+        Schema::create('permissao', function (Blueprint $table) { //permissao
             $table->increments('id');
             $table->string('name', 45);
             $table->string('label', 45)->nullable();
@@ -81,19 +76,19 @@ class CreateUsersTable extends Migration {
 
         });
 
-        // tabela pivot | userperfil | > userperfil_userpermissao < | userpermissao |
-        Schema::create('userperfil_userpermissao', function (Blueprint $table) { //perfil_permissao
+        // tabela pivot | perfil | > perfil_permissao < | permissao |
+        Schema::create('perfil_permissao', function (Blueprint $table) { //perfil_permissao
             $table->increments('id');
-            $table->integer('userperfil_id')->unsigned()->nullable();
-            $table->foreign('userperfil_id')
+            $table->integer('perfil_id')->unsigned()->nullable();
+            $table->foreign('perfil_id')
                   ->references('id')
-                  ->on('userperfil')
+                  ->on('perfil')
                   ->onDelete('cascade');
 
-            $table->integer('userpermissao_id')->unsigned()->nullable();
-            $table->foreign('userpermissao_id')
+            $table->integer('permissao_id')->unsigned()->nullable();
+            $table->foreign('permissao_id')
                   ->references('id')
-                  ->on('userpermissao')
+                  ->on('permissao')
                   ->onDelete('cascade');
             $table->timestamps();
         });
@@ -140,10 +135,10 @@ class CreateUsersTable extends Migration {
      */
     public function down() {
         Schema::dropIfExists('users');
-        Schema::dropIfExists('users_userperfil');
-        Schema::dropIfExists('userperfil');
-        Schema::dropIfExists('userperfil_userpermissao');
-        Schema::dropIfExists('userpermissao');
+        Schema::dropIfExists('perfil_user');
+        Schema::dropIfExists('perfil');
+        Schema::dropIfExists('perfil_permissao');
+        Schema::dropIfExists('permissao');
         Schema::dropIfExists('responsavel');
 
     }

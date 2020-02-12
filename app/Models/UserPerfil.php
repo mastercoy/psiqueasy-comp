@@ -11,22 +11,15 @@ class UserPerfil extends Model {
 
 
     public function user() {
-        return $this->belongsToMany('App\User', 'users_userperfil',
-                                    'userperfil_id', 'user_id');
+        return $this->belongsToMany('App\User', 'perfil_user',
+                                    'perfil_id', 'user_id');
     }
 
     public function permissao() {
-        return $this->belongsToMany('App\Models\UserPermissao', 'userperfil_userpermissao',
-                                    'userperfil_id', 'userpermissao_id');
+        return $this->belongsToMany('App\Models\UserPermissao', 'perfil_permissao',
+                                    'perfil_id', 'permissao_id');
 
     }
 
-    /*public function user_pivot() {
-        return $this->belongsToMany('App\Models\UserPerfilPivot');
-    }
-
-    public function permissoes_pivot() {
-        return $this->belongsToMany('App\Models\PerfilPermissaoPivot');
-    }*/
 
 }

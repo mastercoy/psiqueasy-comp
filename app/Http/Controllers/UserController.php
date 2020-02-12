@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PerfilPermissaoPivot;
 use App\Models\UserPerfil;
 use App\Models\UserPerfilPivot;
-use App\Models\UserPermissao;
 use App\User;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
@@ -13,8 +11,9 @@ use Illuminate\Support\Facades\Response;
 class UserController extends Controller {
 
     public function setPerfilUser(User $user_json, UserPerfil $user_perfil_json) {
+        //obs set_perfil
         //vincula um perfil a um usuário
-        $conditions      = ['user_id' => $user_json->id, 'userperfil_id' => $user_perfil_json->id];
+        $conditions      = ['user_id' => $user_json->id, 'perfil_id' => $user_perfil_json->id];
         $userPerfilPivot = UserPerfilPivot::where($conditions)->first();
 
         if (isset($userPerfilPivot)) {
@@ -28,6 +27,7 @@ class UserController extends Controller {
     }
 
     public function delPerfilUser(User $user_json) {
+        //obs del_perfil
         //desvincula perfil do usuário
         $user = User::find($user_json->id);
         if (!$user->perfil()->get()->toArray()) {
@@ -42,7 +42,6 @@ class UserController extends Controller {
     public function index() { //
         //fixme
         //obs index_user
-        //então checar user->empresa_id == objeto->empresa_id
 
         $users      = User::all();
         $listaUsers = [];
@@ -74,7 +73,7 @@ class UserController extends Controller {
     }
 
     public function show(User $user_json) { // retorna usuário e um array de permissões, pode ser vazio caso nao as tenha
-
+        //obs show_user
         $listaPermissoesUser = [];
 
         if (isset(User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
@@ -125,36 +124,6 @@ class UserController extends Controller {
 
     }
 
-    public function verificarPermissao(User $user_json, $string) { //fixme apagar
-        // cada método do crud terá um nome de permissão
-        // criar_paciente, remover_paciente, editar_paciente, gerar_relat_financeiro, gerar_relat_atendimentos
-        // usuario
-        $usuario = User::find($user_json->id);
-        // tabela pivot  user >< perfil
-        $userPerfilPivot = UserPerfilPivot::whereUserId($usuario->id);
-        // perfil bonitinho
-        $perfil = UserPerfil::find($userPerfilPivot->get()->pluck('userperfil_id')->toArray()[0]);
-        // tabela pivot  perfil >< permissoes
-        $perfilPermissaoPivot = PerfilPermissaoPivot::whereUserperfilId($perfil->id)->get()->toArray();
-
-        // confere permissões através da tabela pivot e salva os nomes em um array
-        foreach ($perfilPermissaoPivot as $pivot) {
-            $permissao       = UserPermissao::whereId($pivot['userpermissao_id'])->first()->toArray();
-            $nomePermissao[] = $permissao['name'];
-        }
-        dd($nomePermissao); // mostra array com as permissões
-
-        // verifica se existe a permissão questionada no array de permissões do usuário
-        return in_array($string, $nomePermissao);
-
-        /*foreach ($nomePermissao as $nome) {
-            if ($nome == $string) {
-                return true;
-            }
-        }
-        return false;*/
-
-    }
 
     // ========================= protected
 

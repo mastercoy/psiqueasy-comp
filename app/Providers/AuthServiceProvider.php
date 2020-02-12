@@ -24,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider {
         $this->registerPolicies();
 
         //afazer vários guards. checar empresa, checar usuario, checar permissão
+        //afazer guard q verifica se pertence e a checagem de permissões
 
         Gate::define('pertence-usuario-logado', function ($user, $objeto) {
             return $user->id == $objeto->user_id;

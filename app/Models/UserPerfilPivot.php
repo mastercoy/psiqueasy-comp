@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserPerfilPivot extends Model {
     //
     protected $guarded = [];
-    protected $table   = 'users_userperfil';
+    protected $table   = 'perfil_user';
 
 
 }

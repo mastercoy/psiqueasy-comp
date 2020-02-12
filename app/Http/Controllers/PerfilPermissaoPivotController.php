@@ -51,8 +51,8 @@ class PerfilPermissaoPivotController extends Controller {
 
     protected function validatePerfilPermissaoPivotRequest() {
         return request()->validate([
-                                       'userperfil_id' => 'required',
-                                       'userpermissao_id' => 'required',
+                                       'perfil_id' => 'required',
+                                       'permissao_id' => 'required',
                                    ]);
     }
 }

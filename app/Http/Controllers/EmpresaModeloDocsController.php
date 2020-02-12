@@ -66,7 +66,6 @@ class EmpresaModeloDocsController extends Controller {
 
     }
 
-
     public function desativarModeloDocs(EmpresaModeloDocs $empresa_modelo_docs_json) {
         //obs desativar_emp_model
         $modelo = EmpresaModeloDocs::find($empresa_modelo_docs_json->id);

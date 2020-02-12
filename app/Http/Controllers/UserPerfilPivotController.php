@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserPerfilPivot;
 use Illuminate\Support\Facades\Response;
 
-class UserPerfilPivotController extends Controller {
+class UserPerfilPivotController extends Controller { //afazer apagar controller?
 
     public function index() {
         //
@@ -50,7 +50,7 @@ class UserPerfilPivotController extends Controller {
     protected function validateUserPerfilPivotRequest() {
         return request()->validate([
                                        'user_id' => 'required',
-                                       'userperfil_id' => 'required',
+                                       'perfil_id' => 'required',
                                    ]);
     }
 

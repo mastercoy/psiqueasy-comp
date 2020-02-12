@@ -81,7 +81,7 @@ class ResponsavelController extends Controller { //verificar se user->id == resp
     }
 
     public function excluidosResponsavel(Responsavel $responsavel_json) {
-        //obs listar_desativados_responsavel
+        //obs listar_desat_resp
         $user = User::find($responsavel_json->id);
 
         return Responsavel::where([

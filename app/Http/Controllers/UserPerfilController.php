@@ -9,15 +9,16 @@ use Illuminate\Support\Facades\Response;
 
 class UserPerfilController extends Controller { //afazer como verificar os perfis? não tem chave para comparação
 
-    public function index() {// exibir os perfis
+    public function index() {// exibir os perfis //afazer utilizar o guard
         //obs index_perfil
         $perfil = UserPerfil::all();
         return Response::json($perfil);
     }
 
     public function setPermissaoPerfil(UserPerfil $user_perfil_json, UserPermissao $user_permissao_json) {
+        //obs set_permissao
         //vincula permissão ao perfil
-        $conditions           = ['userperfil_id' => $user_perfil_json->id, 'userpermissao_id' => $user_permissao_json->id];
+        $conditions           = ['perfil_id' => $user_perfil_json->id, 'permissao_id' => $user_permissao_json->id];
         $perfilPermissaoPivot = PerfilPermissaoPivot::where($conditions)->first();
 
         if (isset($perfilPermissaoPivot)) {
@@ -30,8 +31,9 @@ class UserPerfilController extends Controller { //afazer como verificar os perfi
     }
 
     public function delPermissaoPerfil(UserPerfil $user_perfil_json, UserPermissao $user_permissao_json) {
+        //obs del_permissao
         //remove a permissão do perfil
-        $conditions           = ['userperfil_id' => $user_perfil_json->id, 'userpermissao_id' => $user_permissao_json->id];
+        $conditions           = ['perfil_id' => $user_perfil_json->id, 'permissao_id' => $user_permissao_json->id];
         $perfilPermissaoPivot = PerfilPermissaoPivot::where($conditions)->first();
 
         if (isset($perfilPermissaoPivot)) {
@@ -54,7 +56,6 @@ class UserPerfilController extends Controller { //afazer como verificar os perfi
 
     public function show(UserPerfil $user_perfil_json) {
         //obs show_perfil
-        //fixme usar novo GATE
         $perfil = UserPerfil::find($user_perfil_json->id);
         return Response::json($perfil);
 
@@ -92,6 +93,8 @@ class UserPerfilController extends Controller { //afazer como verificar os perfi
                                        'name' => 'required',
                                        'label' => 'nullable',
                                        'active' => 'nullable',
+                                       'user_id' => 'nullable',
+                                       'empresa_id' => 'nullable'
                                    ]);
 
 

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Response;
 
 class EmpresaFilialController extends Controller {
 
-    public function index() { //obs verificar se user->empresa_id filial->empresa_id
+    public function index() { //
         //obs index_filial
         $filiais      = EmpresaFilial::all();
         $listaFiliais = [];
@@ -33,7 +33,7 @@ class EmpresaFilialController extends Controller {
     public function show(EmpresaFilial $empresa_filial_json) {
         //obs show_filial
         $filial = EmpresaFilial::find($empresa_filial_json->id);
-       
+
         if (Gate::allows('pertence-mesma-empresa', $filial)) {
             return $filial;
         } else {
