@@ -39,8 +39,7 @@ class UserController extends Controller {
 
     }
 
-    public function index() { //afazer mostrar todos users da mesma empresa
-
+    public function index() { //
         //fixme
         //obs index_user
         //então checar user->empresa_id == objeto->empresa_id

@@ -18,7 +18,5 @@ class UserPermissao extends Model {
                                     'userpermissao_id', 'userperfil_id');
     }
 
-    /*public function perfis_pivot() {
-        return $this->belongsToMany('App\Models\PerfilPermissao');
-    }*/
+
 }

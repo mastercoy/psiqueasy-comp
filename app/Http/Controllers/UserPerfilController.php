@@ -16,7 +16,7 @@ class UserPerfilController extends Controller { //afazer como verificar os perfi
     }
 
     public function setPermissaoPerfil(UserPerfil $user_perfil_json, UserPermissao $user_permissao_json) {
-        //vincula permissão ao perfil userperfil_id	userpermissao_id
+        //vincula permissão ao perfil
         $conditions           = ['userperfil_id' => $user_perfil_json->id, 'userpermissao_id' => $user_permissao_json->id];
         $perfilPermissaoPivot = PerfilPermissaoPivot::where($conditions)->first();
 
