@@ -30,8 +30,16 @@
               <td></td>
               <td> {{ user.nome }}</td>
               <td>{{ user.email }}</td>
-              <td v-bind:class="{'ativo': user.emailStatus, 'pendente': !user.emailStatus}">{{ user.vefEmail}}</td>
-               <td><router-link :to="{name:'EditUsuario', params: {user} }" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td> 
+              <td v-bind:class="{'ativo': user.emailStatus === 1, 'pendente': user.emailStatus === 0, 'expirado': user.emailStatus === 2}">{{ user.vefEmail}}</td>
+              <td v-if="user.emailStatus === 1"><router-link :to="{name:'EditUsuario', params: {user} }" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td>
+              <td 
+                v-else-if="user.emailStatus === 0">
+                <button class="btn btn-sm btn-warning" disabled><i class="fa fa-pencil-square" aria-hidden="true"></i></button>
+              </td> 
+              <td 
+                v-else-if="user.emailStatus === 2">
+                <button class="btn btn-secondary btn-sm"> R </button>
+              </td> 
               <td><a @click="selectUser = user.nome" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a></td>                
             </tr>
           </tbody>
@@ -122,22 +130,29 @@ export default {
         id: 1,
         nome: 'Matheus Henrique',
         email: 'teteu@gmail.com',
-        emailStatus: true,
-        vefEmail: 'verified'
+        emailStatus: 1,
+        vefEmail: 'verificado'
         },
         {
         id: 2,
         nome: 'Nylo Pinto',
         email: 'nylus_nograu@gmail.com',
-        emailStatus: true,
-        vefEmail: 'verified'
+        emailStatus: 1,
+        vefEmail: 'verificado'
         },
         {
         id: 3,
-        nome: 'Joãozin Pedrosa',
+        nome: 'João Pedrosa',
         email: 'johndoe@hotmail.com',
-        emailStatus: false,
-        vefEmail: 'pendent'
+        emailStatus: 0,
+        vefEmail: 'pendente'
+        },
+        {
+        id: 4,
+        nome: 'Carlos Nogueira',
+        email: 'ca_lu10000e@gmail.com',
+        emailStatus: 2,
+        vefEmail: 'expirado'
 
         }
       ],
@@ -147,6 +162,9 @@ export default {
   methods: {
     delUser() {
       console.log("Teste");
+    },
+    editUSer() {
+      this.$router.push("/EditUsuario");
     }
   }
 }
@@ -177,6 +195,11 @@ export default {
   .pendente {
     font-weight: bold;
     color: red;
+  }
+
+   .expirado {
+    font-weight: bold;
+    color: grey;
   }
   
 </style>
