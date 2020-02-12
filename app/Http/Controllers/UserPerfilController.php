@@ -5,14 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\PerfilPermissaoPivot;
 use App\Models\UserPerfil;
 use App\Models\UserPermissao;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 
 class UserPerfilController extends Controller { //afazer como verificar os perfis? não tem chave para comparação
 
-    public function index() {// exibir os perfis //afazer utilizar o guard
+    public function index() {
         //obs index_perfil
-        $perfil = UserPerfil::all();
-        return Response::json($perfil);
+        $perfis      = UserPerfil::all();
+        $listaPerfis = [];
+
+        foreach ($perfis as $perfil) {
+            if (Gate::allows('pertence-mesma-empresa', $perfil)) {
+                $listaPerfis[] = $perfil;
+            }
+        }
+
+        return Response::json($listaPerfis);
     }
 
     public function setPermissaoPerfil(UserPerfil $user_perfil_json, UserPermissao $user_permissao_json) {
@@ -57,7 +66,12 @@ class UserPerfilController extends Controller { //afazer como verificar os perfi
     public function show(UserPerfil $user_perfil_json) {
         //obs show_perfil
         $perfil = UserPerfil::find($user_perfil_json->id);
-        return Response::json($perfil);
+        if (Gate::allows('pertence-mesma-empresa', $perfil)) {
+            return $perfil;
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
 
     }
 
@@ -67,23 +81,34 @@ class UserPerfilController extends Controller { //afazer como verificar os perfi
 
     public function update(UserPerfil $user_perfil_json) {
         //obs update_perfil
-        $user_perfil_json->update($this->validateUserPerfilRequest());
-
+        $perfil = UserPerfil::find($user_perfil_json->id);
+        if (Gate::allows('pertence-mesma-empresa', $perfil)) {
+            $user_perfil_json->update($this->validateUserPerfilRequest());
+        } else {
+            abort(403, 'Não encontrado!');
+        }
     }
 
     public function destroy(UserPerfil $user_perfil_json) {
         //obs destroy_perfil
-        $user_perfil_json->delete();
+        $perfil = UserPerfil::find($user_perfil_json->id);
+        if (Gate::allows('pertence-mesma-empresa', $perfil)) {
+            $user_perfil_json->delete();
+        } else {
+            abort(403, 'Não encontrado!');
+        }
 
     }
 
     public function desativarUserPerfil(UserPerfil $user_perfil_json) {
         //obs desativar_perfil
-        $perfil         = UserPerfil::find($user_perfil_json->id);
-        $perfil->active = false;
-        $perfil->save();
-
-
+        $perfil = UserPerfil::find($user_perfil_json->id);
+        if (Gate::allows('pertence-mesma-empresa', $perfil)) {
+            $perfil->active = false;
+            $perfil->save();
+        } else {
+            abort(403, 'Não encontrado!');
+        }
     }
 
     // ========================= protected

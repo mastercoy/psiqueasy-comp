@@ -70,7 +70,7 @@ class CreateUsersTable extends Migration {
         Schema::create('permissao', function (Blueprint $table) { //permissao
             $table->increments('id');
             $table->string('name', 45);
-            $table->string('label', 45)->nullable();
+            $table->string('label', 80)->nullable();
             $table->tinyInteger('active')->default(true);
             $table->timestamps();
 

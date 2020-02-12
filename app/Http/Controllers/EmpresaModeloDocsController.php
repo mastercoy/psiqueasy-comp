@@ -52,7 +52,6 @@ class EmpresaModeloDocsController extends Controller {
         } else {
             abort(403, 'Não encontrado!');
         }
-
     }
 
     public function destroy(EmpresaModeloDocs $empresa_modelo_docs_json) {

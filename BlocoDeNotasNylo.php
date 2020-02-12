@@ -33,7 +33,7 @@ desativar_emp_model - configura modelo de documento como INATIVO
 index_permissao - lista todas permissões
 criar_permissao - cria uma nova permissão
 show_permissao - exibe permissão
-update_permissao - atualiza informaçõs da permissao
+update_permissao - atualiza informações da permissao
 destroy_permissao - apaga por completo a permissao
 desativar_permissao - configura permissao como INATIVA
 === USER PERFIL CONTROLLER
