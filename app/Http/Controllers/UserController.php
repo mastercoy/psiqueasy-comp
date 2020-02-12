@@ -39,8 +39,7 @@ class UserController extends Controller {
 
     }
 
-    public function index() { //
-        //fixme
+    public function index() {
         //obs index_user
 
         $users      = User::all();
@@ -52,15 +51,6 @@ class UserController extends Controller {
             }
         }
         return Response::json($listaUsers);
-
-        //afazer transformar no guard
-        //obs Lista todas as permissões
-        /*$permissoes = UserPermissao::all()->toArray();
-        foreach ($permissoes as $permissao) {
-            $listaTodasPermissoes[] = $permissao['name'];
-        }*/
-
-
     }
 
     public function create() {

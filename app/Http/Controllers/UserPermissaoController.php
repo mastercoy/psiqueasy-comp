@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserPermissao;
 use Illuminate\Support\Facades\Response;
 
-class UserPermissaoController extends Controller { //afazer como verificar? não tem chave estrangeira
+class UserPermissaoController extends Controller { //fixme talvez apagar
 
     public function index() {
         //obs index_permissao

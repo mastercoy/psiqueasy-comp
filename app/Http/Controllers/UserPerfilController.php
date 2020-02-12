@@ -8,7 +8,7 @@ use App\Models\UserPermissao;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 
-class UserPerfilController extends Controller { //afazer como verificar os perfis? não tem chave para comparação
+class UserPerfilController extends Controller {
 
     public function index() {
         //obs index_perfil
