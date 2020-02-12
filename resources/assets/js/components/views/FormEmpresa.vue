@@ -127,7 +127,7 @@ export default {
       //   })
 
        let id = this.$store.state.userID
-       id = 10
+       //id = 10
       
        axios.get(`api/empresa-json/${id}`).then(({ data }) => {
          console.log(data);
