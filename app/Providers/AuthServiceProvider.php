@@ -38,36 +38,34 @@ class AuthServiceProvider extends ServiceProvider {
             return $user->id == $objeto->user_id && $objeto->active == 1;
         });
 
-        Gate::define('pertence-mesma-empresa', function ($user, $objeto) {
+        Gate::define('pertence-mesma-empresa', function ($user, $objeto) { //afazer apagar
             return $user->empresa_id == $objeto->empresa_id;
         });
 
-        Gate::define('pertence-usuario-e-tem-permissao', function ($user, $arrayPermissoes, $nomePermissao) {
-            dd($arrayPermissoes);
-            dd($nomePermissao);
-            dd($user);
+        Gate::define('pertence-mesma-empresa-e-tem-permissao', function ($user, $objeto) {
+
+            $decoder         = json_decode($objeto);
+            $nomePermissao   = $decoder[0];
+            $usuario         = $decoder[1];
+            $arrayPermissoes = $decoder[2];
+
+            return ($user->empresa_id == $usuario->empresa_id) && (in_array($nomePermissao, $arrayPermissoes));
 
         });
 
-        /*
-         * $listaPermissoesUser = [];
+        Gate::define('pertence-a-empresa-e-tem-permissao', function ($user, $objeto) {
 
-        if (isset(User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
-            $user = User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'];
-            foreach ($user as $permissoes) {
-                $listaPermissoesUser[] = $permissoes['name'];
-            }
-        }
+            $decoder         = json_decode($objeto);
+            $nomePermissao   = $decoder[0];
+            $arrayPermissoes = $decoder[1];
+            $empresa         = $decoder[2];
+//            dd($empresa);
+//            dd($empresa->id);
 
-        $usuarioAndPermissoes[] = User::find($user_json->id)->toArray();
-        $usuarioAndPermissoes[] = $listaPermissoesUser;
+            return ($user->empresa_id == $empresa->id) && (in_array($nomePermissao, $arrayPermissoes));
 
-        return $usuarioAndPermissoes;
-         *
-         *
-         */
+        });
 
-        //
 
     }
 }

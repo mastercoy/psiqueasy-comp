@@ -3,23 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 
 class EmpresaController extends Controller {
 
-    public function index() {
+    public function index() { //afazer limpar
         //obs index_empresa
-        Auth::loginUsingId(1);
+
+        Auth::loginUsingId(1); //fixme retirar
+
+        $nomePermissao   = 'index_empresa';
+        $user            = Auth::user();                    // usuário é o usuário logado
+        $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
+//dd($arrayPermissoes);
+        // joga tudo em um array, converte pra json e envia no guard
+        $arrayCompleto = [$nomePermissao, $arrayPermissoes];
+
         $empresas     = Empresa::all();
         $listaEmpresa = [];
 
         foreach ($empresas as $empresa) {
-            if (Gate::allows('pertence-a-empresa', $empresa)) {
+            $arrayCompleto[2] = $empresa;
+            $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+            if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) {
                 $listaEmpresa[] = $empresa;
             }
         }
+
         return Response::json($listaEmpresa);
     }
 
@@ -79,6 +92,24 @@ class EmpresaController extends Controller {
     }
 
     // ========================= protected
+
+    protected function retornaPermissoes(User $user_json) {
+
+        $listaPermissoesUser = [];
+
+        if (isset(User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
+            $permissoes = User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'];
+
+            foreach ($permissoes as $permissao) {
+                $listaPermissoesUser[] = $permissao['name'];
+            }
+
+        } else {
+            return $listaPermissoesUser;
+        }
+
+        return $listaPermissoesUser;
+    }
 
     protected function validateEmpresaRequest() {
         return request()->validate([
