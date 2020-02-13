@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 
@@ -10,6 +11,7 @@ class EmpresaController extends Controller {
 
     public function index() {
         //obs index_empresa
+        Auth::loginUsingId(1);
         $empresas     = Empresa::all();
         $listaEmpresa = [];
 
@@ -32,6 +34,7 @@ class EmpresaController extends Controller {
 
     public function show(Empresa $empresa_json) {
         //obs show_empresa
+        Auth::loginUsingId(1);
         $empresa = Empresa::find($empresa_json->id);
         if (Gate::allows('pertence-a-empresa', $empresa)) {
             return $empresa;

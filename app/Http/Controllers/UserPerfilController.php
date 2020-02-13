@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\PerfilPermissaoPivot;
 use App\Models\UserPerfil;
 use App\Models\UserPermissao;
+use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 
@@ -12,12 +14,13 @@ class UserPerfilController extends Controller {
 
     public function index() {
         //obs index_perfil
+        Auth::loginUsingId(1);
         $perfis      = UserPerfil::all();
         $listaPerfis = [];
-
+        $user        = User::find(1);
         foreach ($perfis as $perfil) {
             if (Gate::allows('pertence-mesma-empresa', $perfil)) {
-                $listaPerfis[] = $perfil;
+                $listaPerfis[] = $perfil; //fixme devolver pro gate
             }
         }
 
