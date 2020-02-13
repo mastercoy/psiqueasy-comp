@@ -60,7 +60,7 @@
           <div class="container vl">
             <div class="container">
               <div class="row">
-                <input class="magic-checkbox" type="checkbox" id="teste" value="Relatórios Financeiros" @click="checkAll" v-model="checkRF" />
+                <input class="magic-checkbox" type="checkbox" id="teste" value="Relatórios Financeiros" @click="checkAll" v-model="checkRF" @change="updateAll"/>
                 <label for="teste"> Relatórios Financeiros</label>
               </div>
               <div class="container">
@@ -79,7 +79,7 @@
               </div>
               <br />
               <div class="row">
-                <input class="magic-checkbox" type="checkbox" id="teste21" value="Pagamentos"  @click="checkAll" v-model="checkRF1"/>
+                <input class="magic-checkbox" type="checkbox" id="teste21" value="Pagamentos"  @click="checkAll" v-model="checkRF1" @change="updateAll"/>
                 <label for="teste21">Pagamentos</label>
               </div>
                 <div class="container">
@@ -235,7 +235,7 @@
         <div class="col-md-8"></div>
         <div class="col-md-4">
           <button class="btn btn-deafult mr-1">Voltar</button>
-          <button class="btn btn-primary" @click="getPermissoes">Continuar</button>
+          <button class="btn btn-primary" @click="getPermissoes">Continuar <i class="fa fa-arrow-right" aria-hidden="true"></i> </button>
         </div>
       </div>
     </div>
@@ -329,19 +329,16 @@ export default {
         default :
           console.log('Nenhuma opção');
       }
-    },
+    },    
     updateCheckRF1() {
       //Método para verificar todas as chechboxs
       if (this.permissoesRF1  == 3) {
         this.checkRF = true;
       } else {
         this.checkRF = false;
-      }
-      if( this.permissoesRF1 === 3 && this.permissoesRF2 === 3 ){
-        this.checkF = true;
-      }else {
         this.checkF = false;
       }
+      
     },
     updateCheckRF2() {
       //Método para verificar todas as chechboxs
@@ -349,13 +346,16 @@ export default {
         this.checkRF1 = true;
       } else {
         this.checkRF1 = false;
+        this.checkF = false;
       }
-      if( this.permissoesRF1 === 3 && this.permissoesRF2 === 3 ){
+    },
+    updateAll() {
+      if(this.checkRF1 == true && this.checkRF == true){
         this.checkF = true;
       }else {
         this.checkF = false;
       }
-    },
+    }
    }
 }
 </script>
