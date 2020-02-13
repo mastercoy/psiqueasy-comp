@@ -16,8 +16,8 @@ export default new Vuex.Store({
         usuários: [],
         Status: 2, //OK
         statusEmpresa: false, //OK
-        userID: 17,
-        empresaID: 10,
+        userID: 1,
+        empresaID: 1,
         token: localStorage.getItem("user-token") || "",
         user: "" //Precisa ser revisado
     },

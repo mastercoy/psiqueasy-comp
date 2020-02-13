@@ -24,24 +24,14 @@
 
         <div class="form-group">
           <div class="container">
-            <h5><strong>Atribuições: </strong></h5>
+            <h5><strong>Perfil: </strong></h5>
                 <div class="row">
-                  <div class="col-md-3">
-                    <input class="magic-checkbox" type="checkbox" id="Agendamentos" value="Agendamentos" v-model="user.atribuicoes" /> 
-                    <label for="Agendamentos">Agendamentos</label>
-                  </div>
-                  <div class="col-md-3">
-                    <input class="magic-checkbox" type="checkbox" id="Financas"  value="Financas" v-model="user.atribuicoes"/> 
-                    <label for="Financas">Financas</label>
-                  </div>
-                  <div class="col-md-3">
-                    <input class="magic-checkbox" type="checkbox" id="cadastros" value="cadastros" v-model="user.atribuicoes"/> 
-                    <label for="cadastros">Cadastros</label>
-                  </div>
-                  <div class="col-md-3">
-                    <input class="magic-checkbox" type="checkbox" id="Admin" value="admin"  v-model="user.atribuicoes"/> 
-                     <label for="Admin">Admin</label>
-                  </div>
+                  <select class="custom-select">
+                    <option selected>Open this select menu</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
                 </div>   
           </div>       
         </div>
