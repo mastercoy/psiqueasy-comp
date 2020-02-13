@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\EmpresaFilial;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 
 class EmpresaFilialController extends Controller {
 
     public function index() { //
+        Auth::loginUsingId(1); //*
         //obs index_filial
         $filiais      = EmpresaFilial::all();
         $listaFiliais = [];
@@ -46,6 +48,7 @@ class EmpresaFilialController extends Controller {
     }
 
     public function update(EmpresaFilial $empresa_filial_json) {
+        Auth::loginUsingId(1);
         //obs update_filial
         $filial = EmpresaFilial::find($empresa_filial_json->id);
         if (Gate::allows('pertence-mesma-empresa', $filial)) {
