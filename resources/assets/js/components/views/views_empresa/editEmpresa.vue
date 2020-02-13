@@ -66,8 +66,8 @@ export default {
     }
   },
   mounted(){
-    // this.cnpj = this.cadEmpresa.cnpj,  :onblur="validarCNPJ"
-    // this.n_empresa = this.cadEmpresa.NomeEmp
+     this.cnpj = this.cadEmpresa.cnpj, 
+     this.nomeEmpresa = this.cadEmpresa.NomeEmp
   },
   props: ['cadEmpresa'],
   methods: {
@@ -76,7 +76,23 @@ export default {
       if (this.$v.$invalid) {
         console.log("Preencha os campos necessários!")
       } else {
-        console.log(this.cnpj)
+        let empresaUpd = {
+          cpf_cnpj: this.cnpj,
+          logo_marca: this.nomeEmpresa
+        }
+
+        axios.put(`/api/empresa-json/${this.$store.state.empresaID}`, empresaUpd)
+         .then(({ data }) => {
+         console.log(data);
+         this.$router.push("/cadastro");
+       });
+
+
+       let toast = this.$toasted.show("Os dados foram atualizados com Sucesso!!", { 
+          theme: "toasted-primary", 
+          position: "bottom-right", 
+          duration : 1500
+        });
      
       }      
     },

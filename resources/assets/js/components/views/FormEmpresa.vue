@@ -75,20 +75,20 @@
 
         <div class="row">
           <div class="col-md-6">
-             <label><strong>CNPJ: </strong></label> {{cadEmpresa.cnpj }}
+             <label><strong>CNPJ: </strong> {{ mascaraCnpj(cadEmpresa.cnpj) }} </label> 
           </div>
           <div class="col-md-6"></div>
         </div>
-        
+
         </div>
         <hr>
-        <div class="row">
+        <!-- <div class="row">
           <div class="col-md-4"></div>
           <div class="col-md-4">
             <button class="btn btn-default btn-sm"> Endereços </button>
           </div>
           <div class="col-md-4"></div>
-        </div>
+        </div> -->
   </div>
 
 </div>  
@@ -107,9 +107,9 @@ export default {
       cnpj: '',
       nomeEmpresa: '',
       cadEmpresa: {
-        nome: 'Nylo Pinto Figueira',
-        cnpj: '54.643.512/0001-03',
-        NomeEmp: 'Nylus Enterprise LTDA',
+        nome: '',
+        cnpj: '',
+        NomeEmp: '',
         naturezaJuridica: '',
         gestao: ''
       }
@@ -131,8 +131,8 @@ export default {
       
        axios.get(`api/empresa-json/${id}`).then(({ data }) => {
          console.log(data);
-        //  this.cadEmpresa.NomeEmp = data.logo_marca
-        //  this.cadEmpresa.cnpj = data.cpf_cnpj
+          this.cadEmpresa.NomeEmp = data.logo_marca
+          this.cadEmpresa.cnpj = data.cpf_cnpj
        });
     },
     createEmpresa() {
@@ -156,7 +156,10 @@ export default {
     //this.getEmpresa();
     },
     atualizarEmpresa() {
-      console.log("empresa Atualizada")
+      console.log("empresa Atualizada");
+    },
+    mascaraCnpj(valor) {
+      return valor.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g,"\$1.\$2.\$3\/\$4\-\$5");
     }
   },
   validations: {

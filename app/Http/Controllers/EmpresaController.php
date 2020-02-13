@@ -11,7 +11,7 @@ class EmpresaController extends Controller {
 
     public function index() {
         //obs index_empresa
-        Auth::loginUsingId(1);
+        Auth::loginUsingId(1); // a ser retirado depois
         $empresas     = Empresa::all();
         $listaEmpresa = [];
 
@@ -34,7 +34,7 @@ class EmpresaController extends Controller {
 
     public function show(Empresa $empresa_json) {
         //obs show_empresa
-        Auth::loginUsingId(1);
+        // Auth::loginUsingId(1);
         $empresa = Empresa::find($empresa_json->id);
         if (Gate::allows('pertence-a-empresa', $empresa)) {
             return $empresa;
@@ -46,8 +46,9 @@ class EmpresaController extends Controller {
     public function edit($id) {
         //
     }
-
+    
     public function update(Empresa $empresa_json) {
+        // Auth::loginUsingId(1);
         //obs update_empresa
         $empresa = Empresa::find($empresa_json->id);
         if (Gate::allows('pertence-a-empresa', $empresa)) {
