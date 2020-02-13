@@ -54,10 +54,6 @@ class UserController extends Controller {
         return Response::json($listaUsers);
     }
 
-    public function create() {
-        //
-    }
-
     public function store() {
         //obs criar_user
         $user_json = User::create($this->validateUserRequest());

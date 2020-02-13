@@ -257,6 +257,78 @@ class CasoDeUsoSeeder extends Seeder {
 
                                        ]);
 
+        DB::table('permissao')->insert([
+                                           'name' => 'index_empresa',
+                                           'label' => 'lista empresas',
+
+                                       ]);
+
+        DB::table('permissao')->insert([
+                                           'name' => 'criar_empresa',
+                                           'label' => 'Cria nova empresa',
+
+                                       ]);
+
+        DB::table('permissao')->insert([
+                                           'name' => 'show_empresa',
+                                           'label' => 'Exibe empresa',
+
+                                       ]);
+
+        DB::table('permissao')->insert([
+                                           'name' => 'update_empresa',
+                                           'label' => 'Atualiza informações da empresa',
+
+                                       ]);
+
+        DB::table('permissao')->insert([
+                                           'name' => 'destroy_empresa',
+                                           'label' => 'Deleta empresa por completo',
+
+                                       ]);
+
+        DB::table('permissao')->insert([
+                                           'name' => 'desativar_empresa',
+                                           'label' => 'Desativa Empresa',
+
+                                       ]);
+
+        DB::table('permissao')->insert([
+                                           'name' => '',
+                                           'label' => '',
+
+                                       ]);
+
+        DB::table('permissao')->insert([
+                                           'name' => '',
+                                           'label' => '',
+
+                                       ]);
+
+        DB::table('permissao')->insert([
+                                           'name' => '',
+                                           'label' => '',
+
+                                       ]);
+
+        DB::table('permissao')->insert([
+                                           'name' => '',
+                                           'label' => '',
+
+                                       ]);
+
+        DB::table('permissao')->insert([
+                                           'name' => '',
+                                           'label' => '',
+
+                                       ]);
+
+        DB::table('permissao')->insert([
+                                           'name' => '',
+                                           'label' => '',
+
+                                       ]);
+
 
     }
 }

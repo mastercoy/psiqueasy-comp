@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Response;
 
 class EmpresaController extends Controller {
 
-    public function index() { //afazer limpar
+    public function index() {//Ok //afazer limpar
         //obs index_empresa
 
         Auth::loginUsingId(1); //fixme retirar
@@ -18,7 +18,7 @@ class EmpresaController extends Controller {
         $nomePermissao   = 'index_empresa';
         $user            = Auth::user();                    // usuário é o usuário logado
         $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
-//dd($arrayPermissoes);
+
         // joga tudo em um array, converte pra json e envia no guard
         $arrayCompleto = [$nomePermissao, $arrayPermissoes];
 
@@ -36,58 +36,97 @@ class EmpresaController extends Controller {
         return Response::json($listaEmpresa);
     }
 
-    public function create() {
-        //
-    }
-
-    public function store() {
+    public function store() {  //Ok
         //obs criar_empresa
-        $empresa_json = Empresa::create($this->validateEmpresaRequest());
-    }
+        Auth::loginUsingId(1); //fixme retirar
 
-    public function show(Empresa $empresa_json) {
-        //obs show_empresa
-        Auth::loginUsingId(1);
-        $empresa = Empresa::find($empresa_json->id);
-        if (Gate::allows('pertence-a-empresa', $empresa)) {
-            return $empresa;
+        $nomePermissao   = 'criar_empresa';
+        $user            = Auth::user();                    // usuário é o usuário logado
+        $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
+        $arrayCompleto   = [$nomePermissao, $arrayPermissoes];
+        $jsonEncoder     = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+
+        if (Gate::allows('tem-permissao', $jsonEncoder)) {
+            $empresa_json = Empresa::create($this->validateEmpresaRequest());
         } else {
-            abort(403, 'Não encontrado!');
+            abort(403, 'Sem Permissão!');
         }
     }
 
-    public function edit($id) {
-        //
+    public function show(Empresa $empresa_json) { //Ok
+        //obs show_empresa
+        Auth::loginUsingId(1);                    //fixme retirar
+        $empresa = Empresa::find($empresa_json->id);
+
+        $nomePermissao   = 'show_empresa';
+        $user            = Auth::user();                    // usuário é o usuário logado
+        $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
+        $arrayCompleto   = [$nomePermissao, $arrayPermissoes, $empresa];
+        $jsonEncoder     = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+
+        if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) {
+            return $empresa;
+        } else {
+            abort(403, 'Sem Permissão!');
+        }
+
+
     }
 
     public function update(Empresa $empresa_json) {
         //obs update_empresa
+        Auth::loginUsingId(1); //fixme retirar
         $empresa = Empresa::find($empresa_json->id);
-        if (Gate::allows('pertence-a-empresa', $empresa)) {
+
+        $nomePermissao   = 'update_empresa';
+        $user            = Auth::user();                    // usuário é o usuário logado
+        $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
+        $arrayCompleto   = [$nomePermissao, $arrayPermissoes, $empresa];
+        $jsonEncoder     = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+
+        if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) {
             $empresa_json->update($this->validateEmpresaRequest());
         } else {
-            abort(403, 'Não encontrado!');
+            abort(403, 'Sem Permissão!');
         }
+
     }
 
-    public function destroy(Empresa $empresa_json) {
+    public function destroy(Empresa $empresa_json) { //Ok
         //obs destroy_empresa
+        Auth::loginUsingId(1);                       //fixme retirar
         $empresa = Empresa::find($empresa_json->id);
-        if (Gate::allows('pertence-a-empresa', $empresa)) {
+
+        $nomePermissao   = 'destroy_empresa';
+        $user            = Auth::user();                    // usuário é o usuário logado
+        $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
+        $arrayCompleto   = [$nomePermissao, $arrayPermissoes, $empresa];
+        $jsonEncoder     = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+
+        if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) {
             $empresa_json->delete();
         } else {
-            abort(403, 'Não encontrado!');
+            abort(403, 'Sem Permissão!');
         }
+
     }
 
-    public function desativarEmpresa(Empresa $empresa_json) {
+    public function desativarEmpresa(Empresa $empresa_json) { //Ok
         //obs desativar_empresa
+        Auth::loginUsingId(1);                                //fixme retirar
         $empresa = Empresa::find($empresa_json->id);
-        if (Gate::allows('pertence-a-empresa', $empresa)) {
+
+        $nomePermissao   = 'desativar_empresa';
+        $user            = Auth::user();                    // usuário é o usuário logado
+        $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
+        $arrayCompleto   = [$nomePermissao, $arrayPermissoes, $empresa];
+        $jsonEncoder     = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+
+        if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) {
             $empresa->active = false;
             $empresa->save();
         } else {
-            abort(403, 'Não encontrado!');
+            abort(403, 'Sem Permissão!');
         }
     }
 
