@@ -168,7 +168,7 @@ export default {
   },
   methods: {
     delUser() {
-      console.log("Teste");
+      $('#exampleModalCenter').modal('hide');
     },
     editUSer() {
       this.$router.push("/EditUsuario");

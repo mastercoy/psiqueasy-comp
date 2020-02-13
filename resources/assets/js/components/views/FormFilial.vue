@@ -65,23 +65,19 @@ export default {
   data() {
     return {
       selectFilial: '',
-      // filial: {
-      // nome: '',
-      // complemento: ''
-      // },
       filiais: []
     }
     
   },
   methods: {
-    getFiliais() {
+    getFiliais() {// Pegar Filiais
       axios.get('api/empresa-filial-json/').then(({data}) => {
        this.filiais = data;
        //console.log(data);
        console.log("Filiais montadas com sucesso");
      });
     },
-    delFilial() {
+    delFilial() { //Deletar Filial
       let id = this.selectFilial.id
       axios.patch(`api/desativar-empresa-filial-json/${id}`)
       .then(({data}) => {

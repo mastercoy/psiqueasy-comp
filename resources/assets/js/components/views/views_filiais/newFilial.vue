@@ -3,7 +3,7 @@
     <h4>Nova Filial</h4>
       <hr>
   <div class="container container-new">
-      <form @submit.prevent="criarFilial">
+      <form>
         <div class="form-group">
           <label for="nome"><strong>Nome: </strong></label>
           <input type="text" class="form-control" v-bind:class="{ 'is-invalid': $v.name.$error}" id="nome" v-model="$v.name.$model" placeholder="Digite o nome da Filial">
@@ -20,7 +20,7 @@
             <div class="col-md-8"></div>
             <div class="col-md-4">
                <router-link to="/filial" type="button" class="btn btn-default mr-1">Cancelar</router-link>
-               <button type="submit" class="btn btn-primary"><i aria-hidden="true" class="fa fa-floppy-o"></i> <b>Salvar</b> </button>
+               <button type="button" @click="criarFilial" class="btn btn-primary"><i aria-hidden="true" class="fa fa-floppy-o"></i> <b>Salvar</b> </button>
             </div>
           </div>
       </form>
@@ -61,9 +61,7 @@ export default {
         axios.post('/api/empresa-filial-json', nfilial).then(({ data })  => {      
           console.log(data);      
           this.$router.push("/filial");
-        });
-
-        
+        });        
 
         let toast = this.$toasted.show("Filial Adicionada com Sucesso!!", { 
           theme: "toasted-primary", 
