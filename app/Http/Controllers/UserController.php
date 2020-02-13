@@ -64,6 +64,7 @@ class UserController extends Controller {
 
     public function show(User $user_json) { // retorna usuário e um array de permissões, pode ser vazio caso nao as tenha
         //obs show_user
+        //afazer criar função pra retornar as permissões do user
         $listaPermissoesUser = [];
 
         if (isset(User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
