@@ -6,7 +6,7 @@
         <div class="form-group">
           <label for="nomeEmpresa"><strong>Nome Empresarial: </strong></label>
           <input type="text" class="form-control" v-bind:class="{ 'is-invalid': $v.nomeEmpresa.$error}" id="nomeEmpresa" v-model="$v.nomeEmpresa.$model">
-          <span v-if="$v.nomeEmpresa.$error">Este campo é obrigatório</span>
+          <span v-if="$v.nomeEmpresa.$error">Este campo é obrigatório </span>
         </div>
 
         <div class="form-group">  
