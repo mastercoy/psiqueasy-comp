@@ -2,7 +2,7 @@
    <div  class="form-temp">
     <h4>Dados da Empresa</h4> 
     <hr>
-      <form @submit.prevent="atualizarEmpresa">
+      <form>
         <div class="form-group">
           <label for="nomeEmpresa"><strong>Nome Empresarial: </strong></label>
           <input type="text" class="form-control" v-bind:class="{ 'is-invalid': $v.nomeEmpresa.$error}" id="nomeEmpresa" v-model="$v.nomeEmpresa.$model">
@@ -47,7 +47,7 @@
             <div class="col-md-8"></div>
             <div class="col-md-4">
                <router-link to="/cadastro" type="button" class="btn btn-default mr-1">Voltar</router-link>
-               <button type="submit" class="btn btn-success"><i aria-hidden="true" class="fa fa-floppy-o"></i>  <b>Atualizar</b> </button>
+               <button type="button" @click="atualizarEmpresa" class="btn btn-success"><i aria-hidden="true" class="fa fa-floppy-o"></i>  <b>Atualizar</b> </button>
             </div>
           </div>        
       </form>    

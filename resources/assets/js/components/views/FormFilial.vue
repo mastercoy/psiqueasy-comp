@@ -59,13 +59,8 @@
 
 <script>
 export default {
-   mounted(){
-     axios.get('api/empresa-filial-json/').then(({data}) => {
-       this.filiais = data;
-       //console.log(data);
-       console.log("Filiais montadas com sucesso");
-     });
-    
+   mounted(){     
+    this.getFiliais();
    },
   data() {
     return {
@@ -79,8 +74,29 @@ export default {
     
   },
   methods: {
+    getFiliais() {
+      axios.get('api/empresa-filial-json/').then(({data}) => {
+       this.filiais = data;
+       //console.log(data);
+       console.log("Filiais montadas com sucesso");
+     });
+    },
     delFilial() {
-      console.log("teste");
+      let id = this.selectFilial.id
+      axios.patch(`api/desativar-empresa-filial-json/${id}`)
+      .then(({data}) => {
+         console.log(data);
+      });
+
+      let toast = this.$toasted.show("A filial foi deletada com sucesso!!", { 
+          theme: "toasted-primary", 
+          position: "bottom-right", 
+          duration : 1500
+        });
+
+      $('#exampleModalCenter').modal('hide');
+      this.getFiliais();
+
     }
   }
 }

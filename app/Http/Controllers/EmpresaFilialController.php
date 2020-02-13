@@ -71,6 +71,7 @@ class EmpresaFilialController extends Controller {
 
 
     public function desativarFilial(EmpresaFilial $empresa_filial_json) {
+        Auth::loginUsingId(1);
         //obs desativar_filial
         $filial = EmpresaFilial::find($empresa_filial_json->id);
         if (Gate::allows('pertence-mesma-empresa', $filial)) {
