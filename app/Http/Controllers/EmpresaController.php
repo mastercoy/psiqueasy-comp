@@ -9,17 +9,20 @@ use Illuminate\Support\Facades\Response;
 
 class EmpresaController extends Controller {
 
-    public function index() {
+    public function index() { //afazer limpar
         //obs index_empresa
         // Auth::loginUsingId(1); 
         $empresas     = Empresa::all();
         $listaEmpresa = [];
 
         foreach ($empresas as $empresa) {
-            if (Gate::allows('pertence-a-empresa', $empresa)) {
+            $arrayCompleto[2] = $empresa;
+            $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+            if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) {
                 $listaEmpresa[] = $empresa;
             }
         }
+
         return Response::json($listaEmpresa);
     }
 
@@ -46,9 +49,8 @@ class EmpresaController extends Controller {
     public function edit($id) {
         //
     }
-    
+
     public function update(Empresa $empresa_json) {
-        // Auth::loginUsingId(1);
         //obs update_empresa
         $empresa = Empresa::find($empresa_json->id);
         if (Gate::allows('pertence-a-empresa', $empresa)) {
@@ -80,6 +82,24 @@ class EmpresaController extends Controller {
     }
 
     // ========================= protected
+
+    protected function retornaPermissoes(User $user_json) {
+
+        $listaPermissoesUser = [];
+
+        if (isset(User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
+            $permissoes = User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'];
+
+            foreach ($permissoes as $permissao) {
+                $listaPermissoesUser[] = $permissao['name'];
+            }
+
+        } else {
+            return $listaPermissoesUser;
+        }
+
+        return $listaPermissoesUser;
+    }
 
     protected function validateEmpresaRequest() {
         return request()->validate([

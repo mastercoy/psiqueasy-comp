@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserPerfil;
 use App\Models\UserPerfilPivot;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 
@@ -62,32 +63,26 @@ class UserController extends Controller {
         $user_json = User::create($this->validateUserRequest());
     }
 
-    public function show(User $user_json) { // retorna usuário e um array de permissões, pode ser vazio caso nao as tenha
+    public function show(User $user_json) {
         //obs show_user
-        $nomePermissao = 'show_user';
-        $user          = User::find($user_json->id);
-//        dd($user); //Ok
-        $arrayPermissoes = $this->retornaPermissoes($user);
-        $this->be($user);
-        if (Gate::allows('pertence-usuario-e-tem-permissao', $arrayPermissoes, $nomePermissao)) {
+        Auth::loginUsingId(1); //fixme retirar // para passar do guard, user logado
+
+        $nomePermissao   = 'show_user';
+        $user            = User::find($user_json->id);
+        $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
+
+        // joga tudo em um array, converte pra json e envia no guard
+        $arrayCompleto = [$nomePermissao, $user, $arrayPermissoes];
+        $jsonEncoder   = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+
+        //o guard transforma json pra array, pega as informações em cada posição [0],[1] etc, e faz as comparações
+        //retorna true ou false
+        if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
             dd('sucesso');
         } else {
             dd('falhou');
         }
-//        dd($permissões);
 
-//        dd($permissões);
-        /*$listaPermissoesUser = [];
-
-        if (isset(User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
-            $user = User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'];
-            foreach ($user as $permissoes) {
-                $listaPermissoesUser[] = $permissoes['name'];
-            }
-        }
-        $usuarioAndPermissoes[] = User::find($user_json->id)->toArray();
-        $usuarioAndPermissoes[] = $listaPermissoesUser;
-        return $usuarioAndPermissoes;*/
     }
 
     public function edit(User $user) {
@@ -129,24 +124,21 @@ class UserController extends Controller {
     // ========================= protected
 
     protected function retornaPermissoes(User $user_json) {
-//        dd($user_json); Ok
+
         $listaPermissoesUser = [];
+
         if (isset(User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
             $permissoes = User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'];
-//            dd($permissoes); //Ok
+
             foreach ($permissoes as $permissao) {
                 $listaPermissoesUser[] = $permissao['name'];
             }
-//            dd($listaPermissoesUser); //Ok
+
         } else {
             return $listaPermissoesUser;
-
         }
+
         return $listaPermissoesUser;
-//        dd('hit'); //Ok
-        /*$usuarioAndPermissoes[] = User::find($user_json->id)->toArray();
-        $usuarioAndPermissoes[] = $listaPermissoesUser;
-        return $usuarioAndPermissoes;*/
     }
 
     protected function validateUserRequest() {
