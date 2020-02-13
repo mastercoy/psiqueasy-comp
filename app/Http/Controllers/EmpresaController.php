@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
-use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 
@@ -11,7 +11,7 @@ class EmpresaController extends Controller {
 
     public function index() {
         //obs index_empresa
-        Auth::loginUsingId(1); // a ser retirado depois
+        // Auth::loginUsingId(1); 
         $empresas     = Empresa::all();
         $listaEmpresa = [];
 

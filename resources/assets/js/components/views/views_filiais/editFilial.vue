@@ -6,13 +6,14 @@
        <form >
         <div class="form-group">
           <label for="nome"><strong>Nome: </strong></label>
-          <input type="text" class="form-control" id="nome" v-model="filial.nome" >
+          <input type="text" class="form-control" id="nome" v-model="filial.name" >
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <label for="CNPJ"><strong>localidade: </strong></label>
           <input type="text" class="form-control" id="CNPJ" v-model="filial.localidade" >
-        </div>
+        </div> -->
+
           <hr />
           <div class="row">          
             <div class="col-md-8"></div>
@@ -31,11 +32,17 @@ export default {
   props: ['filial'],
   methods: {
     editFilial() {
-      // let cFilial = this.filial
+       let cFilial = this.filial
      
-      //  axios.post(`api/editar-filial-json/${cFilial}`).then(({ data })  => {
-      //  console.log("Filial editada com Sucesso");    
-      //   });
+        axios.patch(`/api/empresa-filial-json/${cFilial.id}`, cFilial).then(({ data })  => {
+        console.log("Filial editada com Sucesso");    
+         });
+
+        let toast = this.$toasted.show("Os dados foram atualizados com Sucesso!!", { 
+        theme: "toasted-primary", 
+        position: "bottom-right", 
+        duration : 1500
+        });
     
        this.$router.push("/filial");
     }

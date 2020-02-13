@@ -5,7 +5,7 @@
         <h4><i class="fa fa-building" aria-hidden="true"></i> Filiais</h4>
       </div>
       <div class="col-md-3">
-         <router-link :to="{name:'NovaFilial', params: {filial} }" class="btn btn-primary">
+         <router-link to="/filial/new" class="btn btn-primary">
               <i class="fa fa-plus-square" aria-hidden="true"></i> Nova Filial
          </router-link>
       </div>
@@ -16,9 +16,8 @@
          <table class="table table-sm">
            <thead>
               <tr>
-              <th class="th-lg" scope="col">Código</th>
+              <th class="th-lg" scope="col">ID</th>
               <th class="th-lg" scope="col">Nome</th>              
-              <th class="th-lg" scope="col">Localidade/UF</th>
               <th class="th-lg" scope="col"> Editar </th>
               <th class="th-lg" scope="col"> Deletar </th>
             </tr>
@@ -26,8 +25,7 @@
           <tbody>
             <tr v-for="filial in filiais" :key="filial.id" >              
               <td> {{ filial.id }} </td>
-              <td> {{ filial.nome }}</td>
-              <td> {{ filial.localidade }}</td>
+              <td> {{ filial.name }}</td>
               <td><router-link :to="{name:'EditFilial', params: {filial} }" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td>  
               <td><a @click="selectFilial = filial" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a></td>              
             </tr>
@@ -47,7 +45,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <h5>Voce tem certeza de que deseja deletar a filial {{ selectFilial.nome }} ?</h5>
+                  <h5>Voce tem certeza de que deseja deletar a filial {{ selectFilial.name }} ?</h5>
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
@@ -56,8 +54,6 @@
               </div>
             </div>
           </div>
-
-
   </div>
 </template>
 
@@ -65,8 +61,8 @@
 export default {
    mounted(){
      axios.get('api/empresa-filial-json/').then(({data}) => {
-       //this.filiais = data;
-       console.log(data);
+       this.filiais = data;
+       //console.log(data);
        console.log("Filiais montadas com sucesso");
      });
     
@@ -74,50 +70,15 @@ export default {
   data() {
     return {
       selectFilial: '',
-      filial: {
-      nome: '',
-      localidade: '',
-      complemento: ''
-      },
-      filiais: [
-        {
-          id: 1,
-          nome: "Loja 1",
-          localidade: "Vitoria da Conquista - BA"
-
-        },
-         {
-           id: 2,
-          nome: "Loja 2",
-          localidade: "Firmino Alves - BA"
-
-        },
-         {
-           id: 3,
-          nome: "Loja 3",
-          localidade: "Bom Jesus da Lapa - BA"
-
-        },
-         {
-           id: 4,
-          nome: "Loja 4",
-          localidade: "Salvador - BA"
-
-        }
-      ]
+      // filial: {
+      // nome: '',
+      // complemento: ''
+      // },
+      filiais: []
     }
     
   },
   methods: {
-    editarFilial() {
-      this.filial.nome = "Loja 2";
-      this.filial.localidade = "Salvador/BA";
-
-      this.vefEditFilial = true;
-    },
-    atualizaFilial() {
-      console.log("Filial Atualizada!")
-    },
     delFilial() {
       console.log("teste");
     }
