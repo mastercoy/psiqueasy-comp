@@ -63,10 +63,12 @@ export default {
           this.$router.push("/filial");
         });        
 
-        let toast = this.$toasted.show("Filial Adicionada com Sucesso!!", { 
-          theme: "toasted-primary", 
+        let toast = this.$toasted.success("A nova filial foi adicionada com Sucesso!!", {
+          iconPack: 'fontawesome',
+          icon: "fa-check-circle",
+          theme: "bubble", 
           position: "bottom-right", 
-          duration : 1500
+          duration : 2000
         });
     
       }

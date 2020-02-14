@@ -274,6 +274,8 @@ export default {
   },
   methods: {
     getPermissoes() {
+
+
       
       let var1 = this.permissoesRF1;
       let var2 = this.permissoesRF2
@@ -284,10 +286,21 @@ export default {
       this.userInvite.email = this.user;
       this.userInvite.permissoes = arrayPermissoes;
       this.userInvite.label = this.presetPerfil;
-      console.log(this.userInvite);
+
+      // if(this.userInvite.permissoes = )
+      // console.log(this.userInvite);
 
 
-      this.$router.push("/usuarios");
+      let toast = this.$toasted.success("Os dados foram atualizados com Sucesso!!", {
+        iconPack: 'fontawesome',
+        icon: "fa-exclamation-circle",
+        theme: "bubble", 
+        position: "bottom-right", 
+        duration : 1500
+        });
+
+
+      //this.$router.push("/usuarios");
      
     },
     checkAll(e) {

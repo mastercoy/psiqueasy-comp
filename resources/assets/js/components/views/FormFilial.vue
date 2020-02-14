@@ -82,16 +82,18 @@ export default {
       axios.patch(`api/desativar-empresa-filial-json/${id}`)
       .then(({data}) => {
          console.log(data);
-      });
+      });   
 
-      let toast = this.$toasted.show("A filial foi deletada com sucesso!!", { 
-          theme: "toasted-primary", 
+      let toast = this.$toasted.success("Os dados foram atualizados com Sucesso!!", {
+          iconPack: 'fontawesome',
+          icon: "fa-check-circle",
+          theme: "bubble", 
           position: "bottom-right", 
-          duration : 1500
+          duration : 2000
         });
 
       $('#exampleModalCenter').modal('hide');
-      this.getFiliais();
+        this.getFiliais();
 
     }
   }

@@ -88,10 +88,12 @@ export default {
        });
 
 
-       let toast = this.$toasted.show("Os dados foram atualizados com Sucesso!!", { 
-          theme: "toasted-primary", 
+        let toast = this.$toasted.success("Os dados foram atualizados com Sucesso!!", {
+          iconPack: 'fontawesome',
+          icon: "fa-check-circle",
+          theme: "bubble", 
           position: "bottom-right", 
-          duration : 1500
+          duration : 2000
         });
      
       }      

@@ -38,10 +38,12 @@ export default {
         console.log("Filial editada com Sucesso");    
          });
 
-        let toast = this.$toasted.show("Os dados foram atualizados com Sucesso!!", { 
-        theme: "toasted-primary", 
-        position: "bottom-right", 
-        duration : 1500
+        let toast = this.$toasted.success("Os dados foram atualizados com Sucesso!!", {
+          iconPack: 'fontawesome',
+          icon: "fa-check-circle",
+          theme: "bubble", 
+          position: "bottom-right", 
+          duration : 2000
         });
     
        this.$router.push("/filial");

@@ -16,6 +16,10 @@ import store from "./store";
 import Toasted from "vue-toasted";
 import Vuelidate from "vuelidate";
 import VueTheMask from "vue-the-mask";
+// Import component
+import Loading from 'vue-loading-overlay';
+// Import stylesheet
+import 'vue-loading-overlay/dist/vue-loading.css';
 
 
 /**
@@ -27,6 +31,7 @@ Vue.use(Vuelidate);
 Vue.use(Toasted);
 Vue.use(VueRouter);
 Vue.use(VueTheMask);
+Vue.use(Loading);
 
 const router = new VueRouter({
     mode: "history",
