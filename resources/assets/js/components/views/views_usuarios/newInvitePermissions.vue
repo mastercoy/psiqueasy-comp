@@ -24,25 +24,68 @@
 
     <div class="form-temp">
       <div class="container ">
-         <input class="magic-checkbox" type="checkbox" id="select"  v-model="showPresetPerfil"/>
-         <label for="select"> <h4>Deseja utilizar um perfil que voce já criou?</h4> </label>        
+        <h4>Como deseja associar as permissoes ao usuário</h4>               
         <hr />
-        <div v-if="showPresetPerfil" class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <select class="form-control" v-model="presetPerfil" :disabled="!showPresetPerfil">
-                <option selected disabled></option>
-                <option>Secretária</option>
-                <option>Psicólogo</option>
-                <option>Psicopedagogo</option>
-              </select>
+        <div class="row">
+          <div class="col md-6">
+            <div>
+              <input class="magic-radio" type="radio" name="radio" id="11" value="old" v-model="showPresetPerfil">
+              <label for="11">Utilizar um perfil já criado</label>
             </div>
           </div>
-        </div>        
+          <div class="col md-6">
+            <div>
+              <input class="magic-radio" type="radio" name="radio" id="12" value="new" v-model="showPresetPerfil">
+              <label for="12">Criar um novo Pefil</label>
+            </div>
+          </div>
+          <div>       
+        </div>
+       </div>
+         <!-- <input class="magic-checkbox" type="checkbox" id="select"  v-model="showPresetPerfil"/>
+         <label for="select">  </label>  -->       
+      
       </div>
     </div><br>
 
-    <div class="form-temp">
+    <div class="form-temp" v-if="showPresetPerfil === 'old' ">
+          <div class="container">
+             <div  class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <select class="form-control" v-model="presetPerfil" :disabled="!showPresetPerfil">
+                    <option selected disabled></option>
+                    <option>Secretária</option>
+                    <option>Psicólogo</option>
+                    <option>Psicopedagogo</option>
+                  </select>
+                </div>
+              </div>
+            </div>  
+          </div>
+        </div>
+
+    <div class="form-temp" v-if="showPresetPerfil === 'new' ">
+
+        <h4>
+          Nome do Perfil 
+          <a href="#" for="Admin" data-toggle="popover" data-trigger="hover" title="Finanças" data-placement="top"
+                  data-content="Essa funcionalidade permite que voce salve as permissões selecionadas em um perfil, para que possa ser reutilizada posteriormente.">
+                  <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
+              </a>
+        </h4><hr>
+
+      <div class="container">
+          <div class="form-group">
+            <!-- <label for="Perfil" class="pf">
+              Nome do Perfil:              
+            </label> -->
+            <input type="text" class="form-control" id="Perfil" placeholder="Exemplo: Secretária, Administração Financeira" v-model="perfilName" >
+            <!-- <small id="perfilHelp" class="form-text text-muted">Esse campo é opcional.</small> -->
+          </div>
+      </div>
+        <hr>      
+
       <h4>Selecione as permissões de acesso do usuário</h4>     
       <hr />
       <!-- <label>Marcas todos</label><br> -->
@@ -214,32 +257,16 @@
     </div>
 
     <div class="form-temp">
-      <h4>
-        Crie um perfil com essas permissões 
-        <a href="#" for="Admin" data-toggle="popover" data-trigger="hover" title="Finanças" data-placement="top"
-                data-content="Essa funcionalidade permite que voce salve as permissões selecionadas em um perfil, para que possa ser reutilizada posteriormente.">
-                 <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
-             </a>
-      </h4><hr>
+      
+    </div>
 
-     <div class="container">
-        <div class="form-group">
-          <label for="Perfil" class="pf">
-            Nome do Perfil:              
-          </label>
-          <input type="text" class="form-control" id="Perfil" placeholder="Exemplo: Secretária, Administração Financeira" v-model="perfilName" >
-           <small id="perfilHelp" class="form-text text-muted">Esse campo é opcional.</small>
-        </div>
-     </div>
-      <hr>
-      <div class="row">
+    <div class="row">
         <div class="col-md-8"></div>
         <div class="col-md-4">
           <button class="btn btn-deafult mr-1">Voltar</button>
           <button class="btn btn-primary" @click="getPermissoes">Continuar <i class="fa fa-arrow-right" aria-hidden="true"></i> </button>
         </div>
-      </div>
-    </div>
+      </div><br>
   </div>
 </template>
 
@@ -317,13 +344,7 @@ export default {
 
         this.$router.push("/usuarios");
 
-      }
-
-
-      
-
-
-      
+      } 
      
     },
     checkAll(e) {

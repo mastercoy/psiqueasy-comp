@@ -40,10 +40,7 @@ export default {
   name: 'NewColaborador',
   data() {
     return {
-      userEmail: '',
-      user: {
-        nome: 'joao'
-      }
+      userEmail: ''
     }
   },
   validations: {
@@ -61,10 +58,11 @@ export default {
         console.log("Preencha os campos necessários!")
       } else {
 
-        axios.get('/api/verificar-email/', "matheus002_@hotmail.com").then(({ data }) => {
+        axios.get('/api/verificar-email/', user).then(({ data }) => {
          console.log(data);
          //this.$router.push("/cadastro");
        });
+
         //this.$router.push({ name: 'convitePermissoes', params: { user } })
       }
     }
