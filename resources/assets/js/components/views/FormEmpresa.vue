@@ -149,6 +149,14 @@ export default {
       this.$store.state.statusEmpresa = false      
     });
 
+    let toast = this.$toasted.success("Empresa criada com Sucesso!!", {
+          iconPack: 'fontawesome',
+          icon: "fa-check-circle",
+          theme: "bubble", 
+          position: "bottom-right", 
+          duration : 2000
+        });
+
      this.$store.commit('mudarStatus', 2);
      this.$router.push("/");
      

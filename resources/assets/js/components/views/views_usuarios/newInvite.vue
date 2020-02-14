@@ -52,12 +52,20 @@ export default {
   },
   methods: {
     atualizaRota() {
-      let user = this.userEmail
+      let user = {
+        email: this.userEmail
+      }
+      console.log(user);
       this.$v.$touch()
       if (this.$v.$invalid) {
         console.log("Preencha os campos necessários!")
       } else {
-        this.$router.push({ name: 'convitePermissoes', params: { user } })
+
+        axios.get('/api/verificar-email/', "matheus002_@hotmail.com").then(({ data }) => {
+         console.log(data);
+         //this.$router.push("/cadastro");
+       });
+        //this.$router.push({ name: 'convitePermissoes', params: { user } })
       }
     }
   }
