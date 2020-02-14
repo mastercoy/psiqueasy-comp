@@ -19,7 +19,7 @@ class EmpresaController extends Controller {
         $user            = Auth::user();                    // usuário é o usuário logado
         $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
 
-        // joga tudo em um array, converte pra json e envia no guard
+        // joga tudo em um array, posteriormente converte pra json e envia no guard
         $arrayCompleto = [$nomeMetodo, $arrayPermissoes];
 
         $empresas     = Empresa::all();
