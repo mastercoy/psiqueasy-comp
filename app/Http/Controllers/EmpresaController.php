@@ -37,24 +37,6 @@ class EmpresaController extends Controller {
         return Response::json($listaEmpresa);
     }
 
-    protected function retornaPermissoes(User $user_json) { // recebe um usuário e retorna um array com as diversas permissões dele
-
-        $listaPermissoesUser = [];
-
-        if (isset(User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
-            $permissoes = User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'];
-
-            foreach ($permissoes as $permissao) {
-                $listaPermissoesUser[] = $permissao['name'];
-            }
-
-        } else {
-            return $listaPermissoesUser;
-        }
-
-        return $listaPermissoesUser;
-    }
-
     public function store() {  //Ok
         //obs criar_empresa
         Auth::loginUsingId(1); //fixme retirar
@@ -70,15 +52,6 @@ class EmpresaController extends Controller {
         } else {
             abort(403, 'Sem Permissão!');
         }
-    }
-
-    protected function validateEmpresaRequest() {
-        return request()->validate([
-                                       'cpf_cnpj' => 'required',
-                                       'logo_marca' => 'required',
-                                       'active' => 'nullable',
-                                       'user_id' => 'nullable'
-                                   ]);
     }
 
     public function show(Empresa $empresa_json) {
@@ -120,8 +93,6 @@ class EmpresaController extends Controller {
 
     }
 
-    // ========================= protected
-
     public function destroy(Empresa $empresa_json) { //Ok
         //obs destroy_empresa
         Auth::loginUsingId(1);                       //fixme retirar
@@ -158,6 +129,35 @@ class EmpresaController extends Controller {
         } else {
             abort(403, 'Sem Permissão!');
         }
+    }
+
+    // ========================= protected
+
+    protected function retornaPermissoes(User $user_json) { // recebe um usuário e retorna um array com as diversas permissões dele
+
+        $listaPermissoesUser = [];
+
+        if (isset(User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
+            $permissoes = User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'];
+
+            foreach ($permissoes as $permissao) {
+                $listaPermissoesUser[] = $permissao['name'];
+            }
+
+        } else {
+            return $listaPermissoesUser;
+        }
+
+        return $listaPermissoesUser;
+    }
+
+    protected function validateEmpresaRequest() {
+        return request()->validate([
+                                       'cpf_cnpj' => 'required',
+                                       'logo_marca' => 'required',
+                                       'active' => 'nullable',
+                                       'user_id' => 'nullable'
+                                   ]);
     }
 
 

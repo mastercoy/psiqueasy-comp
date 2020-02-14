@@ -246,36 +246,6 @@ class CasoDeUsoSeeder extends Seeder {
                                            'label' => 'Desativa Empresa',
 
                                        ]);
-        DB::table('permissao')->insert([
-                                           'name' => '',
-                                           'label' => '',
-
-                                       ]);
-        DB::table('permissao')->insert([
-                                           'name' => '',
-                                           'label' => '',
-
-                                       ]);
-        DB::table('permissao')->insert([
-                                           'name' => '',
-                                           'label' => '',
-
-                                       ]);
-        DB::table('permissao')->insert([
-                                           'name' => '',
-                                           'label' => '',
-
-                                       ]);
-        DB::table('permissao')->insert([
-                                           'name' => '',
-                                           'label' => '',
-
-                                       ]);
-        DB::table('permissao')->insert([
-                                           'name' => '',
-                                           'label' => '',
-
-                                       ]);
 
         DB::table('users')->insert([
                                        'name' => 'Nylo FP',
@@ -446,6 +416,36 @@ class CasoDeUsoSeeder extends Seeder {
                                              'perfil_id' => '3',
 
                                          ]);
+
+        DB::table('empresas')->insert([
+                                          'cpf_cnpj' => '11111111',
+                                          'logo_marca' => 'Empresa 1',
+
+                                      ]);
+
+        DB::table('empresas')->insert([
+                                          'cpf_cnpj' => '222222',
+                                          'logo_marca' => 'Empresa 2',
+
+                                      ]);
+
+        DB::table('empresas')->insert([
+                                          'cpf_cnpj' => '3333333',
+                                          'logo_marca' => 'Empresa 3 tem filial',
+
+                                      ]);
+
+        DB::table('empresa_filiais')->insert([
+                                                 'name' => 'Filial Um',
+                                                 'empresa_id' => '3',
+
+                                             ]);
+
+        DB::table('empresa_filiais')->insert([
+                                                 'name' => 'Filial Dois',
+                                                 'empresa_id' => '3',
+
+                                             ]);
 
 
     }
