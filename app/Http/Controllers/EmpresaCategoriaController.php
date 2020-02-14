@@ -12,6 +12,7 @@ class EmpresaCategoriaController extends Controller {
 
     public function index() {  //obs verificar se user->empresa_id == objeto->empresa_id
         //afazer to aqui
+        dd('aqui');
         Auth::loginUsingId(1); //fixme retirar
 
         $nomeMetodo      = 'index_cat';
@@ -37,36 +38,9 @@ class EmpresaCategoriaController extends Controller {
 
     }
 
-    protected function retornaPermissoes(User $user_json) {
-
-        $listaPermissoesUser = [];
-
-        if (isset(User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
-            $permissoes = User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'];
-
-            foreach ($permissoes as $permissao) {
-                $listaPermissoesUser[] = $permissao['name'];
-            }
-
-        } else {
-            return $listaPermissoesUser;
-        }
-
-        return $listaPermissoesUser;
-    }
-
     public function store() {
         //obs criar_cat
         $categoria = EmpresaCategoria::create($this->validateCategoriasRequest());
-    }
-
-    protected function validateCategoriasRequest() {
-        return request()->validate([
-                                       'name' => 'required',
-                                       'descricao' => 'required',
-                                       'active' => 'nullable',
-
-                                   ]);
     }
 
     public function show(EmpresaCategoria $empresa_categoria_json) {
@@ -90,8 +64,6 @@ class EmpresaCategoriaController extends Controller {
 
     }
 
-    // ========================= protected
-
     public function destroy(EmpresaCategoria $empresa_categoria_json) {
         //obs destroy_cat
         $categoria = EmpresaCategoria::find($empresa_categoria_json->id);
@@ -113,6 +85,35 @@ class EmpresaCategoriaController extends Controller {
             abort(403, 'Não encontrado!');
         }
 
+    }
+
+    // ========================= protected
+
+    protected function validateCategoriasRequest() {
+        return request()->validate([
+                                       'name' => 'required',
+                                       'descricao' => 'required',
+                                       'active' => 'nullable',
+
+                                   ]);
+    }
+
+    protected function retornaPermissoes(User $user_json) {
+
+        $listaPermissoesUser = [];
+
+        if (isset(User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
+            $permissoes = User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'];
+
+            foreach ($permissoes as $permissao) {
+                $listaPermissoesUser[] = $permissao['name'];
+            }
+
+        } else {
+            return $listaPermissoesUser;
+        }
+
+        return $listaPermissoesUser;
     }
 
 }

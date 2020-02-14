@@ -32,16 +32,6 @@ class EmpresaFilialController extends Controller {
         $criar_filial_json = EmpresaFilial::create($this->validateFilialRequest());
     }
 
-    protected function validateFilialRequest() {
-        return request()->validate([
-                                       'name' => 'required',
-                                       'active' => 'nullable',
-                                       'empresa_id' => 'nullable',
-                                       'user_id' => 'nullable'
-                                   ]);
-
-    }
-
     public function show(EmpresaFilial $empresa_filial_json) {
         //obs show_filial
         $filial = EmpresaFilial::find($empresa_filial_json->id);
@@ -79,8 +69,6 @@ class EmpresaFilialController extends Controller {
         }
     }
 
-    // ========================= protected
-
     public function desativarFilial(EmpresaFilial $empresa_filial_json) {
         Auth::loginUsingId(1);
         //obs desativar_filial
@@ -92,6 +80,18 @@ class EmpresaFilialController extends Controller {
             abort(403, 'Não encontrado!');
         }
 
+
+    }
+
+    // ========================= protected
+
+    protected function validateFilialRequest() {
+        return request()->validate([
+                                       'name' => 'required',
+                                       'active' => 'nullable',
+                                       'empresa_id' => 'nullable',
+                                       'user_id' => 'nullable'
+                                   ]);
 
     }
 }
