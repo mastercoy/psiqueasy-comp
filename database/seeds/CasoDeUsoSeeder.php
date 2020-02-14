@@ -246,6 +246,21 @@ class CasoDeUsoSeeder extends Seeder {
                                            'label' => 'Desativa Empresa',
 
                                        ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'index_cat',
+                                           'label' => 'index categoria',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'criar_cat',
+                                           'label' => 'criar categoria',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'index_filial',
+                                           'label' => 'index_filial',
+
+                                       ]);
 
         DB::table('empresas')->insert([
                                           'cpf_cnpj' => '11111111',

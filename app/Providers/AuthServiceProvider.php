@@ -45,6 +45,7 @@ class AuthServiceProvider extends ServiceProvider {
         Gate::define('pertence-mesma-empresa-e-tem-permissao', function ($user, $objeto) { //fixme guard
 
             $decoder         = json_decode($objeto);
+//dd($decoder);
             $nomeMetodo      = $decoder[0];
             $arrayPermissoes = $decoder[1];
             $item            = $decoder[2];

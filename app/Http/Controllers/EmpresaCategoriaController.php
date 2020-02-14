@@ -10,27 +10,23 @@ use Illuminate\Support\Facades\Response;
 
 class EmpresaCategoriaController extends Controller {
 
-    public function index() {  //obs verificar se user->empresa_id == objeto->empresa_id
-        //afazer to aqui
-        dd('aqui');
-        Auth::loginUsingId(1); //fixme retirar
+    public function index() {  //Ok
+        Auth::loginUsingId(1); //fixme remover
 
-        $nomeMetodo      = 'index_cat';
-        $user            = Auth::user();                    // usuário é o usuário logado
+        $nomeMetodo      = 'index_cat';                     //nome do método - permissão que usuário PRECISA ter
+        $user            = Auth::user();                    // usuário é o usuário logado atualmente no sistema
         $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
 
         // joga tudo em um array, converte pra json e envia no guard
         $arrayCompleto = [$nomeMetodo, $arrayPermissoes];
 
-        //fixme testar o array nesse ponto
         $categorias      = EmpresaCategoria::all();
         $listaCategorias = [];
 
-        foreach ($categorias as $categoria) { //fixme nao ta entrando aqui
-            dd('teste');
+        foreach ($categorias as $categoria) {
             $arrayCompleto[2] = $categoria;
             $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
-            if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) { //fixme guard
+            if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
                 $listaCategorias[] = $categoria;
             }
         }
@@ -40,49 +36,94 @@ class EmpresaCategoriaController extends Controller {
 
     public function store() {
         //obs criar_cat
-        $categoria = EmpresaCategoria::create($this->validateCategoriasRequest());
+        Auth::loginUsingId(1); //fixme retirar
+
+        $nomeMetodo      = 'criar_cat';                     // passa como string, o 'nome' do método, utilizado para verificar a permissão, cujo o nome é o mesmo
+        $user            = Auth::user();                    // usuário é o usuário logado
+        $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
+        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes];
+        $jsonEncoder     = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+
+        if (Gate::allows('tem-permissao', $jsonEncoder)) {
+            $categoria = EmpresaCategoria::create($this->validateCategoriasRequest());
+        } else {
+            abort(403, 'Sem Permissão!');
+        }
+
     }
 
     public function show(EmpresaCategoria $empresa_categoria_json) {
         //obs show_cat
         $categoria = EmpresaCategoria::find($empresa_categoria_json->id);
-        if (Gate::allows('pertence-mesma-empresa', $categoria)) {
+        Auth::loginUsingId(1);//fixme retirar - só para teste
+
+        $nomeMetodo      = 'show_cat';                                  //nome do método - permissão que usuário PRECISA ter
+        $user            = Auth::user();                                // usuário é o usuário logado atualmente no sistema
+        $arrayPermissoes = $this->retornaPermissoes($user);             //método retorna um array com as permissões do usuário
+        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $categoria]; // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder     = json_encode($arrayCompleto);
+
+        if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
             return $categoria;
         } else {
-            abort(403, 'Não encontrado!');
+            abort(403, 'Sem Permissão!');
         }
     }
 
     public function update(EmpresaCategoria $empresa_categoria_json) {
         //obs update_cat
+        Auth::loginUsingId(1);//fixme retirar - só para teste
         $categoria = EmpresaCategoria::find($empresa_categoria_json->id);
-        if (Gate::allows('pertence-mesma-empresa', $categoria)) {
+
+        $nomeMetodo      = 'update_cat';                                //nome do método - permissão que usuário PRECISA ter
+        $user            = Auth::user();                                // usuário é o usuário logado atualmente no sistema
+        $arrayPermissoes = $this->retornaPermissoes($user);             //método retorna um array com as permissões do usuário
+        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $categoria]; // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder     = json_encode($arrayCompleto);
+
+        if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
             $empresa_categoria_json->update($this->validateCategoriasRequest());
         } else {
-            abort(403, 'Não encontrado!');
+            abort(403, 'Sem Permissão!');
         }
-
     }
 
     public function destroy(EmpresaCategoria $empresa_categoria_json) {
         //obs destroy_cat
+        Auth::loginUsingId(1);//fixme retirar - só para teste
         $categoria = EmpresaCategoria::find($empresa_categoria_json->id);
-        if (Gate::allows('pertence-mesma-empresa', $categoria)) {
+
+        $nomeMetodo      = 'destroy_cat';                                //nome do método - permissão que usuário PRECISA ter
+        $user            = Auth::user();                                 // usuário é o usuário logado atualmente no sistema
+        $arrayPermissoes = $this->retornaPermissoes($user);              //método retorna um array com as permissões do usuário
+        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $categoria];  // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder     = json_encode($arrayCompleto);
+
+        if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
             $empresa_categoria_json->delete();
         } else {
-            abort(403, 'Não encontrado!');
+            abort(403, 'Sem Permissão!');
         }
+
 
     }
 
     public function desativarCategoria(EmpresaCategoria $empresa_categoria_json) {
         //obs desativar_cat
+        Auth::loginUsingId(1);//fixme retirar - só para teste
         $categoria = EmpresaCategoria::find($empresa_categoria_json->id);
-        if (Gate::allows('pertence-mesma-empresa', $categoria)) {
+
+        $nomeMetodo      = 'desativar_cat';                                //nome do método - permissão que usuário PRECISA ter
+        $user            = Auth::user();                                   // usuário é o usuário logado atualmente no sistema
+        $arrayPermissoes = $this->retornaPermissoes($user);                //método retorna um array com as permissões do usuário
+        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $categoria];    // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder     = json_encode($arrayCompleto);
+
+        if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
             $categoria->active = false;
             $categoria->save();
         } else {
-            abort(403, 'Não encontrado!');
+            abort(403, 'Sem Permissão!');
         }
 
     }
@@ -94,7 +135,7 @@ class EmpresaCategoriaController extends Controller {
                                        'name' => 'required',
                                        'descricao' => 'required',
                                        'active' => 'nullable',
-                                       'empresa_id' => 'nullable'
+                                       'empresa_id' => 'required'
 
                                    ]);
     }

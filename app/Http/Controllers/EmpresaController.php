@@ -10,9 +10,7 @@ use Illuminate\Support\Facades\Response;
 
 class EmpresaController extends Controller {
 
-    public function index() {//Ok //afazer limpar
-        //obs index_empresa
-
+    public function index() {  //afazer limpar
         Auth::loginUsingId(1); //fixme retirar
 
         $nomeMetodo      = 'index_empresa';
