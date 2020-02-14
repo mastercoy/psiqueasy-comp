@@ -94,6 +94,7 @@ class EmpresaCategoriaController extends Controller {
                                        'name' => 'required',
                                        'descricao' => 'required',
                                        'active' => 'nullable',
+                                       'empresa_id' => 'nullable'
 
                                    ]);
     }
