@@ -251,19 +251,21 @@ class CasoDeUsoSeeder extends Seeder {
                                        'name' => 'Nylo FP',
                                        'email' => 'nylo@nylo',
                                        'password' => '1234',
+                                       'empresa_id' => '1'
+
 
                                    ]);
         DB::table('users')->insert([
                                        'name' => 'Matheus',
                                        'email' => 'teu@teu',
                                        'password' => '1234',
-
+                                       'empresa_id' => '2'
                                    ]);
         DB::table('users')->insert([
                                        'name' => 'User tres',
                                        'email' => 'tres@tres',
                                        'password' => '1234',
-
+                                       'empresa_id' => '3'
                                    ]);
 
         DB::table('perfil')->insert([
@@ -278,7 +280,6 @@ class CasoDeUsoSeeder extends Seeder {
                                         'name' => 'secretarix',
 
                                     ]);
-
 
         DB::table('perfil_permissao')->insert([
                                                   'perfil_id' => '1',
@@ -422,13 +423,11 @@ class CasoDeUsoSeeder extends Seeder {
                                           'logo_marca' => 'Empresa 1',
 
                                       ]);
-
         DB::table('empresas')->insert([
                                           'cpf_cnpj' => '222222',
                                           'logo_marca' => 'Empresa 2',
 
                                       ]);
-
         DB::table('empresas')->insert([
                                           'cpf_cnpj' => '3333333',
                                           'logo_marca' => 'Empresa 3 tem filial',
@@ -440,12 +439,31 @@ class CasoDeUsoSeeder extends Seeder {
                                                  'empresa_id' => '3',
 
                                              ]);
-
         DB::table('empresa_filiais')->insert([
                                                  'name' => 'Filial Dois',
                                                  'empresa_id' => '3',
 
                                              ]);
+
+        //id	name	descricao	active	empresa_id	created_at	updated_at
+        DB::table('empresa_categorias')->insert([
+                                                    'name' => 'Escola',
+                                                    'descricao' => 'Categoria Um',
+                                                    'empresa_id' => '1',
+
+                                                ]);
+        DB::table('empresa_categorias')->insert([
+                                                    'name' => 'Consultorio',
+                                                    'descricao' => 'Categoria Dois',
+                                                    'empresa_id' => '2',
+
+                                                ]);
+        DB::table('empresa_categorias')->insert([
+                                                    'name' => 'Manicomio',
+                                                    'descricao' => 'Categoria Tres',
+                                                    'empresa_id' => '3',
+
+                                                ]);
 
 
     }
