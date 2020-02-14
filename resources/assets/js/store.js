@@ -5,6 +5,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        // Salvar os dados da empresa associada ao usuário logado( SuperAdmin )
         Empresa: {
             nome: "",
             cnpj: "",
@@ -14,10 +15,10 @@ export default new Vuex.Store({
         },
         Filiais: [],
         usuários: [],
-        Status: 2, //OK
-        statusEmpresa: false, //OK
-        userID: 1,
-        empresaID: 1,
+        Status: 2, //OK // Variável que é modificada  se o usuário tiver ou não permissão de visualizar as opções 
+        statusEmpresa: false, //OK  Booleano que muda de acordo com o status do empresa, se a mesma foi criada exibe uma opção e caso contrário exibe uma tela de cadastro
+        userID: 1,  //Vai receber o ID do usuário que estiver logado (SuperAdmin)
+        empresaID: 1,   //Vai receber o ID da empresa associado ao usuário logado (SuperAdmin)
         token: localStorage.getItem("user-token") || "",
         user: "" //Precisa ser revisado
     },
@@ -41,6 +42,7 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        // Métodos que salva os tokens após o Login
         login({commit}, user) {
             return new Promise((resolve, reject) => {
                 commit("auth_request");

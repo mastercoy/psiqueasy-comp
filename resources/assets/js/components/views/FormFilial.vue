@@ -84,7 +84,7 @@ export default {
          console.log(data);
       });   
 
-      let toast = this.$toasted.success("Os dados foram atualizados com Sucesso!!", {
+      let toast = this.$toasted.error("A filial foi deletada com Sucesso!!", {
           iconPack: 'fontawesome',
           icon: "fa-check-circle",
           theme: "bubble", 
