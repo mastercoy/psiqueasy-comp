@@ -28,16 +28,15 @@ class UserPerfilController extends Controller {
     public function setPermissaoPerfil(UserPerfil $user_perfil_json, UserPermissao $user_permissao_json) {
         //obs set_permissao
         //vincula permissão ao perfil
+        //afazer foreach aqui
         $conditions           = ['perfil_id' => $user_perfil_json->id, 'permissao_id' => $user_permissao_json->id];
         $perfilPermissaoPivot = PerfilPermissaoPivot::where($conditions)->first();
 
-        if (isset($perfilPermissaoPivot)) {
-            return 'Permissão "' . $user_permissao_json->name . '" já se encontra vinculada ao Perfil "' . $user_perfil_json->name . '"';
-        } else {
+        if (!isset($perfilPermissaoPivot)) {
             $perfil = UserPerfil::find($user_perfil_json->id);
             $perfil->permissao()->attach($user_permissao_json);
-            return 'Permissão "' . $user_permissao_json->name . '" vinculada com sucesso ao Perfil "' . $user_perfil_json->name . '"';
         }
+
     }
 
     public function delPermissaoPerfil(UserPerfil $user_perfil_json, UserPermissao $user_permissao_json) {
@@ -62,18 +61,6 @@ class UserPerfilController extends Controller {
     public function store() {
         //obs criar_perfil
         $perfil = UserPerfil::create($this->validateUserPerfilRequest());
-    }
-
-    protected function validateUserPerfilRequest() {
-        return request()->validate([
-                                       'name' => 'required',
-                                       'label' => 'nullable',
-                                       'active' => 'nullable',
-                                       'user_id' => 'nullable',
-                                       'empresa_id' => 'nullable'
-                                   ]);
-
-
     }
 
     public function show(UserPerfil $user_perfil_json) {
@@ -113,8 +100,6 @@ class UserPerfilController extends Controller {
 
     }
 
-    // ========================= protected
-
     public function desativarUserPerfil(UserPerfil $user_perfil_json) {
         //obs desativar_perfil
         $perfil = UserPerfil::find($user_perfil_json->id);
@@ -124,5 +109,19 @@ class UserPerfilController extends Controller {
         } else {
             abort(403, 'Não encontrado!');
         }
+    }
+
+    // ========================= protected
+
+    protected function validateUserPerfilRequest() {
+        return request()->validate([
+                                       'name' => 'required',
+                                       'label' => 'nullable',
+                                       'active' => 'nullable',
+                                       'user_id' => 'nullable',
+                                       'empresa_id' => 'nullable'
+                                   ]);
+
+
     }
 }
