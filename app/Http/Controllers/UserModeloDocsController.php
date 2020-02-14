@@ -30,6 +30,15 @@ class UserModeloDocsController extends Controller { //verificar se user->id == o
         $modelo = UserModeloDocs::create($this->validateModeloDocsRequest());
     }
 
+    protected function validateModeloDocsRequest() {
+        return request()->validate([
+                                       'name' => 'required',
+                                       'conteudo' => 'nullable',
+                                       'active' => 'nullable',
+                                       'user_id' => 'nullable'
+                                   ]);
+    }
+
     public function show(UserModeloDocs $user_modelo_docs_json) {
         //obs show_user_model
         $modelo = UserModeloDocs::find($user_modelo_docs_json->id);
@@ -65,6 +74,8 @@ class UserModeloDocsController extends Controller { //verificar se user->id == o
 
     }
 
+    // ========================= protected
+
     public function desativarModeloDocs(UserModeloDocs $user_modelo_docs_json) {
         //obs desativar_user_model
         $modelo = UserModeloDocs::find($user_modelo_docs_json->id);
@@ -75,17 +86,6 @@ class UserModeloDocsController extends Controller { //verificar se user->id == o
             abort(403, 'Não encontrado!');
         }
 
-    }
-
-    // ========================= protected
-
-    protected function validateModeloDocsRequest() {
-        return request()->validate([
-                                       'name' => 'required',
-                                       'conteudo' => 'nullable',
-                                       'active' => 'nullable',
-                                       'user_id' => 'nullable'
-                                   ]);
     }
 
 }

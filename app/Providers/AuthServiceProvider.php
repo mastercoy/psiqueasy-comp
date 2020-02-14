@@ -42,36 +42,35 @@ class AuthServiceProvider extends ServiceProvider {
             return $user->empresa_id == $objeto->empresa_id;
         });
 
-        Gate::define('pertence-mesma-empresa-e-tem-permissao', function ($user, $objeto) {
+        Gate::define('pertence-mesma-empresa-e-tem-permissao', function ($user, $objeto) { //fixme guard
 
-            $decoder = json_decode($objeto);
-            dd('teste');
-            $nomePermissao   = $decoder[0];
-            $objeto2         = $decoder[1];
-            $arrayPermissoes = $decoder[2];
+            $decoder         = json_decode($objeto);
+            $nomeMetodo      = $decoder[0];
+            $arrayPermissoes = $decoder[1];
+            $item            = $decoder[2];
 
-            return ($user->empresa_id == $objeto2->empresa_id) && (in_array($nomePermissao, $arrayPermissoes));
+            return ($user->empresa_id == $item->empresa_id) && (in_array($nomeMetodo, $arrayPermissoes));
 
         });
 
         Gate::define('pertence-a-empresa-e-tem-permissao', function ($user, $objeto) {
 
             $decoder         = json_decode($objeto);
-            $nomePermissao   = $decoder[0];
+            $nomeMetodo      = $decoder[0];
             $arrayPermissoes = $decoder[1];
             $empresa         = $decoder[2];
 
-            return ($user->empresa_id == $empresa->id) && (in_array($nomePermissao, $arrayPermissoes));
+            return ($user->empresa_id == $empresa->id) && (in_array($nomeMetodo, $arrayPermissoes));
 
         });
 
         Gate::define('tem-permissao', function ($user, $objeto) {
 
             $decoder         = json_decode($objeto);
-            $nomePermissao   = $decoder[0];
+            $nomeMetodo      = $decoder[0];
             $arrayPermissoes = $decoder[1];
 
-            return in_array($nomePermissao, $arrayPermissoes);
+            return in_array($nomeMetodo, $arrayPermissoes);
         });
 
 
