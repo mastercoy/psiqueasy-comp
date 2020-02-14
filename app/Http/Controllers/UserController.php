@@ -7,6 +7,7 @@ use App\Models\UserPerfilPivot;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 
 class UserController extends Controller {
@@ -42,12 +43,12 @@ class UserController extends Controller {
 
     }
 
-    public function verificarEmail(User $user_json) {
-        $user = User::where('email', $user_json->email);
-        if (isset($user)) {
-            return true;
+    public function verificarEmail() {
+
+        if (User::where('email', '=', Input::get('email'))->exists()) {
+            return '1'; //existe
         } else {
-            return false;
+            return '0'; //nao existe
         }
     }
 
@@ -70,6 +71,87 @@ class UserController extends Controller {
         //obs criar_user
         //afazer GUARD
         $user_json = User::create($this->validateUserRequest());
+    }
+
+    public function show(User $user_json) {
+        //obs show_user
+        //afazer GUARD
+        Auth::loginUsingId(1); //fixme retirar // para passar do guard, user logado
+
+        $nomeMetodo      = 'show_user';
+        $user            = User::find($user_json->id);
+        $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
+
+        // joga tudo em um array, converte pra json e envia no guard
+        $arrayCompleto = [$nomeMetodo, $arrayPermissoes, $user];
+        $jsonEncoder   = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+
+        //o guard transforma json pra array, pega as informações em cada posição [0],[1] etc, e faz as comparações
+        //retorna true ou false
+        if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) { //fixme guard
+            dd('sucesso');
+        } else {
+            dd('falhou');
+        }
+
+    }
+
+    public function edit(User $user) {
+        //
+    }
+
+    public function update(User $user_json) {
+        //obs update_user
+        //afazer GUARD
+        if (Gate::allows('pertence-mesma-empresa', $user_json)) {
+            $user_json->update($this->validateUserRequest());
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+    }
+
+    public function destroy(User $user_json) {
+        //obs destroy_user
+        //afazer GUARD
+        if (Gate::allows('pertence-mesma-empresa', $user_json)) {
+            $user_json->delete();
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+    }
+
+    public function desativarUser(User $user_json) {
+        //obs desativar_user
+        //afazer GUARD
+        $user = User::find($user_json->id);
+
+        if (Gate::allows('pertence-mesma-empresa', $user_json)) {
+            $user->active = false;
+            $user->save();
+        } else {
+            abort(403, 'Não encontrado!');
+        }
+
+    }
+
+    // ========================= protected
+
+    protected function retornaPermissoes(User $user_json) {
+
+        $listaPermissoesUser = [];
+
+        if (isset(User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
+            $permissoes = User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'];
+
+            foreach ($permissoes as $permissao) {
+                $listaPermissoesUser[] = $permissao['name'];
+            }
+
+        } else {
+            return $listaPermissoesUser;
+        }
+
+        return $listaPermissoesUser;
     }
 
     protected function validateUserRequest() {
@@ -101,87 +183,5 @@ class UserController extends Controller {
                                        'empresa_id' => 'nullable',
 
                                    ]);
-    }
-
-    public function show(User $user_json) {
-        //obs show_user
-        //afazer GUARD
-        Auth::loginUsingId(1); //fixme retirar // para passar do guard, user logado
-
-        $nomeMetodo      = 'show_user';
-        $user            = User::find($user_json->id);
-        $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
-
-        // joga tudo em um array, converte pra json e envia no guard
-        $arrayCompleto = [$nomeMetodo, $arrayPermissoes, $user];
-        $jsonEncoder   = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
-
-        //o guard transforma json pra array, pega as informações em cada posição [0],[1] etc, e faz as comparações
-        //retorna true ou false
-        if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) { //fixme guard
-            dd('sucesso');
-        } else {
-            dd('falhou');
-        }
-
-    }
-
-    protected function retornaPermissoes(User $user_json) {
-
-        $listaPermissoesUser = [];
-
-        if (isset(User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
-            $permissoes = User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'];
-
-            foreach ($permissoes as $permissao) {
-                $listaPermissoesUser[] = $permissao['name'];
-            }
-
-        } else {
-            return $listaPermissoesUser;
-        }
-
-        return $listaPermissoesUser;
-    }
-
-    public function edit(User $user) {
-        //
-    }
-
-    public function update(User $user_json) {
-        //obs update_user
-        //afazer GUARD
-        if (Gate::allows('pertence-mesma-empresa', $user_json)) {
-            $user_json->update($this->validateUserRequest());
-        } else {
-            abort(403, 'Não encontrado!');
-        }
-    }
-
-
-    // ========================= protected
-
-    public function destroy(User $user_json) {
-        //obs destroy_user
-        //afazer GUARD
-        if (Gate::allows('pertence-mesma-empresa', $user_json)) {
-            $user_json->delete();
-        } else {
-            abort(403, 'Não encontrado!');
-        }
-    }
-
-    public function desativarUser(User $user_json) {
-        //obs desativar_user
-        //afazer GUARD
-        $user = User::find($user_json->id);
-
-        if (Gate::allows('pertence-mesma-empresa', $user_json)) {
-            $user->active = false;
-            $user->save();
-        } else {
-            abort(403, 'Não encontrado!');
-        }
-
     }
 }
