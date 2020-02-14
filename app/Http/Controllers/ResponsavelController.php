@@ -33,6 +33,21 @@ class ResponsavelController extends Controller { //verificar se user->id == resp
 
     }
 
+    protected function validateResponsavelRequest() {
+        return request()->validate([
+                                       'name' => 'required',
+                                       'parentesco' => 'nullable',
+                                       'data_nasc' => 'nullable',
+                                       'end' => 'nullable',
+                                       'tel' => 'nullable',
+                                       'cpf' => 'nullable',
+                                       'rg' => 'nullable',
+                                       'active' => 'nullable',
+                                       'user_id' => 'nullable'
+
+                                   ]);
+    }
+
     public function show(Responsavel $responsavel_json) {
         //obs show_responsavel
         $responsavel = Responsavel::find($responsavel_json->id);
@@ -80,6 +95,8 @@ class ResponsavelController extends Controller { //verificar se user->id == resp
 
     }
 
+    // =========================================== protected
+
     public function excluidosResponsavel(Responsavel $responsavel_json) {
         //obs listar_desat_resp
         $user = User::find($responsavel_json->id);
@@ -90,23 +107,6 @@ class ResponsavelController extends Controller { //verificar se user->id == resp
                                   ])
                           ->orderBy('updated_at', 'desc')
                           ->get();
-    }
-
-    // =========================================== protected
-
-    protected function validateResponsavelRequest() {
-        return request()->validate([
-                                       'name' => 'required',
-                                       'parentesco' => 'nullable',
-                                       'data_nasc' => 'nullable',
-                                       'end' => 'nullable',
-                                       'tel' => 'nullable',
-                                       'cpf' => 'nullable',
-                                       'rg' => 'nullable',
-                                       'active' => 'nullable',
-                                       'user_id' => 'nullable'
-
-                                   ]);
     }
 
 

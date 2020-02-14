@@ -30,6 +30,15 @@ class EmpresaModeloDocsController extends Controller {
         $modelo = EmpresaModeloDocs::create($this->validateModeloDocsRequest());
     }
 
+    protected function validateModeloDocsRequest() {
+        return request()->validate([
+                                       'name' => 'required',
+                                       'conteudo' => 'nullable',
+                                       'active' => 'nullable',
+                                       'empresa_id' => 'nullable'
+                                   ]);
+    }
+
     public function show(EmpresaModeloDocs $empresa_modelo_docs_json) {
         //obs show_emp_model
         $modelo = EmpresaModeloDocs::find($empresa_modelo_docs_json->id);
@@ -64,6 +73,8 @@ class EmpresaModeloDocsController extends Controller {
         }
     }
 
+    // ========================= protected
+
     public function desativarModeloDocs(EmpresaModeloDocs $empresa_modelo_docs_json) {
         //obs desativar_emp_model
         $modelo = EmpresaModeloDocs::find($empresa_modelo_docs_json->id);
@@ -74,17 +85,6 @@ class EmpresaModeloDocsController extends Controller {
             abort(403, 'Não encontrado!');
         }
 
-    }
-
-    // ========================= protected
-
-    protected function validateModeloDocsRequest() {
-        return request()->validate([
-                                       'name' => 'required',
-                                       'conteudo' => 'nullable',
-                                       'active' => 'nullable',
-                                       'empresa_id' => 'nullable'
-                                   ]);
     }
 
 

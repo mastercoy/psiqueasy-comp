@@ -64,6 +64,18 @@ class UserPerfilController extends Controller {
         $perfil = UserPerfil::create($this->validateUserPerfilRequest());
     }
 
+    protected function validateUserPerfilRequest() {
+        return request()->validate([
+                                       'name' => 'required',
+                                       'label' => 'nullable',
+                                       'active' => 'nullable',
+                                       'user_id' => 'nullable',
+                                       'empresa_id' => 'nullable'
+                                   ]);
+
+
+    }
+
     public function show(UserPerfil $user_perfil_json) {
         //obs show_perfil
         $perfil = UserPerfil::find($user_perfil_json->id);
@@ -101,6 +113,8 @@ class UserPerfilController extends Controller {
 
     }
 
+    // ========================= protected
+
     public function desativarUserPerfil(UserPerfil $user_perfil_json) {
         //obs desativar_perfil
         $perfil = UserPerfil::find($user_perfil_json->id);
@@ -110,19 +124,5 @@ class UserPerfilController extends Controller {
         } else {
             abort(403, 'Não encontrado!');
         }
-    }
-
-    // ========================= protected
-
-    protected function validateUserPerfilRequest() {
-        return request()->validate([
-                                       'name' => 'required',
-                                       'label' => 'nullable',
-                                       'active' => 'nullable',
-                                       'user_id' => 'nullable',
-                                       'empresa_id' => 'nullable'
-                                   ]);
-
-
     }
 }

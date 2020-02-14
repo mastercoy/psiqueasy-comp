@@ -22,6 +22,14 @@ class UserPermissaoController extends Controller { //fixme talvez apagar
         $permissao = UserPermissao::create($this->validatePermissaoRequest());
     }
 
+    protected function validatePermissaoRequest() {
+        return request()->validate([
+                                       'name' => 'required',
+                                       'label' => 'nullable',
+                                       'active' => 'nullable'
+                                   ]);
+    }
+
     public function show(UserPermissao $user_permissao_json) {
         //obs show_permissao
         return $perfil = UserPermissao::find($user_permissao_json->id);
@@ -42,21 +50,13 @@ class UserPermissaoController extends Controller { //fixme talvez apagar
         $user_permissao_json->delete();
     }
 
+    // ========================= protected
+
     public function desativarPermissao(UserPermissao $user_permissao_json) {
         //obs desativar_permissao
         $perfil         = UserPermissao::find($user_permissao_json->id);
         $perfil->active = false;
         $perfil->save();
-    }
-
-    // ========================= protected
-
-    protected function validatePermissaoRequest() {
-        return request()->validate([
-                                       'name' => 'required',
-                                       'label' => 'nullable',
-                                       'active' => 'nullable'
-                                   ]);
     }
 
 }

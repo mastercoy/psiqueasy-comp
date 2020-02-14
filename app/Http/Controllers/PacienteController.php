@@ -22,6 +22,25 @@ class PacienteController extends Controller {
         $paciente_json = Paciente::create($this->validatePacienteRequest());
     }
 
+    protected function validatePacienteRequest() {
+        return request()->validate([
+                                       'name' => 'required',
+                                       'data_nasc' => 'nullable',
+                                       'serie' => 'nullable',
+                                       'end' => 'nullable',
+                                       'tel' => 'nullable',
+                                       'cpf' => 'nullable',
+                                       'rg' => 'nullable',
+                                       'queixa' => 'nullable',
+                                       'relatorio_final' => 'nullable',
+                                       'encaminhamento' => 'nullable',
+                                       'informe' => 'nullable',
+                                       'informe_social' => 'nullable',
+                                       'active' => 'nullable',
+                                       'user_id' => 'nullable'
+                                   ]);
+    }
+
     public function show(Paciente $paciente_json) {
         //
         $paciente = Paciente::find($paciente_json->id);
@@ -58,6 +77,8 @@ class PacienteController extends Controller {
 
     }
 
+    // ========================= protected
+
     public function desativarPaciente(Paciente $paciente_json) {
         //
         $paciente = Paciente::find($paciente_json->id);
@@ -68,27 +89,6 @@ class PacienteController extends Controller {
             abort(403, 'Não encontrado!');
         }
 
-    }
-
-    // ========================= protected
-
-    protected function validatePacienteRequest() {
-        return request()->validate([
-                                       'name' => 'required',
-                                       'data_nasc' => 'nullable',
-                                       'serie' => 'nullable',
-                                       'end' => 'nullable',
-                                       'tel' => 'nullable',
-                                       'cpf' => 'nullable',
-                                       'rg' => 'nullable',
-                                       'queixa' => 'nullable',
-                                       'relatorio_final' => 'nullable',
-                                       'encaminhamento' => 'nullable',
-                                       'informe' => 'nullable',
-                                       'informe_social' => 'nullable',
-                                       'active' => 'nullable',
-                                       'user_id' => 'nullable'
-                                   ]);
     }
 
 }
