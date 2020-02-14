@@ -42,6 +42,15 @@ class UserController extends Controller {
 
     }
 
+    public function verificarEmail(User $user_json) {
+        $user = User::where('email', $user_json->email);
+        if (isset($user)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function index() {
         //obs index_user
         //afazer GUARD

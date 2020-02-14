@@ -81,18 +81,18 @@ class EmpresaController extends Controller {
                                    ]);
     }
 
-    public function show(Empresa $empresa_json) { //Ok
-        //obs show_empresa
-        Auth::loginUsingId(1);                    //fixme retirar
+    public function show(Empresa $empresa_json) {
+
+        Auth::loginUsingId(1);                    //fixme retirar - só para teste
         $empresa = Empresa::find($empresa_json->id);
 
-        $nomeMetodo      = 'show_empresa';
-        $user            = Auth::user();                    // usuário é o usuário logado
-        $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $empresa];
-        $jsonEncoder     = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+        $nomeMetodo      = 'show_empresa';                            //nome do método - permissão que usuário PRECISA ter
+        $user            = Auth::user();                              // usuário é o usuário logado atualmente no sistema
+        $arrayPermissoes = $this->retornaPermissoes($user);           //método retorna um array com as permissões do usuário
+        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $empresa]; // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder     = json_encode($arrayCompleto);               //precisa transformar em json pois o guard nao aceita array
 
-        if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) {
+        if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) { //guard não aceita vários parâmetros, por isso coloquei tudo em um
             return $empresa;
         } else {
             abort(403, 'Sem Permissão!');
