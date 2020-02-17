@@ -35,7 +35,7 @@ class AddForeignKeyToTables extends Migration {
                   ->onDelete('cascade');
         });
 
-        Schema::table('perfil', function ($table) {
+        Schema::table('perfil', function ($table) { //fixme nullable
             $table->integer('user_id')->unsigned()->nullable();
             $table->foreign('user_id')
                   ->references('id')

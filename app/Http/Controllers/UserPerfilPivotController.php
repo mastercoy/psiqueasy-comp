@@ -13,22 +13,9 @@ class UserPerfilPivotController extends Controller { //afazer apagar controller?
         return Response::json($pivot);
     }
 
-//Route::resource('user-perfil-pivot-json', 'UserPerfilPivotController');
-    public function create() {
-        //
-    }
-
-
     public function store() {
         //
         $pivot = UserPerfilPivot::create($this->validateUserPerfilPivotRequest());
-    }
-
-    protected function validateUserPerfilPivotRequest() {
-        return request()->validate([
-                                       'user_id' => 'required',
-                                       'perfil_id' => 'required',
-                                   ]);
     }
 
     public function show(UserPerfilPivot $user_perfil_pivot_json) {
@@ -47,11 +34,18 @@ class UserPerfilPivotController extends Controller { //afazer apagar controller?
         $user_perfil_pivot_json->update($this->validateUserPerfilPivotRequest());
     }
 
-    // ========================= protected
-
     public function destroy(UserPerfilPivot $user_perfil_pivot_json) {
         //
         $user_perfil_pivot_json->delete();
+    }
+
+    // ========================= protected
+
+    protected function validateUserPerfilPivotRequest() {
+        return request()->validate([
+                                       'user_id' => 'required',
+                                       'perfil_id' => 'required',
+                                   ]);
     }
 
 

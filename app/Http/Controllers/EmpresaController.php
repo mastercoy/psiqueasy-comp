@@ -10,19 +10,17 @@ use Illuminate\Support\Facades\Response;
 
 class EmpresaController extends Controller {
 
-    public function index() {  //afazer limpar
+    public function index() {
         Auth::loginUsingId(1); //fixme retirar
 
         $nomeMetodo      = 'index_empresa';
-        $user            = Auth::user();                    // usuário é o usuário logado
-        $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
+        $arrayPermissoes = $this->retornaPermissoes(); //método retorna um array com as permissões do usuário
 
         // joga tudo em um array, posteriormente converte pra json e envia no guard
         $arrayCompleto = [$nomeMetodo, $arrayPermissoes];
 
         $empresas     = Empresa::all();
         $listaEmpresa = [];
-        //obs executar query no usuario where com as condições
 
         foreach ($empresas as $empresa) {
             $arrayCompleto[2] = $empresa;
@@ -35,15 +33,13 @@ class EmpresaController extends Controller {
         return Response::json($listaEmpresa);
     }
 
-    public function store() {  //Ok
-        //obs criar_empresa
+    public function store() {
         Auth::loginUsingId(1); //fixme retirar
 
         $nomeMetodo      = 'criar_empresa';                 // passa como string, o 'nome' do método, utilizado para verificar a permissão, cujo o nome é o mesmo
-        $user            = Auth::user();                    // usuário é o usuário logado
-        $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes];
-        $jsonEncoder     = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+        $arrayPermissoes = $this->retornaPermissoes();      // método retorna um array com as permissões do usuário
+        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes]; // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder     = json_encode($arrayCompleto);     // precisa transformar em json pois o guard nao aceita array
 
         if (Gate::allows('tem-permissao', $jsonEncoder)) {
             $empresa_json = Empresa::create($this->validateEmpresaRequest());
@@ -53,13 +49,11 @@ class EmpresaController extends Controller {
     }
 
     public function show(Empresa $empresa_json) {
-
         Auth::loginUsingId(1);                    //fixme retirar - só para teste
         $empresa = Empresa::find($empresa_json->id);
 
         $nomeMetodo      = 'show_empresa';                            //nome do método - permissão que usuário PRECISA ter
-        $user            = Auth::user();                              // usuário é o usuário logado atualmente no sistema
-        $arrayPermissoes = $this->retornaPermissoes($user);           //método retorna um array com as permissões do usuário
+        $arrayPermissoes = $this->retornaPermissoes();                //método retorna um array com as permissões do usuário
         $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $empresa]; // jogo as informações anteriores em um array para enviar no guard
         $jsonEncoder     = json_encode($arrayCompleto);               //precisa transformar em json pois o guard nao aceita array
 
@@ -73,13 +67,11 @@ class EmpresaController extends Controller {
     }
 
     public function update(Empresa $empresa_json) {
-        //obs update_empresa
         Auth::loginUsingId(1); //fixme retirar
         $empresa = Empresa::find($empresa_json->id);
 
         $nomeMetodo      = 'update_empresa';
-        $user            = Auth::user();                    // usuário é o usuário logado
-        $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
+        $arrayPermissoes = $this->retornaPermissoes(); //método retorna um array com as permissões do usuário
         $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $empresa];
         $jsonEncoder     = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
 
@@ -92,13 +84,11 @@ class EmpresaController extends Controller {
     }
 
     public function destroy(Empresa $empresa_json) { //Ok
-        //obs destroy_empresa
         Auth::loginUsingId(1);                       //fixme retirar
         $empresa = Empresa::find($empresa_json->id);
 
         $nomeMetodo      = 'destroy_empresa';
-        $user            = Auth::user();                    // usuário é o usuário logado
-        $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
+        $arrayPermissoes = $this->retornaPermissoes(); //método retorna um array com as permissões do usuário
         $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $empresa];
         $jsonEncoder     = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
 
@@ -111,13 +101,11 @@ class EmpresaController extends Controller {
     }
 
     public function desativarEmpresa(Empresa $empresa_json) { //Ok
-        //obs desativar_empresa
         Auth::loginUsingId(1);                                //fixme retirar
         $empresa = Empresa::find($empresa_json->id);
 
         $nomeMetodo      = 'desativar_empresa';
-        $user            = Auth::user();                    // usuário é o usuário logado
-        $arrayPermissoes = $this->retornaPermissoes($user); //método retorna um array com as permissões do usuário
+        $arrayPermissoes = $this->retornaPermissoes(); //método retorna um array com as permissões do usuário
         $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $empresa];
         $jsonEncoder     = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
 
@@ -131,21 +119,19 @@ class EmpresaController extends Controller {
 
     // ========================= protected
 
-    protected function retornaPermissoes(User $user_json) { // recebe um usuário e retorna um array com as diversas permissões dele
-
+    protected function retornaPermissoes() {
+        $user                = Auth::user();
         $listaPermissoesUser = [];
 
-        if (isset(User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
-            $permissoes = User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'];
+        if (isset(User::where('id', $user->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
+            $permissoes = User::where('id', $user->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'];
 
             foreach ($permissoes as $permissao) {
                 $listaPermissoesUser[] = $permissao['name'];
             }
-
         } else {
             return $listaPermissoesUser;
         }
-
         return $listaPermissoesUser;
     }
 
@@ -154,7 +140,7 @@ class EmpresaController extends Controller {
                                        'cpf_cnpj' => 'required',
                                        'logo_marca' => 'required',
                                        'active' => 'nullable',
-                                       'user_id' => 'nullable'
+                                       'user_id' => 'required'
                                    ]);
     }
 

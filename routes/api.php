@@ -38,7 +38,7 @@ Route::patch('desativar-user-modelo-docs-json/{user_modelo_docs_json}', 'UserMod
 // rotas para RESPONSAVEL
 Route::resource('responsavel-json', 'ResponsavelController');
 Route::patch('desativar-responsavel-json/{responsavel_json}', 'ResponsavelController@desativarResponsavel');
-Route::get('excluidos-responsavel-json/{responsavel_json}', 'ResponsavelController@excluidosResponsavel');
+Route::get('excluidos-responsavel-json', 'ResponsavelController@excluidosResponsavel');
 
 // rotas para EMPRESA
 Route::resource('empresa-json', 'EmpresaController');
@@ -108,7 +108,7 @@ Route::resource('perfil-permissao-pivot-json', 'PerfilPermissaoPivotController')
 |        | PUT|PATCH | api/empresa-modelo-docs-json/{empresa_modelo_docs_json}               | empresa-modelo-docs-json.update     | App\Http\Controllers\EmpresaModeloDocsController@update                | api          |
 |        | GET|HEAD  | api/empresa-modelo-docs-json/{empresa_modelo_docs_json}               | empresa-modelo-docs-json.show       | App\Http\Controllers\EmpresaModeloDocsController@show                  | api          |
 |        | GET|HEAD  | api/empresa-modelo-docs-json/{empresa_modelo_docs_json}/edit          | empresa-modelo-docs-json.edit       | App\Http\Controllers\EmpresaModeloDocsController@edit                  | api          |
-|        | GET|HEAD  | api/excluidos-responsavel-json/{responsavel_json}                     |                                     | App\Http\Controllers\ResponsavelController@excluidosResponsavel        | api          |
+|        | GET|HEAD  | api/excluidos-responsavel-json                                        |                                     | App\Http\Controllers\ResponsavelController@excluidosResponsavel        | api          |
 |        | GET|HEAD  | api/paciente-json                                                     | paciente-json.index                 | App\Http\Controllers\PacienteController@index                          | api          |
 |        | POST      | api/paciente-json                                                     | paciente-json.store                 | App\Http\Controllers\PacienteController@store                          | api          |
 |        | GET|HEAD  | api/paciente-json/create                                              | paciente-json.create                | App\Http\Controllers\PacienteController@create                         | api          |
@@ -175,5 +175,4 @@ Route::resource('perfil-permissao-pivot-json', 'PerfilPermissaoPivotController')
 |        | GET|HEAD  | register                                                              | register                            | App\Http\Controllers\Auth\RegisterController@showRegistrationForm      | web,guest    |
 |        | POST      | register                                                              |                                     | App\Http\Controllers\Auth\RegisterController@register                  | web,guest    |
 +--------+-----------+-----------------------------------------------------------------------+-------------------------------------+------------------------------------------------------------------------+--------------+
-
- */
+*/

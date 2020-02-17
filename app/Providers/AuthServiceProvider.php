@@ -27,6 +27,16 @@ class AuthServiceProvider extends ServiceProvider {
             return $user->id == $objeto->user_id;
         });
 
+        Gate::define('pertence-usuario-logado-e-tem-permissao', function ($user, $objeto) {
+
+            $decoder         = json_decode($objeto);
+            $nomeMetodo      = $decoder[0];
+            $arrayPermissoes = $decoder[1];
+            $item            = $decoder[2];
+
+            return ($user->id == $item->user_id) && (in_array($nomeMetodo, $arrayPermissoes));
+        });
+
         Gate::define('pertence-a-empresa', function ($user, $objeto) {
             return $user->empresa_id == $objeto->id;
         });
@@ -42,7 +52,6 @@ class AuthServiceProvider extends ServiceProvider {
         Gate::define('pertence-mesma-empresa-e-tem-permissao', function ($user, $objeto) { //fixme guard
 
             $decoder         = json_decode($objeto);
-//dd($decoder);
             $nomeMetodo      = $decoder[0];
             $arrayPermissoes = $decoder[1];
             $item            = $decoder[2];

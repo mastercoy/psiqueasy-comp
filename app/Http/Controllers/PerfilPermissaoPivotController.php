@@ -13,21 +13,9 @@ class PerfilPermissaoPivotController extends Controller {
         return Response::json($permissao);
     }
 
-    public function create() {
-        //
-    }
-
-
     public function store() {
         //
         $permissao = PerfilPermissaoPivot::create($this->validatePerfilPermissaoPivotRequest());
-    }
-
-    protected function validatePerfilPermissaoPivotRequest() {
-        return request()->validate([
-                                       'perfil_id' => 'required',
-                                       'permissao_id' => 'required',
-                                   ]);
     }
 
     public function show(PerfilPermissaoPivot $perfil_permissao_pivot_json) {
@@ -36,19 +24,22 @@ class PerfilPermissaoPivotController extends Controller {
         return $permissao->toArray();
     }
 
-    public function edit(PerfilPermissaoPivot $perfil_permissao_pivot_json) {
-        //
-    }
-
     public function update(PerfilPermissaoPivot $perfil_permissao_pivot_json) {
         //
         $perfil_permissao_pivot_json->update($this->validatePerfilPermissaoPivotRequest());
     }
 
-    // ========================= protected
-
     public function destroy(PerfilPermissaoPivot $perfil_permissao_pivot_json) {
         //
         $perfil_permissao_pivot_json->delete();
+    }
+
+    // ========================= protected
+
+    protected function validatePerfilPermissaoPivotRequest() {
+        return request()->validate([
+                                       'perfil_id' => 'required',
+                                       'permissao_id' => 'required',
+                                   ]);
     }
 }

@@ -41,7 +41,7 @@ class CreateUsersTable extends Migration {
 
         });
 
-        Schema::create('perfil', function (Blueprint $table) { //perfil
+        Schema::create('perfil', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 45);
             $table->string('label', 45)->nullable();
@@ -53,13 +53,13 @@ class CreateUsersTable extends Migration {
         // tabela pivot | users | > perfil_user <  | perfil |
         Schema::create('perfil_user', function (Blueprint $table) {      //user_perfil
             $table->increments('id');                                    //fixme talvez tirar
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
                   ->references('id')
                   ->on('users')
                   ->onDelete('cascade');
 
-            $table->integer('perfil_id')->unsigned()->nullable();
+            $table->integer('perfil_id')->unsigned();
             $table->foreign('perfil_id')
                   ->references('id')
                   ->on('perfil')
@@ -79,13 +79,13 @@ class CreateUsersTable extends Migration {
         // tabela pivot | perfil | > perfil_permissao < | permissao |
         Schema::create('perfil_permissao', function (Blueprint $table) { //perfil_permissao
             $table->increments('id');
-            $table->integer('perfil_id')->unsigned()->nullable();
+            $table->integer('perfil_id')->unsigned();
             $table->foreign('perfil_id')
                   ->references('id')
                   ->on('perfil')
                   ->onDelete('cascade');
 
-            $table->integer('permissao_id')->unsigned()->nullable();
+            $table->integer('permissao_id')->unsigned();
             $table->foreign('permissao_id')
                   ->references('id')
                   ->on('permissao')
@@ -98,7 +98,7 @@ class CreateUsersTable extends Migration {
             $table->string('name');
             $table->longText('conteudo')->nullable();
             $table->boolean('active')->default(true);
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
                   ->references('id')
                   ->on('users')
@@ -117,7 +117,7 @@ class CreateUsersTable extends Migration {
             $table->string('cpf')->nullable();
             $table->string('rg')->nullable();
             $table->boolean('active')->default(true);
-            $table->integer('user_id')->unsigned()->nullable();
+            $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
                   ->references('id')
                   ->on('users');

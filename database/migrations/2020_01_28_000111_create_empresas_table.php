@@ -30,9 +30,9 @@ class CreateEmpresasTable extends Migration {
         Schema::create('empresa_categorias', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 191);
-            $table->string('descricao', 191);
+            $table->string('descricao', 191)->nullable();
             $table->tinyInteger('active')->default(true);
-            $table->integer('empresa_id')->unsigned()->nullable();
+            $table->integer('empresa_id')->unsigned();
             $table->foreign('empresa_id')
                   ->references('id')
                   ->on('empresas');
@@ -43,7 +43,7 @@ class CreateEmpresasTable extends Migration {
             $table->increments('id');
             $table->string('name', 191);
             $table->tinyInteger('active')->default(true);
-            $table->integer('empresa_id')->unsigned()->nullable();
+            $table->integer('empresa_id')->unsigned();
             $table->foreign('empresa_id')
                   ->references('id')
                   ->on('empresas');
@@ -55,7 +55,7 @@ class CreateEmpresasTable extends Migration {
             $table->string('name');
             $table->longText('conteudo')->nullable();
             $table->boolean('active')->default(true);
-            $table->integer('empresa_id')->unsigned()->nullable();
+            $table->integer('empresa_id')->unsigned();
             $table->foreign('empresa_id')
                   ->references('id')
                   ->on('empresas')
