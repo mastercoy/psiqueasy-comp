@@ -55,6 +55,7 @@
       </div> <!-- FIM DA DIV DA COL MD-3 -->
 
       <div class="col-md-9">
+        
         <router-view />
       </div><!-- FIM DA DIV DA COL MD-9 -->
     </div>
