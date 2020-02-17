@@ -29,6 +29,7 @@ Route::post('verificar-email', 'UserController@verificarEmail');
 Route::resource('user-perfil-json', 'UserPerfilController');
 Route::patch('desativar-user-perfil-json/{user_perfil_json}', 'UserPerfilController@desativarUserPerfil');
 Route::post('setar-permissao-perfil/{user_perfil_json}/{user_permissao_json}', 'UserPerfilController@setPermissaoPerfil');
+Route::post('setar-permissoes/{user_perfil_json}', 'UserPerfilController@setPermissoes');
 Route::post('remover-permissao-perfil/{user_perfil_json}/{user_permissao_json}', 'UserPerfilController@delPermissaoPerfil');
 
 // rotas para USER MODELO DOCS

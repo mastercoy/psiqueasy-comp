@@ -26,6 +26,7 @@ class EmpresaFilialController extends Controller {
             $arrayCompleto[2] = $filial;
             $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
             if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
+                //afazer
                 $listaFiliais[] = $filial;
 
             }
