@@ -8,6 +8,7 @@ use App\Models\UserPermissao;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Response;
 
 class UserPerfilController extends Controller {
@@ -20,6 +21,41 @@ class UserPerfilController extends Controller {
         $arrayCompleto   = [$nomeMetodo, $arrayPermissoes];                 // jogo as informações anteriores em um array para enviar no guard
         $jsonEncoder     = json_encode($arrayCompleto);
 
+        //afazer foreach aqui
+        $conditions           = ['perfil_id' => $user_perfil_json->id, 'permissao_id' => $user_permissao_json->id];
+        $perfilPermissaoPivot = PerfilPermissaoPivot::where($conditions)->first();
+
+        if (Gate::allows('tem-permissao', $jsonEncoder)) {
+            if (!isset($perfilPermissaoPivot)) {
+                $perfil = UserPerfil::find($user_perfil_json->id);
+                $perfil->permissao()->attach($user_permissao_json);
+            }
+        } else {
+            abort(403, 'Sem Permissão!');
+        }
+    }
+
+    public function setPermissoes(UserPerfil $user_perfil_json) {
+        Auth::loginUsingId(1);//fixme retirar - só para teste
+//        dd($permissoes);
+
+        $teste = Input::all();
+        dd($teste);
+        dd(is_array($permissoes));
+        $teste = $permissoes->toArray();
+        dd($teste);
+
+        $nomeMetodo      = 'set_permissao';                                 //nome do método - permissão que usuário PRECISA ter
+        $arrayPermissoes = $this->retornaPermissoes();                      //método retorna um array com as permissões do usuário
+        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes];                 // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder     = json_encode($arrayCompleto);
+
+        foreach ($permissoes as $permissao) {
+            dd('$permissao');
+
+        }
+
+        //afazer foreach aqui
         $conditions           = ['perfil_id' => $user_perfil_json->id, 'permissao_id' => $user_permissao_json->id];
         $perfilPermissaoPivot = PerfilPermissaoPivot::where($conditions)->first();
 
@@ -87,6 +123,7 @@ class UserPerfilController extends Controller {
 
         if (Gate::allows('tem-permissao', $jsonEncoder)) {
             $perfil = UserPerfil::create($this->validateUserPerfilRequest());
+            return $perfil->id; //obs parei aqui
         } else {
             abort(403, 'Sem Permissão!');
         }
