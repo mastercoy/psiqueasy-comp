@@ -255,17 +255,19 @@
       </div>
     </div>
 
-    <div class="form-temp">
+    <!-- <div class="form-temp">
      <div class="container-new">
-      <div class="row">
+      
+    </div> 
+    </div> -->
+
+    <div class="row">
         <div class="col-md-8"></div>
           <div class="col-md-4">
             <button class="btn btn-deafult mr-1">Voltar</button>
             <button class="btn btn-primary" @click="getPermissoes">Continuar <i class="fa fa-arrow-right" aria-hidden="true"></i> </button>
           </div>
       </div>
-    </div> 
-    </div>
 
    <br>
   </div>
@@ -318,11 +320,25 @@ export default {
       arrayPermissoes = var1 + var2;
       this.userInvite.email = this.user;
       this.userInvite.permissoes = arrayPermissoes;
-      this.userInvite.label = this.presetPerfil;
+      this.userInvite.label = this.labelPerfil;
 
       switch(this.showPresetPerfil) {
         case 'old' :
-          console.log("Usuário cadastrado com o perfil de secretária!");
+          if(this.presetPerfil === ''){
+            console.log('Por favor selecione um perfil para o usuário!');
+          }else {
+
+            let toast = this.$toasted.success("O convite para o usuário foi criado com Sucesso!!", {
+              iconPack: 'fontawesome',
+              icon: "fa-exclamation-circle",
+              theme: "bubble", 
+              position: "bottom-right", 
+              duration : 1500
+              });
+
+
+            this.$router.push("/usuarios");
+          }
           break;
         case 'new' :
           this.$v.$touch()

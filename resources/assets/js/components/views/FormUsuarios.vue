@@ -168,6 +168,15 @@ export default {
   },
   methods: {
     delUser() {
+      let toast = this.$toasted
+                  .error("O usuário foi deletado com sucesso!!", 
+                {
+                  iconPack: 'fontawesome',
+                  icon: "fa-exclamation-circle",
+                  theme: "bubble", 
+                  position: "bottom-right", 
+                  duration : 1500
+                });
       $('#exampleModalCenter').modal('hide');
     },
     editUSer() {
