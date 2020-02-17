@@ -8,10 +8,7 @@ export default new Vuex.Store({
         // Salvar os dados da empresa associada ao usuário logado( SuperAdmin )
         Empresa: {
             nome: "",
-            cnpj: "",
-            NomeEmp: "",
-            naturezaJuridica: "",
-            gestao: ""
+            cnpj: ""
         },
         Filiais: [],
         usuários: [],

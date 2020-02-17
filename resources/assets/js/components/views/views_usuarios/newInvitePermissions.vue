@@ -46,7 +46,7 @@
          <label for="select">  </label>  -->       
       
       </div>
-    </div><br>
+    </div>
 
     <div class="form-temp" v-if="showPresetPerfil === 'old' ">
           <div class="container">
@@ -67,30 +67,29 @@
 
     <div class="form-temp" v-if="showPresetPerfil === 'new' ">
 
-        <h4>
-          Nome do Perfil 
-          <a href="#" for="Admin" data-toggle="popover" data-trigger="hover" title="Finanças" data-placement="top"
-                  data-content="Essa funcionalidade permite que voce salve as permissões selecionadas em um perfil, para que possa ser reutilizada posteriormente.">
-                  <i class="fa fa-info-circle fa-lg" aria-hidden="true"></i>
-              </a>
-        </h4><hr>
+        <h4>Nome do Perfil <span> * </span></h4>
+        <hr>
 
       <div class="container">
           <div class="form-group">
-            <!-- <label for="Perfil" class="pf">
-              Nome do Perfil:              
-            </label> -->
-            <input type="text" class="form-control" id="Perfil" placeholder="Exemplo: Secretária, Administração Financeira" v-model="perfilName" >
-            <!-- <small id="perfilHelp" class="form-text text-muted">Esse campo é opcional.</small> -->
+            <input 
+              type="text" 
+              class="form-control" 
+              v-bind:class="{ 'is-invalid': $v.labelPerfil.$error}" 
+              id="Perfil" 
+              placeholder="Exemplo: Secretária, Administração Financeira" 
+              v-model="$v.labelPerfil.$model" >
+              <span v-if="$v.labelPerfil.$error"> O campo é obrigatório </span>
+             <small id="perfilHelp" class="form-text text-muted">Esse campo é o identificador do perfil de usuário a ser criado.</small> 
           </div>
       </div>
-        <hr>      
+          
 
       <h4>Selecione as permissões de acesso do usuário</h4>     
       <hr />
       <!-- <label>Marcas todos</label><br> -->
       <button type="button" class="btn btn-link mb-1">Marcas todos</button>
-      <br />
+      <br />      
       <div class="container">
         <div class="parent">         
             <input class="magic-checkbox" type="checkbox" id="Financeiro" value="Financeiro" @click="checkAll" v-model="checkF"/>
@@ -99,8 +98,9 @@
                <i :class="[iconF ? 'fa-chevron-up' : 'fa-chevron-down', 'fa']" />
             </a>          
         </div>
-        <br />
+        <br />        
         <div class="collapse" id="collapseExample">
+          <div class="overflow-auto">
           <div class="container vl">
             <div class="container">
               <div class="row">
@@ -143,6 +143,7 @@
             </div>
           </div>
         </div>
+      </div>
       </div>
 
        <div class="container">
@@ -248,29 +249,30 @@
        <div class="container">
         <div class="parent">         
             <input class="magic-checkbox" type="checkbox" id="Pacientes" value="Pacientes" />
-            <label for="Pacientes">Pacientes</label>       
-            <!-- <a class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-               <i class="fa fa-chevron-down" aria-hidden="true"></i>
-            </a>           -->
+            <label for="Pacientes">Pacientes</label>      
+            
         </div>
       </div>
     </div>
 
     <div class="form-temp">
-      
+     <div class="container-new">
+      <div class="row">
+        <div class="col-md-8"></div>
+          <div class="col-md-4">
+            <button class="btn btn-deafult mr-1">Voltar</button>
+            <button class="btn btn-primary" @click="getPermissoes">Continuar <i class="fa fa-arrow-right" aria-hidden="true"></i> </button>
+          </div>
+      </div>
+    </div> 
     </div>
 
-    <div class="row">
-        <div class="col-md-8"></div>
-        <div class="col-md-4">
-          <button class="btn btn-deafult mr-1">Voltar</button>
-          <button class="btn btn-primary" @click="getPermissoes">Continuar <i class="fa fa-arrow-right" aria-hidden="true"></i> </button>
-        </div>
-      </div><br>
+   <br>
   </div>
 </template>
 
 <script>
+import { required } from 'vuelidate/lib/validators'
 export default {
   props: ["emailUser"],
   mounted() {
@@ -279,6 +281,9 @@ export default {
 
       //Metodo para carregar os perfis salvos!
     });
+  },
+   validations: {
+    labelPerfil: {required}
   },
   data() {
     return { 
@@ -298,14 +303,13 @@ export default {
       permissoesRF2: [],
       presetPerfil: '',
       perfilName: '',
-      showPresetPerfil: false
+      showPresetPerfil: false,
+      labelPerfil: ''
        
     };
   },
   methods: {
-    getPermissoes() {
-
-      
+    getPermissoes() {      
       
       let var1 = this.permissoesRF1;
       let var2 = this.permissoesRF2
@@ -316,37 +320,47 @@ export default {
       this.userInvite.permissoes = arrayPermissoes;
       this.userInvite.label = this.presetPerfil;
 
-      // if(this.userInvite.permissoes = )
-      //console.log(this.userInvite);
+      switch(this.showPresetPerfil) {
+        case 'old' :
+          console.log("Usuário cadastrado com o perfil de secretária!");
+          break;
+        case 'new' :
+          this.$v.$touch()
+          if (this.$v.$invalid) {
+            console.log("Preencha os campos necessários!")
+          } else {
+              if(this.userInvite.permissoes === ''){
+                let toast = this.$toasted
+                  .error("As opções de permissões não foram preenchidas corretamente, por favor verifique os campos e tente novamente!!", 
+                {
+                  iconPack: 'fontawesome',
+                  icon: "fa-exclamation-circle",
+                  theme: "bubble", 
+                  position: "bottom-right", 
+                  duration : 1500
+                });
+             } else {          
+              console.log(this.userInvite);
 
-      // if(this.presetPerfil !== '' && this.userInvite.permissoes === ''){
-      //   this.perfilName = this.presetPerfil;
-      // };
+              let toast = this.$toasted.success("O perfil para o usuário convidado, foi criado com Sucesso!!", {
+              iconPack: 'fontawesome',
+              icon: "fa-exclamation-circle",
+              theme: "bubble", 
+              position: "bottom-right", 
+              duration : 1500
+              });
+          //this.$router.push("/usuarios");
+            } 
+           
 
-      if(this.userInvite.permissoes === ''){
-        let toast = this.$toasted.error("As opções não foram preenchidas corretamente, por favor verifique os campos e tente novamente!!", {
-        iconPack: 'fontawesome',
-        icon: "fa-exclamation-circle",
-        theme: "bubble", 
-        position: "bottom-right", 
-        duration : 1500
-        });
-      }else {
+          }
+          break;
+        default: 
+        console.log('teste');
+      }       
+
+          
         
-        console.log(this.userInvite);
-
-        let toast = this.$toasted.success("O perfil para o usuário convidado, foi criado com Sucesso!!", {
-        iconPack: 'fontawesome',
-        icon: "fa-exclamation-circle",
-        theme: "bubble", 
-        position: "bottom-right", 
-        duration : 1500
-        });
-
-        //this.$router.push("/usuarios");
-
-      } 
-     
     },
     checkAll(e) {
 

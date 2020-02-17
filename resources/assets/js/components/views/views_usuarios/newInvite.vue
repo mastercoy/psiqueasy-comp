@@ -63,8 +63,7 @@ export default {
          }else {
            this.testeVal = false;
            this.$router.push({ name: 'convitePermissoes', params: { emailUser } });
-         }
-         
+         }         
        });
 
         
