@@ -15,6 +15,7 @@
               <label for="email"><strong>E-mail: </strong></label>
               <input type="text" class="form-control" v-bind:class="{ 'is-invalid': $v.userEmail.$error}" id="email" v-model="$v.userEmail.$model" >
                <span v-if="$v.userEmail.$error"> Digite um e-mail válido!! </span>
+               <span v-if="testeVal"> Esse email já está cadastrado! </span>
             </div>
              <div class="col-md-3"></div>
            </div>         
@@ -24,7 +25,7 @@
           <div class="col-md-8"></div>
           <div class="col-md-4">
             <router-link to="/usuarios" type="button" class="btn btn-default mr-1"> Voltar </router-link>           
-            <button class="btn btn-primary" @click="atualizaRota"> Continuar <i class="fa fa-arrow-right" aria-hidden="true"></i> </button>            
+            <button class="btn btn-primary" @click="verificaEmail"> Continuar <i class="fa fa-arrow-right" aria-hidden="true"></i> </button>            
           </div>
         </div>
     </div>
@@ -40,30 +41,33 @@ export default {
   name: 'NewColaborador',
   data() {
     return {
-      userEmail: ''
+      userEmail: '',
+      testeVal: false
     }
   },
   validations: {
     userEmail: {required, email}
-    //:to="{name:'convitePermissoes', params: {userEmail} }"
   },
   methods: {
-    atualizaRota() {
-      let user = {
-        email: this.userEmail
-      }
-      console.log(user);
+    verificaEmail() {
+      let emailUser = this.userEmail
+      //console.log(user);
       this.$v.$touch()
       if (this.$v.$invalid) {
         console.log("Preencha os campos necessários!")
       } else {
-
-        axios.get('/api/verificar-email/', user).then(({ data }) => {
-         console.log(data);
-         //this.$router.push("/cadastro");
+        console.log(emailUser)
+        axios.post('/api/verificar-email', {"email": emailUser}).then(({ data }) => {
+         if(data === 1){       
+           this.testeVal = true;
+         }else {
+           this.testeVal = false;
+           this.$router.push({ name: 'convitePermissoes', params: { emailUser } });
+         }
+         
        });
 
-        //this.$router.push({ name: 'convitePermissoes', params: { user } })
+        
       }
     }
   }

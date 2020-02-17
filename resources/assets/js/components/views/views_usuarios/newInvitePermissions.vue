@@ -14,7 +14,7 @@
          <i class="fa fa-user fa-4x" aria-hidden="true"></i>
         
         
-          <label>{{ user }}</label>
+          <label>{{ emailUser }}</label>
         
         
           <router-link to="/usuarios/invite">Alterar</router-link>
@@ -272,7 +272,7 @@
 
 <script>
 export default {
-  props: ["user"],
+  props: ["emailUser"],
   mounted() {
      $(document).ready(function(){
       $('[data-toggle="popover"]').popover();
@@ -332,7 +332,8 @@ export default {
         duration : 1500
         });
       }else {
-
+        
+        console.log(this.userInvite);
 
         let toast = this.$toasted.success("O perfil para o usuário convidado, foi criado com Sucesso!!", {
         iconPack: 'fontawesome',
@@ -342,7 +343,7 @@ export default {
         duration : 1500
         });
 
-        this.$router.push("/usuarios");
+        //this.$router.push("/usuarios");
 
       } 
      
