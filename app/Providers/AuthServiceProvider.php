@@ -7,20 +7,12 @@ use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvid
 use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider {
-    /**
-     * The policy mappings for the application.
-     *
-     * @var array
-     */
+
     protected $policies = [
         'App\Model' => 'App\Policies\ModelPolicy',
     ];
 
-    /**
-     * Register any authentication / authorization services.
-     *
-     * @return void
-     */
+
     public function boot() {
         $this->registerPolicies();
 
@@ -39,7 +31,7 @@ class AuthServiceProvider extends ServiceProvider {
             return ($user->id == $item->user_id) && (in_array($nomeMetodo, $permissoesUser));
         });
 
-        Gate::define('pertence-mesma-empresa-e-tem-permissao', function ($user, $objeto) { //fixme guard
+        Gate::define('pertence-mesma-empresa-e-tem-permissao', function ($user, $objeto) {
 
             $permissoesUser = (new UserController)->retornaPermissoes();
             $decoder        = json_decode($objeto);
@@ -61,8 +53,10 @@ class AuthServiceProvider extends ServiceProvider {
 
         });
 
+        // ============================================================================================================
+        // ============================================================================================================
+        // ============================================================================================================
 
-        // ====================================
 
         Gate::define('pertence-usuario-logado', function ($user, $objeto) {
             return $user->id == $objeto->user_id;

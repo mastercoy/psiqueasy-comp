@@ -301,15 +301,16 @@ class CasoDeUsoSeeder extends Seeder {
 
         DB::table('perfil')->insert([
                                         'name' => 'Master',
+                                        'empresa_id' => '1',
 
                                     ]);
         DB::table('perfil')->insert([
                                         'name' => 'Profissional',
-
+                                        'empresa_id' => '1',
                                     ]);
         DB::table('perfil')->insert([
                                         'name' => 'secretarix',
-
+                                        'empresa_id' => '1',
                                     ]);
 
         DB::table('perfil_permissao')->insert([
@@ -460,7 +461,6 @@ class CasoDeUsoSeeder extends Seeder {
 
                                              ]);
 
-        //id	name	descricao	active	empresa_id	created_at	updated_at
         DB::table('empresa_categorias')->insert([
                                                     'name' => 'Escola',
                                                     'descricao' => 'Categoria Um',
