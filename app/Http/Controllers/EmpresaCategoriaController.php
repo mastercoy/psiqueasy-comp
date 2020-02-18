@@ -10,11 +10,11 @@ use Illuminate\Support\Facades\Response;
 
 class EmpresaCategoriaController extends Controller {
 
-    public function index() {  //Ok
+    public function index() {
         Auth::loginUsingId(1); //fixme remover
 
-        $nomeMetodo      = 'index_cat';                     //nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();      //método retorna um array com as permissões do usuário
+        $nomeMetodo      = 'index_cat';                     // nome do método - permissão que usuário PRECISA ter
+        $arrayPermissoes = $this->retornaPermissoes();      // método retorna um array com as permissões do usuário
 
         // joga tudo em um array, converte pra json e envia no guard
         $arrayCompleto = [$nomeMetodo, $arrayPermissoes];
@@ -23,11 +23,15 @@ class EmpresaCategoriaController extends Controller {
         $listaCategorias = [];
 
         foreach ($categorias as $categoria) {
-            $arrayCompleto[2] = $categoria;
-            $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
-            if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
-                $listaCategorias[] = $categoria;
+
+            if ($categoria->active != 0) {
+                $arrayCompleto[2] = $categoria;
+                $jsonEncoder      = json_encode($arrayCompleto); // precisa transformar em json pois o guard nao aceita array
+                if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
+                    $listaCategorias[] = $categoria;
+                }
             }
+
         }
         return Response::json($listaCategorias);
 

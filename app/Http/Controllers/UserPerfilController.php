@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\PerfilPermissaoPivot;
 use App\Models\UserPerfil;
 use App\Models\UserPerfilPivot;
-use App\Models\UserPermissao;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
@@ -14,69 +13,51 @@ use Illuminate\Support\Facades\Response;
 
 class UserPerfilController extends Controller {
 
-    public function setPermissaoPerfil(UserPerfil $user_perfil_json, UserPermissao $user_permissao_json) {
-        Auth::loginUsingId(1);//fixme retirar - só para teste
-
-        $nomeMetodo      = 'set_permissao';                                 //nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();                      //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes];                 // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);
-
-        //afazer foreach aqui
-        $conditions           = ['perfil_id' => $user_perfil_json->id, 'permissao_id' => $user_permissao_json->id];
-        $perfilPermissaoPivot = PerfilPermissaoPivot::where($conditions)->first();
-
-        if (Gate::allows('tem-permissao', $jsonEncoder)) {
-            if (!isset($perfilPermissaoPivot)) {
-                $perfil = UserPerfil::find($user_perfil_json->id);
-                $perfil->permissao()->attach($user_permissao_json);
-            }
-        } else {
-            abort(403, 'Sem Permissão!');
-        }
-    }
-
     public function setPermissoes(UserPerfil $user_perfil_json) { //obs ta filé - recebe um array tipo [1,2,3,6,10] com apenas o id das permissões
         Auth::loginUsingId(1);                                    //fixme retirar - só para teste
 
-        $permissoes      = Input::all();                                    // agora é um array de permissões
-        $nomeMetodo      = 'set_permissao';                                 // nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();                      // método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes];                 // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);                     // precisa transformar em json pois o guard nao aceita array
+        $perfil          = UserPerfil::find($user_perfil_json->id);
+        $permissoes      = Input::all();                                             // agora é um array de permissões
+        $nomeMetodo      = 'set_permissao';                                          // nome do método - permissão que usuário PRECISA ter
+        $arrayPermissoes = $this->retornaPermissoes();                               // método retorna um array com as permissões do usuário
+        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $perfil];                 // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder     = json_encode($arrayCompleto);                              // precisa transformar em json pois o guard nao aceita array
 
-        foreach ($permissoes as $permissao) {
+        if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
 
-            $conditions           = ['perfil_id' => $user_perfil_json->id, 'permissao_id' => $permissao];
-            $perfilPermissaoPivot = PerfilPermissaoPivot::where($conditions)->first();
+            foreach ($permissoes as $permissao) {
+                $conditions           = ['perfil_id' => $user_perfil_json->id, 'permissao_id' => $permissao];
+                $perfilPermissaoPivot = PerfilPermissaoPivot::where($conditions)->first();
 
-            if (!isset($perfilPermissaoPivot)) {
-                if (Gate::allows('tem-permissao', $jsonEncoder)) {
+                if (!isset($perfilPermissaoPivot)) {
                     $perfil = UserPerfil::find($user_perfil_json->id);
                     $perfil->permissao()->attach($permissao);
                 }
             }
-
+        } else {
+            abort(403, 'Sem Permissão!');
         }
-
 
     }
 
-    public function delPermissaoPerfil(UserPerfil $user_perfil_json, UserPermissao $user_permissao_json) {
+    public function delPermissoes(UserPerfil $user_perfil_json) {
         Auth::loginUsingId(1);//fixme retirar - só para teste
 
+        $permissoes      = Input::all();
         $nomeMetodo      = 'del_permissao';                                 //nome do método - permissão que usuário PRECISA ter
         $arrayPermissoes = $this->retornaPermissoes();                      //método retorna um array com as permissões do usuário
         $arrayCompleto   = [$nomeMetodo, $arrayPermissoes];                 // jogo as informações anteriores em um array para enviar no guard
         $jsonEncoder     = json_encode($arrayCompleto);
 
-        $conditions           = ['perfil_id' => $user_perfil_json->id, 'permissao_id' => $user_permissao_json->id];
-        $perfilPermissaoPivot = PerfilPermissaoPivot::where($conditions)->first();
-
         if (Gate::allows('tem-permissao', $jsonEncoder)) {
-            if (isset($perfilPermissaoPivot)) {
-                $perfil = UserPerfil::find($user_perfil_json->id);
-                $perfil->permissao()->detach($user_permissao_json);
+            foreach ($permissoes as $permissao) {
+                $conditions           = ['perfil_id' => $user_perfil_json->id, 'permissao_id' => $permissao];
+                $perfilPermissaoPivot = PerfilPermissaoPivot::where($conditions)->first();
+
+                if (isset($perfilPermissaoPivot)) {
+                    $perfil = UserPerfil::find($user_perfil_json->id);
+                    $perfil->permissao()->detach($permissao);
+                }
             }
         } else {
             abort(403, 'Sem Permissão!');
@@ -119,12 +100,13 @@ class UserPerfilController extends Controller {
 
         if (Gate::allows('tem-permissao', $jsonEncoder)) {
             $conditions = ['name' => Input::get('name'), 'empresa_id' => Input::get('empresa_id')];
+            $perfil     = UserPerfil::where($conditions)->first();
 
-            if (!UserPerfil::where($conditions)) {
+            if (!isset($perfil)) { //caso o perfil ainda não exista
                 $perfil = UserPerfil::create($this->validateUserPerfilRequest());
-                return 'ID do perfil recém criado: ' . $perfil->id; //obs parei aqui
+                return 'ID do perfil recém criado: ' . $perfil->id; //fixme retirar essa linha
             } else {
-                return 'Perfil já existe';
+                return 'já existe';
             }
         } else {
             abort(403, 'Sem Permissão!');
