@@ -41,6 +41,8 @@ class EmpresaController extends Controller {
         $arrayCompleto   = [$nomeMetodo, $arrayPermissoes]; // jogo as informações anteriores em um array para enviar no guard
         $jsonEncoder     = json_encode($arrayCompleto);     // precisa transformar em json pois o guard nao aceita array
 
+        auth()->user->empresa_id; //obs importante
+
         if (Gate::allows('tem-permissao', $jsonEncoder)) {
             $empresa_json = Empresa::create($this->validateEmpresaRequest());
         } else {
