@@ -23,7 +23,6 @@ class EmpresaCategoriaController extends Controller {
         $listaCategorias = [];
 
         foreach ($categorias as $categoria) {
-
             if ($categoria->active != 0) {
                 $arrayCompleto[2] = $categoria;
                 $jsonEncoder      = json_encode($arrayCompleto); // precisa transformar em json pois o guard nao aceita array
@@ -54,13 +53,19 @@ class EmpresaCategoriaController extends Controller {
     }
 
     public function show(EmpresaCategoria $empresa_categoria_json) {
-        Auth::loginUsingId(1);//fixme retirar - só para teste
+        Auth::loginUsingId(1);                                                                                                                                                                                      //fixme retirar - só para teste
         $categoria = EmpresaCategoria::find($empresa_categoria_json->id);
 
-        $nomeMetodo      = 'show_cat';                                  //nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();                  //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $categoria]; // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);                 // precisa transformar em json pois o guard nao aceita array
+        if ($categoria->active == 0) {
+            return null;
+        }
+
+        // $result = (new UserController)->retornaPermissoes();
+        // dd($result); //afazer continuar
+        $nomeMetodo      = 'show_cat';                                                                                                                                                                                   // nome do método - permissão que usuário PRECISA ter
+        $arrayPermissoes = $this->retornaPermissoes();                                                                                                                                                              // método retorna um array com as permissões do usuário
+        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $categoria];                                                                                                                                             // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder     = json_encode($arrayCompleto);                                                                                                                                                             // precisa transformar em json pois o guard nao aceita array
 
         if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
             return $categoria;

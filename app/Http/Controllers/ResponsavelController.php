@@ -24,11 +24,14 @@ class ResponsavelController extends Controller { //verificar se user->id == resp
         $listaResponsaveis = [];
 
         foreach ($responsaveis as $responsavel) {
-            $arrayCompleto[2] = $responsavel;
-            $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
-            if (Gate::allows('pertence-usuario-logado-e-tem-permissao', $jsonEncoder)) {
-                $listaResponsaveis[] = $responsavel;
+            if ($responsavel->active != 0) {
+                $arrayCompleto[2] = $responsavel;
+                $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+                if (Gate::allows('pertence-usuario-logado-e-tem-permissao', $jsonEncoder)) {
+                    $listaResponsaveis[] = $responsavel;
+                }
             }
+
         }
         return Response::json($listaResponsaveis);
     }
@@ -52,6 +55,10 @@ class ResponsavelController extends Controller { //verificar se user->id == resp
     public function show(Responsavel $responsavel_json) {
         Auth::loginUsingId(1);//fixme retirar - só para teste
         $responsavel = Responsavel::find($responsavel_json->id);
+
+        if ($responsavel->active == 0) {
+            return null;
+        }
 
         $nomeMetodo      = 'show_responsavel';                                  //nome do método - permissão que usuário PRECISA ter
         $arrayPermissoes = $this->retornaPermissoes();                          //método retorna um array com as permissões do usuário

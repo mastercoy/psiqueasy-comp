@@ -23,11 +23,14 @@ class EmpresaController extends Controller {
         $listaEmpresa = [];
 
         foreach ($empresas as $empresa) {
-            $arrayCompleto[2] = $empresa;
-            $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
-            if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) {
-                $listaEmpresa[] = $empresa;
+            if ($empresa->active != 0) {
+                $arrayCompleto[2] = $empresa;
+                $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+                if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) {
+                    $listaEmpresa[] = $empresa;
+                }
             }
+
         }
 
         return Response::json($listaEmpresa);
@@ -53,6 +56,10 @@ class EmpresaController extends Controller {
     public function show(Empresa $empresa_json) {
         Auth::loginUsingId(1);                    //fixme retirar - só para teste
         $empresa = Empresa::find($empresa_json->id);
+
+        if ($empresa->active == 0) {
+            return null;
+        }
 
         $nomeMetodo      = 'show_empresa';                            //nome do método - permissão que usuário PRECISA ter
         $arrayPermissoes = $this->retornaPermissoes();                //método retorna um array com as permissões do usuário

@@ -23,11 +23,14 @@ class UserModeloDocsController extends Controller { //verificar se user->id == o
         $listaModelos = [];
 
         foreach ($modelos as $modelo) {
-            $arrayCompleto[2] = $modelo;
-            $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
-            if (Gate::allows('pertence-usuario-logado-e-tem-permissao', $jsonEncoder)) {
-                $listaModelos[] = $modelo;
+            if ($modelo->active != 0) {
+                $arrayCompleto[2] = $modelo;
+                $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+                if (Gate::allows('pertence-usuario-logado-e-tem-permissao', $jsonEncoder)) {
+                    $listaModelos[] = $modelo;
+                }
             }
+
         }
         return Response::json($listaModelos);
     }
@@ -52,6 +55,10 @@ class UserModeloDocsController extends Controller { //verificar se user->id == o
     public function show(UserModeloDocs $user_modelo_docs_json) {
         Auth::loginUsingId(1);//fixme retirar - só para teste
         $modelo = UserModeloDocs::find($user_modelo_docs_json->id);
+
+        if ($modelo->active == 0) {
+            return null;
+        }
 
         $nomeMetodo      = 'show_user_model';                                   //nome do método - permissão que usuário PRECISA ter
         $arrayPermissoes = $this->retornaPermissoes();                          //método retorna um array com as permissões do usuário

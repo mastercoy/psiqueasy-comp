@@ -74,10 +74,12 @@ class UserController extends Controller {
         $listaUsers = [];
 
         foreach ($users as $user) {
-            $arrayCompleto[2] = $user;
-            $jsonEncoder      = json_encode($arrayCompleto); // precisa transformar em json pois o guard nao aceita array
-            if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
-                $listaUsers[] = $user;
+            if ($user->active != 0) {
+                $arrayCompleto[2] = $user;
+                $jsonEncoder      = json_encode($arrayCompleto); // precisa transformar em json pois o guard nao aceita array
+                if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
+                    $listaUsers[] = $user;
+                }
             }
         }
         return Response::json($listaUsers);
@@ -102,6 +104,10 @@ class UserController extends Controller {
     public function show(User $user_json) {
         Auth::loginUsingId(1);//fixme retirar - só para teste
         $usuario = User::find($user_json->id);
+
+        if ($usuario->active == 0) {
+            return null;
+        }
 
         $nomeMetodo      = 'show_user';                                 //nome do método - permissão que usuário PRECISA ter
         $arrayPermissoes = $this->retornaPermissoes();                  //método retorna um array com as permissões do usuário
@@ -167,7 +173,7 @@ class UserController extends Controller {
 
     // ========================= protected
 
-    protected function retornaPermissoes() {
+    public function retornaPermissoes() {
         $user_json           = Auth::user();
         $listaPermissoesUser = [];
 

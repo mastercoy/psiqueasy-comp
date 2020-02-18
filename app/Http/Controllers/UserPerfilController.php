@@ -78,14 +78,16 @@ class UserPerfilController extends Controller {
         $listaPerfis = [];
 
         foreach ($perfis as $perfil) {
-            $arrayCompleto[2] = $perfil;
-            $jsonEncoder      = json_encode($arrayCompleto); // precisa transformar em json pois o guard nao aceita array
-            if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
-                $quant         = count(UserPerfilPivot::where('perfil_id', $perfil->id)->get()->toArray());
-                $listaPerfis[] = $perfil;
-                $listaPerfis[] = $quant;
-
+            if ($perfil->active != 0) {
+                $arrayCompleto[2] = $perfil;
+                $jsonEncoder      = json_encode($arrayCompleto); // precisa transformar em json pois o guard nao aceita array
+                if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
+                    $quant         = count(UserPerfilPivot::where('perfil_id', $perfil->id)->get()->toArray());
+                    $listaPerfis[] = $perfil;
+                    $listaPerfis[] = $quant;
+                }
             }
+
         }
         return Response::json($listaPerfis);
     }
@@ -116,6 +118,10 @@ class UserPerfilController extends Controller {
     public function show(UserPerfil $user_perfil_json) {
         Auth::loginUsingId(1);//fixme retirar - só para teste
         $perfil = UserPerfil::find($user_perfil_json->id);
+
+        if ($perfil->active == 0) {
+            return null;
+        }
 
         $nomeMetodo      = 'show_perfil';                                  //nome do método - permissão que usuário PRECISA ter
         $arrayPermissoes = $this->retornaPermissoes();                     //método retorna um array com as permissões do usuário

@@ -23,12 +23,12 @@ class EmpresaFilialController extends Controller {
         $listaFiliais = [];
 
         foreach ($filiais as $filial) {
-            $arrayCompleto[2] = $filial;
-            $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
-            if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
-                //afazer
-                $listaFiliais[] = $filial;
-
+            if ($filial->active != 0) {
+                $arrayCompleto[2] = $filial;
+                $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+                if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
+                    $listaFiliais[] = $filial;
+                }
             }
         }
         return Response::json($listaFiliais);
@@ -53,6 +53,10 @@ class EmpresaFilialController extends Controller {
     public function show(EmpresaFilial $empresa_filial_json) {
         Auth::loginUsingId(1);//fixme retirar - só para teste
         $filial = EmpresaFilial::find($empresa_filial_json->id);
+
+        if ($filial->active == 0) {
+            return 'filial desativada';
+        }
 
         $nomeMetodo      = 'show_filial';                                  //nome do método - permissão que usuário PRECISA ter
         $arrayPermissoes = $this->retornaPermissoes();                     //método retorna um array com as permissões do usuário

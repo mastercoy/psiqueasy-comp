@@ -23,11 +23,14 @@ class EmpresaModeloDocsController extends Controller {
         $listaModelos = [];
 
         foreach ($modelos as $modelo) {
-            $arrayCompleto[2] = $modelo;
-            $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
-            if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
-                $listaModelos[] = $modelo;
+            if ($modelo->active != 0) {
+                $arrayCompleto[2] = $modelo;
+                $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+                if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
+                    $listaModelos[] = $modelo;
+                }
             }
+
         }
         return Response::json($listaModelos);
     }
@@ -51,6 +54,10 @@ class EmpresaModeloDocsController extends Controller {
     public function show(EmpresaModeloDocs $empresa_modelo_docs_json) {
         Auth::loginUsingId(1);//fixme retirar - só para teste
         $modelo = EmpresaModeloDocs::find($empresa_modelo_docs_json->id);
+
+        if ($modelo->active == 0) {
+            return null;
+        }
 
         $nomeMetodo      = 'show_emp_model';                                  //nome do método - permissão que usuário PRECISA ter
         $arrayPermissoes = $this->retornaPermissoes();                        //método retorna um array com as permissões do usuário
