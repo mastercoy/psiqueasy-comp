@@ -368,6 +368,10 @@ export default {
              } else {          
               console.log(this.userInvite);
 
+              axios.post('/api/user-perfil-json', ).then(({data}) => {
+                console.log(data);
+              });
+
               let toast = this.$toasted.success("O perfil para o usuário convidado, foi criado com Sucesso!!", {
               iconPack: 'fontawesome',
               icon: "fa-exclamation-circle",
