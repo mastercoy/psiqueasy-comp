@@ -50,34 +50,21 @@
         </div>
     </div>
 
-    <!-- <div class="container">
-   
-    <div class="row">
-      <div class="card mb-2 mr-2" style="width: 20rem" >
-        <div class="card-body">
-          <h5 class="card-title"><strong> Nylo Pinto </strong></h5>
-          <h6 class="card-subtitle mb-2 text text-muted">Estagiário do setor de TI</h6>
-          <p class="card-text">Nisi ea cillum veniam dolor pariatur sunt ad reprehenderit. 
-            Anim cupidatat exercitation quis aliquip aliquip eiusmod nulla ea amet commodo irure ullamco aliqua dolore.
-          </p><hr>
-            <router-link :to="{name:'EditUsuario', params: {User} }" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td>  
-            <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a>    
-        </div>        
+        <div class="form-temp">
+        <h4><i class="fa fa-tasks" aria-hidden="true"></i> Perfis</h4>
+        <hr>
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12">
+              <label> Teste </label>
+              <label> {{ perfisNew }} </label>
+              <div v-for="per in perfisNew" :key="per.id">
+                <label>{{ per.nome }}</label>
+              </div>  
+            </div>    
+          </div>
+        </div>
       </div>
-
-       <div class="card mb-2 mr-2" style="width: 20rem">
-        <div class="card-body">         
-          <h5 class="card-title"> <strong>Matheus Henrique Oliveira Santos </strong></h5>
-          <h6 class="card-subtitle mb-2 text text-muted">Estagiário do setor de TI</h6>
-          <p class="card-text">Nisi ea cillum veniam dolor pariatur sunt ad reprehenderit. 
-            Anim cupidatat exercitation quis aliquip aliquip eiusmod nulla ea amet commodo irure ullamco aliqua dolore.
-          </p><hr>
-            <router-link :to="{name:'EditUsuario', params: {User} }" class="btn btn-warning btn-sm"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td>  
-            <a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a>    
-        </div>        
-      </div>
-      </div>
-    </div> -->
 
     <!-- Modal para comfirmação de deletar -->
           <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -101,52 +88,16 @@
           </div>
   </div><!-- fim form-temp -->
   <br>
-
-  <div class="form-temp">
-    <h4><i class="fa fa-tasks" aria-hidden="true"></i> Perfis</h4>
-    <hr>
-    <div class="container">
-      <div class="row">     
-        <label> {{ perfisNew[0] }}</label>          
-      </div>
-    </div>
-  </div>
+ 
   </div>
 </template>
 
 <script>
 export default {
-  mounted(){
+  mounted(){ 
     $(document).ready(function(){
       $('[data-toggle="popover"]').popover();     
-    });    
-
-     //Metodo para carregar os perfis salvos!
-     axios.get("/api/user-perfil-json").then(({data}) => {
-      console.log(data);
-      this.perfis = data;
-      //console.log(this.perfis[0].name);
-
-      for(let i=0; i <= this.perfis.length; i++) {
-        if(typeof this.perfis[i] === "object") {
-          this.perfisNew[i] = {
-            id: this.perfis[i].id,
-            nome: this.perfis[i].name,
-            quantidade: this.perfis[i + 1]  
-          }
-        }        
-      }
-
-      console.log(this.perfisNew);  //Modificar depois **
-    });
-
-    
-
-    // this.perfisNew[0] = {
-    //   nome: this.perfis[0].name,
-    //   quantidade: this.perfis[1]
-    // }
-    
+    });     
   },
   data() {
     return {
@@ -206,6 +157,26 @@ export default {
     },
     reenviarEmail() {
       console.log("Funciona!");
+    },
+    carregaPerfis() { 
+     let temp = 0;
+     //Metodo para carregar os perfis salvos!
+      axios.get("/api/user-perfil-json").then(({data}) => {
+        console.log(data);
+        this.perfis = data;
+        //console.log(this.perfis[0].name);
+        for(let i=0; i <= this.perfis.length; i++) {
+          if(typeof this.perfis[i] === "object") {
+            this.perfisNew[temp] = {
+              id: this.perfis[i].id,
+              nome: this.perfis[i].name,
+              quantidade: this.perfis[i + 1]  
+            }
+            temp++;
+          }        
+        }
+        console.log(this.perfisNew);  //Modificar depois **      
+      });    
     }
   }
 }

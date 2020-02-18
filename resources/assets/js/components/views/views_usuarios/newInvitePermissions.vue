@@ -41,9 +41,7 @@
           </div>
           <div>       
         </div>
-       </div>
-         <!-- <input class="magic-checkbox" type="checkbox" id="select"  v-model="showPresetPerfil"/>
-         <label for="select">  </label>  -->       
+       </div>               
       
       </div>
     </div>
@@ -53,11 +51,10 @@
              <div  class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <select class="form-control" v-model="presetPerfil" :disabled="!showPresetPerfil">
-                    <option selected disabled></option>
-                    <option>Secretária</option>
-                    <option>Psicólogo</option>
-                    <option>Psicopedagogo</option>
+                  <select class="form-control" v-model="presetPerfil" :disabled="!showPresetPerfil" >
+                    <option v-for="perf in perfisNew" :key="perf.id">
+                    <option > {{ perf.nome }}</option>                    
+                    </option>
                   </select>
                 </div>
               </div>
@@ -87,7 +84,7 @@
 
       <h4>Selecione as permissões de acesso do usuário</h4>     
       <hr />
-      <!-- <label>Marcas todos</label><br> -->
+     
       <button type="button" class="btn btn-link mb-1">Marcas todos</button>
       <br />      
       <div class="container">
@@ -198,8 +195,7 @@
             </div>
           </div>
         </div>
-      </div>   
-
+      </div> 
      
 
        <div class="collapse" id="collapseExample1">
@@ -268,7 +264,6 @@
             <button class="btn btn-primary" @click="getPermissoes">Continuar <i class="fa fa-arrow-right" aria-hidden="true"></i> </button>
           </div>
       </div>
-
    <br>
   </div>
 </template>
@@ -283,6 +278,8 @@ export default {
 
       //Metodo para carregar os perfis salvos!
     });
+
+    this.carregaPerfis();
   },
    validations: {
     labelPerfil: {required}
@@ -306,13 +303,13 @@ export default {
       presetPerfil: '',
       perfilName: '',
       showPresetPerfil: false,
-      labelPerfil: ''
+      labelPerfil: '',
+      perfisNew: []
        
     };
   },
   methods: {
     getPermissoes() {      
-      
       let var1 = this.permissoesRF1;
       let var2 = this.permissoesRF2
       let arrayPermissoes = [];
@@ -337,7 +334,6 @@ export default {
                   duration : 1500
                 });
           }else {
-
             let toast = this.$toasted.success("O convite para o usuário foi criado com Sucesso!!", {
               iconPack: 'fontawesome',
               icon: "fa-exclamation-circle",
@@ -345,8 +341,6 @@ export default {
               position: "bottom-right", 
               duration : 1500
               });
-
-
             this.$router.push("/usuarios");
           }
           break;
@@ -366,35 +360,31 @@ export default {
                   duration : 1500
                 });
              } else {          
-              console.log(this.userInvite);
-
-              axios.post('/api/user-perfil-json', ).then(({data}) => {
+              //console.log(this.userInvite);
+              let newp = {
+                name: this.labelPerfil,
+                empresa_id: this.$store.state.empresaID
+              }
+              console.log(newp)
+              axios.post('/api/user-perfil-json', newp).then(({data}) => {
                 console.log(data);
               });
-
               let toast = this.$toasted.success("O perfil para o usuário convidado, foi criado com Sucesso!!", {
-              iconPack: 'fontawesome',
-              icon: "fa-exclamation-circle",
-              theme: "bubble", 
-              position: "bottom-right", 
-              duration : 1500
+                iconPack: 'fontawesome',
+                icon: "fa-exclamation-circle",
+                theme: "bubble", 
+                position: "bottom-right", 
+                duration : 1500
               });
-              
               this.$router.push("/usuarios");
             } 
-           
-
           }
           break;
         default: 
         console.log('teste');
-      }       
-
-          
-        
+      }     
     },
     checkAll(e) {
-
       switch (e.target.value) {
         case 'Financeiro' :
           this.checkF = !this.checkF;                    
@@ -427,8 +417,7 @@ export default {
           if (this.checkRF1) {
             this.permissoesRF2 = ["teste1", "teste2", "teste3"]
           }
-          break;
-          
+          break;          
         default :
           console.log('Nenhuma opção');
       }
@@ -458,6 +447,27 @@ export default {
       }else {
         this.checkF = false;
       }
+    },
+    carregaPerfis() { 
+     let temp = 0;
+     let perfis = [];
+     //Metodo para carregar os perfis salvos!
+      axios.get("/api/user-perfil-json").then(({data}) => {
+        console.log(data);
+        //perfis = data;
+        // //console.log(this.perfis[0].name);
+        // for(let i=0; i <= perfis.length; i++) {
+        //   if(typeof perfis[i] === "object") {
+        //     this.perfisNew[temp] = {
+        //       id: perfis[i].id,
+        //       nome: perfis[i].name,
+        //       quantidade: perfis[i + 1]  
+        //     }
+        //     temp++;
+        //   }        
+        // }
+        // console.log(this.perfisNew);  //Modificar depois **      
+      });    
     }
    }
 }
