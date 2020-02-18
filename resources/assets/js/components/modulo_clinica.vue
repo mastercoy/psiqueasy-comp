@@ -12,41 +12,12 @@
 
       <div class="col-md-3">
 
-
-         <!-- <ul v-if="this.$store.state.Status === 0">
-            <li> Perfil </li>
-            <li> Configurações </li>
-            <li> E-Mail </li>
-            <li> Senha </li>
-            <li> Idioma </li>
-          </ul>  
-        
-          <ul v-else-if="this.$store.state.Status === 1">
-            <li><router-link to="/cadastro">Empresa</router-link></li>
-            <li> Perfil </li>
-            <li> Configurações </li>
-            <li> E-Mail </li>
-            <li> Senha </li>
-            <li> Idioma </li>
-          </ul>  
-
-          <ul v-else-if="this.$store.state.Status === 2">
-            <li><router-link to="/cadastro">Empresa</router-link></li>
-            <li> <router-link to="/filial">Filiais</router-link></li>
-            <li><router-link to="/usuarios">Usuários</router-link></li>
-            <li ><router-link to="/usuarios/invite/permissions"> Permissoes </router-link></li>
-            <li> Configurações </li>
-            <li> E-Mail </li>
-            <li> Senha </li>
-            <li> Idioma </li>
-          </ul>   -->
-
         <div class="form-temp">       
          <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-            <router-link class="nav-link active" id="v-pills-empresa-tab" data-toggle="pill" href="#v-pills-empresa" role="tab" to="/cadastro" aria-selected="true"> Empresa </router-link>
-            <router-link class="nav-link" id="v-pills-filial-tab" data-toggle="pill" href="#v-pills-filial" role="tab" to="/filial" aria-selected="false"> Filiais </router-link>
-            <router-link class="nav-link" id="v-pills-users-tab" data-toggle="pill" href="#v-pills-users" role="tab" to="/usuarios" aria-selected="false"> Usuários </router-link>
-            <router-link class="nav-link" id="v-pills-permission-tab" data-toggle="pill" href="#v-pills-permissoes" role="tab" to="/usuarios/invite/permissions" aria-selected="false"> Permissoes </router-link>                        
+            <router-link v-if="this.$store.state.Status >= 1 " class="nav-link active" id="v-pills-empresa-tab" data-toggle="pill" href="#v-pills-empresa" role="tab" to="/cadastro" aria-selected="true"> Empresa </router-link>
+            <router-link v-if="this.$store.state.Status === 2" class="nav-link" id="v-pills-filial-tab" data-toggle="pill" href="#v-pills-filial" role="tab" to="/filial" aria-selected="false"> Filiais </router-link>
+            <router-link v-if="this.$store.state.Status === 2" class="nav-link" id="v-pills-users-tab" data-toggle="pill" href="#v-pills-users" role="tab" to="/usuarios" aria-selected="false"> Usuários </router-link>
+            <router-link v-if="this.$store.state.Status === 2" class="nav-link" id="v-pills-permission-tab" data-toggle="pill" href="#v-pills-permissoes" role="tab" to="/usuarios/invite/permissions" aria-selected="false"> Permissoes </router-link>                        
             <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Configurações</a>
             <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">E-mail</a>
             <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Idioma</a>
@@ -55,7 +26,7 @@
       </div> <!-- FIM DA DIV DA COL MD-3 -->
 
       <div class="col-md-9">
-        
+
         <router-view />
       </div><!-- FIM DA DIV DA COL MD-9 -->
     </div>

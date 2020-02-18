@@ -78,7 +78,8 @@ export default {
       } else {
         let empresaUpd = {
           cpf_cnpj: this.cnpj,
-          logo_marca: this.nomeEmpresa
+          logo_marca: this.nomeEmpresa,
+          user_id: 1
         }
 
         axios.put(`/api/empresa-json/${this.$store.state.empresaID}`, empresaUpd)
@@ -86,7 +87,6 @@ export default {
          console.log(data);
          this.$router.push("/cadastro");
        });
-
 
         let toast = this.$toasted.success("Os dados foram atualizados com Sucesso!!", {
           iconPack: 'fontawesome',

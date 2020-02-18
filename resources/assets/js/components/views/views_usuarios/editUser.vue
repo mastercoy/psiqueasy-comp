@@ -22,7 +22,7 @@
           </select>
         </div>
 
-        <div class="form-group">
+        <!-- <div class="form-group">
           <div class="container">
             <h5><strong>Perfil: </strong></h5>
                 <div class="row">
@@ -34,7 +34,7 @@
                   </select>
                 </div>   
           </div>       
-        </div>
+        </div> -->
 
          <hr />
           <div class="row">          
@@ -54,7 +54,14 @@ export default {
   props: ['user'],
   methods: {
     editUser() {
-      console.log("Usuário editado com Sucesso");
+      let toast = this.$toasted.success("Usuário editado com Sucesso!", {
+              iconPack: 'fontawesome',
+              icon: "fa-exclamation-circle",
+              theme: "bubble", 
+              position: "bottom-right", 
+              duration : 1500
+              });
+      //console.log("Usuário editado com Sucesso");
       this.$router.push("/usuarios");
     }
   }

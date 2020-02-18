@@ -7,14 +7,9 @@ import EditUser from "./components/views/views_usuarios/EditUser"
 import EditEmpresa from "./components/views/views_empresa/editEmpresa"
 import newInvite from "./components/views/views_usuarios/newInvite";
 import newInviteP from "./components/views/views_usuarios/newInvitePermissions";
-import login from "./components/auth/login"
 
 
 const routes = [
-    {
-        path: "/login",
-        component: login
-    },
     {
         path: "/cadastro",
         component: CadastroEmpresa
