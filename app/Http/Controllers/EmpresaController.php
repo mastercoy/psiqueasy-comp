@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Empresa;
-use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
@@ -13,41 +12,33 @@ class EmpresaController extends Controller {
     public function index() {
         Auth::loginUsingId(1); //fixme retirar
 
-        $nomeMetodo      = 'index_empresa';
-        $arrayPermissoes = $this->retornaPermissoes(); //método retorna um array com as permissões do usuário
-
-        // joga tudo em um array, posteriormente converte pra json e envia no guard
-        $arrayCompleto = [$nomeMetodo, $arrayPermissoes];
+        $nomeMetodo    = 'index_empresa';
+        $arrayCompleto = [$nomeMetodo];
 
         $empresas     = Empresa::all();
         $listaEmpresa = [];
 
         foreach ($empresas as $empresa) {
             if ($empresa->active != 0) {
-                $arrayCompleto[2] = $empresa;
-                $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+                $arrayCompleto[1] = $empresa;
+                $jsonEncoder      = json_encode($arrayCompleto);
                 if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) {
                     $listaEmpresa[] = $empresa;
                 }
             }
 
         }
-
         return Response::json($listaEmpresa);
     }
 
     public function store() {
-        Auth::loginUsingId(1); //fixme retirar
+        Auth::loginUsingId(1);
+        $nomeMetodo = 'criar_empresa';          // passa como string, o 'nome' do método, utilizado para verificar a permissão, cujo o nome é o mesmo
 
-        $nomeMetodo      = 'criar_empresa';                 // passa como string, o 'nome' do método, utilizado para verificar a permissão, cujo o nome é o mesmo
-        $arrayPermissoes = $this->retornaPermissoes();      // método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes]; // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);     // precisa transformar em json pois o guard nao aceita array
+        // auth()->user->empresa_id; //obs importante
 
-        auth()->user->empresa_id; //obs importante
-
-        if (Gate::allows('tem-permissao', $jsonEncoder)) {
-            $empresa_json = Empresa::create($this->validateEmpresaRequest());
+        if (Gate::allows('tem-permissao', $nomeMetodo)) {
+            Empresa::create($this->validateEmpresaRequest());
         } else {
             abort(403, 'Sem Permissão!');
         }
@@ -61,28 +52,24 @@ class EmpresaController extends Controller {
             return null;
         }
 
-        $nomeMetodo      = 'show_empresa';                            //nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();                //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $empresa]; // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);               //precisa transformar em json pois o guard nao aceita array
+        $nomeMetodo    = 'show_empresa';                // nome do método - permissão que usuário PRECISA ter
+        $arrayCompleto = [$nomeMetodo, $empresa];       // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder   = json_encode($arrayCompleto);   // precisa transformar em json pois o guard nao aceita array
 
         if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) { //guard não aceita vários parâmetros, por isso coloquei tudo em um
             return $empresa;
         } else {
             abort(403, 'Sem Permissão!');
         }
-
-
     }
 
     public function update(Empresa $empresa_json) {
         Auth::loginUsingId(1); //fixme retirar
         $empresa = Empresa::find($empresa_json->id);
 
-        $nomeMetodo      = 'update_empresa';
-        $arrayPermissoes = $this->retornaPermissoes(); //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $empresa];
-        $jsonEncoder     = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+        $nomeMetodo    = 'update_empresa';
+        $arrayCompleto = [$nomeMetodo, $empresa];
+        $jsonEncoder   = json_encode($arrayCompleto);
 
         if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) {
             $empresa_json->update($this->validateEmpresaRequest());
@@ -96,10 +83,9 @@ class EmpresaController extends Controller {
         Auth::loginUsingId(1);                       //fixme retirar
         $empresa = Empresa::find($empresa_json->id);
 
-        $nomeMetodo      = 'destroy_empresa';
-        $arrayPermissoes = $this->retornaPermissoes(); //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $empresa];
-        $jsonEncoder     = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+        $nomeMetodo    = 'destroy_empresa';
+        $arrayCompleto = [$nomeMetodo, $empresa];
+        $jsonEncoder   = json_encode($arrayCompleto);
 
         if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) {
             $empresa_json->delete();
@@ -113,10 +99,9 @@ class EmpresaController extends Controller {
         Auth::loginUsingId(1);                                //fixme retirar
         $empresa = Empresa::find($empresa_json->id);
 
-        $nomeMetodo      = 'desativar_empresa';
-        $arrayPermissoes = $this->retornaPermissoes(); //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $empresa];
-        $jsonEncoder     = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+        $nomeMetodo    = 'desativar_empresa';
+        $arrayCompleto = [$nomeMetodo, $empresa];
+        $jsonEncoder   = json_encode($arrayCompleto);
 
         if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) {
             $empresa->active = false;
@@ -127,22 +112,6 @@ class EmpresaController extends Controller {
     }
 
     // ========================= protected
-
-    protected function retornaPermissoes() {
-        $user                = Auth::user();
-        $listaPermissoesUser = [];
-
-        if (isset(User::where('id', $user->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
-            $permissoes = User::where('id', $user->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'];
-
-            foreach ($permissoes as $permissao) {
-                $listaPermissoesUser[] = $permissao['name'];
-            }
-        } else {
-            return $listaPermissoesUser;
-        }
-        return $listaPermissoesUser;
-    }
 
     protected function validateEmpresaRequest() {
         return request()->validate([

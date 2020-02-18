@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\EmpresaCategoria;
 use App\User;
 use Illuminate\Support\Facades\Auth;

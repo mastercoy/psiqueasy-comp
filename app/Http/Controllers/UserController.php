@@ -13,17 +13,13 @@ use Illuminate\Support\Facades\Response;
 class UserController extends Controller {
 
     public function setPerfilUser(User $user_json, UserPerfil $user_perfil_json) {
-        Auth::loginUsingId(1);//fixme retirar - só para teste
-
-        $nomeMetodo      = 'set_perfil';                                 //nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();                   //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes];              // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);
+        Auth::loginUsingId(1);                                      // fixme retirar - só para teste
+        $nomeMetodo = 'set_perfil';                                 // nome do método - permissão que usuário PRECISA ter
 
         $conditions      = ['user_id' => $user_json->id, 'perfil_id' => $user_perfil_json->id];
         $userPerfilPivot = UserPerfilPivot::where($conditions)->first();
 
-        if (Gate::allows('tem-permissao', $jsonEncoder)) {
+        if (Gate::allows('tem-permissao', $nomeMetodo)) {
             if (!isset($userPerfilPivot)) {
                 $usuario = User::find($user_json->id);
                 $usuario->perfil()->attach($user_perfil_json);
@@ -31,27 +27,21 @@ class UserController extends Controller {
         } else {
             abort(403, 'Sem Permissão!');
         }
-
-
     }
 
     public function delPerfilUser(User $user_json) {
-        //obs del_perfil
         Auth::loginUsingId(1);//fixme retirar - só para teste
-        $usuario = User::find($user_json->id);
+        $usuario    = User::find($user_json->id);
+        $nomeMetodo = 'del_perfil';                                 //nome do método - permissão que usuário PRECISA ter
 
-        $nomeMetodo      = 'del_perfil';                                 //nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();                   //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes];              // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);
-
-        if (Gate::allows('tem-permissao', $jsonEncoder)) {
+        if (Gate::allows('tem-permissao', $nomeMetodo)) {
             if ($usuario->perfil()->get()->toArray()) {
                 $usuario->perfil()->detach();
             }
         } else {
             abort(403, 'Sem Permissão!');
         }
+
     }
 
     public function verificarEmail() {
@@ -66,16 +56,15 @@ class UserController extends Controller {
     public function index() {
         Auth::loginUsingId(1);//fixme retirar - só para teste
 
-        $nomeMetodo      = 'index_user';                       // nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();         // método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes];    // jogo as informações anteriores em um array para enviar no guard
+        $nomeMetodo    = 'index_user';                       // nome do método - permissão que usuário PRECISA ter
+        $arrayCompleto = [$nomeMetodo];                      // jogo as informações anteriores em um array para enviar no guard
 
         $users      = User::all();
         $listaUsers = [];
 
         foreach ($users as $user) {
             if ($user->active != 0) {
-                $arrayCompleto[2] = $user;
+                $arrayCompleto[1] = $user;
                 $jsonEncoder      = json_encode($arrayCompleto); // precisa transformar em json pois o guard nao aceita array
                 if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
                     $listaUsers[] = $user;
@@ -86,15 +75,11 @@ class UserController extends Controller {
     }
 
     public function store() {
-        Auth::loginUsingId(1); //fixme retirar
+        Auth::loginUsingId(1);                      // fixme retirar
+        $nomeMetodo = 'criar_user';                 // passa como string, o 'nome' do método, utilizado para verificar a permissão, cujo o nome é o mesmo
 
-        $nomeMetodo      = 'criar_user';                     // passa como string, o 'nome' do método, utilizado para verificar a permissão, cujo o nome é o mesmo
-        $arrayPermissoes = $this->retornaPermissoes();       //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes];  // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);      //precisa transformar em json pois o guard nao aceita array
-
-        if (Gate::allows('tem-permissao', $jsonEncoder)) {
-            $user_json = User::create($this->validateUserRequest());
+        if (Gate::allows('tem-permissao', $nomeMetodo)) {
+            User::create($this->validateUserRequest());
         } else {
             abort(403, 'Sem Permissão!');
         }
@@ -109,10 +94,9 @@ class UserController extends Controller {
             return null;
         }
 
-        $nomeMetodo      = 'show_user';                                 //nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();                  //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $usuario];   // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);                 // precisa transformar em json pois o guard nao aceita array
+        $nomeMetodo    = 'show_user';                 // nome do método - permissão que usuário PRECISA ter
+        $arrayCompleto = [$nomeMetodo, $usuario];     // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder   = json_encode($arrayCompleto); // precisa transformar em json pois o guard nao aceita array
 
         if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
             return $usuario;
@@ -125,10 +109,9 @@ class UserController extends Controller {
         Auth::loginUsingId(1);//fixme retirar - só para teste
         $usuario = User::find($user_json->id);
 
-        $nomeMetodo      = 'update_user';                                //nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();                   //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $usuario];    // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);                  // precisa transformar em json pois o guard nao aceita array
+        $nomeMetodo    = 'update_user';               // nome do método - permissão que usuário PRECISA ter
+        $arrayCompleto = [$nomeMetodo, $usuario];     // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder   = json_encode($arrayCompleto); // precisa transformar em json pois o guard nao aceita array
 
         if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
             $user_json->update($this->validateUserRequest());
@@ -141,10 +124,9 @@ class UserController extends Controller {
         Auth::loginUsingId(1);//fixme retirar - só para teste
         $usuario = User::find($user_json->id);
 
-        $nomeMetodo      = 'destroy_user';                                //nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();                    //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $usuario];     // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);
+        $nomeMetodo    = 'destroy_user';              // nome do método - permissão que usuário PRECISA ter
+        $arrayCompleto = [$nomeMetodo, $usuario];     // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder   = json_encode($arrayCompleto); // precisa transformar em json pois o guard nao aceita array
 
         if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
             $user_json->delete();
@@ -157,10 +139,9 @@ class UserController extends Controller {
         Auth::loginUsingId(1);//fixme retirar - só para teste
         $usuario = User::find($user_json->id);
 
-        $nomeMetodo      = 'desativar_user';                                //nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();                      //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $usuario];       // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);
+        $nomeMetodo    = 'desativar_user';                 // nome do método - permissão que usuário PRECISA ter
+        $arrayCompleto = [$nomeMetodo, $usuario];          // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder   = json_encode($arrayCompleto);
 
         if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
             $usuario->active = false;
@@ -170,8 +151,6 @@ class UserController extends Controller {
         }
 
     }
-
-    // ========================= protected
 
     public function retornaPermissoes() {
         $user_json           = Auth::user();
@@ -190,6 +169,8 @@ class UserController extends Controller {
 
         return $listaPermissoesUser;
     }
+
+    // ========================= protected
 
     protected function validateUserRequest() {
         return request()->validate([
