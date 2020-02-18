@@ -102,7 +102,7 @@ class UserPerfilController extends Controller {
             if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
                 $quant         = count(UserPerfilPivot::where('perfil_id', $perfil->id)->get()->toArray());
                 $listaPerfis[] = $perfil; //obs será q da pra melhorar?
-                $listaPerfis[] = 'quantidadeUsuarios = ' . $quant;
+                $listaPerfis[] = $quant;
 
             }
         }

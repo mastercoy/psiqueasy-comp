@@ -326,6 +326,16 @@ export default {
         case 'old' :
           if(this.presetPerfil === ''){
             console.log('Por favor selecione um perfil para o usuário!');
+
+             let toast = this.$toasted
+                  .error("Por favor selecione um perfil para o usuário!", 
+                {
+                  iconPack: 'fontawesome',
+                  icon: "fa-exclamation-circle",
+                  theme: "bubble", 
+                  position: "bottom-right", 
+                  duration : 1500
+                });
           }else {
 
             let toast = this.$toasted.success("O convite para o usuário foi criado com Sucesso!!", {
@@ -365,7 +375,8 @@ export default {
               position: "bottom-right", 
               duration : 1500
               });
-          //this.$router.push("/usuarios");
+              
+              this.$router.push("/usuarios");
             } 
            
 
