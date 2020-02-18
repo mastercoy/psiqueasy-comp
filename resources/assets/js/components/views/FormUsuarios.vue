@@ -106,13 +106,9 @@
     <h4><i class="fa fa-tasks" aria-hidden="true"></i> Perfis</h4>
     <hr>
     <div class="container">
-      <div class="row">
-      <div>
-        <strong> Não existem perfis cadastrados no momento... </strong>
+      <div class="row">     
+        <label> {{ perfisNew[0] }}</label>          
       </div>
-
-      </div>
-
     </div>
   </div>
   </div>
@@ -122,13 +118,40 @@
 export default {
   mounted(){
     $(document).ready(function(){
-      $('[data-toggle="popover"]').popover();
-
-      //Metodo para carregar os perfis salvos!
+      $('[data-toggle="popover"]').popover();     
     });    
+
+     //Metodo para carregar os perfis salvos!
+     axios.get("/api/user-perfil-json").then(({data}) => {
+      console.log(data);
+      this.perfis = data;
+      //console.log(this.perfis[0].name);
+
+      for(let i=0; i <= this.perfis.length; i++) {
+        if(typeof this.perfis[i] === "object") {
+          this.perfisNew[i] = {
+            id: this.perfis[i].id,
+            nome: this.perfis[i].name,
+            quantidade: this.perfis[i + 1]  
+          }
+        }        
+      }
+
+      console.log(this.perfisNew);  //Modificar depois **
+    });
+
+    
+
+    // this.perfisNew[0] = {
+    //   nome: this.perfis[0].name,
+    //   quantidade: this.perfis[1]
+    // }
+    
   },
   data() {
     return {
+      perfisNew: [],
+      perfis: [],
       selectUser: '',
       vefCadastro: false,
       editCadastro: false,
@@ -160,7 +183,6 @@ export default {
         email: 'ca_lu10000e@gmail.com',
         emailStatus: 2,
         vefEmail: 'expirado'
-
         }
       ],
       perfis: [] 
