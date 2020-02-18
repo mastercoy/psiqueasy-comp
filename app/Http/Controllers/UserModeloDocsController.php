@@ -3,49 +3,39 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserModeloDocs;
-use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Response;
 
-class UserModeloDocsController extends Controller { //verificar se user->id == objeto->user_id
+class UserModeloDocsController extends Controller {
 
     public function index() {
-        Auth::loginUsingId(1); //fixme remover
+        Auth::loginUsingId(1);
 
-        $nomeMetodo      = 'index_user_model';                      //nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();              //método retorna um array com as permissões do usuário
+        $nomeMetodo    = 'index_user_model';    //nome do método - permissão que usuário PRECISA ter
+        $arrayCompleto = [$nomeMetodo];
 
-        // joga tudo em um array, converte pra json e envia no guard
-        $arrayCompleto = [$nomeMetodo, $arrayPermissoes];
-
-        $modelos      = UserModeloDocs::all();
+        $modelos      = UserModeloDocs::where('user_id', auth()->user()->id)->whereActive('1');
         $listaModelos = [];
 
-        foreach ($modelos as $modelo) {
-            if ($modelo->active != 0) {
-                $arrayCompleto[2] = $modelo;
-                $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
-                if (Gate::allows('pertence-usuario-logado-e-tem-permissao', $jsonEncoder)) {
-                    $listaModelos[] = $modelo;
-                }
+        foreach ($modelos->get()->toArray() as $modelo) {
+            $arrayCompleto[1] = $modelo;
+            $jsonEncoder      = json_encode($arrayCompleto); //precisa transformar em json pois o guard nao aceita array
+            if (Gate::allows('pertence-usuario-logado-e-tem-permissao', $jsonEncoder)) {
+                $listaModelos[] = $modelo;
             }
+
 
         }
         return Response::json($listaModelos);
     }
 
     public function store() {
-        //obs criar_user_model
-        Auth::loginUsingId(1); //fixme retirar
+        Auth::loginUsingId(1);
+        $nomeMetodo = 'criar_user_model'; //nome do método - permissão que usuário PRECISA ter
 
-        $nomeMetodo      = 'criar_user_model';                      //nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();              //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes];         // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);             //precisa transformar em json pois o guard nao aceita array
-
-        if (Gate::allows('tem-permissao', $jsonEncoder)) {
-            $modelo = UserModeloDocs::create($this->validateModeloDocsRequest());
+        if (Gate::allows('tem-permissao', $nomeMetodo)) {
+            UserModeloDocs::create($this->validateModeloDocsRequest());
         } else {
             abort(403, 'Sem Permissão!');
         }
@@ -53,17 +43,16 @@ class UserModeloDocsController extends Controller { //verificar se user->id == o
     }
 
     public function show(UserModeloDocs $user_modelo_docs_json) {
-        Auth::loginUsingId(1);//fixme retirar - só para teste
+        Auth::loginUsingId(1);
         $modelo = UserModeloDocs::find($user_modelo_docs_json->id);
 
         if ($modelo->active == 0) {
             return null;
         }
 
-        $nomeMetodo      = 'show_user_model';                                   //nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();                          //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $modelo];            // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);                         // guard nao aceita array, envio entao um json
+        $nomeMetodo    = 'show_user_model';                                   //nome do método - permissão que usuário PRECISA ter
+        $arrayCompleto = [$nomeMetodo, $modelo];                              // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder   = json_encode($arrayCompleto);                         // guard nao aceita array, envio entao um json
 
         if (Gate::allows('pertence-usuario-logado-e-tem-permissao', $jsonEncoder)) {
             return $modelo;
@@ -73,14 +62,13 @@ class UserModeloDocsController extends Controller { //verificar se user->id == o
     }
 
     public function update(UserModeloDocs $user_modelo_docs_json) {
-        //obs update_user_model
+
         Auth::loginUsingId(1);
         $modelo = UserModeloDocs::find($user_modelo_docs_json->id);
 
-        $nomeMetodo      = 'update_user_model';                                        //nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();                                 //método retorna um array com as permissões do usuário
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $modelo];                   // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);                                // guard nao aceita array, envio entao um json
+        $nomeMetodo    = 'update_user_model';               //nome do método - permissão que usuário PRECISA ter
+        $arrayCompleto = [$nomeMetodo, $modelo];            // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder   = json_encode($arrayCompleto);       // guard nao aceita array, envio entao um json
 
         if (Gate::allows('pertence-usuario-logado-e-tem-permissao', $jsonEncoder)) {
             $user_modelo_docs_json->update($this->validateModeloDocsRequest());
@@ -90,13 +78,12 @@ class UserModeloDocsController extends Controller { //verificar se user->id == o
     }
 
     public function destroy(UserModeloDocs $user_modelo_docs_json) {
-        Auth::loginUsingId(1);//fixme retirar - só para teste
+        Auth::loginUsingId(1);
         $modelo = UserModeloDocs::find($user_modelo_docs_json->id);
 
-        $nomeMetodo      = 'destroy_user_model';                                   //nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();                             //método retorna um array com as permissões do usuário logado atualmente no sistema
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $modelo];               // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);                            // guard nao aceita array, envio entao um json
+        $nomeMetodo    = 'destroy_user_model';         //nome do método - permissão que usuário PRECISA ter
+        $arrayCompleto = [$nomeMetodo, $modelo];       // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder   = json_encode($arrayCompleto);  // guard nao aceita array, envio entao um json
 
         if (Gate::allows('pertence-usuario-logado', $jsonEncoder)) {
             $user_modelo_docs_json->delete();
@@ -111,10 +98,9 @@ class UserModeloDocsController extends Controller { //verificar se user->id == o
         Auth::loginUsingId(1);//fixme retirar - só para teste
         $modelo = UserModeloDocs::find($user_modelo_docs_json->id);
 
-        $nomeMetodo      = 'desativar_responsavel';                                  //nome do método - permissão que usuário PRECISA ter
-        $arrayPermissoes = $this->retornaPermissoes();                               //método retorna um array com as permissões do usuário logado atualmente no sistema
-        $arrayCompleto   = [$nomeMetodo, $arrayPermissoes, $modelo];                 // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder     = json_encode($arrayCompleto);                              // guard nao aceita array, envio entao um json
+        $nomeMetodo    = 'desativar_responsavel';    //nome do método - permissão que usuário PRECISA ter
+        $arrayCompleto = [$nomeMetodo, $modelo];     // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder   = json_encode($arrayCompleto);// guard nao aceita array, envio entao um json
 
         if (Gate::allows('pertence-usuario-logado-e-tem-permissao', $jsonEncoder)) {
             $modelo->active = false;
@@ -127,23 +113,6 @@ class UserModeloDocsController extends Controller { //verificar se user->id == o
 
     // ========================= protected
 
-    protected function retornaPermissoes() {
-        $user_json           = Auth::user();
-        $listaPermissoesUser = [];
-
-        if (isset(User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'])) {
-            $permissoes = User::where('id', $user_json->id)->with('perfil.permissao')->first()->toArray()['perfil'][0]['permissao'];
-
-            foreach ($permissoes as $permissao) {
-                $listaPermissoesUser[] = $permissao['name'];
-            }
-
-        } else {
-            return $listaPermissoesUser;
-        }
-
-        return $listaPermissoesUser;
-    }
 
     protected function validateModeloDocsRequest() {
         return request()->validate([

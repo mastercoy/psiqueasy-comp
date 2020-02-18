@@ -60,22 +60,20 @@ class UserPerfilController extends Controller {
     }
 
     public function index() { //obs ficou filé usando o auth() e ['']
-        Auth::loginUsingId(2);
+        Auth::loginUsingId(1);
         $nomeMetodo    = 'index_perfil';
         $arrayCompleto = [$nomeMetodo];
-        $perfis        = UserPerfil::where('empresa_id', auth()->user()->empresa_id); //obs usar de exemplo essa linha
+        $perfis        = UserPerfil::where('empresa_id', auth()->user()->empresa_id)->whereActive('1'); //obs usar de exemplo essa linha
         $listaPerfis   = [];
 
         foreach ($perfis->get()->toArray() as $perfil) {
-            if ($perfil['active'] != 0) {
-                $arrayCompleto[1] = $perfil;
-                $jsonEncoder      = json_encode($arrayCompleto);
+            $arrayCompleto[1] = $perfil;
+            $jsonEncoder      = json_encode($arrayCompleto);
 
-                if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
-                    $quant         = count(UserPerfilPivot::where('perfil_id', $perfil['id'])->get()->toArray());
-                    $listaPerfis[] = $perfil;
-                    $listaPerfis[] = $quant;
-                }
+            if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
+                $quant         = count(UserPerfilPivot::where('perfil_id', $perfil['id'])->get()->toArray());
+                $listaPerfis[] = $perfil;
+                $listaPerfis[] = $quant;
             }
 
         }
@@ -104,6 +102,7 @@ class UserPerfilController extends Controller {
     public function show(UserPerfil $user_perfil_json) {
         Auth::loginUsingId(1);
         $perfil = UserPerfil::find($user_perfil_json->id);
+        dd($perfil);
 
         if ($perfil->active == 0) {
             return null;
