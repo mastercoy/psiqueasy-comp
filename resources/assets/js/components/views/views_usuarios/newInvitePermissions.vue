@@ -245,8 +245,7 @@
        <div class="container">
         <div class="parent">         
             <input class="magic-checkbox" type="checkbox" id="Pacientes" value="Pacientes" />
-            <label for="Pacientes">Pacientes</label>      
-            
+            <label for="Pacientes">Pacientes</label>     
         </div>
       </div>
     </div>
@@ -309,10 +308,16 @@ export default {
     };
   },
   methods: {
-    getPermissoes() {      
+    getPermissoes() {
+      let toast;
+      let checkPerfil = '';      
       let var1 = this.permissoesRF1;
       let var2 = this.permissoesRF2
       let arrayPermissoes = [];
+      let newp = {
+                name: this.labelPerfil,
+                empresa_id: this.$store.state.empresaID
+              }
 
       arrayPermissoes = var1 + var2;
       this.userInvite.email = this.user;
@@ -334,7 +339,7 @@ export default {
                   duration : 1500
                 });
           }else {
-            let toast = this.$toasted.success("O convite para o usuário foi criado com Sucesso!!", {
+              toast = this.$toasted.success("O convite para o usuário foi criado com Sucesso!!", {
               iconPack: 'fontawesome',
               icon: "fa-exclamation-circle",
               theme: "bubble", 
@@ -361,22 +366,40 @@ export default {
                 });
              } else {          
               //console.log(this.userInvite);
-              let newp = {
-                name: this.labelPerfil,
-                empresa_id: this.$store.state.empresaID
-              }
-              console.log(newp)
-              axios.post('/api/user-perfil-json', newp).then(({data}) => {
-                console.log(data);
+              
+              //console.log(newp)
+              axios.post('/api/user-perfil-json', newp)
+                .then(({data}) => {
+                  checkPerfil = data;    
+                  
+                   if(checkPerfil === 'já existe') {
+                      toast = this.$toasted.error("O nome escolhido para o perfil já existe! Por favor digite outro nome", {
+                      iconPack: 'fontawesome',
+                      icon: "fa-exclamation-circle",
+                      theme: "bubble", 
+                      position: "bottom-right", 
+                      duration : 2000
+                      });
+                    }else {
+                      toast = this.$toasted.success("O perfil para o usuário convidado, foi criado com Sucesso!!", {
+                      iconPack: 'fontawesome',
+                      icon: "fa-exclamation-circle",
+                      theme: "bubble", 
+                      position: "bottom-right", 
+                      duration : 2000
+                    });
+                    
+                    }
+
+                    this.$router.push("/usuarios");
+
+                    axios.post(`/api/setar-permissoes/${checkPerfil}`)
+                      .then(({data}) => {
+                        
+                      });
               });
-              let toast = this.$toasted.success("O perfil para o usuário convidado, foi criado com Sucesso!!", {
-                iconPack: 'fontawesome',
-                icon: "fa-exclamation-circle",
-                theme: "bubble", 
-                position: "bottom-right", 
-                duration : 1500
-              });
-              this.$router.push("/usuarios");
+              
+             
             } 
           }
           break;
@@ -454,19 +477,19 @@ export default {
      //Metodo para carregar os perfis salvos!
       axios.get("/api/user-perfil-json").then(({data}) => {
         console.log(data);
-        //perfis = data;
-        // //console.log(this.perfis[0].name);
-        // for(let i=0; i <= perfis.length; i++) {
-        //   if(typeof perfis[i] === "object") {
-        //     this.perfisNew[temp] = {
-        //       id: perfis[i].id,
-        //       nome: perfis[i].name,
-        //       quantidade: perfis[i + 1]  
-        //     }
-        //     temp++;
-        //   }        
-        // }
-        // console.log(this.perfisNew);  //Modificar depois **      
+        perfis = data;
+        //console.log(this.perfis[0].name);
+        for(let i=0; i <= perfis.length; i++) {
+          if(typeof perfis[i] === "object") {
+            this.perfisNew[temp] = {
+              id: perfis[i].id,
+              nome: perfis[i].name, 
+              quantidade: perfis[i + 1]  
+            }
+            temp++;
+          }        
+        }
+        console.log(this.perfisNew);  //Modificar depois **      
       });    
     }
    }
