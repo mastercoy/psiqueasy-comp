@@ -128,7 +128,15 @@ class ResponsavelController extends Controller {
     // =========================================== protected
 
     protected function validateResponsavelRequest() {
-        return request()->validate(['name' => 'required', 'parentesco' => 'nullable', 'data_nasc' => 'nullable', 'end' => 'nullable', 'tel' => 'nullable', 'cpf' => 'nullable', 'rg' => 'nullable', 'active' => 'nullable', 'user_id' => 'required'
+        return request()->validate(['name' => 'required',
+                                    'parentesco' => 'required',
+                                    'data_nasc' => 'nullable',
+                                    'end' => 'nullable',
+                                    'tel' => 'nullable',
+                                    'cpf' => 'nullable',
+                                    'rg' => 'nullable',
+                                    'active' => 'nullable',
+                                    'user_id' => 'required'
 
                                    ]);
     }

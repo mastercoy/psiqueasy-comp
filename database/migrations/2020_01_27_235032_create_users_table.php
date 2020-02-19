@@ -51,8 +51,8 @@ class CreateUsersTable extends Migration {
         });
 
         // tabela pivot | users | > perfil_user <  | perfil |
-        Schema::create('perfil_user', function (Blueprint $table) {      //user_perfil
-            $table->increments('id');                                    //fixme talvez tirar
+        Schema::create('perfil_user', function (Blueprint $table) {
+            $table->increments('id'); //fixme talvez tirar
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')
                   ->references('id')

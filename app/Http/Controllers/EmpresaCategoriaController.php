@@ -40,7 +40,7 @@ class EmpresaCategoriaController extends Controller {
     }
 
     public function show(EmpresaCategoria $empresa_categoria_json) {
-        Auth::loginUsingId(1);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           //fixme retirar - só para teste
+        Auth::loginUsingId(1);
         $categoria = EmpresaCategoria::find($empresa_categoria_json->id);
 
         if ($categoria->active == 0) {

@@ -38,7 +38,7 @@ class EmpresaController extends Controller {
     }
 
     public function show(Empresa $empresa_json) {
-        Auth::loginUsingId(1);                    //fixme retirar - só para teste
+        Auth::loginUsingId(1);
         $empresa = Empresa::find($empresa_json->id);
 
         if ($empresa->active == 0) {
@@ -57,7 +57,7 @@ class EmpresaController extends Controller {
     }
 
     public function update(Empresa $empresa_json) {
-        Auth::loginUsingId(1); //fixme retirar
+        Auth::loginUsingId(1);
         $empresa = Empresa::find($empresa_json->id);
 
         $nomeMetodo    = 'update_empresa';
@@ -72,8 +72,8 @@ class EmpresaController extends Controller {
 
     }
 
-    public function destroy(Empresa $empresa_json) { //Ok
-        Auth::loginUsingId(1);                       //fixme retirar
+    public function destroy(Empresa $empresa_json) {
+        Auth::loginUsingId(1);
         $empresa = Empresa::find($empresa_json->id);
 
         $nomeMetodo    = 'destroy_empresa';
@@ -88,8 +88,8 @@ class EmpresaController extends Controller {
 
     }
 
-    public function desativarEmpresa(Empresa $empresa_json) { //Ok
-        Auth::loginUsingId(1);                                //fixme retirar
+    public function desativarEmpresa(Empresa $empresa_json) {
+        Auth::loginUsingId(1);
         $empresa = Empresa::find($empresa_json->id);
 
         $nomeMetodo    = 'desativar_empresa';

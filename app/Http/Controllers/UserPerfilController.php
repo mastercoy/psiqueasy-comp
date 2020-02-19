@@ -62,7 +62,7 @@ class UserPerfilController extends Controller {
         Auth::loginUsingId(1);
         $nomeMetodo    = 'index_perfil';
         $arrayCompleto = [$nomeMetodo];
-        $perfis        = UserPerfil::where('empresa_id', auth()->user()->empresa_id)->whereActive('1'); //obs usar de exemplo essa linha
+        $perfis        = UserPerfil::where('empresa_id', auth()->user()->empresa_id)->whereActive('1');
         $listaPerfis   = [];
 
         foreach ($perfis->get()->toArray() as $perfil) {

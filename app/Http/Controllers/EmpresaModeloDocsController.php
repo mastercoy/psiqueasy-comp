@@ -125,7 +125,7 @@ class EmpresaModeloDocsController extends Controller {
                                        'name' => 'required',
                                        'conteudo' => 'nullable',
                                        'active' => 'nullable',
-                                       'empresa_id' => 'nullable' //fixme talvez pegar Auth:user()->empresa_id
+                                       'empresa_id' => 'required'
                                    ]);
     }
 

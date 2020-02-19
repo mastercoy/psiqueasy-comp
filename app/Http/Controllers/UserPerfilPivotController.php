@@ -15,7 +15,7 @@ class UserPerfilPivotController extends Controller { //afazer apagar controller?
 
     public function store() {
         //
-        $pivot = UserPerfilPivot::create($this->validateUserPerfilPivotRequest());
+        serPerfilPivot::create($this->validateUserPerfilPivotRequest());
     }
 
     public function show(UserPerfilPivot $user_perfil_pivot_json) {
