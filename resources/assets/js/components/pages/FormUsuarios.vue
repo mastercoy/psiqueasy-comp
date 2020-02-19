@@ -48,30 +48,31 @@
           </tbody>
          </table>
         </div>
-    </div>     
-
-    <div class="form-temp">
-        <h4><i class="fa fa-tasks" aria-hidden="true"></i> Perfis</h4>
-        <hr>
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <label> Teste </label>
-              <label> {{ perfisNew }} </label>
-              <div v-for="per in perfisNew" :key="per.id">
-                <label>{{ per.nome }}</label>
-              </div>  
-            </div>    
-          </div>
-        </div>
-      </div>  
+    </div>    
   </div><!-- fim form-temp -->
   <br>
 
-  
-
-
-
+    <div class="form-temp">
+          <h4><i class="fa fa-tasks" aria-hidden="true"></i> Perfis</h4>
+          <hr>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12" >
+                <div>
+                  <section v-for="perf in perfisNew" :key="perf.id">
+                    <div class="row">
+                      <div class="col-md-6"><strong>{{perf.nome}}</strong></div>
+                      <div class="col-md-6"><button class="btn btn-sm btn-secondary">
+                        <i class="fa fa-pencil-square" aria-hidden="true"></i>
+                      </button></div>                      
+                    </div><br>
+                  </section>
+                </div>           
+              </div>    
+            </div>
+          </div>
+        </div>  
+    
        <!-- Modal para comfirmação de deletar -->
           <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -92,7 +93,6 @@
               </div>
             </div>
           </div>
- 
   </div>
 
   
@@ -101,51 +101,7 @@
 <script>
 export default {
   mounted(){ 
-    $(document).ready(function(){
-      $('[data-toggle="popover"]').popover();     
-    });
-    
-    axios.get('/api/user-json').then(({data}) => {
-      //console.log(data);
-      this.users = data;
-      
-    });
-    this.carregaPerfis();
-    
-    
-  },
-  data() {
-    return {
-      perfisNew: [],
-      perfis: [],
-      selectUser: '',
-      vefCadastro: false,
-      editCadastro: false,
-      users: [],
-      perfis: [] 
-    }
-  },
-  methods: {
-    delUser() {
-      let toast = this.$toasted
-                  .error("O usuário foi deletado com sucesso!!", 
-                {
-                  iconPack: 'fontawesome',
-                  icon: "fa-exclamation-circle",
-                  theme: "bubble", 
-                  position: "bottom-right", 
-                  duration : 1500
-                });
-      $('#exampleModalCenter').modal('hide');
-    },
-    editUSer() {
-      this.$router.push("/EditUsuario");
-    },
-    reenviarEmail() {
-      console.log("Funciona!");
-    },
-    carregaPerfis() { 
-     let temp = 0;
+    let temp = 0;
      //Metodo para carregar os perfis salvos!
       axios.get("/api/user-perfil-json").then(({data}) => {
         //console.log(data);
@@ -162,29 +118,49 @@ export default {
           }        
         }
         console.log(this.perfisNew);  //Modificar depois **      
-      });    
+      });   
+        
+    axios.get('/api/user-json').then(({data}) => {
+      this.users = data;  
+      console.log(data);    
+    });
+
+    ;  
+  },
+  data() {
+    return {
+      perfisNew: [],
+      perfis: [],
+      selectUser: '',
+      vefCadastro: false,
+      editCadastro: false,
+      users: [],
+    }
+  },
+  methods: {
+    delUser() {
+      let toast = this.$toasted
+                  .error("O usuário foi deletado com sucesso!!", 
+                {
+                  iconPack: 'fontawesome',
+                  icon: "fa-exclamation-circle",
+                  theme: "bubble", 
+                  position: "bottom-right", 
+                  duration : 1500
+                });
+      $('#exampleModalCenter').modal('hide');
+    },
+    reenviarEmail() {
+      console.log("Funciona!");
+    },
+    carregaPerfis() { 
+      
     }
   }
 }
 </script>
 
 <style scoped>
-  /* .form-temp {
-   padding: 20px;
-   background-color:#fff;
-   border-radius: 5px;
-  }
-
-  h4 {
-    color: rgb(112, 112, 112);
-  }
-  .container-new {
-    border: 1px solid rgb(202, 202, 202);
-    border-radius: 5px;
-    padding: 10px;
-    margin-bottom: 20px;
-  } */
-
   .ativo {
     font-weight: bold;
     color: greenyellow;

@@ -77,180 +77,8 @@
           </div>
       </div>
 
-      <PermissoesForm />
-
-
-          
-      <!--
-      <h4>Selecione as permissões de acesso do usuário</h4>     
-      <hr />
-     
-      <button type="button" class="btn btn-link mb-1">Marcas todos</button>
-      <br />      
-      <div class="container">
-        <div class="parent">         
-            <input class="magic-checkbox" type="checkbox" id="Financeiro" value="Financeiro" @click="checkAll" v-model="checkF"/>
-            <label for="Financeiro">Financeiro</label>       
-            <a class="btn btn-default" @click="iconF = !iconF" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-               <i :class="[iconF ? 'fa-chevron-up' : 'fa-chevron-down', 'fa']" />
-            </a>          
-        </div>
-        <br />        
-        <div class="collapse" id="collapseExample">
-          <div class="overflow-auto">
-          <div class="container vl">
-            <div class="container">
-              <div class="row">
-                <input class="magic-checkbox" type="checkbox" id="teste" value="Relatórios Financeiros" @click="checkAll" v-model="checkRF" @change="updateAll"/>
-                <label for="teste"> Relatórios Financeiros</label>
-              </div>
-              <div class="container">
-                <div>
-                  <input class="magic-checkbox" type="checkbox" id="op1" value="op1"  v-model="permissoesRF1" @change="updateCheckRF1" />
-                  <label for="op1">Cadastrar relatórios financeiros</label>
-                </div>
-                <div>
-                  <input class="magic-checkbox" type="checkbox" id="op2" value="op2" v-model="permissoesRF1" @change="updateCheckRF1" />
-                  <label for="op2">Editar relatórios financeiros</label>
-                </div>
-                <div>
-                  <input class="magic-checkbox" type="checkbox" id="op3" value="op3" v-model="permissoesRF1" @change="updateCheckRF1"/>
-                  <label for="op3">Deletar relatórios financeiros</label>
-                </div>
-              </div>
-              <br />
-              <div class="row">
-                <input class="magic-checkbox" type="checkbox" id="teste21" value="Pagamentos"  @click="checkAll" v-model="checkRF1" @change="updateAll"/>
-                <label for="teste21">Pagamentos</label>
-              </div>
-                <div class="container">
-                  <div>
-                    <input class="magic-checkbox" type="checkbox" id="teste1" value="teste1"  v-model="permissoesRF2" @change="updateCheckRF2"/>
-                    <label for="teste1">Visualizar Pagamentos</label>
-                  </div>
-                  <div>
-                    <input class="magic-checkbox" type="checkbox" id="teste2" value="teste2"  v-model="permissoesRF2"  @change="updateCheckRF2"/>
-                    <label for="teste2">Agendar Pagamentos</label>
-                  </div>
-                  <div>
-                    <input class="magic-checkbox" type="checkbox" id="teste3" value="teste3"  v-model="permissoesRF2"  @change="updateCheckRF2"/>
-                    <label for="teste3">Gerar relaórios de pagamentos</label>
-                  </div>
-                </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      </div>
-
-       <div class="container">
-        <div class="parent">         
-            <input class="magic-checkbox" type="checkbox" id="Agendamentos" value="Agendamentos" />
-            <label for="Agendamentos">Agendamentos</label>       
-            <a class="btn btn-default" type="button" @click="iconE = !iconE" data-toggle="collapse" data-target="#collapseAgendamentos" aria-expanded="false" aria-controls="collapseAgendamentos">
-               <i :class="[iconE ? 'fa-chevron-up' : 'fa-chevron-down', 'fa']" />
-            </a>          
-        </div>
-        <br />
-        <div class="collapse" id="collapseAgendamentos">
-          <div class="container vl">
-            <div class="container">
-              <div class="row">
-                <input class="magic-checkbox" type="checkbox" id="teste" value="teste" />
-                <label for="teste">Teste11</label>
-              </div>
-                <div class="container">
-                  <div>
-                    <input class="magic-checkbox" type="checkbox" id="Teste1" value="teste1" />
-                    <label for="teste1">Teste1</label>
-                  </div>
-                  <div>
-                    <input class="magic-checkbox" type="checkbox" id="Teste2" value="Teste2" />
-                    <label for="Teste2">Teste2</label>
-                  </div>
-                  <div>
-                    <input class="magic-checkbox" type="checkbox" id="Teste3" value="Teste3" />
-                    <label for="Teste3">Teste3</label>
-                  </div>
-                </div>
-              <br />
-              <div class="row">
-                <input class="magic-checkbox" type="checkbox" id="teste21" value="teste21" />
-                <label for="teste21">Teste21</label>
-              </div>
-              <div class="container">
-                <div>
-                  <input class="magic-checkbox" type="checkbox" id="Teste1" value="teste1" />
-                  <label for="teste1">Teste1</label>
-                </div>
-                <div>
-                  <input class="magic-checkbox" type="checkbox" id="Teste2" value="Teste2" />
-                  <label for="Teste2">Teste2</label>
-                </div>
-                <div>
-                  <input class="magic-checkbox" type="checkbox" id="Teste3" value="Teste3" />
-                  <label for="Teste3">Teste3</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div> 
-     
-
-       <div class="collapse" id="collapseExample1">
-          <div class="container vl">
-            <div class="container">
-              <div class="row">
-                <input class="magic-checkbox" type="checkbox" id="teste" value="teste" />
-                <label for="teste">Teste11</label>
-              </div>
-              <div class="container">
-                <div>
-                  <input class="magic-checkbox" type="checkbox" id="Teste1" value="teste1" />
-                  <label for="teste1">Teste1</label>
-                </div>
-                <div>
-                  <input class="magic-checkbox" type="checkbox" id="Teste2" value="Teste2" />
-                  <label for="Teste2">Teste2</label>
-                </div>
-                <div>
-                  <input class="magic-checkbox" type="checkbox" id="Teste3" value="Teste3" />
-                  <label for="Teste3">Teste3</label>
-                </div>
-              </div>
-              <br />
-              <div class="row">
-                <input class="magic-checkbox" type="checkbox" id="teste21" value="teste21" />
-                <label for="teste21">Teste21</label>
-              </div>
-              <div class="container">
-                <div>
-                  <input class="magic-checkbox" type="checkbox" id="Teste1" value="teste1" />
-                  <label for="teste1">Teste1</label>
-                </div>
-                <div>
-                  <input class="magic-checkbox" type="checkbox" id="Teste2" value="Teste2" />
-                  <label for="Teste2">Teste2</label>
-                </div>
-                <div>
-                  <input class="magic-checkbox" type="checkbox" id="Teste3" value="Teste3" />
-                  <label for="Teste3">Teste3</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-       <div class="container">
-        <div class="parent">         
-            <input class="magic-checkbox" type="checkbox" id="Pacientes" value="Pacientes" />
-            <label for="Pacientes">Pacientes</label>     
-        </div>
-      </div>-->
-    </div> 
-
-   
+      <PermissoesForm />     
+    </div>   
 
     <div class="row">
         <div class="col-md-8"></div>
@@ -286,14 +114,6 @@ export default {
         label: '',
         selectedPerfil: ''
       },
-      // vefAlerta: false,
-      // iconF: false,
-      // iconE: false,
-      // checkRF: false,
-      // checkRF1: false,
-      // checkF: false,
-      // permissoesRF1: [],
-      // permissoesRF2: [],
       presetPerfil: '',
       perfilName: '',
       showPresetPerfil: false,
@@ -384,12 +204,9 @@ export default {
                         duration : 2000
                       });
                     } 
-
                     // axios.post(`/api/setar-permissoes/${checkPerfil}`, [1,2,3])
-                    //   .then(({data}) => {
-                        
+                    //   .then(({data}) => {                        
                     //   });
-
                     // this.$router.push("/usuarios");
               }); 
             } 

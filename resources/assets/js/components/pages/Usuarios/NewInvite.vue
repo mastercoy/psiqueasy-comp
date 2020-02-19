@@ -7,8 +7,8 @@
         <p>Ex laboris nostrud nisi ullamco laborum sint eu cillum quis occaecat et. 
           Cupidatat laborum amet elit aliqua reprehenderit velit nisi proident.
           Ut dolor fugiat velit Lorem pariatur velit nulla pariatur.
-           Duis id velit sit commodo eiusmod officia minim id adipisicing exercitation enim voluptate eiusmod.
-           Aliquip fugiat est ullamco ad ullamco qui incididunt consequat nulla laboris quis aliqua.</p>
+          Duis id velit sit commodo eiusmod officia minim id adipisicing exercitation enim voluptate eiusmod.
+          Aliquip fugiat est ullamco ad ullamco qui incididunt consequat nulla laboris quis aliqua.</p>
 
            <div class="col-md-9">
              <div class="form-group">
@@ -69,7 +69,6 @@ export default {
   }
 }
 </script>
-
 
 <style scoped>
   .form-temp {
