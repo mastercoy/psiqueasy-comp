@@ -10,32 +10,25 @@ use Illuminate\Support\Facades\Response;
 class EmpresaController extends Controller {
 
     public function index() {
-        Auth::loginUsingId(1); //fixme retirar
-
+        Auth::loginUsingId(1);
         $nomeMetodo    = 'index_empresa';
         $arrayCompleto = [$nomeMetodo];
+        $empresas      = Empresa::where('id', auth()->user()->empresa_id)->whereActive('1');
+        $listaEmpresa  = [];
 
-        $empresas     = Empresa::all();
-        $listaEmpresa = [];
-
-        foreach ($empresas as $empresa) {
-            if ($empresa->active != 0) {
-                $arrayCompleto[1] = $empresa;
-                $jsonEncoder      = json_encode($arrayCompleto);
-                if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) {
-                    $listaEmpresa[] = $empresa;
-                }
+        foreach ($empresas->get()->toArray() as $empresa) {
+            $arrayCompleto[1] = $empresa;
+            $jsonEncoder      = json_encode($arrayCompleto);
+            if (Gate::allows('pertence-a-empresa-e-tem-permissao', $jsonEncoder)) {
+                $listaEmpresa[] = $empresa;
             }
-
         }
         return Response::json($listaEmpresa);
     }
 
     public function store() {
         Auth::loginUsingId(1);
-        $nomeMetodo = 'criar_empresa';          // passa como string, o 'nome' do método, utilizado para verificar a permissão, cujo o nome é o mesmo
-
-        // auth()->user->empresa_id; //obs importante
+        $nomeMetodo = 'criar_empresa';
 
         if (Gate::allows('tem-permissao', $nomeMetodo)) {
             Empresa::create($this->validateEmpresaRequest());
@@ -109,6 +102,21 @@ class EmpresaController extends Controller {
         } else {
             abort(403, 'Sem Permissão!');
         }
+    }
+
+    public function inativosEmpresa() {
+        Auth::loginUsingId(1);
+        $user       = Auth::user();
+        $nomeMetodo = 'listar_emp_desat';
+
+        if (Gate::allows('tem-permissao', $nomeMetodo)) {
+            return Empresa::where([['id', '=', $user->empresa_id], // do usuário
+                                   ['active', '=', 0], // desativados
+                                  ])->orderBy('updated_at', 'desc')->get();
+        } else {
+            abort(403, 'Sem Permissão!');
+        }
+
     }
 
     // ========================= protected

@@ -12,14 +12,16 @@ use Illuminate\Support\Facades\Response;
 
 class UserController extends Controller {
 
-    public function setPerfilUser(User $user_json, UserPerfil $user_perfil_json) {//fixme permissão
+    public function setPerfilUser(User $user_json, UserPerfil $user_perfil_json) {
         Auth::loginUsingId(1);
-        $nomeMetodo = 'set_perfil';
+        $nomeMetodo    = 'set_perfil';
+        $arrayCompleto = [$nomeMetodo, $user_json];
+        $jsonEncoder   = json_encode($arrayCompleto);
 
         $conditions      = ['user_id' => $user_json->id, 'perfil_id' => $user_perfil_json->id];
         $userPerfilPivot = UserPerfilPivot::where($conditions)->first();
 
-        if (Gate::allows('tem-permissao', $nomeMetodo)) {
+        if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
             if (!isset($userPerfilPivot)) {
                 $usuario = User::find($user_json->id);
                 $usuario->perfil()->attach($user_perfil_json);
@@ -29,12 +31,14 @@ class UserController extends Controller {
         }
     }
 
-    public function delPerfilUser(User $user_json) { //fixme permissão
+    public function delPerfilUser(User $user_json) {
         Auth::loginUsingId(1);
-        $usuario    = User::find($user_json->id);
-        $nomeMetodo = 'del_perfil';
+        $usuario       = User::find($user_json->id);
+        $nomeMetodo    = 'del_perfil';
+        $arrayCompleto = [$nomeMetodo, $usuario];
+        $jsonEncoder   = json_encode($arrayCompleto);
 
-        if (Gate::allows('tem-permissao', $nomeMetodo)) {
+        if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
             if ($usuario->perfil()->get()->toArray()) {
                 $usuario->perfil()->detach();
             }
@@ -45,7 +49,6 @@ class UserController extends Controller {
     }
 
     public function verificarEmail() {
-
         if (User::where('email', '=', Input::get('email'))->exists()) {
             return '1'; // existe
         } else {
@@ -55,20 +58,16 @@ class UserController extends Controller {
 
     public function index() {
         Auth::loginUsingId(1);
-
         $nomeMetodo    = 'index_user';
         $arrayCompleto = [$nomeMetodo];
+        $users         = User::where('empresa_id', auth()->user()->empresa_id)->whereActive('1');
+        $listaUsers    = [];
 
-        $users      = User::all();
-        $listaUsers = [];
-
-        foreach ($users as $user) {
-            if ($user->active != 0) {
-                $arrayCompleto[1] = $user;
-                $jsonEncoder      = json_encode($arrayCompleto);
-                if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
-                    $listaUsers[] = $user;
-                }
+        foreach ($users->get()->toArray() as $user) {
+            $arrayCompleto[1] = $user;
+            $jsonEncoder      = json_encode($arrayCompleto);
+            if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
+                $listaUsers[] = $user;
             }
         }
         return Response::json($listaUsers);
@@ -150,6 +149,20 @@ class UserController extends Controller {
             abort(403, 'Sem Permissão!');
         }
 
+    }
+
+    public function inativosUser() {
+        Auth::loginUsingId(1);
+        $user       = Auth::user();
+        $nomeMetodo = 'listar_users_desat';
+
+        if (Gate::allows('tem-permissao', $nomeMetodo)) {
+            return User::where([['empresa_id', '=', $user->empresa_id], // do usuário
+                                ['active', '=', 0], // desativados
+                               ])->orderBy('updated_at', 'desc')->get();
+        } else {
+            abort(403, 'Sem Permissão!');
+        }
     }
 
     public function retornaPermissoes() {

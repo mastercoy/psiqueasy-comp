@@ -4,11 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
 class CasoDeUsoSeeder extends Seeder {
-    /**
-     * Run the database seeds.
-     *
-     * @return void    id    name    label    active    created_at    updated_at
-     */
+
     public function run() {
         //
         DB::table('permissao')->insert([
@@ -47,6 +43,11 @@ class CasoDeUsoSeeder extends Seeder {
 
                                        ]);
         DB::table('permissao')->insert([
+                                           'name' => 'listar_users_desat',
+                                           'label' => 'listar_users_desat',
+
+                                       ]);
+        DB::table('permissao')->insert([
                                            'name' => 'desativar_user',
                                            'label' => 'configura usuário como INATIVO',
 
@@ -74,6 +75,11 @@ class CasoDeUsoSeeder extends Seeder {
         DB::table('permissao')->insert([
                                            'name' => 'destroy_emp_model',
                                            'label' => 'apaga por completo o modelo de documento da empresa',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'listar_emp_model_desat',
+                                           'label' => 'listar_emp_model_desat',
 
                                        ]);
         DB::table('permissao')->insert([
@@ -147,6 +153,11 @@ class CasoDeUsoSeeder extends Seeder {
 
                                        ]);
         DB::table('permissao')->insert([
+                                           'name' => 'listar_perfis_desat',
+                                           'label' => 'listar_perfis_desat',
+
+                                       ]);
+        DB::table('permissao')->insert([
                                            'name' => 'desativar_perfil',
                                            'label' => 'configura o perfil como INATIVO',
 
@@ -207,6 +218,16 @@ class CasoDeUsoSeeder extends Seeder {
 
                                        ]);
         DB::table('permissao')->insert([
+                                           'name' => 'list_user_model_desat',
+                                           'label' => 'list_user_model_desat',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'listar_resp_desat',
+                                           'label' => 'listar_resp_desat',
+
+                                       ]);
+        DB::table('permissao')->insert([
                                            'name' => 'desativar_responsavel',
                                            'label' => 'configura o responsavel como INATIVO',
 
@@ -252,13 +273,73 @@ class CasoDeUsoSeeder extends Seeder {
 
                                        ]);
         DB::table('permissao')->insert([
+                                           'name' => 'listar_emp_desat',
+                                           'label' => 'listar_emp_desat',
+
+                                       ]);
+        DB::table('permissao')->insert([
                                            'name' => 'criar_cat',
                                            'label' => 'criar categoria',
 
                                        ]);
         DB::table('permissao')->insert([
+                                           'name' => 'show_filial',
+                                           'label' => 'show_filial',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'listar_filial_desat',
+                                           'label' => 'listar_filial_desat',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'desativar_filial',
+                                           'label' => 'desativar_filial',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'destroy_filial',
+                                           'label' => 'destroy_filial',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'update_filial',
+                                           'label' => 'update_filial',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'criar_filial',
+                                           'label' => 'criar_filial',
+
+                                       ]);
+        DB::table('permissao')->insert([
                                            'name' => 'index_filial',
                                            'label' => 'index_filial',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'listar_cat_desat',
+                                           'label' => 'listar_cat_desat',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'desativar_cat',
+                                           'label' => 'desativar_cat',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'destroy_cat',
+                                           'label' => 'destroy_cat',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'update_cat',
+                                           'label' => 'update_cat',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'show_cat',
+                                           'label' => 'show_cat',
 
                                        ]);
 
@@ -385,32 +466,337 @@ class CasoDeUsoSeeder extends Seeder {
                                               ]);
         DB::table('perfil_permissao')->insert([
                                                   'perfil_id' => '1',
+                                                  'permissao_id' => '14',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
                                                   'permissao_id' => '15',
 
                                               ]);
         DB::table('perfil_permissao')->insert([
-                                                  'perfil_id' => '2',
+                                                  'perfil_id' => '1',
                                                   'permissao_id' => '16',
 
                                               ]);
         DB::table('perfil_permissao')->insert([
-                                                  'perfil_id' => '2',
+                                                  'perfil_id' => '1',
                                                   'permissao_id' => '17',
 
                                               ]);
         DB::table('perfil_permissao')->insert([
-                                                  'perfil_id' => '2',
+                                                  'perfil_id' => '1',
                                                   'permissao_id' => '18',
 
                                               ]);
         DB::table('perfil_permissao')->insert([
-                                                  'perfil_id' => '2',
+                                                  'perfil_id' => '1',
                                                   'permissao_id' => '19',
 
                                               ]);
         DB::table('perfil_permissao')->insert([
-                                                  'perfil_id' => '2',
+                                                  'perfil_id' => '1',
                                                   'permissao_id' => '20',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '21',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '22',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '23',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '24',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '25',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '26',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '27',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '28',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '29',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '30',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '31',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '32',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '33',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '34',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '35',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '36',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '37',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '38',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '39',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '40',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '41',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '42',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '43',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '44',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '45',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '46',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '47',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '48',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '49',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '50',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '51',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '52',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '53',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '54',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '55',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '56',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '57',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '58',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '59',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '60',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '61',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '62',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '63',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '64',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '65',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '66',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '67',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '2',
+                                                  'permissao_id' => '1',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '2',
+                                                  'permissao_id' => '2',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '2',
+                                                  'permissao_id' => '3',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '2',
+                                                  'permissao_id' => '4',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '2',
+                                                  'permissao_id' => '5',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '2',
+                                                  'permissao_id' => '6',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '2',
+                                                  'permissao_id' => '7',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '2',
+                                                  'permissao_id' => '8',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '2',
+                                                  'permissao_id' => '9',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '2',
+                                                  'permissao_id' => '10',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '2',
+                                                  'permissao_id' => '11',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '2',
+                                                  'permissao_id' => '12',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '2',
+                                                  'permissao_id' => '13',
 
                                               ]);
         DB::table('perfil_permissao')->insert([
@@ -437,49 +823,56 @@ class CasoDeUsoSeeder extends Seeder {
         DB::table('perfil_user')->insert([
                                              'user_id' => '1',
                                              'perfil_id' => '1',
-
                                          ]);
         DB::table('perfil_user')->insert([
                                              'user_id' => '2',
                                              'perfil_id' => '2',
-
                                          ]);
         DB::table('perfil_user')->insert([
                                              'user_id' => '3',
                                              'perfil_id' => '3',
-
                                          ]);
 
         DB::table('empresa_filiais')->insert([
-                                                 'name' => 'Filial Um',
-                                                 'empresa_id' => '3',
-
+                                                 'name' => 'Filial Um Emp1',
+                                                 'empresa_id' => '1',
                                              ]);
         DB::table('empresa_filiais')->insert([
-                                                 'name' => 'Filial Dois',
+                                                 'name' => 'Filial Dois Emp1',
+                                                 'empresa_id' => '1',
+                                             ]);
+        DB::table('empresa_filiais')->insert([
+                                                 'name' => 'Filial Dois Emp2',
+                                                 'empresa_id' => '2',
+                                             ]);
+        DB::table('empresa_filiais')->insert([
+                                                 'name' => 'Filial Dois Emp2',
+                                                 'empresa_id' => '2',
+                                             ]);
+        DB::table('empresa_filiais')->insert([
+                                                 'name' => 'Filial Dois Emp3',
                                                  'empresa_id' => '3',
-
+                                             ]);
+        DB::table('empresa_filiais')->insert([
+                                                 'name' => 'Filial Dois Emp3',
+                                                 'empresa_id' => '3',
                                              ]);
 
         DB::table('empresa_categorias')->insert([
                                                     'name' => 'Escola',
                                                     'descricao' => 'Categoria Um',
                                                     'empresa_id' => '1',
-
                                                 ]);
         DB::table('empresa_categorias')->insert([
                                                     'name' => 'Consultorio',
                                                     'descricao' => 'Categoria Dois',
                                                     'empresa_id' => '2',
-
                                                 ]);
         DB::table('empresa_categorias')->insert([
                                                     'name' => 'Manicomio',
                                                     'descricao' => 'Categoria Tres',
                                                     'empresa_id' => '3',
-
                                                 ]);
-
 
     }
 }

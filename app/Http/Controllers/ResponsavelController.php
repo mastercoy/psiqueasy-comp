@@ -16,16 +16,14 @@ class ResponsavelController extends Controller {
         $nomeMetodo    = 'index_responsavel';
         $arrayCompleto = [$nomeMetodo];
 
-        $responsaveis      = Responsavel::all();
+        $responsaveis      = Responsavel::where('user_id', auth()->user()->id)->whereActive('1');
         $listaResponsaveis = [];
 
-        foreach ($responsaveis as $responsavel) {
-            if ($responsavel->active != 0) {
-                $arrayCompleto[1] = $responsavel;
-                $jsonEncoder      = json_encode($arrayCompleto);
-                if (Gate::allows('pertence-usuario-logado-e-tem-permissao', $jsonEncoder)) {
-                    $listaResponsaveis[] = $responsavel;
-                }
+        foreach ($responsaveis->get()->toArray() as $responsavel) {
+            $arrayCompleto[1] = $responsavel;
+            $jsonEncoder      = json_encode($arrayCompleto);
+            if (Gate::allows('pertence-usuario-logado-e-tem-permissao', $jsonEncoder)) {
+                $listaResponsaveis[] = $responsavel;
             }
 
         }
@@ -111,11 +109,11 @@ class ResponsavelController extends Controller {
 
     }
 
-    public function excluidosResponsavel() {
+    public function inativosResponsavel() {
         Auth::loginUsingId(1);
         $user = Auth::user();
 
-        $nomeMetodo = 'listar_respon_desat';
+        $nomeMetodo = 'listar_resp_desat';
 
         if (Gate::allows('tem-permissao', $nomeMetodo)) {
             return Responsavel::where([['user_id', '=', $user->id], // do usuário

@@ -11,20 +11,16 @@ class EmpresaFilialController extends Controller {
 
     public function index() {
         Auth::loginUsingId(1);
-
         $nomeMetodo    = 'index_filial';
         $arrayCompleto = [$nomeMetodo];
+        $filiais       = EmpresaFilial::where('empresa_id', auth()->user()->empresa_id)->whereActive('1');
+        $listaFiliais  = [];
 
-        $filiais      = EmpresaFilial::all();
-        $listaFiliais = [];
-
-        foreach ($filiais as $filial) {
-            if ($filial->active != 0) {
-                $arrayCompleto[1] = $filial;
-                $jsonEncoder      = json_encode($arrayCompleto);
-                if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
-                    $listaFiliais[] = $filial;
-                }
+        foreach ($filiais->get()->toArray() as $filial) {
+            $arrayCompleto[1] = $filial;
+            $jsonEncoder      = json_encode($arrayCompleto);
+            if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
+                $listaFiliais[] = $filial;
             }
         }
         return Response::json($listaFiliais);
@@ -104,6 +100,20 @@ class EmpresaFilialController extends Controller {
         if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
             $filial->active = false;
             $filial->save();
+        } else {
+            abort(403, 'Sem Permissão!');
+        }
+    }
+
+    public function inativosFilial() {
+        Auth::loginUsingId(1);
+        $user       = Auth::user();
+        $nomeMetodo = 'listar_filial_desat';
+
+        if (Gate::allows('tem-permissao', $nomeMetodo)) {
+            return EmpresaFilial::where([['empresa_id', '=', $user->empresa_id], // do usuário
+                                         ['active', '=', 0], // desativados
+                                        ])->orderBy('updated_at', 'desc')->get();
         } else {
             abort(403, 'Sem Permissão!');
         }

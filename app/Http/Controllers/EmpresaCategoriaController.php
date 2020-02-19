@@ -12,21 +12,17 @@ class EmpresaCategoriaController extends Controller {
 
     public function index() {
         Auth::loginUsingId(1);
-        $nomeMetodo    = 'index_cat';
-        $arrayCompleto = [$nomeMetodo];
-
-        $categorias      = EmpresaCategoria::all();
+        $nomeMetodo      = 'index_cat';
+        $arrayCompleto   = [$nomeMetodo];
+        $categorias      = EmpresaCategoria::where('empresa_id', auth()->user()->empresa_id)->whereActive('1');
         $listaCategorias = [];
 
-        foreach ($categorias as $categoria) {
-            if ($categoria->active != 0) {
-                $arrayCompleto[1] = $categoria;
-                $jsonEncoder      = json_encode($arrayCompleto);
-                if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
-                    $listaCategorias[] = $categoria;
-                }
+        foreach ($categorias->get()->toArray() as $categoria) {
+            $arrayCompleto[1] = $categoria;
+            $jsonEncoder      = json_encode($arrayCompleto);
+            if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
+                $listaCategorias[] = $categoria;
             }
-
         }
         return Response::json($listaCategorias);
     }
@@ -109,6 +105,20 @@ class EmpresaCategoriaController extends Controller {
             abort(403, 'Sem Permissão!');
         }
 
+    }
+
+    public function inativosCategoria() {
+        Auth::loginUsingId(1);
+        $user       = Auth::user();
+        $nomeMetodo = 'listar_cat_desat';
+
+        if (Gate::allows('tem-permissao', $nomeMetodo)) {
+            return EmpresaCategoria::where([['empresa_id', '=', $user->empresa_id], // do usuário
+                                            ['active', '=', 0], // desativados
+                                           ])->orderBy('updated_at', 'desc')->get();
+        } else {
+            abort(403, 'Sem Permissão!');
+        }
     }
 
     // ========================= protected

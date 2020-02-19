@@ -13,16 +13,15 @@ class EmpresaModeloDocsController extends Controller {
         Auth::loginUsingId(1);
         $nomeMetodo    = 'index_emp_model';
         $arrayCompleto = [$nomeMetodo];
-        $modelos       = EmpresaModeloDocs::all();
+        $modelos       = EmpresaModeloDocs::where('empresa_id', auth()->user()->empresa_id)->whereActive('1');
         $listaModelos  = [];
 
-        foreach ($modelos as $modelo) {
-            if ($modelo->active != 0) {
-                $arrayCompleto[1] = $modelo;
-                $jsonEncoder      = json_encode($arrayCompleto);
-                if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
-                    $listaModelos[] = $modelo;
-                }
+        foreach ($modelos->get()->toArray() as $modelo) {
+            $arrayCompleto[1] = $modelo;
+            $jsonEncoder      = json_encode($arrayCompleto);
+            if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
+                $listaModelos[] = $modelo;
+
             }
 
         }
@@ -103,6 +102,20 @@ class EmpresaModeloDocsController extends Controller {
             abort(403, 'Sem Permissão!');
         }
 
+    }
+
+    public function inativosModelEmp() {
+        Auth::loginUsingId(1);
+        $user       = Auth::user();
+        $nomeMetodo = 'listar_emp_model_desat';
+
+        if (Gate::allows('tem-permissao', $nomeMetodo)) {
+            return EmpresaModeloDocs::where([['empresa_id', '=', $user->empresa_id], // do usuário
+                                             ['active', '=', 0], // desativados
+                                            ])->orderBy('updated_at', 'desc')->get();
+        } else {
+            abort(403, 'Sem Permissão!');
+        }
     }
 
     // ========================= protected

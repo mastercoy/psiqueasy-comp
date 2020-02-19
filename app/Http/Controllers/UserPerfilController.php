@@ -14,7 +14,6 @@ class UserPerfilController extends Controller {
 
     public function setPermissoes(UserPerfil $user_perfil_json) {
         Auth::loginUsingId(1);
-
         $perfil        = UserPerfil::find($user_perfil_json->id);
         $permissoes    = Input::all();
         $nomeMetodo    = 'set_permissao';
@@ -59,7 +58,7 @@ class UserPerfilController extends Controller {
 
     }
 
-    public function index() { //obs ficou filé usando o auth() e ['']
+    public function index() {
         Auth::loginUsingId(1);
         $nomeMetodo    = 'index_perfil';
         $arrayCompleto = [$nomeMetodo];
@@ -102,7 +101,6 @@ class UserPerfilController extends Controller {
     public function show(UserPerfil $user_perfil_json) {
         Auth::loginUsingId(1);
         $perfil = UserPerfil::find($user_perfil_json->id);
-        dd($perfil);
 
         if ($perfil->active == 0) {
             return null;
@@ -163,6 +161,20 @@ class UserPerfilController extends Controller {
             $perfil->save();
         } else {
             abort(403, 'Não encontrado!');
+        }
+    }
+
+    public function inativosPerfil() {
+        Auth::loginUsingId(1);
+        $user       = Auth::user();
+        $nomeMetodo = 'listar_perfis_desat';
+
+        if (Gate::allows('tem-permissao', $nomeMetodo)) {
+            return UserPerfil::where([['empresa_id', '=', $user->empresa_id], // do usuário
+                                      ['active', '=', 0], // desativados
+                                     ])->orderBy('updated_at', 'desc')->get();
+        } else {
+            abort(403, 'Sem Permissão!');
         }
     }
 
