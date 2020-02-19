@@ -1,12 +1,12 @@
-import Filial from "./components/views/FormFilial"
-import CadastroEmpresa from "./components/views/FormEmpresa"
-import Usuarios from "./components/views/FormUsuarios"
-import newFilial from "./components/views/views_filiais/newFilial"
-import EditFilial from "./components/views/views_filiais/EditFilial"
-import EditUser from "./components/views/views_usuarios/EditUser"
-import EditEmpresa from "./components/views/views_empresa/editEmpresa"
-import newInvite from "./components/views/views_usuarios/newInvite";
-import newInviteP from "./components/views/views_usuarios/newInvitePermissions";
+import Filial from "./components/pages/FormFilial"
+import CadastroEmpresa from "./components/pages/FormEmpresa"
+import Usuarios from "./components/pages/FormUsuarios"
+import newFilial from "./components/pages/Filiais/NewFilial"
+import EditFilial from "./components/pages/Filiais/EditFilial"
+import EditUser from "./components/pages/Usuarios/EditUser"
+import EditEmpresa from "./components/pages/Empresa/EditEmpresa"
+import newInvite from "./components/pages/Usuarios/NewInvite";
+import newInviteP from "./components/pages/Usuarios/NewInvitePermissions";
 
 
 const routes = [
