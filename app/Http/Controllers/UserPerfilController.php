@@ -89,7 +89,7 @@ class UserPerfilController extends Controller {
 
             if (!isset($perfil)) { //caso o perfil ainda não exista
                 $perfil = UserPerfil::create($this->validateUserPerfilRequest());
-                return 'ID do perfil recém criado: ' . $perfil->id; //fixme retirar essa linha
+                return $perfil->id;
             } else {
                 return 'já existe';
             }
