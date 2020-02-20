@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -68,6 +69,19 @@ Route::resource('user-perfil-pivot-json', 'UserPerfilPivotController');
 
 // rotas para PERFIL PERMISSAO PIVOT
 Route::resource('perfil-permissao-pivot-json', 'PerfilPermissaoPivotController');
+
+// rotas para ENVIO DE EMAIL - testando
+Route::post('laravel-send-email', 'EnviarEmailController@sendEmail');
+
+Route::get('/send-mail', function () {
+
+    Mail::raw('Text', function ($message) {
+        $message->to('contact@contact.com');
+    });
+
+    return 'A message has been sent to Mailtrap!';
+
+});
 
 // ===============================================================================================================================
 
