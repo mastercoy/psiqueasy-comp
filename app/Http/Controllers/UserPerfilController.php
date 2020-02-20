@@ -38,7 +38,6 @@ class UserPerfilController extends Controller {
 
     public function delPermissoes(UserPerfil $user_perfil_json) {
         Auth::loginUsingId(1);
-
         $permissoes = Input::all();
         $nomeMetodo = 'del_permissao';
 
