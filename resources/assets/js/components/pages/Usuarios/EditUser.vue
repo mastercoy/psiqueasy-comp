@@ -21,21 +21,7 @@
             <option> Matriz </option>
           </select>
         </div>
-
-        <!-- <div class="form-group">
-          <div class="container">
-            <h5><strong>Perfil: </strong></h5>
-                <div class="row">
-                  <select class="custom-select">
-                    <option selected>Open this select menu</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-                </div>   
-          </div>       
-        </div> -->
-
+        
          <hr />
           <div class="row">          
             <div class="col-md-8"></div>

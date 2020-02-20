@@ -12,11 +12,16 @@
 
            <div class="col-md-9">
              <div class="form-group">
+              <label for="name"><strong>Nome: </strong></label>
+              <input type="text" class="form-control" v-bind:class="{ 'is-invalid': $v.userName.$error}" id="name" v-model="$v.userName.$model" >
+               <span v-if="$v.userName.$error"> O campo é obrigatório!! </span>
+             </div>
+             <div class="form-group">
               <label for="email"><strong>E-mail: </strong></label>
               <input type="text" class="form-control" v-bind:class="{ 'is-invalid': $v.userEmail.$error}" id="email" v-model="$v.userEmail.$model" >
                <span v-if="$v.userEmail.$error"> Digite um e-mail válido!! </span>
                <span v-if="testeVal"> Esse email já está cadastrado! </span>
-            </div>
+             </div>
              <div class="col-md-3"></div>
            </div>         
       </div>
@@ -41,15 +46,18 @@ export default {
   data() {
     return {
       userEmail: '',
+      userName: '',
       testeVal: false
     }
   },
   validations: {
-    userEmail: {required, email}
+    userEmail: {required, email},
+    userName: {required}
   },
   methods: {
     verificaEmail() {
       let emailUser = this.userEmail
+      let nameUser = this.userName
       //console.log(user);
       this.$v.$touch()
       if (this.$v.$invalid) {
@@ -61,7 +69,7 @@ export default {
            this.testeVal = true;
          }else {
            this.testeVal = false;
-           this.$router.push({ name: 'convitePermissoes', params: { emailUser } });
+           this.$router.push({ name: 'convitePermissoes', params: { emailUser, nameUser } });
          }         
        });  
       }

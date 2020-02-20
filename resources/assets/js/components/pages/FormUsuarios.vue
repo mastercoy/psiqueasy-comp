@@ -99,8 +99,6 @@
             </div>
           </div>
   </div>
-
-  
 </template>
 
 <script>
@@ -109,9 +107,7 @@ export default {
     let temp = 0;
      //Metodo para carregar os perfis salvos!
       axios.get("/api/user-perfil-json").then(({data}) => {
-        //console.log(data);
         this.perfis = data;
-        //console.log(this.perfis[0].name);
         for(let i=0; i <= this.perfis.length; i++) {
           if(typeof this.perfis[i] === "object") {
             this.perfisNew[temp] = {
@@ -122,15 +118,13 @@ export default {
             temp++;
           }        
         }
-        console.log(this.perfisNew);  //Modificar depois **      
+        //console.log(this.perfisNew);  //Modificar depois **      
       });   
         
     axios.get('/api/user-json').then(({data}) => {
       this.users = data;  
-      console.log(data);    
-    });
-
-    ;  
+      //console.log(data);    
+    });    
   },
   data() {
     return {

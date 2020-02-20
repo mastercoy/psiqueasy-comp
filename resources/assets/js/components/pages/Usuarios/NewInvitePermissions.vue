@@ -1,13 +1,24 @@
 <template>
   <div class="container">
-    <div class="form-temp">      
-
+    <div class="form-temp"> 
       <div class="row">
-        <div class="docker">
-         <i class="fa fa-user fa-4x" aria-hidden="true"></i>        
-          <label>{{ emailUser }}</label>        
+                
+        <div class="col-md-6">
+          <i class="fa fa-envelope fa-2x" aria-hidden="true"></i><hr>
+          <div><label><strong>Email: </strong> {{ emailUser }}</label></div>          
+         </div>
+        <div class="col-md-6">
+          <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i><hr>
+          <div><label><strong>Nome: </strong> {{ nameUser }}</label></div>           
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-3"></div>        
+        <div class="col md-3">
           <router-link to="/usuarios/invite">Alterar</router-link>
         </div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
       </div>
     </div>
 
@@ -86,7 +97,7 @@ import PermissoesForm from '../../utils/PermissoesForm'
 
 import { required } from 'vuelidate/lib/validators'
 export default {
-  props: ["emailUser"],
+  props: ["emailUser", "nameUser"],
   mounted() {
     this.carregaPerfis();
   },
@@ -108,7 +119,8 @@ export default {
       perfilName: '',
       showPresetPerfil: false,
       labelPerfil: '',
-      perfisNew: []
+      perfisNew: [],
+      
        
     };
   },
@@ -151,7 +163,7 @@ export default {
               position: "bottom-right", 
               duration : 1500
               });
-            this.$router.push("/usuarios");
+            //this.$router.push("/usuarios");
           }
           break;
         case 'new' :
@@ -172,7 +184,7 @@ export default {
              } else {          
               //console.log(this.userInvite);
               
-              //console.log(newp)
+              console.log(newp)
               axios.post('/api/user-perfil-json', newp)
                 .then(({data}) => {
                   checkPerfil = data;    
@@ -231,7 +243,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .form-temp {
   margin-bottom: 30px;
 }

@@ -1,13 +1,13 @@
 <template>
   <div class="form-temp">
     <h3>{{perf.nome}}</h3>
-    <!-- <div>{{ perf }}</div> -->
+    <h5>{{ arrPermissoes1 }}</h5>
     <div class="alert alert-warning" role="alert">
       <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>
       As alterações feitas afetarão todos os usuários com este perfil
     </div>
     <hr>
-    <EditPermissions :perfil='perfil'/>
+    <EditPermissions :perfil='perfil' v-on:teste='teste2'/>
   </div>
 </template>
 
@@ -24,7 +24,13 @@ export default {
   },
   data() {
     return {
-      perfil: {}
+      perfil: {},
+      arrPermissoes1: []
+    }
+  },
+  methods: {
+    teste2(e, f) {
+      this.arrPermissoes1 = e + f;
     }
   }
 }

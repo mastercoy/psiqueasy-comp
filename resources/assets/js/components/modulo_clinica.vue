@@ -40,6 +40,7 @@
 export default {
   name: "modulo_clinica",
   mounted() {
+    // Chamada para o método para salvar as informações de login do usuário
     // let newUser = this.user
     // axios.post('api/user-json', newUser).then(({ data }) => {
     //      console.log("Usuário criado com sucesso!");

@@ -171,7 +171,7 @@
 <script>
 export default {
   name: 'PermissoesForm',
-  props: ['perfil'],
+  props: ['perfil', 'arrPermissoes1'],
   data() {
     return {
       vefAlerta: false,
@@ -289,7 +289,7 @@ export default {
             this.checkRF1 = true;  
             this.checkRF = true;                
             this.permissoesRF1 = ["op1", "op2", "op3"];
-            this.permissoesRF2 = ["teste1", "teste2", "teste3"];        
+            this.permissoesRF2 = ["teste1", "teste2", "teste3"];     
           }else {
             this.checkRF = false;
             this.checkRF1 = false;
@@ -316,10 +316,11 @@ export default {
         default :
           console.log('Nenhuma opção');
       }
+      this.$emit('teste', this.permissoesRF1, this.permissoesRF2);
     },    
     updateCheckRF1() {
       //Método para verificar todas as chechboxs
-      if (this.permissoesRF1  == 3) {
+      if (this.permissoesRF1.includes("op1", "op2", "op3")) {
         this.checkRF = true;
       } else {
         this.checkRF = false;
@@ -329,7 +330,7 @@ export default {
     },
     updateCheckRF2() {
       //Método para verificar todas as chechboxs
-      if (this.permissoesRF2  == 3) {
+      if (this.permissoesRF2.includes("teste1", "teste2", "teste3")) {
         this.checkRF1 = true;
       } else {
         this.checkRF1 = false;
