@@ -1,13 +1,6 @@
 <template>
   <div class="container">
-    <div class="form-temp">
-
-      <!-- <div v-if="vefAlerta" class="alert alert-warning alert-dismissible fade show" role="alert">
-        Voce não os campos corretamente, por favor complete o formulário e tente novamente!
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div> -->
+    <div class="form-temp">      
 
       <div class="row">
         <div class="docker">
@@ -25,21 +18,20 @@
         <div class="row">
           <div class="col md-6">
             <div>
-              <input class="magic-radio" type="radio" name="radio" id="11" value="old" v-model="showPresetPerfil">
-              <label for="11">Utilizar um perfil já criado</label>
+              <input class="magic-radio" type="radio" name="radio" id="12" value="new" checked v-model="showPresetPerfil">
+              <label for="12">Criar um novo Pefil</label>              
             </div>
           </div>
           <div class="col md-6">
             <div>
-              <input class="magic-radio" type="radio" name="radio" id="12" value="new" v-model="showPresetPerfil">
-              <label for="12">Criar um novo Pefil</label>
+              <input class="magic-radio" type="radio" name="radio" id="11" value="old" v-model="showPresetPerfil">
+              <label for="11">Utilizar um perfil já criado</label>              
             </div>
           </div>
           <div>       
         </div>
-       </div>               
-      
-      </div>
+       </div>         
+     </div>
     </div>
 
     <div class="form-temp" v-if="showPresetPerfil === 'old' ">
@@ -57,12 +49,10 @@
             </div>  
           </div>
         </div>
-
     <div class="form-temp" v-if="showPresetPerfil === 'new' ">
 
-        <h4>Nome do Perfil <span> * </span></h4>
-        <hr>
-
+      <h4>Nome do Perfil <span> * </span></h4>
+      <hr>
       <div class="container">
           <div class="form-group">
             <input 
@@ -83,7 +73,7 @@
     <div class="row">
         <div class="col-md-8"></div>
           <div class="col-md-4">
-            <button class="btn btn-deafult mr-1">Voltar</button>
+            <router-link to="/usuarios" type="button" class="btn btn-default mr-1"> Cancelar </router-link>
             <button class="btn btn-primary" @click="getPermissoes">Continuar <i class="fa fa-arrow-right" aria-hidden="true"></i> </button>
           </div>
       </div>
@@ -92,7 +82,7 @@
 </template>
 
 <script>
-import PermissoesForm from './PermissoesForm.vue'
+import PermissoesForm from '../../utils/PermissoesForm'
 
 import { required } from 'vuelidate/lib/validators'
 export default {

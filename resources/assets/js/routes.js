@@ -7,6 +7,7 @@ import EditUser from "./components/pages/Usuarios/EditUser"
 import EditEmpresa from "./components/pages/Empresa/EditEmpresa"
 import newInvite from "./components/pages/Usuarios/NewInvite";
 import newInviteP from "./components/pages/Usuarios/NewInvitePermissions";
+import PerfilInfo from "./components/pages/Usuarios/PerfilInfo";
 
 
 const routes = [
@@ -29,7 +30,7 @@ const routes = [
         path: "/filial/new",
         name: "NovaFilial",
         component: newFilial,
-        props: true,
+        props: true
         // meta: {
         //     requiresAuth: true
         // }
@@ -42,7 +43,7 @@ const routes = [
     },
     {
         path: "/usuarios",
-        component: Usuarios,
+        component: Usuarios
         // meta: {
         //     requiresAuth: true
         // }
@@ -63,6 +64,12 @@ const routes = [
         path: "/usuarios/edit",
         name: "EditUsuario",
         component: EditUser,
+        props: true
+    },
+    {
+        path: "/profile/edit",
+        name: "editProfile",
+        component: PerfilInfo,
         props: true
     }
 ];

@@ -61,14 +61,14 @@
                 <div>
                   <section v-for="perf in perfisNew" :key="perf.id">
                     <div class="row">
-                     <div class="col-md-8">
+                     <div class="col-md-10">
                        <strong id="nperfil">{{perf.nome}}</strong>
                         <small id="nperfilHelp" class="form-text text-muted">Usuários: {{ perf.quantidade}}</small> 
                      </div>                      
-                        <div class="col-md-4">
-                          <button class="btn btn-sm btn-secondary">
-                            <i class="fa fa-pencil-square" aria-hidden="true"></i>                            
-                          </button>                         
+                        <div class="col-md-2">
+                          <router-link class="btn btn-sm btn-secondary" :to="{ name: 'editProfile', params: { perf } }">
+                            <i class="fa fa-plus" aria-hidden="true"></i>                            
+                          </router-link>                         
                      </div>                      
                     </div><hr>
                   </section>
