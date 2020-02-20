@@ -61,11 +61,16 @@
                 <div>
                   <section v-for="perf in perfisNew" :key="perf.id">
                     <div class="row">
-                      <div class="col-md-6"><strong>{{perf.nome}}</strong></div>
-                      <div class="col-md-6"><button class="btn btn-sm btn-secondary">
-                        <i class="fa fa-pencil-square" aria-hidden="true"></i>
-                      </button></div>                      
-                    </div><br>
+                     <div class="col-md-8">
+                       <strong id="nperfil">{{perf.nome}}</strong>
+                        <small id="nperfilHelp" class="form-text text-muted">Usuários: {{ perf.quantidade}}</small> 
+                     </div>                      
+                        <div class="col-md-4">
+                          <button class="btn btn-sm btn-secondary">
+                            <i class="fa fa-pencil-square" aria-hidden="true"></i>                            
+                          </button>                         
+                     </div>                      
+                    </div><hr>
                   </section>
                 </div>           
               </div>    
