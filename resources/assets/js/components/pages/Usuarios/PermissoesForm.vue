@@ -26,7 +26,7 @@
                 <div>
                   <input class="magic-checkbox" type="checkbox" id="op1" value="op1"  v-model="permissoesRF1" @change="updateCheckRF1" />
                   <label for="op1">Cadastrar relatórios financeiros</label>
-                </div>
+                </div>  
                 <div>
                   <input class="magic-checkbox" type="checkbox" id="op2" value="op2" v-model="permissoesRF1" @change="updateCheckRF1" />
                   <label for="op2">Editar relatórios financeiros</label>
@@ -271,7 +271,6 @@ export default {
                         duration : 2000
                       });
                     } 
-
                     axios.post(`/api/setar-permissoes/${checkPerfil}`, [1,2,3])
                       .then(({data}) => {});
                     this.$router.push("/usuarios");
