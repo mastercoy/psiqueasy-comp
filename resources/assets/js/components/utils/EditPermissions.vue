@@ -38,7 +38,8 @@
               </div>
               <br />
               <div class="row">
-                <input class="magic-checkbox" type="checkbox" id="teste21" value="Pagamentos"  @click="checkAll" v-model="checkRF1" @change="updateAll"/>
+                <input class="magic-checkbox" type="checkbox" id="teste21" value="Pagamentos"  @click="checkAll" v-model="checkRF1" @change="updateAll"
+                />
                 <label for="teste21">Pagamentos</label>
               </div>
                 <div class="container">
