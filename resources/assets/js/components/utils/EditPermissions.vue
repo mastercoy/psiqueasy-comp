@@ -1,7 +1,10 @@
 <template>
   <div>
-     <h4>Permissões de acesso do usuário</h4>    
-      <!-- <label>{{ perfil }} </label> -->
+     <div class="input-group">
+      <strong class="text mr-1"> Editar nome do perfil: </strong>
+      <input type="text" class="form control" aria-label="Default" v-model="perfil.nome"><br>
+    </div>
+     <h4>Permissões de acesso do usuário</h4>     
       <hr />     
       <button type="button" class="btn btn-link mb-1">Marcas todos</button>
       <br />      
@@ -38,8 +41,7 @@
               </div>
               <br />
               <div class="row">
-                <input class="magic-checkbox" type="checkbox" id="teste21" value="Pagamentos"  @click="checkAll" v-model="checkRF1" @change="updateAll"
-                />
+                <input class="magic-checkbox" type="checkbox" id="teste21" value="Pagamentos"  @click="checkAll" v-model="checkRF1" @change="updateAll"/>
                 <label for="teste21">Pagamentos</label>
               </div>
                 <div class="container">
@@ -172,7 +174,7 @@
 <script>
 export default {
   name: 'PermissoesForm',
-  props: ['perfil', 'arrPermissoes1'],
+  props: ['perfil'],
   data() {
     return {
       vefAlerta: false,
@@ -269,10 +271,10 @@ export default {
                         duration : 2000
                       });
                     } 
-                    axios.post(`/api/setar-permissoes/${checkPerfil}`, [1,2,3])
-                      .then(({data}) => {});
-                    this.$router.push("/usuarios");
-              }); 
+                    // axios.post(`/api/setar-permissoes/${checkPerfil}`, [1,2,3])
+                    //   .then(({data}) => {});
+                    // this.$router.push("/usuarios");
+              });
             } 
           }
           break;
@@ -290,7 +292,7 @@ export default {
             this.checkRF1 = true;  
             this.checkRF = true;                
             this.permissoesRF1 = ["op1", "op2", "op3"];
-            this.permissoesRF2 = ["teste1", "teste2", "teste3"];     
+            this.permissoesRF2 = ["teste1", "teste2", "teste3"];        
           }else {
             this.checkRF = false;
             this.checkRF1 = false;
@@ -317,11 +319,12 @@ export default {
         default :
           console.log('Nenhuma opção');
       }
-      this.$emit('teste', this.permissoesRF1, this.permissoesRF2);
+      let arr = this.permissoesRF1 + this.permissoesRF2
+      this.$emit('teste', arr)
     },    
     updateCheckRF1() {
       //Método para verificar todas as chechboxs
-      if (this.permissoesRF1.includes("op1", "op2", "op3")) {
+      if (this.permissoesRF1  == 3) {
         this.checkRF = true;
       } else {
         this.checkRF = false;
@@ -331,7 +334,7 @@ export default {
     },
     updateCheckRF2() {
       //Método para verificar todas as chechboxs
-      if (this.permissoesRF2.includes("teste1", "teste2", "teste3")) {
+      if (this.permissoesRF2  == 3) {
         this.checkRF1 = true;
       } else {
         this.checkRF1 = false;

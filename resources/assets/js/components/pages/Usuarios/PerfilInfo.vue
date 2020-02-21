@@ -7,7 +7,7 @@
       As alterações feitas afetarão todos os usuários com este perfil
     </div>
     <hr>
-    <EditPermissions :perfil='perfil' v-on:teste='teste2'/>
+    <EditPermissions :perfil='perfil' @teste='teste2'/>
   </div>
 </template>
 
@@ -71,5 +71,4 @@ export default {
   justify-content: space-between;
   vertical-align: middle;
 }
-
 </style>
