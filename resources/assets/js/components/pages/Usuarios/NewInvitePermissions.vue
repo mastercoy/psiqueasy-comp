@@ -21,19 +21,19 @@
 
     <div class="form-temp">
       <div class="container ">
-        <h4>Como deseja associar as permissoes ao usuário</h4>               
+        <h4>Como deseja selecionar a posição do usuário?</h4>               
         <hr />
         <div class="row">
           <div class="col md-6">
             <div>
               <input class="magic-radio" type="radio" name="radio" id="12" value="new" checked v-model="showPresetPerfil">
-              <label for="12">Criar um novo Pefil</label>              
+              <label for="12">Criar um perfil do zero?</label>              
             </div>
           </div>
           <div class="col md-6">
             <div>
               <input class="magic-radio" type="radio" name="radio" id="11" value="old" v-model="showPresetPerfil">
-              <label for="11">Utilizar um perfil já criado</label>              
+              <label for="11">Utilizar um perfil salvo?</label>              
             </div>
           </div>
           <div>       
