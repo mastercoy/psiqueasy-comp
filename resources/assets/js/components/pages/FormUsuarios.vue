@@ -43,7 +43,7 @@
                 data-toggle="popover" data-trigger="hover" title="OBS" data-placement="bottom" data-content="Tempo expirado do convite, clique para enviar novamente"
                 ><i class="fa fa-refresh" aria-hidden="true"></i> </a>
               </td>  -->
-              <td><a @click="selectUser = user.nome" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a></td>                
+              <td><a @click="selectUser = user.name" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a></td>                
             </tr>
           </tbody>
          </table>

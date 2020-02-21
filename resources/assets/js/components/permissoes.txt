@@ -1,0 +1,7 @@
+LISTA DE PERMISSOES 
+
+  COD   ||    DESCRIÇÃO
+  01    ||    Criar perfil
+  02    ||    Deletar perfil
+  03    ||    Pegar usuário
+  04    ||    Criar usuário

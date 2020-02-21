@@ -67,10 +67,9 @@
     <hr>
     <div class="container">
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-md-12">
              <label><strong>Nome da Empresa: </strong></label> {{cadEmpresa.NomeEmp }}
           </div>
-          <div class="col-md-6"></div>
         </div>
 
         <div class="row">
