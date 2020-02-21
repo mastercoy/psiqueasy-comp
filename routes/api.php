@@ -71,8 +71,7 @@ Route::resource('user-perfil-pivot-json', 'UserPerfilPivotController');
 Route::resource('perfil-permissao-pivot-json', 'PerfilPermissaoPivotController');
 
 // rotas para ENVIO DE EMAIL - testando
-Route::post('laravel-send-email', 'EnviarEmailController@sendEmail');
-
+Route::post('send-email', 'EnviarEmailController@sendEmail');
 Route::get('/send-mail', function () {
 
     Mail::raw('Text', function ($message) {
