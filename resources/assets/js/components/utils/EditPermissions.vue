@@ -1,9 +1,14 @@
 <template>
   <div>
-     <div class="input-group">
-      <strong class="text mr-1"> Editar nome do perfil: </strong>
-      <input type="text" class="form control" aria-label="Default" v-model="perfil.nome"><br>
+    <label for="input-group">Deseja modificar o nome do perfil?</label>
+     <div class="input-group mb-3">
+     <div class="input-group-prepend">
+    <div class="input-group-text">      
+      <input type="checkbox" aria-label="Checkbox for following text input" v-model=editNomePerfil>
     </div>
+  </div>
+  <input type="text" class="form-control" aria-label="Text input with checkbox" :disabled="!editNomePerfil" v-model="perfil.nome">
+</div>
      <h4>Permissões de acesso do usuário</h4>     
       <hr />     
       <button type="button" class="btn btn-link mb-1">Marcas todos</button>
@@ -167,7 +172,18 @@
             <input class="magic-checkbox" type="checkbox" id="Pacientes" value="Pacientes" />
             <label for="Pacientes">Pacientes</label>     
         </div>
-      </div>
+      </div><hr>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+              <router-link to="/usuarios" class="btn btn-default mr-1">Voltar</router-link>
+              <button class="btn btn-success">Atualizar</button>
+            </div>
+          </div>
+        </div>
     </div> 
 </template>
 
@@ -177,6 +193,7 @@ export default {
   props: ['perfil'],
   data() {
     return {
+      editNomePerfil: false,
       vefAlerta: false,
       iconF: false,
       iconE: false,

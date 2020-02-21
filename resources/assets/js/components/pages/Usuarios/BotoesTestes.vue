@@ -27,7 +27,7 @@
         <button class="btn btn-secondary btn-block" :disabled="!checkPermissoes(1)" @click="testFunc">
           Editar Perfil
         </button>
-        <button class="btn btn-secondary btn-block" :disabled="!checkPermissoes(1)" @click="testFunc">
+        <button class="btn btn-secondary btn-block" :disabled="!checkPermissoes(8)" @click="testFunc">
           Editar Perfil
         </button>
       </div>
@@ -40,7 +40,7 @@
 export default {
   data() {
     return {
-      permissoes: [1, 30]
+      permissoes: [1, 10, 30]
     }
   },
   methods: {

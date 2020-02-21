@@ -13,12 +13,9 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-3"></div>        
-        <div class="col md-3">
-          <router-link to="/usuarios/invite">Alterar</router-link>
+        <div class="col-md-12">
+          <router-link to="/usuarios/invite" class="btn btn-link btn-block">Alterar</router-link>
         </div>
-        <div class="col-md-3"></div>
-        <div class="col-md-3"></div>
       </div>
     </div>
 
@@ -61,7 +58,6 @@
           </div>
         </div>
     <div class="form-temp" v-if="showPresetPerfil === 'new' ">
-
       <h4>Nome do Perfil <span> * </span></h4>
       <hr>
       <div class="container">
@@ -77,9 +73,9 @@
              <small id="perfilHelp" class="form-text text-muted">Esse campo é o identificador do perfil de usuário a ser criado.</small> 
           </div>
       </div>
-
-      <PermissoesForm />     
-    </div>   
+      <PermissoesForm /> 
+      <hr>
+    </div>  
 
     <div class="row">
         <div class="col-md-8"></div>
