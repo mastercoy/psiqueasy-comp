@@ -11,6 +11,10 @@ class User extends Authenticatable {
     protected $guarded = [];
     protected $hidden  = ['password', 'remember_token',];
 
+    public function setPasswordAttribute($password) {
+        $this->attributes['password'] = bcrypt($password);
+    }
+
     public function perfil() {
         return $this->belongsToMany('App\Models\UserPerfil', 'perfil_user',
                                     'user_id', 'perfil_id');

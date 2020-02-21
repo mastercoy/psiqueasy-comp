@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -71,16 +70,11 @@ Route::resource('user-perfil-pivot-json', 'UserPerfilPivotController');
 Route::resource('perfil-permissao-pivot-json', 'PerfilPermissaoPivotController');
 
 // rotas para ENVIO DE EMAIL - testando
-Route::post('send-email', 'EnviarEmailController@sendEmail');
-Route::get('/send-mail', function () {
+Route::get('enviar-email', 'ConviteController@convidar')->name('convidar'); //afazer apagar
 
-    Mail::raw('Text', function ($message) {
-        $message->to('contact@contact.com');
-    });
+Route::post('enviar-email', 'ConviteController@processar')->name('processar');
+Route::get('aceitar-convite/{token}', 'ConviteController@aceitar')->name('aceitar');
 
-    return 'A message has been sent to Mailtrap!';
-
-});
 
 // ===============================================================================================================================
 

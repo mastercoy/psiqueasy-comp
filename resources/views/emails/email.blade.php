@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html>
+<p>Olá, {{$convite->name}}</p>
 
-    <body>
-        <?php use Illuminate\Support\Facades\Input;$user = auth()->user();$input = Input::all();?>
+<p>Você foi convidado para usar o sistema PsiquEasy por {{auth()->user()->name}}</p>
 
-        <h1>Esse é um email de testes</h1>
-        <p>Obrigado, {{  $input['name'] }}</p>
-
-    </body>
-
-</html>
+<a href="{{ route('aceitar', $convite->token) }}">Clique aqui</a> para ativar!

@@ -2,18 +2,21 @@
 
 namespace App\Mail;
 
-
+use App\Models\Convite;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Auth;
 
+
 class UserRegistrationInvite extends Mailable {
     use Queueable, SerializesModels;
 
+    public $convite;
 
-    public function __construct() {
+    public function __construct(Convite $convite) {
         //
+        $this->convite = $convite;
     }
 
 
