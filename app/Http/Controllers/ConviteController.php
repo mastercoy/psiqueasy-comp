@@ -17,13 +17,13 @@ class ConviteController extends Controller {
     }
 
     public function processar(Request $request) {
-        Auth::loginUsingId(1); //fixme
+        Auth::loginUsingId(1); // fixme
         // validate the incoming request data
+        // generate a random string using Laravel's str_random helper
         do {
-            //generate a random string using Laravel's str_random helper
             $token = str_random();
-        } //check if the token already exists and if it does, try again
-        while (Convite::where('token', $token)->first());
+            //check if the token already exists and if it does, try again
+        } while (Convite::where('token', $token)->first());
 
         //create a new convite record
         $convite = Convite::create([
@@ -33,7 +33,6 @@ class ConviteController extends Controller {
                                        'empresa_id' => auth()->user()->empresa_id,
                                        'token' => $token,
                                    ]);
-
 
         // send the email
         Mail::to($request->get('email'))->send(new UserRegistrationInvite($convite));

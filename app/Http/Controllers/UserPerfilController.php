@@ -126,9 +126,9 @@ class UserPerfilController extends Controller {
         Auth::loginUsingId(1);
         $perfil = UserPerfil::find($user_perfil_json->id);
 
-        $nomeMetodo    = 'update_perfil';                                  // nome do método - permissão que usuário PRECISA ter
-        $arrayCompleto = [$nomeMetodo, $perfil];                           // jogo as informações anteriores em um array para enviar no guard
-        $jsonEncoder   = json_encode($arrayCompleto);                      // guard nao aceita array, envio entao um json
+        $nomeMetodo    = 'update_perfil';               // nome do método - permissão que usuário PRECISA ter
+        $arrayCompleto = [$nomeMetodo, $perfil];        // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder   = json_encode($arrayCompleto);   // guard nao aceita array, envio entao um json
 
         if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
             $user_perfil_json->update($this->validateUserPerfilRequest());

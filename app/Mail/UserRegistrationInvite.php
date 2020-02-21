@@ -20,7 +20,7 @@ class UserRegistrationInvite extends Mailable {
     }
 
 
-    public function build() { // obs Obrigatórios campos no json 'email' 'name'
+    public function build() { // obs
         Auth::loginUsingId(1);
         return $this->view('emails.email')
                     ->subject('Você foi convidado para o PsiquEasy por ' . auth()->user()->name)
