@@ -41,6 +41,7 @@ class ConviteController extends Controller {
         // redirect back where we came from
         // return redirect()
         // ->back();
+        // dd('teste');
     }
 
     public function aceitar($token) {

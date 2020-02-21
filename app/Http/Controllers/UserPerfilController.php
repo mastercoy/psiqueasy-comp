@@ -57,6 +57,12 @@ class UserPerfilController extends Controller {
 
     }
 
+    public function quaisPermissoes(UserPerfil $user_perfil_json) { //afazer guard etc e tal
+        $perfil = UserPerfil::find($user_perfil_json->id);
+        return $perfil->permissao()->get()->toArray();
+
+    }
+
     public function index() {
         Auth::loginUsingId(1);
         $nomeMetodo    = 'index_perfil';

@@ -32,6 +32,7 @@ Route::patch('desativar-user-perfil-json/{user_perfil_json}', 'UserPerfilControl
 Route::post('setar-permissoes/{user_perfil_json}', 'UserPerfilController@setPermissoes');
 Route::post('remover-permissoes/{user_perfil_json}', 'UserPerfilController@delPermissoes');
 Route::get('inativos-perfis-json', 'UserPerfilController@inativosPerfil');
+Route::get('permissoes-perfil-json/{user_perfil_json}', 'UserPerfilController@quaisPermissoes');
 
 // rotas para USER MODELO DOCS
 Route::resource('user-modelo-docs-json', 'UserModeloDocsController');
