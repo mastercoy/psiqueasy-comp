@@ -33,7 +33,6 @@ class UserPerfilController extends Controller {
         } else {
             abort(403, 'Sem Permissão!');
         }
-
     }
 
     public function delPermissoes(UserPerfil $user_perfil_json) {
