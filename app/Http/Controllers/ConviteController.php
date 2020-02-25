@@ -12,20 +12,15 @@ use Illuminate\Support\Facades\Mail;
 
 class ConviteController extends Controller {
     //
-    public function convidar() {
-        // show the user a form with an email field to invite a new user
-    }
-
-    public function processar(Request $request) {
+    public function enviarEmail(Request $request) {
         Auth::loginUsingId(2); // fixme
-        // validate the incoming request data
-        // generate a random string using Laravel's str_random helper
+        // gera uma string random para ser usada como token
         do {
             $token = str_random();
-            //check if the token already exists and if it does, try again
+            // verifica se o token ja existe e se existe, gera um novo
         } while (Convite::where('token', $token)->first());
 
-        //create a new convite record
+        // cria um novo convite
         $convite = Convite::create([
                                        'email' => $request->get('email'),
                                        'name' => $request->get('name'),
@@ -34,13 +29,17 @@ class ConviteController extends Controller {
                                        'token' => $token,
                                    ]);
 
-        // send the email
+        // envia o email
         Mail::to($request->get('email'))->send(new UserRegistrationInvite($convite));
 
-        // redirect back where we came from
-        // return redirect()
-        // ->back();
-        // dd('teste');
+        // redireciona para a pagina anterior
+        return redirect()->back();
+    }
+
+    public function reenviarEmail(Request $request) {
+        $convite = Convite::where('email', $request->get('email'))->first();
+        Mail::to($request->get('email'))->send(new UserRegistrationInvite($convite));
+
     }
 
     public function aceitar($token) {

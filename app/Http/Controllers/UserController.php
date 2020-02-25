@@ -49,7 +49,8 @@ class UserController extends Controller {
     }
 
     public function verificarEmail() {
-        if (User::where('email', '=', Input::get('email'))->exists()) {
+        if (User::where('email', Input::get('email'))
+                ->where('empresa_id', !null)->exists()) {
             return '1'; // existe
         } else {
             return '0'; // nao existe
