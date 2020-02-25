@@ -43,19 +43,18 @@ class ConviteController extends Controller {
     }
 
     public function aceitar($token) {
+        // acha o convite através do token
         $convite = Convite::where('token', $token)->first();
 
-        // here we'll look up the user by the token sent provided in the URL
-        // Look up the convite
+        // se convite na existe
         if (!$convite) {
-            //if the convite doesn't exist do something more graceful than this
+            //
             abort(404);
         }
 
-        $senhaTemp = str_random(6);
+        $senhaTemp = str_random(6); // cria uma string como senha temporária
 
-        // create the user with the details from the convite
-
+        // cria o usuário utilizando os detalhes do convite
         $usuario = User::create([
                                     'email' => $convite->email,
                                     'name' => $convite->name,
@@ -64,18 +63,16 @@ class ConviteController extends Controller {
                                 ]);
         $usuario->perfil()->attach($convite->perfil_id);
 
-        // delete the convite so it can't be used again
+        // após usado, deleta o convide do banco de dados
         $convite->delete();
 
-        // here you would probably log the user in and show them the dashboard, but we'll just prove it worked
+        // aqui deve exibir uma pagina bonitinha para o usuário
 
+        // mensagem provisoria com a senha temporária
         echo 'Seja Bem Vindo! Sua senha provisória é: ' . $senhaTemp . '';
         echo '<br>';
         echo 'Por favor, mude-a assim que possível';
 
-        // $resposta = ['usuario'=> $usuario, 'senha' => $senhaTemp];
-
-        // return $resposta;
     }
 
 
