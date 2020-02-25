@@ -19,9 +19,8 @@ class UserRegistrationInvite extends Mailable {
         $this->convite = $convite;
     }
 
-
-    public function build() { // obs
-        Auth::loginUsingId(1);
+    public function build() {  // obs
+        Auth::loginUsingId(2); //fixme retirar
         return $this->view('emails.email')
                     ->subject('Você foi convidado para o PsiquEasy por ' . auth()->user()->name)
                     ->from('psiqueasy@oliveiracorp.com.br', 'PsiquEasy')

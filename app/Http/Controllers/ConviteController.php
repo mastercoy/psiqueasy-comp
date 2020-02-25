@@ -17,7 +17,7 @@ class ConviteController extends Controller {
     }
 
     public function processar(Request $request) {
-        Auth::loginUsingId(1); // fixme
+        Auth::loginUsingId(2); // fixme
         // validate the incoming request data
         // generate a random string using Laravel's str_random helper
         do {
@@ -72,14 +72,12 @@ class ConviteController extends Controller {
 
         echo 'Seja Bem Vindo! Sua senha provisória é: ' . $senhaTemp . '';
         echo '<br>';
-        echo '<br>';
         echo 'Por favor, mude-a assim que possível';
+
+        // $resposta = ['usuario'=> $usuario, 'senha' => $senhaTemp];
+
+        // return $resposta;
     }
 
-    /*public function processar() {
-        // process the form submission and send the invite by email
-        Auth::loginUsingId(1); //fixme
-        $input = Input::get('email');
-        Mail::to($input)->send(new UserRegistrationInvite());
-    }*/
+
 }
