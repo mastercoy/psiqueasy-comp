@@ -1,6 +1,6 @@
 <template>
   <div>
-    <label for="input-group">Deseja modificar o nome do perfil?</label>
+    <label for="input-group">Alterar o nome do perfil?</label>
      <div class="input-group mb-3">
      <div class="input-group-prepend">
     <div class="input-group-text">      
@@ -72,7 +72,7 @@
        <div class="container">
         <div class="parent">         
             <input class="magic-checkbox" type="checkbox" id="Agendamentos" value="Agendamentos" />
-            <label for="Agendamentos">Agendamentos</label>       
+            <label for="Agendamentos">Perfis | Permissões</label>       
             <a class="btn btn-default" type="button" @click="iconE = !iconE" data-toggle="collapse" data-target="#collapseAgendamentos" aria-expanded="false" aria-controls="collapseAgendamentos">
                <i :class="[iconE ? 'fa-chevron-up' : 'fa-chevron-down', 'fa']" />
             </a>          
@@ -83,20 +83,24 @@
             <div class="container">
               <div class="row">
                 <input class="magic-checkbox" type="checkbox" id="teste" value="teste" />
-                <label for="teste">Teste11</label>
+                <label for="teste">Perfil</label>
               </div>
                 <div class="container">
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="Teste1" value="teste1" />
-                    <label for="teste1">Teste1</label>
+                    <input class="magic-checkbox" type="checkbox" id="P201" value="1" v-model="permissoesBloco2"/>
+                    <label for="P201">Visualizar Perfil</label>
                   </div>
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="Teste2" value="Teste2" />
-                    <label for="Teste2">Teste2</label>
+                    <input class="magic-checkbox" type="checkbox" id="P202" value="2" v-model="permissoesBloco2"/>
+                    <label for="P202">Remover Perfil</label>
                   </div>
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="Teste3" value="Teste3" />
-                    <label for="Teste3">Teste3</label>
+                    <input class="magic-checkbox" type="checkbox" id="P203" value="3" v-model="permissoesBloco2"/>
+                    <label for="P203">Visualizar Usuários</label>
+                  </div>
+                  <div>
+                    <input class="magic-checkbox" type="checkbox" id="P204" value="4" v-model="permissoesBloco2"/>
+                    <label for="P204">Cadastrar Usuários</label>
                   </div>
                 </div>
               <br />
@@ -180,7 +184,7 @@
             <div class="col-md-4"></div>
             <div class="col-md-4">
               <router-link to="/usuarios" class="btn btn-default mr-1">Voltar</router-link>
-              <button class="btn btn-success">Atualizar</button>
+              <button class="btn btn-success" @click="atualizarPerfil">Atualizar</button>
             </div>
           </div>
         </div>
@@ -191,6 +195,15 @@
 export default {
   name: 'PermissoesForm',
   props: ['perfil'],
+  mounted() { 
+    setTimeout(() => {
+      let temp = this.perfil;
+      //console.log(temp);  
+      this.getPerfilPermissoes();
+    },500);  
+
+    // console.log(perfil_test);  
+  },
   data() {
     return {
       editNomePerfil: false,
@@ -202,103 +215,29 @@ export default {
       checkF: false,
       permissoesRF1: [],
       permissoesRF2: [],
+      permissoesBloco2: [],
       presetPerfil: '',
       perfilName: '',
       showPresetPerfil: false,
       labelPerfil: '',
-      perfisNew: []
+      perfisNew: [],
+      p_perfil_user: []
     }
   },
   methods: {
-    getPermissoes() {
-      let toast;
-      let checkPerfil = '';      
-      let var1 = this.permissoesRF1;
-      let var2 = this.permissoesRF2
-      let arrayPermissoes = [];
-      let newp = {
-                name: this.labelPerfil,
-                empresa_id: this.$store.state.empresaID
-              }
-
-      arrayPermissoes = var1 + var2;
-      this.userInvite.email = this.user;
-      this.userInvite.permissoes = arrayPermissoes;
-      this.userInvite.label = this.labelPerfil;
-
-      switch(this.showPresetPerfil) {
-        case 'old' :
-          if(this.presetPerfil === ''){
-            console.log('Por favor selecione um perfil para o usuário!');
-
-             let toast = this.$toasted
-                  .error("Por favor selecione um perfil para o usuário!", 
-                {
-                  iconPack: 'fontawesome',
-                  icon: "fa-exclamation-circle",
-                  theme: "bubble", 
-                  position: "bottom-right", 
-                  duration : 1500
-                });
-          }else {
-              toast = this.$toasted.success("O convite para o usuário foi criado com Sucesso!!", {
-              iconPack: 'fontawesome',
-              icon: "fa-exclamation-circle",
-              theme: "bubble", 
-              position: "bottom-right", 
-              duration : 1500
-              });
-            this.$router.push("/usuarios");
-          }
-          break;
-        case 'new' :
-          this.$v.$touch()
-          if (this.$v.$invalid) {
-            console.log("Preencha os campos necessários!")
-          } else {
-              if(this.userInvite.permissoes === ''){
-                let toast = this.$toasted
-                  .error("As opções de permissões não foram preenchidas corretamente, por favor verifique os campos e tente novamente!!", 
-                {
-                  iconPack: 'fontawesome',
-                  icon: "fa-exclamation-circle",
-                  theme: "bubble", 
-                  position: "bottom-right", 
-                  duration : 1500
-                });
-             } else { 
-              axios.post('/api/user-perfil-json', newp)
-                .then(({data}) => {
-                  checkPerfil = data;    
-                  
-                   if(checkPerfil === 'já existe') {
-                      toast = this.$toasted.error("O nome escolhido para o perfil já existe! Por favor digite outro nome", {
-                      iconPack: 'fontawesome',
-                      icon: "fa-exclamation-circle",
-                      theme: "bubble", 
-                      position: "bottom-right", 
-                      duration : 2000
-                      });
-                    }else {
-                      toast = this.$toasted.success("O perfil para o usuário convidado, foi criado com Sucesso!!", {
-                        iconPack: 'fontawesome',
-                        icon: "fa-exclamation-circle",
-                        theme: "bubble", 
-                        position: "bottom-right", 
-                        duration : 2000
-                      });
-                    } 
-                    // axios.post(`/api/setar-permissoes/${checkPerfil}`, [1,2,3])
-                    //   .then(({data}) => {});
-                    // this.$router.push("/usuarios");
-              });
-            } 
-          }
-          break;
-        default: 
-        console.log('teste');
-      }     
-    },
+    getPerfilPermissoes() {
+      let arratTemp = []; 
+      let perfil_test = [];     
+        axios.get(`/api/permissoes-perfil-json/${this.perfil.id}`)
+          .then(({data}) => {
+             arratTemp = data;
+            console.log(data);  
+            
+          for(let i = 0; i <= arratTemp.lenght; i++){
+            perfil_test[i] = arratTemp[i].id;
+          }          
+          });   
+    },    
     checkAll(e) {
       switch (e.target.value) {
         case 'Financeiro' :
@@ -315,7 +254,6 @@ export default {
             this.checkRF1 = false;
           }
           break;
-
         case 'Relatórios Financeiros' :
           //console.log("Relatórios Financeiros");
           this.checkRF = !this.checkRF;
@@ -346,8 +284,7 @@ export default {
       } else {
         this.checkRF = false;
         this.checkF = false;
-      }
-      
+      }      
     },
     updateCheckRF2() {
       //Método para verificar todas as chechboxs
@@ -365,6 +302,20 @@ export default {
         this.checkF = false;
       }
     },
+    atualizarPerfil() {
+      console.log(this.perfil);
+      let pedit = {
+        id: this.perfil.id,
+        name: this.perfil.nome,
+        empresa_id: this.$store.state.empresaID,
+        array_permissoes: [...this.permissoesRF1 , ...this.permissoesRF2, ...this.permissoesBloco2]
+      }; 
+      console.log(pedit);
+      //  axios.put(`/api/user-perfil-json/${pedit.id}`, pedit)
+      //   .then(({data}) => {
+      //     console.log(data);
+      //   });
+    }
   }
 }
 </script>

@@ -7,7 +7,7 @@
       As alterações feitas afetarão todos os usuários com este perfil
     </div>
     <hr>
-    <EditPermissions :perfil='perfil' @teste='teste2'/>
+    <EditPermissions :perfil='perfil'/>
   </div>
 </template>
 
@@ -26,11 +26,6 @@ export default {
     return {
       perfil: {},
       arrPermissoes1: []
-    }
-  },
-  methods: {
-    teste2(e, f) {
-      this.arrPermissoes1 = e + f;
     }
   }
 }

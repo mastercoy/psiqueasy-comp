@@ -324,8 +324,7 @@ export default {
       } else {
         this.checkRF = false;
         this.checkF = false;
-      }
-      
+      } 
     },
     updateCheckRF2() {
       //Método para verificar todas as chechboxs

@@ -27,13 +27,13 @@
           <div class="col md-6">
             <div>
               <input class="magic-radio" type="radio" name="radio" id="12" value="new" checked v-model="showPresetPerfil">
-              <label for="12">Criar um perfil do zero?</label>              
+              <label for="12">Criar um perfil do zero</label>              
             </div>
           </div>
           <div class="col md-6">
             <div>
               <input class="magic-radio" type="radio" name="radio" id="11" value="old" v-model="showPresetPerfil">
-              <label for="11">Utilizar um perfil salvo?</label>              
+              <label for="11">Utilizar um perfil salvo</label>              
             </div>
           </div>
           <div>       
@@ -177,13 +177,12 @@ export default {
                   position: "bottom-right", 
                   duration : 1500
                 });
-             } else {          
-              //console.log(this.userInvite);
+             } else { 
               
               console.log(newp)
               axios.post('/api/user-perfil-json', newp)
                 .then(({data}) => {
-                  checkPerfil = data;    
+                  checkPerfil = data;   
                   
                    if(checkPerfil === 'já existe') {
                       toast = this.$toasted.error("O nome escolhido para o perfil já existe! Por favor digite outro nome", {
