@@ -240,12 +240,14 @@ export default {
             });
             console.log(perfil_test);
             this.permissoes = perfil_test
+            this.updateCheckRF2();
+            this.updateCheckRF1();
           }); 
     },    
     checkAll(e) {
       switch (e.target.value) {
         case 'Financeiro' :
-          this.tempArry = [1, 2, 3]
+          this.tempArry = [1, 2, 3, 4, 5, 6, 7]
           this.checkF = !this.checkF;          
           this.permissoes = this.permissoes.filter((p) => {
             if(!this.tempArry.includes(p)) return p; 
@@ -253,31 +255,31 @@ export default {
           if(this.checkF) { 
             this.checkRF1 = true;  
             this.checkRF = true;                
-            this.permissoes.push(1, 2, 3, 4, 5, 6);       
+            this.permissoes.push(1, 2, 3, 4, 5, 6, 7);       
           }else {
             this.checkRF = false;
             this.checkRF1 = false;
           }
           break;
         case 'Relatórios Financeiros' :
-           this.tempArry = [1, 2, 3]
+           this.tempArry = [1, 2, 3, 4]
           this.checkRF = !this.checkRF;
           this.permissoes = this.permissoes.filter((p) => {
             if(!this.tempArry.includes(p)) return p; 
           });
           if (this.checkRF) {
-            this.permissoes.push(1, 2, 3);
+            this.permissoes.push(1, 2, 3, 4);
           }
           break;
 
         case 'Pagamentos' :
-          this.tempArry = [4, 5, 6]
+          this.tempArry = [5, 6, 7]
           this.checkRF1 = !this.checkRF1;
            this.permissoes = this.permissoes.filter((p) => {
             if(!this.tempArry.includes(p)) return p; 
           });
           if (this.checkRF1) {
-            this.permissoes.push(4, 5, 6);
+            this.permissoes.push(5, 6, 7);
           }
           break;          
         default :
@@ -287,7 +289,7 @@ export default {
       console.log(this.permissoes)  
     },   
     updateCheckRF1() {
-     this.permissoes.includes([1, 2, 3]) ?
+     this.permissoes.includes([1, 2, 3, 4]) ?
         this.checkRF = true :
           this.checkRF = false
           this.checkF = false;
@@ -295,7 +297,7 @@ export default {
       console.log(this.permissoes) 
     },
     updateCheckRF2() {
-     this.permissoes.includes([4, 5, 6]) ?
+     this.permissoes.includes([5, 6, 7]) ?
         this.checkRF1 = true :      
           this.checkRF1 = false
           this.checkF = false;
@@ -319,10 +321,11 @@ export default {
         array_permissoes: this.permissoes   //VERIFICAR SE AS PERMISSOES ESCOLHIDAS ATENDEM AS DEMANDAS
       }; 
       console.log(pedit);
-      //  axios.put(`/api/user-perfil-json/${pedit.id}`, pedit)
-      //   .then(({data}) => {
-      //     console.log(data);
-      //   });
+       axios.put(`/api/user-perfil-json/${pedit.id}`, pedit)
+        .then(({data}) => {
+          console.log(data);
+         this.$router.push("/usuarios");
+        });
     }
   }
 }
