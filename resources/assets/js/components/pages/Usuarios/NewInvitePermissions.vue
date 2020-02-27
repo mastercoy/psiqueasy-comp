@@ -73,7 +73,7 @@
              <small id="perfilHelp" class="form-text text-muted">Esse campo é o identificador do perfil de usuário a ser criado.</small> 
           </div>
       </div>
-      <PermissoesForm /> 
+      <PermissoesForm v-on:teste='teste'/> 
       <hr>
     </div>  
 
@@ -103,6 +103,11 @@ export default {
    validations: {
     labelPerfil: {required}
   },
+  // computed: {
+  //   permissoesT: function () {
+  //     return this.permissoes
+  //   } 
+  // },
   data() {
     return { 
       userInvite: {
@@ -111,6 +116,7 @@ export default {
         label: '',
         selectedPerfil: ''
       },
+      permissoesArray: [],
       presetPerfil: '',
       perfilName: '',
       showPresetPerfil: false,
@@ -121,6 +127,10 @@ export default {
     };
   },
   methods: {
+    teste(e) {
+      console.log('Funciona!!', e);
+      this.arrayProp = e;
+    },
     getPermissoes() {
       let toast;
       let checkPerfil = '';      
@@ -132,10 +142,12 @@ export default {
                 empresa_id: this.$store.state.empresaID
               }
 
-      arrayPermissoes = var1 + var2;
+      arrayPermissoes = this.arrayProp
       this.userInvite.email = this.user;
       this.userInvite.permissoes = arrayPermissoes;
-      this.userInvite.label = this.labelPerfil;
+      this.userInvite.label = this.labelPerfil; 
+
+      //console.log(this.permissoes);
 
       switch(this.showPresetPerfil) {
         case 'old' :
@@ -180,9 +192,11 @@ export default {
              } else { 
               
               console.log(newp)
+              console.log(arrayPermissoes);
               axios.post('/api/user-perfil-json', newp)
                 .then(({data}) => {
-                  checkPerfil = data;   
+                  checkPerfil = data; 
+                  console.log(checkPerfil)  
                   
                    if(checkPerfil === 'já existe') {
                       toast = this.$toasted.error("O nome escolhido para o perfil já existe! Por favor digite outro nome", {
@@ -201,10 +215,10 @@ export default {
                         duration : 2000
                       });
                     } 
-                    // axios.post(`/api/setar-permissoes/${checkPerfil}`, [1,2,3])
-                    //   .then(({data}) => {                        
-                    //   });
-                    // this.$router.push("/usuarios");
+                    axios.post(`/api/setar-permissoes/${checkPerfil}`, arrayPermissoes)
+                      .then(({data}) => {                        
+                      });
+                    this.$router.push("/usuarios");
               }); 
             } 
           }
