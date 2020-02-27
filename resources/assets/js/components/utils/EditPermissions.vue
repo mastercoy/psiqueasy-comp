@@ -294,7 +294,7 @@ export default {
           this.checkRF = false
           this.checkF = false;
           
-      console.log(this.permissoes) 
+      //console.log(this.permissoes) 
     },
     updateCheckRF2() {
      this.permissoes.includes([5, 6, 7]) ?
@@ -302,7 +302,7 @@ export default {
           this.checkRF1 = false
           this.checkF = false;
 
-      console.log(this.permissoes);
+      //console.log(this.permissoes);
     },
     updateAll() {
       if(this.checkRF1 == true && this.checkRF == true){
@@ -320,12 +320,17 @@ export default {
         empresa_id: this.$store.state.empresaID,
         array_permissoes: this.permissoes   //VERIFICAR SE AS PERMISSOES ESCOLHIDAS ATENDEM AS DEMANDAS
       }; 
-      console.log(pedit);
-       axios.put(`/api/user-perfil-json/${pedit.id}`, pedit)
-        .then(({data}) => {
-          console.log(data);
-         this.$router.push("/usuarios");
-        });
+
+      axios.patch(`/api/user-perfil-json/${pedit.id}`, pedit.name)
+                .then(({data}) => {
+
+                  console.log(pedit.array_permissoes);
+                   axios.post(`sync-permissoes-perfil/${pedit.id}`, pedit.array_permissoes)
+                    .then(({data}) => {
+                      console.log(data);                     
+                    });
+               });
+               this.$router.push("/usuarios");
     }
   }
 }
