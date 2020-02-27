@@ -21,7 +21,6 @@ class UserPerfilController extends Controller {
 
         if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
             $perfil->permissao()->sync($permissoes);
-
         } else {
             abort(403, 'Sem Permissão!');
         }

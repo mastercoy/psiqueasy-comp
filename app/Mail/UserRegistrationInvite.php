@@ -2,25 +2,21 @@
 
 namespace App\Mail;
 
-use App\Models\Convite;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Auth;
-
 
 class UserRegistrationInvite extends Mailable {
     use Queueable, SerializesModels;
 
-    public $convite;
+    public $url;
 
-    public function __construct(Convite $convite) {
+    public function __construct($url) {
         //
-        $this->convite = $convite;
+        $this->url = $url;
     }
 
-    public function build() {  // obs
-        Auth::loginUsingId(2); //fixme retirar
+    public function build() {
         return $this->view('emails.email')
                     ->subject('Você foi convidado para o PsiquEasy por ' . auth()->user()->name)
                     ->from('psiqueasy@oliveiracorp.com.br', 'PsiquEasy')

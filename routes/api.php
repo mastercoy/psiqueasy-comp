@@ -31,7 +31,7 @@ Route::resource('user-perfil-json', 'UserPerfilController');
 Route::patch('desativar-user-perfil-json/{user_perfil_json}', 'UserPerfilController@desativarUserPerfil');
 Route::get('inativos-perfis-json', 'UserPerfilController@inativosPerfil');
 Route::get('permissoes-perfil-json/{user_perfil_json}', 'UserPerfilController@quaisPermissoes');
-Route::post('sync-permissoes-perfil/{user_perfil_json}', 'UserPerfilController@syncPermissoes');
+Route::patch('sync-permissoes-perfil/{user_perfil_json}', 'UserPerfilController@syncPermissoes');
 
 // rotas para USER MODELO DOCS
 Route::resource('user-modelo-docs-json', 'UserModeloDocsController');
@@ -72,7 +72,7 @@ Route::resource('perfil-permissao-pivot-json', 'PerfilPermissaoPivotController')
 // rotas para ENVIO DE EMAIL - testando
 Route::post('enviar-email', 'ConviteController@enviarEmail');
 Route::post('reenviar-email', 'ConviteController@reenviarEmail');
-Route::get('aceitar-convite/{token}', 'ConviteController@aceitar')->name('aceitar');
+Route::get('aceitar-convite', 'ConviteController@aceitar')->name('aceitar');
 
 
 // ===============================================================================================================================

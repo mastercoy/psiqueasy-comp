@@ -57,6 +57,10 @@ class UserController extends Controller {
         }
     }
 
+    public function cadastroViaConvite() {
+
+    }
+
     public function index() {
         Auth::loginUsingId(1);
         $nomeMetodo    = 'index_user';

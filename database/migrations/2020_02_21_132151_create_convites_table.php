@@ -14,8 +14,8 @@ class CreateConvitesTable extends Migration {
         Schema::create('convites', function (Blueprint $table) {
             $table->increments('id');
             $table->string('email');
-            $table->string('name')->nullable();
-            $table->string('token', 16)->unique();
+            $table->date('expire_date');
+            $table->string('token', 32)->unique();
             $table->integer('perfil_id')->nullable();
             $table->integer('empresa_id')->nullable();
             $table->timestamps();

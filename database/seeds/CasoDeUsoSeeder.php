@@ -123,15 +123,11 @@ class CasoDeUsoSeeder extends Seeder {
 
                                        ]);
         DB::table('permissao')->insert([
-                                           'name' => 'set_permissao',
-                                           'label' => 'vincula permissao ao perfil',
+                                           'name' => 'sync_permissao',
+                                           'label' => 'sync_permissao',
 
                                        ]);
-        DB::table('permissao')->insert([
-                                           'name' => 'del_permissao',
-                                           'label' => 'desvincula permissao ao perfil',
 
-                                       ]);
         DB::table('permissao')->insert([
                                            'name' => 'criar_perfil',
                                            'label' => 'Cria um novo perfil',
@@ -727,11 +723,6 @@ class CasoDeUsoSeeder extends Seeder {
         DB::table('perfil_permissao')->insert([
                                                   'perfil_id' => '1',
                                                   'permissao_id' => '66',
-
-                                              ]);
-        DB::table('perfil_permissao')->insert([
-                                                  'perfil_id' => '1',
-                                                  'permissao_id' => '67',
 
                                               ]);
         DB::table('perfil_permissao')->insert([
