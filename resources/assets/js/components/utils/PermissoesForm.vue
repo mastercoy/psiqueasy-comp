@@ -7,7 +7,7 @@
       <div class="container">
         <div class="parent">         
             <input class="magic-checkbox" type="checkbox" id="Financeiro" value="Financeiro" @click="checkAll" v-model="checkF"/>
-            <label for="Financeiro">Financeiro</label>       
+            <label for="Financeiro">Atendimento | Pagamento</label>       
             <a class="btn btn-default" @click="iconF = !iconF" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
                <i :class="[iconF ? 'fa-chevron-up' : 'fa-chevron-down', 'fa']" />
             </a>          
@@ -19,20 +19,24 @@
             <div class="container">
               <div class="row">
                 <input class="magic-checkbox" type="checkbox" id="teste" value="Relatórios Financeiros" @click="checkAll" v-model="checkRF" @change="updateAll"/>
-                <label for="teste"> Relatórios Financeiros</label>
+                <label for="teste"> Atendimentos</label>
               </div>
               <div class="container">
                 <div>
-                  <input class="magic-checkbox" type="checkbox" id="op1" value="op1"  v-model="permissoes" @change="updateCheckRF1" />
-                  <label for="op1">Cadastrar relatórios financeiros</label> 
+                  <input class="magic-checkbox" type="checkbox" id="P101" :value='1'  v-model="permissoes" @change="updateCheckRF1" />
+                  <label for="P101"> Visualizar atendimentos</label> 
                 </div>  
                 <div>
-                  <input class="magic-checkbox" type="checkbox" id="op2" value="op2" v-model="permissoes" @change="updateCheckRF1" />
-                  <label for="op2">Editar relatórios financeiros</label>
+                  <input class="magic-checkbox" type="checkbox" id="P102" :value='2' v-model="permissoes" @change="updateCheckRF1" />
+                  <label for="P102">Editar atendimento</label>
                 </div>
                 <div>
-                  <input class="magic-checkbox" type="checkbox" id="op3" value="op3" v-model="permissoes" @change="updateCheckRF1"/>
-                  <label for="op3">Deletar relatórios financeiros</label>
+                  <input class="magic-checkbox" type="checkbox" id="P103" :value='3' v-model="permissoes" @change="updateCheckRF1"/>
+                  <label for="P103">Cancelar atendimento</label>
+                </div>
+                <div>
+                  <input class="magic-checkbox" type="checkbox" id="P107" :value='4' v-model="permissoes" @change="updateCheckRF1"/>
+                  <label for="P107">Agendar Atendimento</label>
                 </div>
               </div>
               <br />
@@ -42,16 +46,16 @@
               </div>
                 <div class="container">
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="teste1" value="teste1"  v-model="permissoes" @change="updateCheckRF2"/>
-                    <label for="teste1">Visualizar Pagamentos</label>
+                    <input class="magic-checkbox" type="checkbox" id="P104" :value='5' v-model="permissoes" @change="updateCheckRF2"/>
+                    <label for="P104">Cadastrar Pagamentos</label>
                   </div>
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="teste2" value="teste2"  v-model="permissoes"  @change="updateCheckRF2"/>
-                    <label for="teste2">Agendar Pagamentos</label>
+                    <input class="magic-checkbox" type="checkbox" id="P105" :value='6'  v-model="permissoes" @change="updateCheckRF2"/>
+                    <label for="P105">Visualizar status de Pagamento</label>
                   </div>
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="teste3" value="teste3"  v-model="permissoes"  @change="updateCheckRF2"/>
-                    <label for="teste3">Gerar relaórios de pagamentos</label>
+                    <input class="magic-checkbox" type="checkbox" id="P106" :value='7'  v-model="permissoes"  @change="updateCheckRF2"/>
+                    <label for="P106">Gerar relaórios de pagamentos</label>
                   </div>
                 </div>
             </div>
@@ -76,21 +80,21 @@
                 <input class="magic-checkbox" type="checkbox" id="teste" value="teste" />
                 <label for="teste">Perfil</label>
               </div>
-                <div class="container">
+                 <div class="container">
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="P201" value="1" v-model="permissoes"/>
+                    <input class="magic-checkbox" type="checkbox" id="P201" :value='8' v-model="permissoes"/>
                     <label for="P201">Visualizar Perfil</label>
                   </div>
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="P202" value="2" v-model="permissoes"/>
+                    <input class="magic-checkbox" type="checkbox" id="P202" :value='9' v-model="permissoes"/>
                     <label for="P202">Remover Perfil</label>
                   </div>
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="P203" value="3" v-model="permissoes"/>
+                    <input class="magic-checkbox" type="checkbox" id="P203" :value='10' v-model="permissoes"/>
                     <label for="P203">Visualizar Usuários</label>
                   </div>
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="P204" value="6" v-model="permissoes"/>
+                    <input class="magic-checkbox" type="checkbox" id="P204" :value='11' v-model="permissoes"/>
                     <label for="P204">Cadastrar Usuários</label>
                   </div>
                 </div>
@@ -171,13 +175,7 @@
 
       <hr>
 
-       <div class="row">
-        <div class="col-md-8"></div>
-          <div class="col-md-4">
-            <router-link to="/usuarios" type="button" class="btn btn-default mr-1"> Cancelar </router-link>
-            <button class="btn btn-primary" @click="getPermissoes">Continuar <i class="fa fa-arrow-right" aria-hidden="true"></i> </button>
-          </div>
-      </div>
+       
     </div> 
 </template>
 
@@ -193,7 +191,7 @@ export default {
       checkRF1: false,
       checkF: false,
       permissoes: [],
-       tempArry: [],
+      tempArry: [],
       presetPerfil: '',
       perfilName: '',
       showPresetPerfil: false,
@@ -202,101 +200,10 @@ export default {
     }
   },
   methods: {
-    getPermissoes() {
-      let toast;
-      let checkPerfil = '';      
-      let var1 = this.permissoesRF1;
-      let var2 = this.permissoesRF2
-      let arrayPermissoes = [];
-      let newp = {
-                name: this.labelPerfil,
-                empresa_id: this.$store.state.empresaID
-              }
-
-      arrayPermissoes = var1 + var2;
-      this.userInvite.email = this.user;
-      this.userInvite.permissoes = arrayPermissoes;
-      this.userInvite.label = this.labelPerfil;
-
-      switch(this.showPresetPerfil) {
-        case 'old' :
-          if(this.presetPerfil === ''){
-            console.log('Por favor selecione um perfil para o usuário!');
-
-             let toast = this.$toasted
-                  .error("Por favor selecione um perfil para o usuário!", 
-                {
-                  iconPack: 'fontawesome',
-                  icon: "fa-exclamation-circle",
-                  theme: "bubble", 
-                  position: "bottom-right", 
-                  duration : 1500
-                });
-          }else {
-              toast = this.$toasted.success("O convite para o usuário foi criado com Sucesso!!", {
-              iconPack: 'fontawesome',
-              icon: "fa-exclamation-circle",
-              theme: "bubble", 
-              position: "bottom-right", 
-              duration : 1500
-              });
-            this.$router.push("/usuarios");
-          }
-          break;
-        case 'new' :
-          this.$v.$touch()
-          if (this.$v.$invalid) {
-            console.log("Preencha os campos necessários!")
-          } else {
-              if(this.userInvite.permissoes === ''){
-                let toast = this.$toasted
-                  .error("As opções de permissões não foram preenchidas corretamente, por favor verifique os campos e tente novamente!!", 
-                {
-                  iconPack: 'fontawesome',
-                  icon: "fa-exclamation-circle",
-                  theme: "bubble", 
-                  position: "bottom-right", 
-                  duration : 1500
-                });
-             } else { 
-              axios.post('/api/user-perfil-json', newp)
-                .then(({data}) => {
-                  checkPerfil = data;    
-                  
-                   if(checkPerfil === 'já existe') {
-                      toast = this.$toasted.error("O nome escolhido para o perfil já existe! Por favor digite outro nome", {
-                      iconPack: 'fontawesome',
-                      icon: "fa-exclamation-circle",
-                      theme: "bubble", 
-                      position: "bottom-right", 
-                      duration : 2000
-                      });
-                    }else {
-                      toast = this.$toasted.success("O perfil para o usuário convidado, foi criado com Sucesso!!", {
-                        iconPack: 'fontawesome',
-                        icon: "fa-exclamation-circle",
-                        theme: "bubble", 
-                        position: "bottom-right", 
-                        duration : 2000
-                      });
-                    } 
-                    axios.post(`/api/setar-permissoes/${checkPerfil}`, [1,2,3])
-                      .then(({data}) => {});
-                    this.$router.push("/usuarios");
-              });
-              
-             
-            } 
-          }
-          break;
-        default: 
-        console.log('teste');
-      }     
-    },
-    checkAll(e) {
-       switch (e.target.value) {
+     checkAll(e) {
+      switch (e.target.value) {
         case 'Financeiro' :
-          this.tempArry = ["op1", "op2", "op3","teste1", "teste2", "teste3"]
+          this.tempArry = [1, 2, 3]
           this.checkF = !this.checkF;          
           this.permissoes = this.permissoes.filter((p) => {
             if(!this.tempArry.includes(p)) return p; 
@@ -304,55 +211,54 @@ export default {
           if(this.checkF) { 
             this.checkRF1 = true;  
             this.checkRF = true;                
-            this.permissoes.push("op1", "op2", "op3","teste1", "teste2", "teste3");       
+            this.permissoes.push(1, 2, 3, 4, 5, 6);       
           }else {
             this.checkRF = false;
             this.checkRF1 = false;
           }
           break;
         case 'Relatórios Financeiros' :
-           this.tempArry = ["op1", "op2", "op3"]
+           this.tempArry = [1, 2, 3]
           this.checkRF = !this.checkRF;
           this.permissoes = this.permissoes.filter((p) => {
             if(!this.tempArry.includes(p)) return p; 
           });
           if (this.checkRF) {
-            this.permissoes.push("op1", "op2", "op3");
+            this.permissoes.push(1, 2, 3);
           }
           break;
 
         case 'Pagamentos' :
-          this.tempArry = ["teste1", "teste2", "teste3"]
+          this.tempArry = [4, 5, 6]
           this.checkRF1 = !this.checkRF1;
            this.permissoes = this.permissoes.filter((p) => {
             if(!this.tempArry.includes(p)) return p; 
           });
           if (this.checkRF1) {
-            this.permissoes.push("teste1", "teste2", "teste3");
+            this.permissoes.push(4, 5, 6);
           }
           break;          
         default :
           console.log('Nenhuma opção');
-      
-      // this.$emit('teste', arr)
-      console.log(this.permissoes)  
-    }   
-    },    
-     updateCheckRF1() {
-     this.permissoes.includes(["op1", "op2", "op3"]) ?
+      }
+       this.$emit('teste', this.permissoes)
+      //console.log(this.permissoes)  
+    },   
+    updateCheckRF1() {
+     this.permissoes.includes([1, 2, 3]) ?
         this.checkRF = true :
           this.checkRF = false
           this.checkF = false;
           
-      console.log(this.permissoes) 
+      this.$emit('teste', this.permissoes)
     },
     updateCheckRF2() {
-     this.permissoes.includes(["teste1", "teste2", "teste3"]) ?
+     this.permissoes.includes([4, 5, 6]) ?
         this.checkRF1 = true :      
           this.checkRF1 = false
           this.checkF = false;
 
-      console.log(this.permissoes);
+      this.$emit('teste', this.permissoes)
     },
     updateAll() {
       if(this.checkRF1 == true && this.checkRF == true){
