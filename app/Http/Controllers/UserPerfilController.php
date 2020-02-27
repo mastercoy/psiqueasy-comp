@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\PerfilPermissaoPivot;
 use App\Models\UserPerfil;
 use App\Models\UserPerfilPivot;
 use Illuminate\Support\Facades\Auth;
@@ -12,51 +11,24 @@ use Illuminate\Support\Facades\Response;
 
 class UserPerfilController extends Controller {
 
-    public function setPermissoes(UserPerfil $user_perfil_json) {
-        Auth::loginUsingId(1);
+    public function syncPermissoes(UserPerfil $user_perfil_json) {
+        Auth::loginUsingId(1); //fixme
         $perfil        = UserPerfil::find($user_perfil_json->id);
         $permissoes    = Input::all();
-        $nomeMetodo    = 'set_permissao';
+        $nomeMetodo    = 'sync_permissao';
         $arrayCompleto = [$nomeMetodo, $perfil];
         $jsonEncoder   = json_encode($arrayCompleto);
 
         if (Gate::allows('pertence-mesma-empresa-e-tem-permissao', $jsonEncoder)) {
-            foreach ($permissoes as $permissao) {
-                $conditions           = ['perfil_id' => $user_perfil_json->id, 'permissao_id' => $permissao];
-                $perfilPermissaoPivot = PerfilPermissaoPivot::where($conditions)->first();
+            $perfil->permissao()->sync($permissoes);
 
-                if (!isset($perfilPermissaoPivot)) {
-                    $perfil = UserPerfil::find($user_perfil_json->id);
-                    $perfil->permissao()->attach($permissao);
-                }
-            }
-        } else {
-            abort(403, 'Sem Permissão!');
-        }
-    }
-
-    public function delPermissoes(UserPerfil $user_perfil_json) {
-        Auth::loginUsingId(1);
-        $permissoes = Input::all();
-        $nomeMetodo = 'del_permissao';
-
-        if (Gate::allows('tem-permissao', $nomeMetodo)) {
-            foreach ($permissoes as $permissao) {
-                $conditions           = ['perfil_id' => $user_perfil_json->id, 'permissao_id' => $permissao];
-                $perfilPermissaoPivot = PerfilPermissaoPivot::where($conditions)->first();
-
-                if (isset($perfilPermissaoPivot)) {
-                    $perfil = UserPerfil::find($user_perfil_json->id);
-                    $perfil->permissao()->detach($permissao);
-                }
-            }
         } else {
             abort(403, 'Sem Permissão!');
         }
 
     }
 
-    public function quaisPermissoes(UserPerfil $user_perfil_json) { //afazer guard etc e tal
+    public function quaisPermissoes(UserPerfil $user_perfil_json) { // obs sem guard?
         $perfil = UserPerfil::find($user_perfil_json->id);
         return $perfil->permissao()->get()->toArray();
 
