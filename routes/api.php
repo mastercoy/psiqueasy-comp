@@ -70,9 +70,9 @@ Route::resource('user-perfil-pivot-json', 'UserPerfilPivotController');
 Route::resource('perfil-permissao-pivot-json', 'PerfilPermissaoPivotController');
 
 // rotas para ENVIO DE EMAIL - testando
-Route::post('enviar-email', 'ConviteController@enviarEmail');
-Route::post('reenviar-email', 'ConviteController@reenviarEmail');
-Route::get('aceitar-convite', 'ConviteController@aceitar')->name('aceitar');
+Route::post('enviar-convite', 'ConviteController@enviarConvite');
+Route::get('completar-cadastro', 'ConviteController@completarCadastro')->name('completar');
+Route::post('aceitar-convite', 'ConviteController@aceitar')->name('aceitar');
 
 
 // ===============================================================================================================================

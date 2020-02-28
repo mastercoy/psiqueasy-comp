@@ -3,106 +3,76 @@
 namespace App\Http\Controllers;
 
 use App\Mail\UserRegistrationInvite;
-use App\Models\Convite;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\View;
 
 
 class ConviteController extends Controller {
     //
 
-    public function enviarEmail(Request $request) {
+    public function enviarConvite(Request $request) {
         Auth::loginUsingId(1); // fixme
 
-        // para ter ctz que não mandará segundo convite diferente para mesma pessoa da mesma empresa
-        // $convite = Convite::where('email', $request->get('email'))
-        //                   ->where('empresa_id', auth()->user()->empresa_id)
-        //                   ->first();
-        //
-        // // se ja existe convite para esse email por essa empresa, reenvia o convite
-        // if ($convite) {
-        //     // abort(304);
-        //     $this->reenviarEmail($request);
-        //     // return redirect()->back();
-        // }
+        $user = User::where('email', $request->get('email'))
+                    ->where('empresa_id', auth()->user()->empresa_id)->first(); // verifica se existe usuario cadastrado E com empresa_id
 
-        // gera uma string random para ser usada como token
-        // do {
-        //     $token = str_random(32);
-        //     // verifica se o token ja existe e se existe, gera um novo
-        // } while (Convite::where('token', $token)->first());
+        if ($user) { // se ja existir não pode mandar convite
+            return 'Usuário ja existe';
+        }
 
-        $url = URL::temporarySignedRoute('aceitar', now()->addHour(24), [
+        // cria uma URL temporária
+        $url = URL::temporarySignedRoute('completar', now()->addSeconds(24), [
             'email' => $request->get('email'),
             'perfil_id' => $request->get('perfil_id'),
             'empresa_id' => auth()->user()->empresa_id,
         ]);
 
-        // dd($url);
-
-        // cria um novo convite
-        /*$convite = Convite::create([
-                                       'email' => $request->get('email'),
-                                       'expire_date' => Carbon::now()->addDays(7),
-                                       'perfil_id' => $request->get('perfil_id'),
-                                       'empresa_id' => auth()->user()->empresa_id,
-                                       'token' => $token,
-                                   ]);*/
-
-        // envia o email
+        // envia o email contendo a URL temporária
         Mail::to($request->get('email'))->send(new UserRegistrationInvite($url));
 
-        // redireciona para a pagina anterior
-        // return redirect()->back();
     }
 
-    // public function reenviarEmail(Request $request) {
-    //     $convite = Convite::where('email', $request->get('email'))->first();
-    //     Mail::to($request->get('email'))->send(new UserRegistrationInvite($convite));
-    // }
+    public function completarCadastro(Request $request) {
+        // ao clicar n0 link do email essa view é exibida ao usuário
+        // aqui o user completa formulário e clica em confirmar
+        return View::make('cadastro')->with('request', $request->all());
 
-    public function aceitar(Request $request) { //afazer se convite expirar
-        /* if ($request->hasValidSignature()) {
-             dd('tem válido');
-         } else {
-             dd('nao ta valido');
-         }*/
-        dd($request->all());
-        // fixme não precisa de senha temporária, tirar criação de user aqui
+    }
 
-        // acha o convite através do token
-        $convite = Convite::where('token', $token)->first();
+    public function aceitar(Request $request) {
+        // ao confirmar o formulario anterior, feita validação
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'perfil_id' => 'required',
+            'empresa_id' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed'
+        ]);
 
-        // se convite na existe
-        if (!$convite) {
-            abort(404);
+        // se validação falhar exibe erros na tela
+        if ($validator->fails()) {
+            return $validator->errors();
+        } else {
+            // se passar na validação usuário é criado com perfil e permissões ja relacionadas
+            $usuario = User::create([
+                                        'email' => $request->email,
+                                        'name' => $request->name,
+                                        'password' => bcrypt($request->password),
+                                        'empresa_id' => $request->empresa_id,
+                                    ]);
+            $usuario->perfil()->attach($request->perfil_id);
+
+            return 'Usuário criado com sucesso';
         }
 
-        $senhaTemp = str_random(6); // cria uma string como senha temporária
-
-        // cria o usuário utilizando os detalhes do convite
-        $usuario = User::create([
-                                    'email' => $convite->email,
-                                    'name' => $convite->name,
-                                    'password' => $senhaTemp,
-                                    'empresa_id' => $convite->empresa_id,
-                                ]);
-        $usuario->perfil()->attach($convite->perfil_id);
-
-        // após usado, deleta o convide do banco de dados
-        $convite->delete();
-
-        // aqui deve exibir uma pagina bonitinha para o usuário
-
-        // mensagem provisoria com a senha temporária
-        echo 'Seja Bem Vindo! Sua senha provisória é: ' . $senhaTemp . '';
-        echo '<br>';
-        echo 'Por favor, mude-a assim que possível';
 
     }
 
 
 }
+
