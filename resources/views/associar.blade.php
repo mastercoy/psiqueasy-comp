@@ -17,25 +17,16 @@
     </head>
 
     <body>
-        <h1>Por favor, confirme seu Cadastro!</h1>
+        <h1>Olá {{\App\User::where('email', $request['email'])->first()->name}}! Associe sua conta a empresa {{\App\Models\Empresa::find($request['empresa_id'])->logo_marca}}</h1>
         <div id="app">
-
-            <hr>
-            <form action="{{route("aceitar")}}" method="post">
+            <p>Você foi convidado para utilizar o sistema PsiquEasy através de {{$request['name_user']}}! </p>
+            <p>Gostaria de confirmar sua associação? </p>
+            <form action="{{route("associar_user")}}" method="post">
                 <input type="hidden" name="email" value="{{$request['email']}}">
                 <input type="hidden" name="perfil_id" value="{{$request['perfil_id']}}">
                 <input type="hidden" name="empresa_id" value="{{$request['empresa_id']}}">
-                <br>
-                <label for="name">Digite seu nome: </label>
-                <input type="text" id="Nome" name="name" placeholder="Nome">
-                <br>
-                <label for="password">Digite sua senha: </label>
-                <input type="password" name="password" id="password">
-                <br>
-                <label for="password_confirmation">confirme sua senha: </label>
-                <input type="password" name="password_confirmation" id="password_confirmation">
-                <hr>
-                <button type="submit" id="convite">Enviar</button>
+
+                <button type="submit">Confirmar</button>
             </form>
         </div>
 

@@ -25,6 +25,7 @@ Route::post('setar-perfil-user/{user_json}/{user_perfil_json}', 'UserController@
 Route::get('remover-perfil-user/{user_json}', 'UserController@delPerfilUser');
 Route::post('verificar-email', 'UserController@verificarEmail');
 Route::get('inativos-user-json', 'UserController@inativosUser');
+Route::post('associar-user-empresa', 'UserController@associarUserAntigoEmpresa')->name('associar_user');
 
 // rotas para USER PERFIL
 Route::resource('user-perfil-json', 'UserPerfilController');
@@ -72,6 +73,7 @@ Route::resource('perfil-permissao-pivot-json', 'PerfilPermissaoPivotController')
 // rotas para ENVIO DE EMAIL - testando
 Route::post('enviar-convite', 'ConviteController@enviarConvite');
 Route::get('completar-cadastro', 'ConviteController@completarCadastro')->name('completar');
+Route::get('associar-cadastro', 'ConviteController@associarCadastro')->name('associar');
 Route::post('aceitar-convite', 'ConviteController@aceitar')->name('aceitar');
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserPerfil;
 use App\Models\UserPerfilPivot;
 use App\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Input;
@@ -45,6 +46,19 @@ class UserController extends Controller {
         } else {
             abort(403, 'Sem Permissão!');
         }
+
+    }
+
+    public function associarUserAntigoEmpresa(Request $request) {
+        if (!$request->hasValidSignature()) {
+            abort(response()->json('Unauthorized', 403));
+        }
+
+        $user             = User::where('email', $request->email)->first();
+        $perfil           = UserPerfil::where('id', $request->perfil_id)->first();
+        $user->empresa_id = $request->empresa_id;
+        $user->perfil()->attach($perfil);
+        $user->save();
 
     }
 

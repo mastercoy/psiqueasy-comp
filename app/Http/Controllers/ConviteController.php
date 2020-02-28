@@ -14,23 +14,40 @@ use Illuminate\Support\Facades\View;
 
 class ConviteController extends Controller {
     //
-
     public function enviarConvite(Request $request) {
-        Auth::loginUsingId(1); // fixme
+        Auth::loginUsingId(1);
 
-        $user = User::where('email', $request->get('email'))
-                    ->where('empresa_id', auth()->user()->empresa_id)->first(); // verifica se existe usuario cadastrado E com empresa_id
+        // para saber se existe usuario cadastrado COM empresa_id
+        $userComEmpresa = User::where('email', $request->get('email'))
+                              ->where('empresa_id', auth()->user()->empresa_id)->first();
 
-        if ($user) { // se ja existir não pode mandar convite
-            return 'Usuário ja existe';
+        // para saber se existe usuario cadastrado SEM empresa_id
+        $userSemEmpresa = User::where('email', $request->get('email'))
+                              ->where('empresa_id', null)->first();
+
+        // se ja existir não pode mandar convite
+        if ($userComEmpresa) {
+            return 'Usuário ja existe e tem uma empresa'; //fixme
         }
 
-        // cria uma URL temporária
-        $url = URL::temporarySignedRoute('completar', now()->addSeconds(24), [
-            'email' => $request->get('email'),
-            'perfil_id' => $request->get('perfil_id'),
-            'empresa_id' => auth()->user()->empresa_id,
-        ]);
+        // se ja existir tem que mandar convite diferenciado
+        if ($userSemEmpresa) {
+            // cria uma URL temporária
+            $url = URL::temporarySignedRoute('associar', now()->addHours(5), [
+                'email' => $request->get('email'),
+                'perfil_id' => $request->get('perfil_id'),
+                'empresa_id' => auth()->user()->empresa_id,
+                'name_user' => auth()->user()->name,
+            ]);
+        } else {
+            // cria uma URL temporária
+            $url = URL::temporarySignedRoute('completar', now()->addHours(5), [
+                'email' => $request->get('email'),
+                'perfil_id' => $request->get('perfil_id'),
+                'empresa_id' => auth()->user()->empresa_id,
+            ]);
+
+        }
 
         // envia o email contendo a URL temporária
         Mail::to($request->get('email'))->send(new UserRegistrationInvite($url));
@@ -38,14 +55,24 @@ class ConviteController extends Controller {
     }
 
     public function completarCadastro(Request $request) {
-        // ao clicar n0 link do email essa view é exibida ao usuário
+        // ao clicar no link do email essa view é exibida ao usuário
         // aqui o user completa formulário e clica em confirmar
         return View::make('cadastro')->with('request', $request->all());
 
     }
 
+    public function associarCadastro(Request $request) {
+        // tem que associar o perfil existente a empresa_id de quem convidou e ao perfil selecionado
+        return View::make('associar')->with('request', $request->all());
+    }
+
     public function aceitar(Request $request) {
-        // ao confirmar o formulario anterior, feita validação
+        // verifica se a signed URL é válida
+        if (!$request->hasValidSignature()) {
+            abort(response()->json('URL não válida aceitar', 403));
+        }
+
+        // ao submeter o formulario anterior, faz validação
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'perfil_id' => 'required',
