@@ -50,8 +50,9 @@ class UserController extends Controller {
     }
 
     public function associarUserAntigoEmpresa(Request $request) {
+        // verifica se a signed URL é válida
         if (!$request->hasValidSignature()) {
-            abort(response()->json('Unauthorized', 403));
+            abort(response()->json('URL não válida completar', 403));
         }
 
         $user             = User::where('email', $request->email)->first();

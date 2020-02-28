@@ -25,6 +25,7 @@
                 <input type="hidden" name="email" value="{{$request['email']}}">
                 <input type="hidden" name="perfil_id" value="{{$request['perfil_id']}}">
                 <input type="hidden" name="empresa_id" value="{{$request['empresa_id']}}">
+                <input type="hidden" name="signature" value="{{$request['signature']}}">
                 <br>
                 <label for="name">Digite seu nome: </label>
                 <input type="text" id="Nome" name="name" placeholder="Nome">

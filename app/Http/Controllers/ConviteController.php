@@ -39,6 +39,7 @@ class ConviteController extends Controller {
                 'empresa_id' => auth()->user()->empresa_id,
                 'name_user' => auth()->user()->name,
             ]);
+
         } else {
             // cria uma URL temporária
             $url = URL::temporarySignedRoute('completar', now()->addHours(5), [
@@ -69,7 +70,7 @@ class ConviteController extends Controller {
     public function aceitar(Request $request) {
         // verifica se a signed URL é válida
         if (!$request->hasValidSignature()) {
-            abort(response()->json('URL não válida aceitar', 403));
+            abort(response()->json('URL não válida - aceitar', 403));
         }
 
         // ao submeter o formulario anterior, faz validação
