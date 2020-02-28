@@ -101,20 +101,20 @@
               <br />
               <div class="row">
                 <input class="magic-checkbox" type="checkbox" id="teste21" value="teste21" />
-                <label for="teste21">Teste21</label>
+                <label for="teste21">Relatórios</label>
               </div>
               <div class="container">
                 <div>
-                  <input class="magic-checkbox" type="checkbox" id="Teste1" value="teste1" />
-                  <label for="teste1">Teste1</label>
+                  <input class="magic-checkbox" type="checkbox" id="P206" :value='12' />
+                  <label for="P206">Visualizar Relatórios</label>
                 </div>
                 <div>
-                  <input class="magic-checkbox" type="checkbox" id="Teste2" value="Teste2" />
-                  <label for="Teste2">Teste2</label>
+                  <input class="magic-checkbox" type="checkbox" id="P207" :value='13' />
+                  <label for="P207">Gerar novos relarórios</label>
                 </div>
                 <div>
-                  <input class="magic-checkbox" type="checkbox" id="Teste3" value="Teste3" />
-                  <label for="Teste3">Teste3</label>
+                  <input class="magic-checkbox" type="checkbox" id="P205" :value='14' />
+                  <label for="Teste3">Deletar relatórios</label>
                 </div>
               </div>
             </div>
@@ -203,7 +203,7 @@ export default {
      checkAll(e) {
       switch (e.target.value) {
         case 'Financeiro' :
-          this.tempArry = [1, 2, 3]
+          this.tempArry = [1, 2, 3, 4]
           this.checkF = !this.checkF;          
           this.permissoes = this.permissoes.filter((p) => {
             if(!this.tempArry.includes(p)) return p; 
@@ -211,31 +211,31 @@ export default {
           if(this.checkF) { 
             this.checkRF1 = true;  
             this.checkRF = true;                
-            this.permissoes.push(1, 2, 3, 4, 5, 6);       
+            this.permissoes.push(1, 2, 3, 4, 5, 6, 7);       
           }else {
             this.checkRF = false;
             this.checkRF1 = false;
           }
           break;
         case 'Relatórios Financeiros' :
-           this.tempArry = [1, 2, 3]
+           this.tempArry = [1, 2, 3, 4]
           this.checkRF = !this.checkRF;
           this.permissoes = this.permissoes.filter((p) => {
             if(!this.tempArry.includes(p)) return p; 
           });
           if (this.checkRF) {
-            this.permissoes.push(1, 2, 3);
+            this.permissoes.push(1, 2, 3, 4);
           }
           break;
 
         case 'Pagamentos' :
-          this.tempArry = [4, 5, 6]
+          this.tempArry = [5, 6, 7]
           this.checkRF1 = !this.checkRF1;
            this.permissoes = this.permissoes.filter((p) => {
             if(!this.tempArry.includes(p)) return p; 
           });
           if (this.checkRF1) {
-            this.permissoes.push(4, 5, 6);
+            this.permissoes.push(5, 6, 7);
           }
           break;          
         default :
@@ -245,15 +245,18 @@ export default {
       //console.log(this.permissoes)  
     },   
     updateCheckRF1() {
-     this.permissoes.includes([1, 2, 3]) ?
+     this.permissoes.includes([1, 2, 3, 4]) ?
         this.checkRF = true :
+            boxNew.indeterminate = true;
           this.checkRF = false
           this.checkF = false;
+
+          console.log(boxNew.indeterminate)
           
       this.$emit('teste', this.permissoes)
     },
     updateCheckRF2() {
-     this.permissoes.includes([4, 5, 6]) ?
+     this.permissoes.includes([5, 6, 7]) ?
         this.checkRF1 = true :      
           this.checkRF1 = false
           this.checkF = false;

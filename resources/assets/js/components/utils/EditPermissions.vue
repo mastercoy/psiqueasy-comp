@@ -1,6 +1,7 @@
 <template>
   <div>
-    <label for="input-group">Alterar o nome do perfil?</label>
+    <label for="input-group">Alterar o nome do perfil?</label> 
+    <!-- <input type="checkbox" id="some-checkbox" checked> -->
      <div class="input-group mb-3">
      <div class="input-group-prepend">
     <div class="input-group-text">      
@@ -200,6 +201,7 @@ export default {
   name: 'PermissoesForm',
   props: ['perfil'],
   mounted() { 
+    // $("#Financeiro").prop("indeterminate", true);
      setTimeout(() => {
        let temp = this.perfil;
        this.getPerfilPermissoes();
