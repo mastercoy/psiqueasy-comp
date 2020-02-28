@@ -41,25 +41,32 @@ export default {
   mounted() {
      axios.get(`/api/permissoes-perfil-json/3`)
           .then(({data}) => {
-            console.log(data);
+            this.tempArr = data;
+            for(let i = 0; i < this.tempArr.length; i++) {
+              this.permissoes[i] = this.tempArr[i].id;
+              console.log('OK!');
+            } 
+            //console.log('testando...')    
           }); 
   },
   data() {
     return {
-      permissoes: []
+      permissoes: [],
+      tempArr: []
     }
   },
   methods: {
     testFunc() {
       console.log("Está ativo!");
     },
-     checkPermissoes(e) { //Função que retorna se o 
-     console.log(e);
-          if( this.permissoes.includes(e)){
-            return true;
-          }else {
-            return false;
-          }
+     checkPermissoes(e) { //Função que retorna se o
+        let vef;
+        setTimeout(() => {  
+          vef = this.permissoes.includes(e); 
+               
+          console.log(this.permissoes.includes(e));          
+        },500);
+        return vef;
         }    
   }
 }

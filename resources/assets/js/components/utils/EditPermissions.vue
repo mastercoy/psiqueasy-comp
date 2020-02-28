@@ -311,25 +311,22 @@ export default {
         this.checkF = false;
       }
     },
-    atualizarPerfil() {
-      // api/remover-permissoes/{user_perfil_json} 
-      // api/setar-permissoes/{user_perfil_json}  
+    atualizarPerfil() { 
       let pedit = {
         id: this.perfil.id,
         name: this.perfil.nome,
         empresa_id: this.$store.state.empresaID,
         array_permissoes: this.permissoes   //VERIFICAR SE AS PERMISSOES ESCOLHIDAS ATENDEM AS DEMANDAS
       }; 
-
-      axios.patch(`/api/user-perfil-json/${pedit.id}`, pedit.name)
+          console.log(pedit);
+      axios.patch(`/api/user-perfil-json/${pedit.id}`, {name: pedit.name, empresa_id: pedit.empresa_id})
                 .then(({data}) => {
-
-                  console.log(pedit.array_permissoes);
-                   axios.post(`sync-permissoes-perfil/${pedit.id}`, pedit.array_permissoes)
+                  console.log(pedit.array_permissoes);                   
+               });
+      axios.patch(`/api/sync-permissoes-perfil/${pedit.id}`, pedit.array_permissoes)
                     .then(({data}) => {
                       console.log(data);                     
                     });
-               });
                this.$router.push("/usuarios");
     }
   }
