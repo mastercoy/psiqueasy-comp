@@ -176,10 +176,6 @@ export default {
                console.log(perfId);
               // FALTA COMPLETAR COM A CHAMADA PARA A API
 
-
-
-
-
               toast = this.$toasted.success("O convite para o usuário foi criado com Sucesso!!", {
               iconPack: 'fontawesome',
               icon: "fa-exclamation-circle",
@@ -195,7 +191,7 @@ export default {
           if (this.$v.$invalid) {
             console.log("Preencha os campos necessários!")
           } else {
-              if(this.userInvite.permissoes === ''){
+              if(this.userInvite.permissoes === undefined){
                 let toast = this.$toasted
                   .error("As opções de permissões não foram preenchidas corretamente, por favor verifique os campos e tente novamente!!", 
                 {

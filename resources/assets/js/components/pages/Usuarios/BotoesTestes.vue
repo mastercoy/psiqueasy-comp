@@ -2,7 +2,7 @@
   <div class="form-temp">
     <h2>Página para testes de aplicação de botões</h2><hr>
     <div class="container">
-      <div class="row" v-if="test">
+      <div class="row">
         <button class="btn btn-primary btn-block" :disabled="checkPermissoes(1)" @click="testFunc">
           Editar Empresa
         </button>
@@ -21,7 +21,7 @@
         <button class="btn btn-warning btn-block" :disabled="checkPermissoes(6)" @click="testFunc">
           Editar User
          </button>
-        <!--<button class="btn btn-danger btn-block" :disabled="checkPermissoes(7)" @click="testFunc">
+        <button class="btn btn-danger btn-block" :disabled="checkPermissoes(7)" @click="testFunc">
           Deletar User
         </button>
         <button class="btn btn-secondary btn-block" :disabled="checkPermissoes(8)" @click="testFunc">
@@ -29,7 +29,7 @@
         </button>
         <button class="btn btn-secondary btn-block" :disabled="checkPermissoes(9)" @click="testFunc">
           Editar Perfil
-        </button> -->
+        </button>
       </div>
     </div>  
 
@@ -38,8 +38,19 @@
 
 <script>
 export default {
-  mounted() {
-     axios.get(`/api/permissoes-perfil-json/3`)
+  beforeMount() {
+    this.pegaPermissoes();
+  },
+  data() {
+    return {
+      permissoes: [],
+      tempArr: [],
+     
+    }
+  },
+  methods: {
+    async pegaPermissoes() {
+       axios.get(`/api/permissoes-perfil-json/3`)
           .then(({data}) => {
             this.tempArr = data;
             for(let i = 0; i < this.tempArr.length; i++) {
@@ -48,28 +59,15 @@ export default {
             } 
             //console.log('testando...')    
           }); 
-  },
-  data() {
-    return {
-      permissoes: [],
-      tempArr: [],
-      test: false
-    }
-  },
-  methods: {
+    },
     testFunc() {
       console.log("Está ativo!");
     },
      checkPermissoes(e) { //Função que retorna se o
-        let vef;
-        setTimeout(() => {  
-          vef = this.permissoes.includes(e); 
+      console.log(e)
+      return this.permissoes.includes(e); 
                
-          console.log(this.permissoes.includes(e));          
-        },500);
-        // test = true
-        return vef;
-        }    
+    }    
   }
 }
 </script>
