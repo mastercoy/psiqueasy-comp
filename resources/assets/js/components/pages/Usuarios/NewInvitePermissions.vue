@@ -49,7 +49,7 @@
                 <div class="form-group">
                   <select class="form-control" v-model="presetPerfil" :disabled="!showPresetPerfil" >
                     <option v-for="perf in perfisNew" :key="perf.id">
-                    <option > {{ perf.nome }}</option>                    
+                    <option :value="perf.id"> {{ perf.nome }}</option>                    
                     </option>
                   </select>
                 </div>
@@ -164,6 +164,22 @@ export default {
                   duration : 1500
                 });
           }else {
+
+              console.log(this.presetPerfil);  
+              console.log(this.perfisNew[0].nome)
+              let perfId = 0;
+              for(let i = 0; i < this.perfisNew.length; i++){
+                if(this.presetPerfil === this.perfisNew[i].nome)
+                  perfId = this.perfisNew[i].id;
+              }
+
+               console.log(perfId);
+              // FALTA COMPLETAR COM A CHAMADA PARA A API
+
+
+
+
+
               toast = this.$toasted.success("O convite para o usuário foi criado com Sucesso!!", {
               iconPack: 'fontawesome',
               icon: "fa-exclamation-circle",
@@ -215,7 +231,8 @@ export default {
                         duration : 2000
                       });
                     } 
-                    axios.post(`/api/setar-permissoes/${checkPerfil}`, arrayPermissoes)
+                    console.log(arrayPermissoes);
+                    axios.patch(`/api/sync-permissoes-perfil/${checkPerfil}`, arrayPermissoes)
                       .then(({data}) => {                        
                       });
                     this.$router.push("/usuarios");

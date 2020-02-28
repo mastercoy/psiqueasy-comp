@@ -2,7 +2,7 @@
   <div class="form-temp">
     <h2>Página para testes de aplicação de botões</h2><hr>
     <div class="container">
-      <div class="row">
+      <div class="row" v-if="test">
         <button class="btn btn-primary btn-block" :disabled="checkPermissoes(1)" @click="testFunc">
           Editar Empresa
         </button>
@@ -52,7 +52,8 @@ export default {
   data() {
     return {
       permissoes: [],
-      tempArr: []
+      tempArr: [],
+      test: false
     }
   },
   methods: {
@@ -66,6 +67,7 @@ export default {
                
           console.log(this.permissoes.includes(e));          
         },500);
+        // test = true
         return vef;
         }    
   }
