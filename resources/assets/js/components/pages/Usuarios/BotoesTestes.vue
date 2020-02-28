@@ -20,8 +20,8 @@
         </button>
         <button class="btn btn-warning btn-block" :disabled="checkPermissoes(6)" @click="testFunc">
           Editar User
-        </button>
-        <button class="btn btn-danger btn-block" :disabled="checkPermissoes(7)" @click="testFunc">
+         </button>
+        <!--<button class="btn btn-danger btn-block" :disabled="checkPermissoes(7)" @click="testFunc">
           Deletar User
         </button>
         <button class="btn btn-secondary btn-block" :disabled="checkPermissoes(8)" @click="testFunc">
@@ -29,7 +29,7 @@
         </button>
         <button class="btn btn-secondary btn-block" :disabled="checkPermissoes(9)" @click="testFunc">
           Editar Perfil
-        </button>
+        </button> -->
       </div>
     </div>  
 

@@ -33,13 +33,24 @@
             <br>
             <label for="senhaA">confirme a senha: </label>
             <input type="password" id="senhaA">
+
+            <hr>
+            <button type="button" id="convite"> Enviar </button>
         </div>
     </div>
 
     </div>
 
 
-    <script></script>
+    <script>
+        let conviteButton = document.getElementById("convite");
+        
+        var conviteEnviar = function() {
+            
+        };
+
+        conviteButton.addEventListener('click', conviteButton());
+    </script>
 </body>
 
 </html>

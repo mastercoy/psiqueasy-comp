@@ -134,8 +134,8 @@ export default {
     getPermissoes() {
       let toast;
       let checkPerfil = '';      
-      let var1 = this.permissoesRF1;
-      let var2 = this.permissoesRF2
+      // let var1 = this.permissoesRF1;
+      // let var2 = this.permissoesRF2
       let arrayPermissoes = [];
       let newp = {
                 name: this.labelPerfil,
