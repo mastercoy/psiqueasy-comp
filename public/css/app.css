@@ -3215,6 +3215,18 @@
   background: #c9e2f9;
 }
 
+.magic-checkbox:indeterminate + label:before {
+  display: block;
+  padding: 3px;
+  background: #eb3ea3;
+  content: '+';
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -ms-flex-line-pack: start;
+      align-content: flex-start;
+  border: #3e97eb;
+}
+
 /*!
  * Bootstrap v4.4.1 (https://getbootstrap.com/)
  * Copyright 2011-2019 The Bootstrap Authors

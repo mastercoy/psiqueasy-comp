@@ -2,7 +2,7 @@
   <div>
      <h4>Selecione as permissões de acesso do usuário</h4>     
       <hr />     
-      <button type="button" class="btn btn-link mb-1">Marcas todos</button>
+      <button type="button" class="btn btn-link mb-1">Marcas todos</button>      
       <br />      
       <div class="container">
         <div class="parent">         
@@ -182,6 +182,8 @@
 <script>
 export default {
   name: 'PermissoesForm',
+  mounted() {
+  },
   data() {
     return {
       vefAlerta: false,
@@ -203,7 +205,7 @@ export default {
      checkAll(e) {
       switch (e.target.value) {
         case 'Financeiro' :
-          this.tempArry = [1, 2, 3, 4]
+          this.tempArry = [1, 2, 3, 4, 5, 6, 7]
           this.checkF = !this.checkF;          
           this.permissoes = this.permissoes.filter((p) => {
             if(!this.tempArry.includes(p)) return p; 
@@ -247,11 +249,9 @@ export default {
     updateCheckRF1() {
      this.permissoes.includes([1, 2, 3, 4]) ?
         this.checkRF = true :
-            boxNew.indeterminate = true;
           this.checkRF = false
           this.checkF = false;
 
-          console.log(boxNew.indeterminate)
           
       this.$emit('teste', this.permissoes)
     },

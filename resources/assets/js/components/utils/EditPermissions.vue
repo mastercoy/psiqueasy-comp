@@ -210,6 +210,7 @@ export default {
   },
   data() {
     return {
+      
       editNomePerfil: false,
       vefAlerta: false,
       iconF: false,
@@ -241,9 +242,11 @@ export default {
               i++
             });
             console.log(perfil_test);
-            this.permissoes = perfil_test
+            this.permissoes = perfil_test;
             this.updateCheckRF2();
             this.updateCheckRF1();
+            this.updateAll();
+            console.log('funciona!');
           }); 
     },    
     checkAll(e) {
@@ -291,8 +294,11 @@ export default {
       console.log(this.permissoes)  
     },   
     updateCheckRF1() {
+      let checkTest = document.getElementById("Financeiro");
+    
      this.permissoes.includes([1, 2, 3, 4]) ?
         this.checkRF = true :
+          checkTest.indeterminate = true;
           this.checkRF = false
           this.checkF = false;
           
@@ -307,10 +313,13 @@ export default {
       //console.log(this.permissoes);
     },
     updateAll() {
-      if(this.checkRF1 == true && this.checkRF == true){
+       let checkTest = document.getElementById("Financeiro");
+      if(this.checkRF1 === true && this.checkRF === true){
         this.checkF = true;
+        checkTest.indeterminate = false;
       }else {
         this.checkF = false;
+        checkTest.indeterminate = true;
       }
     },
     atualizarPerfil() { 
