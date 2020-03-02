@@ -40,20 +40,12 @@
 export default {
   name: "modulo_clinica",
   mounted() {
-    // Chamada para o método para salvar as informações de login do usuário
-    // let newUser = this.user
-    // axios.post('api/user-json', newUser).then(({ data }) => {
-    //      console.log("Usuário criado com sucesso!");
-    //    });
+    //ADICIONAR MÉTODO PARA VERIFICAR QUAL O USUÁRIO QUE ESTÁ LOGADO E QUAIS AS PERMISSÕES DO MESMO
      },
   data() {
     return {
       nivelPermissao: 0,
-      // user: {
-      //   name: 'Matheus Henrique',
-      //   email: 'teteu@gmail.com',
-      //   password: '1234'
-      // }
+     
     }
   },
   methods: {

@@ -201,16 +201,17 @@ export default {
   name: 'PermissoesForm',
   props: ['perfil'],
   mounted() { 
-    // $("#Financeiro").prop("indeterminate", true);
+    // $("#Financeiro").prop("indeterminate", true);    
      setTimeout(() => {
        let temp = this.perfil;
        this.getPerfilPermissoes();
-       },500);     
+       },200);     
        
   },
   data() {
     return {
-      
+      checkboxFinanceiro: '',
+      checkboxAtendimentos: '',
       editNomePerfil: false,
       vefAlerta: false,
       iconF: false,
@@ -294,18 +295,26 @@ export default {
       console.log(this.permissoes)  
     },   
     updateCheckRF1() {
-      let checkTest = document.getElementById("Financeiro");
+      let checkTest = document.getElementById("Financeiro");  //
+      let checkTest2 = document.getElementById("RF"); 
+
+      let testando = this.permissoes.some(perm => [1,2,3,4].includes(perm))
+
+      console.log(testando)
     
-     this.permissoes.includes([1, 2, 3, 4]) ?
-        this.checkRF = true :
+     if(testando) {
+        this.checkRF = true 
+        checkTest2.indeterminate = false
+        }else {
           checkTest.indeterminate = true;
-          this.checkRF = false
+          checkTest2.indeterminate = true;
+          this.checkRF = true
           this.checkF = false;
-          
+      }          
       //console.log(this.permissoes) 
     },
     updateCheckRF2() {
-     this.permissoes.includes([5, 6, 7]) ?
+     this.permissoes.includes(5 & 6 & 7) ?
         this.checkRF1 = true :      
           this.checkRF1 = false
           this.checkF = false;

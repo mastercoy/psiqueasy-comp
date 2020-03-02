@@ -3219,7 +3219,8 @@
   display: block;
   padding: 3px;
   background: #eb3ea3;
-  content: '+';
+  content: '';
+  color: #fff;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   -ms-flex-line-pack: start;

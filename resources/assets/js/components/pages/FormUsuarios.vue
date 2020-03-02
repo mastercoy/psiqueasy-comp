@@ -7,7 +7,7 @@
       </div>
       <div class="col-md-3">
        <router-link to="/usuarios/invite" class="btn btn-primary">
-          <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i> Novo Usuário
+          <i class="fa fa-user-plus fa-lg" aria-hidden="true"></i> Convidar Usuário
         </router-link>
       </div>
     </div>  <hr>

@@ -122,7 +122,10 @@ export default {
       showPresetPerfil: false,
       labelPerfil: '',
       perfisNew: [],
-      
+      formConvite: {
+        email: this.emailUser,
+        perfil_id: ''
+      }         
        
     };
   },
@@ -175,6 +178,11 @@ export default {
 
                console.log(perfId);
               // FALTA COMPLETAR COM A CHAMADA PARA A API
+              this.formConvite.empresa_id = perfId
+              axios.post('/api/enviar-convite', this.formConvite)
+                .then(({data}) => {
+                  console.log(data);
+                });
 
               toast = this.$toasted.success("O convite para o usuário foi criado com Sucesso!!", {
               iconPack: 'fontawesome',
@@ -204,7 +212,7 @@ export default {
              } else { 
               
               console.log(newp)
-              console.log(arrayPermissoes);
+              console.log(arrayPermissoes);             
               axios.post('/api/user-perfil-json', newp)
                 .then(({data}) => {
                   checkPerfil = data; 
@@ -229,10 +237,19 @@ export default {
                     } 
                     console.log(arrayPermissoes);
                     axios.patch(`/api/sync-permissoes-perfil/${checkPerfil}`, arrayPermissoes)
-                      .then(({data}) => {                        
+                      .then(({data}) => {  
+                        console.log(data);
+                        
+                        this.formConvite.empresa_id = data;
+                        axios.post('/api/enviar-convite', this.formConvite)
+                          .then(({data}) => {
+                            console.log(data);
+                          });
+                          
                       });
                     this.$router.push("/usuarios");
               }); 
+
             } 
           }
           break;
