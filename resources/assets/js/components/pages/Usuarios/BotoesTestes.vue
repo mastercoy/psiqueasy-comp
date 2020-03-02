@@ -49,7 +49,7 @@ export default {
     }
   },
   methods: {
-    async pegaPermissoes() {
+    pegaPermissoes() {
        axios.get(`/api/permissoes-perfil-json/3`)
           .then(({data}) => {
             this.tempArr = data;
@@ -64,9 +64,16 @@ export default {
       console.log("Está ativo!");
     },
      checkPermissoes(e) { //Função que retorna se o
-      console.log(e)
-      return this.permissoes.includes(e); 
-               
+     let teste = true;
+     setTimeout(() => { console.log(e)
+      if (this.permissoes.includes(e)){
+        console.log(this.permissoes.includes(e))
+        teste = false;
+      }else {
+        teste = true;
+      } 
+     }, 1500);
+      return teste
     }    
   }
 }
