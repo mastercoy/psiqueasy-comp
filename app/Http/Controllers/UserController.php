@@ -50,16 +50,15 @@ class UserController extends Controller {
     }
 
     public function associarUserAntigoEmpresa(Request $request) {
-        // verifica se a signed URL é válida
-        if (!$request->hasValidSignature()) {
-            abort(response()->json('URL não válida completar', 403));
-        }
+        $desencriptado = decrypt($request->hash);
 
-        $user             = User::where('email', $request->email)->first();
-        $perfil           = UserPerfil::where('id', $request->perfil_id)->first();
-        $user->empresa_id = $request->empresa_id;
+        $user             = User::where('email', $desencriptado['email'])->first();
+        $perfil           = UserPerfil::where('id', $desencriptado['perfil_id'])->first();
+        $user->empresa_id = $desencriptado['empresa_id'];
         $user->perfil()->attach($perfil);
         $user->save();
+
+        return 'Associação feita com sucesso!';
 
     }
 
@@ -70,10 +69,6 @@ class UserController extends Controller {
         } else {
             return '0'; // nao existe
         }
-    }
-
-    public function cadastroViaConvite() {
-
     }
 
     public function index() {

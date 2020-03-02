@@ -15,37 +15,43 @@ use Illuminate\Support\Facades\View;
 class ConviteController extends Controller {
     //
     public function enviarConvite(Request $request) {
-        Auth::loginUsingId(1);
+        Auth::loginUsingId(1); //fixme
+
+        $paraEncriptar = [
+            'email' => $request->email,
+            'perfil_id' => $request->perfil_id,
+            'empresa_id' => auth()->user()->empresa_id,
+        ];
+
+        $encriptado = encrypt($paraEncriptar);
 
         // para saber se existe usuario cadastrado COM empresa_id
         $userComEmpresa = User::where('email', $request->get('email'))
-                              ->where('empresa_id', auth()->user()->empresa_id)->first();
+                              ->where('empresa_id', !null)->first();
 
         // para saber se existe usuario cadastrado SEM empresa_id
         $userSemEmpresa = User::where('email', $request->get('email'))
                               ->where('empresa_id', null)->first();
 
-        // se ja existir não pode mandar convite
+        // se ja existir usuário cadastrado com empresa_id, não pode mandar convite
         if ($userComEmpresa) {
             return 'Usuário ja existe e tem uma empresa'; //fixme
         }
 
-        // se ja existir tem que mandar convite diferenciado
+        // se ja existir usuário cadastrado sem empresa_id, tem que mandar convite diferenciado
         if ($userSemEmpresa) {
             // cria uma URL temporária
-            $url = URL::temporarySignedRoute('associar', now()->addHours(5), [
-                'email' => $request->get('email'),
-                'perfil_id' => $request->get('perfil_id'),
-                'empresa_id' => auth()->user()->empresa_id,
+            $url = URL::SignedRoute('associar', [
+                'email' => $request->email,
                 'name_user' => auth()->user()->name,
+                'hash' => $encriptado,
             ]);
 
+            // caso for novo usuário
         } else {
             // cria uma URL temporária
-            $url = URL::temporarySignedRoute('completar', now()->addHours(5), [
-                'email' => $request->get('email'),
-                'perfil_id' => $request->get('perfil_id'),
-                'empresa_id' => auth()->user()->empresa_id,
+            $url = URL::SignedRoute('completar', [
+                'hash' => $encriptado,
             ]);
 
         }
@@ -57,30 +63,34 @@ class ConviteController extends Controller {
 
     public function completarCadastro(Request $request) {
         // ao clicar no link do email essa view é exibida ao usuário
+        // verifica se a signed URL é válida
+        if (!$request->hasValidSignature()) {
+            abort(response()->json('URL não válida - completarCadastro', 403));
+        }
+
         // aqui o user completa formulário e clica em confirmar
         return View::make('cadastro')->with('request', $request->all());
 
     }
 
     public function associarCadastro(Request $request) {
+        // ao clicar no link do email essa view é exibida ao usuário
+        // verifica se a signed URL é válida
+        if (!$request->hasValidSignature()) {
+            abort(response()->json('URL não válida - associarCadastro', 403));
+        }
         // tem que associar o perfil existente a empresa_id de quem convidou e ao perfil selecionado
         return View::make('associar')->with('request', $request->all());
     }
 
     public function aceitar(Request $request) {
-        // verifica se a signed URL é válida
-        if (!$request->hasValidSignature()) {
-            abort(response()->json('URL não válida - aceitar', 403));
-        }
-
-        // ao submeter o formulario anterior, faz validação
+        // validação acontece ao se submeter o formulário
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'perfil_id' => 'required',
-            'empresa_id' => 'required',
-            'email' => 'required|email',
             'password' => 'required|confirmed'
         ]);
+
+        $desencriptado = decrypt($request->hash);
 
         // se validação falhar, exibe erros na tela
         if ($validator->fails()) {
@@ -88,12 +98,12 @@ class ConviteController extends Controller {
         } else {
             // passando na validação, usuário é criado com perfil e permissões ja relacionadas
             $usuario = User::create([
-                                        'email' => $request->email,
+                                        'email' => $desencriptado['email'],
                                         'name' => $request->name,
                                         'password' => bcrypt($request->password),
-                                        'empresa_id' => $request->empresa_id,
+                                        'empresa_id' => $desencriptado['empresa_id'],
                                     ]);
-            $usuario->perfil()->attach($request->perfil_id);
+            $usuario->perfil()->attach($desencriptado['perfil_id']);
 
             return 'Usuário criado com sucesso';
         }
