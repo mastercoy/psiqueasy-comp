@@ -82,11 +82,11 @@ class ConviteController extends Controller {
             'password' => 'required|confirmed'
         ]);
 
-        // se validação falhar exibe erros na tela
+        // se validação falhar, exibe erros na tela
         if ($validator->fails()) {
             return $validator->errors();
         } else {
-            // se passar na validação usuário é criado com perfil e permissões ja relacionadas
+            // passando na validação, usuário é criado com perfil e permissões ja relacionadas
             $usuario = User::create([
                                         'email' => $request->email,
                                         'name' => $request->name,

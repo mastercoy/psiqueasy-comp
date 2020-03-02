@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserPerfilPivot;
 use Illuminate\Support\Facades\Response;
 
-class UserPerfilPivotController extends Controller { //afazer apagar controller?
+class UserPerfilPivotController extends Controller { //
 
     public function index() {
         //
@@ -15,7 +15,7 @@ class UserPerfilPivotController extends Controller { //afazer apagar controller?
 
     public function store() {
         //
-        serPerfilPivot::create($this->validateUserPerfilPivotRequest());
+        UserPerfilPivot::create($this->validateUserPerfilPivotRequest());
     }
 
     public function show(UserPerfilPivot $user_perfil_pivot_json) {
