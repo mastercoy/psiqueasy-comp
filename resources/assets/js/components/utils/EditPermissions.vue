@@ -12,7 +12,6 @@
 </div>
      <h4>Permissões de acesso do usuário</h4>     
       <hr />     
-      <button type="button" class="btn btn-link mb-1">Marcas todos</button>
       <br />      
       <div class="container">
         <div class="parent">         
@@ -201,7 +200,9 @@ export default {
   name: 'PermissoesForm',
   props: ['perfil'],
   mounted() { 
-    // $("#Financeiro").prop("indeterminate", true);    
+    this.checkboxFinanceiro = document.getElementById("Financeiro");
+    this.checkboxAtendimentos = document.getElementById("RF");  // Pag
+    this.checkboxPagamentos = document.getElementById("Pag");  
      setTimeout(() => {
        let temp = this.perfil;
        this.getPerfilPermissoes();
@@ -212,6 +213,7 @@ export default {
     return {
       checkboxFinanceiro: '',
       checkboxAtendimentos: '',
+      checkboxPagamentos: '',
       editNomePerfil: false,
       vefAlerta: false,
       iconF: false,
@@ -266,6 +268,7 @@ export default {
             this.checkRF = false;
             this.checkRF1 = false;
           }
+           this.updateAll();
           break;
         case 'Relatórios Financeiros' :
            this.tempArry = [1, 2, 3, 4]
@@ -276,17 +279,19 @@ export default {
           if (this.checkRF) {
             this.permissoes.push(1, 2, 3, 4);
           }
+           this.updateAll();
           break;
 
         case 'Pagamentos' :
           this.tempArry = [5, 6, 7]
           this.checkRF1 = !this.checkRF1;
-           this.permissoes = this.permissoes.filter((p) => {
+          this.permissoes = this.permissoes.filter((p) => {
             if(!this.tempArry.includes(p)) return p; 
           });
           if (this.checkRF1) {
             this.permissoes.push(5, 6, 7);
           }
+          this.updateAll();
           break;          
         default :
           console.log('Nenhuma opção');
@@ -295,40 +300,60 @@ export default {
       console.log(this.permissoes)  
     },   
     updateCheckRF1() {
-      let checkTest = document.getElementById("Financeiro");  //
-      let checkTest2 = document.getElementById("RF"); 
-
-      let testando = this.permissoes.some(perm => [1,2,3,4].includes(perm))
-
-      console.log(testando)
-    
-     if(testando) {
-        this.checkRF = true 
-        checkTest2.indeterminate = false
+      let temp = 0;
+      this.permissoes.forEach((p) => {
+        if([1,2,3,4].includes(p))
+          temp++
+      });      
+      console.log(temp)
+      if(temp === 0) {        
+        this.checkboxAtendimentos.indeterminate = false;
+        this.checkRF =false;
+      } else if(temp === 4) {
+        //console.log("AteAoui")
+        this.checkRF = true; 
+        this.checkboxFinanceiro.indeterminate = true;
+        this.checkboxAtendimentos.indeterminate = false;
         }else {
-          checkTest.indeterminate = true;
-          checkTest2.indeterminate = true;
-          this.checkRF = true
-          this.checkF = false;
+          this.checkboxFinanceiro.indeterminate = true;
+          this.checkboxAtendimentos.indeterminate = true;
+          this.checkRF = false;
+          //this.checkF = false;
       }          
-      //console.log(this.permissoes) 
+       this.updateAll();
     },
     updateCheckRF2() {
-     this.permissoes.includes(5 & 6 & 7) ?
-        this.checkRF1 = true :      
-          this.checkRF1 = false
-          this.checkF = false;
-
-      //console.log(this.permissoes);
+     let temp = 0;
+      this.permissoes.forEach((p) => {
+        if([5, 6, 7].includes(p))
+          temp++
+      });      
+      console.log(temp)
+      if(temp === 0) {        
+        this.checkboxPagamentos.indeterminate = false;
+        this.checkRF1 =false;
+      } else if(temp === 3) {
+        //console.log("AteAoui")
+        this.checkRF1 = true; 
+        this.checkboxFinanceiro.indeterminate = true;
+        this.checkboxPagamentos.indeterminate = false;
+        }else {
+          this.checkboxFinanceiro.indeterminate = true;
+          this.checkboxPagamentos.indeterminate = true;
+          this.checkRF1 = false;
+          //this.checkF = false;
+      }          
+      this.updateAll();
     },
     updateAll() {
-       let checkTest = document.getElementById("Financeiro");
-      if(this.checkRF1 === true && this.checkRF === true){
+      if(this.permissoes == []) {
+        this.checkboxFinanceiro.indeterminate = false;
+      } else if(this.checkRF1 == true && this.checkRF == true){
         this.checkF = true;
-        checkTest.indeterminate = false;
+        this.checkboxFinanceiro.indeterminate = false;
       }else {
         this.checkF = false;
-        checkTest.indeterminate = true;
+        this.checkboxFinanceiro.indeterminate = true;
       }
     },
     atualizarPerfil() { 

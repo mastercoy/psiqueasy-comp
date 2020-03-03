@@ -172,9 +172,7 @@
             <label for="Pacientes">Pacientes</label>     
         </div>
       </div>
-
       <hr>
-
        
     </div> 
 </template>
@@ -183,9 +181,15 @@
 export default {
   name: 'PermissoesForm',
   mounted() {
+    this.checkboxFinanceiro = document.getElementById("Financeiro");
+    this.checkboxAtendimentos = document.getElementById("RF");  // Pag
+    this.checkboxPagamentos = document.getElementById("Pag");  
   },
   data() {
     return {
+      checkboxFinanceiro: '',
+      checkboxAtendimentos: '',
+      checkboxPagamentos: '',
       vefAlerta: false,
       iconF: false,
       iconE: false,

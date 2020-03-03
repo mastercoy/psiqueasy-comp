@@ -3218,14 +3218,14 @@
 .magic-checkbox:indeterminate + label:before {
   display: block;
   padding: 3px;
-  background: #eb3ea3;
+  background: #3e97eb;
   content: '';
   color: #fff;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
   -ms-flex-line-pack: start;
       align-content: flex-start;
-  border: #3e97eb;
+  border: 2px solid #fff;
 }
 
 /*!
