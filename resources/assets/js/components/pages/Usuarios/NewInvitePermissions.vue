@@ -227,12 +227,12 @@ export default {
                       duration : 2000
                       });
                     }else {
-                      toast = this.$toasted.success("O perfil para o usuário convidado, foi criado com Sucesso!!", {
-                        iconPack: 'fontawesome',
-                        icon: "fa-exclamation-circle",
-                        theme: "bubble", 
-                        position: "bottom-right", 
-                        duration : 2000
+                      toast = this.$toasted.success("O convite para o usuário foi criado com Sucesso!!", {
+                      iconPack: 'fontawesome',
+                      icon: "fa-exclamation-circle",
+                      theme: "bubble", 
+                      position: "bottom-right", 
+                      duration : 1500
                       });
                     } 
                     console.log(arrayPermissoes);

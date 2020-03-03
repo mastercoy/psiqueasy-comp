@@ -86,8 +86,8 @@
           <div class="container vl">
             <div class="container">
               <div class="row">
-                <input class="magic-checkbox" type="checkbox" id="teste" value="teste" />
-                <label for="teste">Perfil</label>
+                <input class="magic-checkbox" type="checkbox" id="Perfil" value="Perfil" @click="checkAll" v-model="checkRF2"/>
+                <label for="Perfil">Perfil</label>
               </div>
                 <div class="container">
                   <div>
@@ -110,7 +110,7 @@
               <br />
               <div class="row">
                 <input class="magic-checkbox" type="checkbox" id="teste21" value="teste21" />
-                <label for="teste21">Teste21</label>
+                <label for="teste21">Visualização</label>
               </div>
               <div class="container">
                 <div>
@@ -220,6 +220,7 @@ export default {
       iconE: false,
       checkRF: false,
       checkRF1: false,
+      checkRF2: false,
       checkF: false,
       permissoes: [],
       tempArry: [],
@@ -292,7 +293,17 @@ export default {
             this.permissoes.push(5, 6, 7);
           }
           this.updateAll();
-          break;          
+          break;  
+        case 'Perfil' :
+          this.tempArr = [8,9,10,11];
+          this.checkRF2 = !this.checkRF2;
+          this.permissoes = this.permissoes.filter((p) => {
+            if(!this.tempArry.includes(p)) return p; 
+          });
+          if(this.checkRF2) {
+            this.permissoes.push(8, 9, 10, 11);
+          }
+
         default :
           console.log('Nenhuma opção');
       }
@@ -308,6 +319,7 @@ export default {
       console.log(temp)
       if(temp === 0) {        
         this.checkboxAtendimentos.indeterminate = false;
+        this.checkboxFinanceiro.indeterminate = true;
         this.checkRF =false;
       } else if(temp === 4) {
         //console.log("AteAoui")
@@ -331,6 +343,7 @@ export default {
       console.log(temp)
       if(temp === 0) {        
         this.checkboxPagamentos.indeterminate = false;
+        this.checkboxFinanceiro.indeterminate = true;
         this.checkRF1 =false;
       } else if(temp === 3) {
         //console.log("AteAoui")
@@ -345,15 +358,44 @@ export default {
       }          
       this.updateAll();
     },
+    updateCheckRF2() {
+      let temp = 0;
+      this.permissoes.forEach((p) => {
+        if([8, 9, 10, 11].includes(p))
+          temp++
+      });      
+      console.log(temp)
+      // if(temp === 0) {        
+      //   this.checkboxPagamentos.indeterminate = false;
+      //   this.checkboxFinanceiro.indeterminate = true;
+      //   this.checkRF1 =false;
+      // } else if(temp === 3) {
+      //   //console.log("AteAoui")
+      //   this.checkRF1 = true; 
+      //   this.checkboxFinanceiro.indeterminate = true;
+      //   this.checkboxPagamentos.indeterminate = false;
+      //   }else {
+      //     this.checkboxFinanceiro.indeterminate = true;
+      //     this.checkboxPagamentos.indeterminate = true;
+      //     this.checkRF1 = false;
+      //     //this.checkF = false;
+      // }    
+    },
     updateAll() {
-      if(this.permissoes == []) {
-        this.checkboxFinanceiro.indeterminate = false;
-      } else if(this.checkRF1 == true && this.checkRF == true){
+      let temp;
+       this.permissoes.forEach((p) => {
+        if([1,2,3,4,5,6,7].includes(p))
+          temp++
+      });      
+      if(temp === 0){
+       this.checkboxFinanceiro.indeterminate = false;
+      }
+     if(this.checkRF1 == true && this.checkRF == true){
         this.checkF = true;
         this.checkboxFinanceiro.indeterminate = false;
       }else {
         this.checkF = false;
-        this.checkboxFinanceiro.indeterminate = true;
+        //this.checkboxFinanceiro.indeterminate = true;
       }
     },
     atualizarPerfil() { 
