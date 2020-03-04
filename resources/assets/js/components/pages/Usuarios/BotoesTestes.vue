@@ -2,15 +2,14 @@
   <div class="form-temp">
     <h2>Página para testes de aplicação de botões</h2>
     <hr />
-    <input class="magic-checkbox" type="checkbox" id="checkbox-teste" />
-    <label for="checkbox-teste">Checkbox para Teste</label>
     <div class="container">
       <div class="row">
         <button
           class="btn btn-primary btn-block"
           :disabled="checkPermissoes(1)"
           @click="testFunc"
-        >Editar Empresa</button>
+        ><i class="fa fa-pencil-square" aria-hidden="true"></i> 
+        Editar Empresa</button>
         <button
           class="btn btn-warning btn-block"
           :disabled="checkPermissoes(20)"

@@ -89,7 +89,7 @@
 </template>
 
 <script>
-import PermissoesForm from '../../utils/PermissoesForm'
+import PermissoesForm from '../../form_components/PermissoesForm'
 
 import { required } from 'vuelidate/lib/validators'
 export default {

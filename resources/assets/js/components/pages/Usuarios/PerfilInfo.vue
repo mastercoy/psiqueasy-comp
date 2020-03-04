@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import EditPermissions from '../../utils/EditPermissions';
+import EditPermissions from '../../form_components/EditPermissions';
 export default {
   mounted() {
     this.perfil = this.perf
