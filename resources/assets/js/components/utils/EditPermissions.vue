@@ -249,8 +249,8 @@ export default {
             this.permissoes = perfil_test;
             this.updateCheckRF2();
             this.updateCheckRF1();
-            this.updateAll();
-            console.log('funciona!');
+            //this.updateAll();
+            //console.log('funciona!');
           }); 
     },    
     checkAll(e) {
@@ -280,7 +280,7 @@ export default {
           if (this.checkRF) {
             this.permissoes.push(1, 2, 3, 4);
           }
-           this.updateAll();
+           //this.updateAll();
           break;
 
         case 'Pagamentos' :
@@ -292,7 +292,7 @@ export default {
           if (this.checkRF1) {
             this.permissoes.push(5, 6, 7);
           }
-          this.updateAll();
+          //this.updateAll();
           break;  
         case 'Perfil' :
           this.tempArr = [8,9,10,11];
@@ -316,7 +316,7 @@ export default {
         if([1,2,3,4].includes(p))
           temp++
       });      
-      console.log(temp)
+      //console.log(temp)
       if(temp === 0) {        
         this.checkboxAtendimentos.indeterminate = false;
         this.checkboxFinanceiro.indeterminate = true;
@@ -330,7 +330,7 @@ export default {
           this.checkboxFinanceiro.indeterminate = true;
           this.checkboxAtendimentos.indeterminate = true;
           this.checkRF = false;
-          //this.checkF = false;
+          this.checkF = false;
       }          
        this.updateAll();
     },
@@ -340,7 +340,7 @@ export default {
         if([5, 6, 7].includes(p))
           temp++
       });      
-      console.log(temp)
+      //console.log(temp)
       if(temp === 0) {        
         this.checkboxPagamentos.indeterminate = false;
         this.checkboxFinanceiro.indeterminate = true;
@@ -358,7 +358,7 @@ export default {
       }          
       this.updateAll();
     },
-    updateCheckRF2() {
+    updateCheckRF3() {
       let temp = 0;
       this.permissoes.forEach((p) => {
         if([8, 9, 10, 11].includes(p))
@@ -382,20 +382,25 @@ export default {
       // }    
     },
     updateAll() {
-      let temp;
+      let temp = 0;
        this.permissoes.forEach((p) => {
         if([1,2,3,4,5,6,7].includes(p))
           temp++
       });      
+      console.log('testando...'+temp)
       if(temp === 0){
        this.checkboxFinanceiro.indeterminate = false;
-      }
-     if(this.checkRF1 == true && this.checkRF == true){
-        this.checkF = true;
-        this.checkboxFinanceiro.indeterminate = false;
-      }else {
-        this.checkF = false;
-        //this.checkboxFinanceiro.indeterminate = true;
+      } else {
+        this.checkboxFinanceiro.indeterminate = true;
+
+        
+        if(this.checkRF1 == true && this.checkRF == true){
+           this.checkF = true;
+           this.checkboxFinanceiro.indeterminate = false;
+         }else {
+           this.checkF = false;
+           //
+         }
       }
     },
     atualizarPerfil() { 

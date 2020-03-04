@@ -18,8 +18,8 @@
           <div class="container vl">
             <div class="container">
               <div class="row">
-                <input class="magic-checkbox" type="checkbox" id="teste" value="Relatórios Financeiros" @click="checkAll" v-model="checkRF" @change="updateAll"/>
-                <label for="teste"> Atendimentos</label>
+                <input class="magic-checkbox" type="checkbox" id="RF" value="Relatórios Financeiros" @click="checkAll" v-model="checkRF" @change="updateAll"/>
+                <label for="RF"> Atendimentos</label>
               </div>
               <div class="container">
                 <div>
@@ -41,8 +41,8 @@
               </div>
               <br />
               <div class="row">
-                <input class="magic-checkbox" type="checkbox" id="teste21" value="Pagamentos"  @click="checkAll" v-model="checkRF1" @change="updateAll"/>
-                <label for="teste21">Pagamentos</label>
+                <input class="magic-checkbox" type="checkbox" id="Pag" value="Pagamentos"  @click="checkAll" v-model="checkRF1" @change="updateAll"/>
+                <label for="Pag">Pagamentos</label>
               </div>
                 <div class="container">
                   <div>
@@ -222,6 +222,7 @@ export default {
             this.checkRF = false;
             this.checkRF1 = false;
           }
+           this.updateAll();
           break;
         case 'Relatórios Financeiros' :
            this.tempArry = [1, 2, 3, 4]
@@ -232,85 +233,146 @@ export default {
           if (this.checkRF) {
             this.permissoes.push(1, 2, 3, 4);
           }
+           //this.updateAll();
           break;
 
         case 'Pagamentos' :
           this.tempArry = [5, 6, 7]
           this.checkRF1 = !this.checkRF1;
-           this.permissoes = this.permissoes.filter((p) => {
+          this.permissoes = this.permissoes.filter((p) => {
             if(!this.tempArry.includes(p)) return p; 
           });
           if (this.checkRF1) {
             this.permissoes.push(5, 6, 7);
           }
-          break;          
+          //this.updateAll();
+          break;  
+        case 'Perfil' :
+          this.tempArr = [8,9,10,11];
+          this.checkRF2 = !this.checkRF2;
+          this.permissoes = this.permissoes.filter((p) => {
+            if(!this.tempArry.includes(p)) return p; 
+          });
+          if(this.checkRF2) {
+            this.permissoes.push(8, 9, 10, 11);
+          }
+
         default :
           console.log('Nenhuma opção');
       }
-       this.$emit('teste', this.permissoes)
+      this.$emit('teste', this.permissoes);
       //console.log(this.permissoes)  
-    },   
+    },     
     updateCheckRF1() {
-     this.permissoes.includes([1, 2, 3, 4]) ?
-        this.checkRF = true :
-          this.checkRF = false
+      let temp = 0;
+      this.permissoes.forEach((p) => {
+        if([1,2,3,4].includes(p))
+          temp++
+      });      
+      //console.log(temp)
+      if(temp === 0) {        
+        this.checkboxAtendimentos.indeterminate = false;
+        this.checkboxFinanceiro.indeterminate = true;
+        this.checkRF =false;
+      } else if(temp === 4) {
+        //console.log("AteAoui")
+        this.checkRF = true; 
+        this.checkboxFinanceiro.indeterminate = true;
+        this.checkboxAtendimentos.indeterminate = false;
+        }else {
+          this.checkboxFinanceiro.indeterminate = true;
+          this.checkboxAtendimentos.indeterminate = true;
+          this.checkRF = false;
           this.checkF = false;
-
+      }          
+       this.updateAll();
           
       this.$emit('teste', this.permissoes)
     },
     updateCheckRF2() {
-     this.permissoes.includes([5, 6, 7]) ?
-        this.checkRF1 = true :      
-          this.checkRF1 = false
-          this.checkF = false;
+     let temp = 0;
+      this.permissoes.forEach((p) => {
+        if([5, 6, 7].includes(p))
+          temp++
+      });      
+      //console.log(temp)
+      if(temp === 0) {        
+        this.checkboxPagamentos.indeterminate = false;
+        this.checkboxFinanceiro.indeterminate = true;
+        this.checkRF1 =false;
+      } else if(temp === 3) {
+        //console.log("AteAoui")
+        this.checkRF1 = true; 
+        this.checkboxFinanceiro.indeterminate = true;
+        this.checkboxPagamentos.indeterminate = false;
+        }else {
+          this.checkboxFinanceiro.indeterminate = true;
+          this.checkboxPagamentos.indeterminate = true;
+          this.checkRF1 = false;
+          //this.checkF = false;
+      }          
+      this.updateAll();
 
       this.$emit('teste', this.permissoes)
     },
     updateAll() {
-      if(this.checkRF1 == true && this.checkRF == true){
-        this.checkF = true;
-      }else {
-        this.checkF = false;
+    let temp = 0;
+       this.permissoes.forEach((p) => {
+        if([1,2,3,4,5,6,7].includes(p))
+          temp++
+      });      
+      console.log('testando...'+temp)
+      if(temp === 0){
+       this.checkboxFinanceiro.indeterminate = false;
+      } else {
+        this.checkboxFinanceiro.indeterminate = true;
+        
+        if(this.checkRF1 == true && this.checkRF == true){
+           this.checkF = true;
+           this.checkboxFinanceiro.indeterminate = false;
+         }else {
+           this.checkF = false;
+           //
+         }
       }
     },
   }
 }
 </script>
-
 <style scoped>
-  body {
-    background-color: #e5edfa;
-  }
+.form-temp {
+  margin-bottom: 30px;
+}
 
-  ul {
-    width: 150px;
-    background: #fff;
-    border-radius: 5px;
-    padding: 20px 10px;
-  }
+.parent {
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #eee;
+  border-radius: 5px;
+}
 
-  li {
-    margin-left: 20px;
-  }
+.vl {
+  border-left: 3px solid #eee;
+  height: 300px;
+  margin-bottom: 30px;
+}
 
-  .form-temp {
-   padding: 20px;
-   background-color: #fff;
-   border-radius: 5px;
-  }
+.container-n1 {
+  padding: 20px;
+} 
 
-  h4 {
-    color: rgb(112, 112, 112);
-  }
-  .container-new {
-    border: 1px solid rgb(202, 202, 202);
-    border-radius: 5px;
-    padding: 10px;
-  }
-   span {
-    color: red;
-    font-weight: bold
-  }
+.pf {
+  color: rgb(112, 112, 112);
+}
+
+.docker {
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+}
 
 </style>

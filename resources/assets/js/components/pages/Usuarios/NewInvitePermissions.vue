@@ -103,11 +103,6 @@ export default {
    validations: {
     labelPerfil: {required}
   },
-  // computed: {
-  //   permissoesT: function () {
-  //     return this.permissoes
-  //   } 
-  // },
   data() {
     return { 
       userInvite: {
@@ -155,7 +150,7 @@ export default {
       switch(this.showPresetPerfil) {
         case 'old' :
           if(this.presetPerfil === ''){
-            console.log('Por favor selecione um perfil para o usuário!');
+            //console.log('Por favor selecione um perfil para o usuário!');
 
              let toast = this.$toasted
                   .error("Por favor selecione um perfil para o usuário!", 
@@ -168,8 +163,8 @@ export default {
                 });
           }else {
 
-              console.log(this.presetPerfil);  
-              console.log(this.perfisNew[0].nome)
+              //console.log(this.presetPerfil);  
+              //console.log(this.perfisNew[0].nome)
               let perfId = 0;
               for(let i = 0; i < this.perfisNew.length; i++){
                 if(this.presetPerfil === this.perfisNew[i].nome)
@@ -181,7 +176,7 @@ export default {
               this.formConvite.empresa_id = perfId
               axios.post('/api/enviar-convite', this.formConvite)
                 .then(({data}) => {
-                  console.log(data);
+                  //console.log(data);
                 });
 
               toast = this.$toasted.success("O convite para o usuário foi criado com Sucesso!!", {
@@ -216,7 +211,7 @@ export default {
               axios.post('/api/user-perfil-json', newp)
                 .then(({data}) => {
                   checkPerfil = data; 
-                  console.log(checkPerfil)  
+                  //console.log(checkPerfil)  
                   
                    if(checkPerfil === 'já existe') {
                       toast = this.$toasted.error("O nome escolhido para o perfil já existe! Por favor digite outro nome", {
@@ -235,15 +230,15 @@ export default {
                       duration : 1500
                       });
                     } 
-                    console.log(arrayPermissoes);
+                    //console.log(arrayPermissoes);
                     axios.patch(`/api/sync-permissoes-perfil/${checkPerfil}`, arrayPermissoes)
                       .then(({data}) => {  
-                        console.log(data);
+                        //console.log(data);
                         
                         this.formConvite.empresa_id = data;
                         axios.post('/api/enviar-convite', this.formConvite)
                           .then(({data}) => {
-                            console.log(data);
+                            //console.log(data);
                           });
                           
                       });
@@ -275,7 +270,7 @@ export default {
             temp++;
           }        
         }
-        console.log(this.perfisNew);  //Modificar depois **      
+        //console.log(this.perfisNew);  //Modificar depois **      
       });    
     }
    }
