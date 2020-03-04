@@ -75,8 +75,8 @@
 
        <div class="container">
         <div class="parent">         
-            <input class="magic-checkbox" type="checkbox" id="Users" value="Agendamentos" />
-            <label for="Users">Perfis | Permissões</label>       
+            <input class="magic-checkbox" type="checkbox" id="Perf" value="VPerfil" v-model="checkF2" @click="checkAll"/>
+            <label for="Perf">Perfis | Permissões</label>       
             <a class="btn btn-default" type="button" @click="iconE = !iconE" data-toggle="collapse" data-target="#collapseAgendamentos" aria-expanded="false" aria-controls="collapseAgendamentos">
                <i :class="[iconE ? 'fa-chevron-up' : 'fa-chevron-down', 'fa']" />
             </a>          
@@ -86,24 +86,24 @@
           <div class="container vl">
             <div class="container">
               <div class="row">
-                <input class="magic-checkbox" type="checkbox" id="Perfil" value="Perfil" @click="checkAll" v-model="checkRF2"/>
+                <input class="magic-checkbox" type="checkbox" id="Perfil" value="Perfil" @click="checkAll" v-model="checkRF2"  @change="updateAll2"/>
                 <label for="Perfil">Perfil</label>
               </div>
                 <div class="container">
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="P201" :value='8' v-model="permissoes"/>
+                    <input class="magic-checkbox" type="checkbox" id="P201" :value='8' v-model="permissoes" @change="updateCheckRF3"/>
                     <label for="P201">Visualizar Perfil</label>
                   </div>
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="P202" :value='9' v-model="permissoes"/>
+                    <input class="magic-checkbox" type="checkbox" id="P202" :value='9' v-model="permissoes" @change="updateCheckRF3"/>
                     <label for="P202">Remover Perfil</label>
                   </div>
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="P203" :value='10' v-model="permissoes"/>
+                    <input class="magic-checkbox" type="checkbox" id="P203" :value='10' v-model="permissoes" @change="updateCheckRF3"/>
                     <label for="P203">Visualizar Usuários</label>
                   </div>
                   <div>
-                    <input class="magic-checkbox" type="checkbox" id="P204" :value='11' v-model="permissoes"/>
+                    <input class="magic-checkbox" type="checkbox" id="P204" :value='11' v-model="permissoes" @change="updateCheckRF3"/>
                     <label for="P204">Cadastrar Usuários</label>
                   </div>
                 </div>
@@ -203,17 +203,20 @@ export default {
     this.checkboxFinanceiro = document.getElementById("Financeiro");
     this.checkboxAtendimentos = document.getElementById("RF");  // Pag
     this.checkboxPagamentos = document.getElementById("Pag");  
+    /***************************** */
+    this.checkboxAgendamentos = document.getElementById("Perfil");
      setTimeout(() => {
        let temp = this.perfil;
        this.getPerfilPermissoes();
-       },200);     
-       
+       },200);      
   },
   data() {
     return {
       checkboxFinanceiro: '',
       checkboxAtendimentos: '',
       checkboxPagamentos: '',
+      //
+      checkboxAgendamentos: '',
       editNomePerfil: false,
       vefAlerta: false,
       iconF: false,
@@ -222,6 +225,7 @@ export default {
       checkRF1: false,
       checkRF2: false,
       checkF: false,
+      checkF2: false,
       permissoes: [],
       tempArry: [],
       presetPerfil: '',
@@ -294,7 +298,7 @@ export default {
           }
           //this.updateAll();
           break;  
-        case 'Perfil' :
+        case 'VPerfil' :
           this.tempArr = [8,9,10,11];
           this.checkRF2 = !this.checkRF2;
           this.permissoes = this.permissoes.filter((p) => {
@@ -308,7 +312,7 @@ export default {
           console.log('Nenhuma opção');
       }
       // this.$emit('teste', arr)
-      console.log(this.permissoes)  
+      //console.log(this.permissoes)  
     },   
     updateCheckRF1() {
       let temp = 0;
@@ -365,21 +369,21 @@ export default {
           temp++
       });      
       console.log(temp)
-      // if(temp === 0) {        
-      //   this.checkboxPagamentos.indeterminate = false;
-      //   this.checkboxFinanceiro.indeterminate = true;
-      //   this.checkRF1 =false;
-      // } else if(temp === 3) {
-      //   //console.log("AteAoui")
-      //   this.checkRF1 = true; 
-      //   this.checkboxFinanceiro.indeterminate = true;
-      //   this.checkboxPagamentos.indeterminate = false;
-      //   }else {
-      //     this.checkboxFinanceiro.indeterminate = true;
-      //     this.checkboxPagamentos.indeterminate = true;
-      //     this.checkRF1 = false;
-      //     //this.checkF = false;
-      // }    
+      if(temp === 0) {        
+        this.checkboxPagamentos.indeterminate = false;
+        this.checkboxFinanceiro.indeterminate = true;
+        this.checkRF1 =false;
+      } else if(temp === 3) {
+        //console.log("AteAoui")
+        this.checkRF1 = true; 
+        this.checkboxFinanceiro.indeterminate = true;
+        this.checkboxPagamentos.indeterminate = false;
+        }else {
+          this.checkboxFinanceiro.indeterminate = true;
+          this.checkboxPagamentos.indeterminate = true;
+          this.checkRF1 = false;
+          //this.checkF = false;
+      }    
     },
     updateAll() {
       let temp = 0;
@@ -402,6 +406,9 @@ export default {
            //
          }
       }
+    },
+    updateAll2() {
+      console.log('teste...');
     },
     atualizarPerfil() { 
       let pedit = {

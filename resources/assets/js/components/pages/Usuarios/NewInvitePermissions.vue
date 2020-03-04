@@ -249,7 +249,13 @@ export default {
           }
           break;
         default: 
-        console.log('teste');
+        toast = this.$toasted.error("Por favor, Selecione uma opção válida!", {
+                      iconPack: 'fontawesome',
+                      icon: "fa-exclamation-circle",
+                      theme: "bubble", 
+                      position: "bottom-right", 
+                      duration : 2000
+                      });
       }     
     },
     carregaPerfis() { 

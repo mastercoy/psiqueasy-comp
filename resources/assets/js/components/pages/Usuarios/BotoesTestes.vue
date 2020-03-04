@@ -58,10 +58,7 @@
 <script>
 export default {
   mounted() {
-    //checkbox-teste
-    let checkTest = document.getElementById("checkbox-teste");
-    checkTest.indeterminate = true;
-
+    
     this.pegaPermissoes();
   },
   data() {
