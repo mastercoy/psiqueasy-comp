@@ -1,7 +1,6 @@
 <template>
   <div class="form-temp">
     <h3>{{perf.nome}}</h3>
-    <h5>{{ arrPermissoes1 }}</h5>
     <div class="alert alert-warning" role="alert">
       <i class="fa fa-exclamation-circle fa-lg" aria-hidden="true"></i>
       As alterações feitas afetarão todos os usuários com este perfil

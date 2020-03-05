@@ -2,7 +2,7 @@
   <div class="form-temp">
     <h2>Página para testes de aplicação de botões</h2>
     <hr />
-    <div class="container">
+    <div class="container" v-if="verificaP">
       <div class="row">
         <button
           class="btn btn-primary btn-block"
@@ -12,7 +12,7 @@
         Editar Empresa</button>
         <button
           class="btn btn-warning btn-block"
-          :disabled="checkPermissoes(20)"
+          :disabled="checkPermissoes(2)"
           @click="testFunc"
         >Adicionar Filial</button>
         <button
@@ -57,43 +57,47 @@
 
 <script>
 export default {
-  mounted() {
+  //props: ['listPermissoes'],
+  beforeMount() {
+    this.pegaPermissoes()
     
-    this.pegaPermissoes();
   },
   data() {
     return {
       permissoes: [],
-      tempArr: []
+      tempArr: [],
+      verificarP: true
     };
-  },
+  },  
   methods: {
-    pegaPermissoes() {
+   pegaPermissoes() {
       axios.get(`/api/permissoes-perfil-json/3`).then(({ data }) => {
         this.tempArr = data;
         for (let i = 0; i < this.tempArr.length; i++) {
           this.permissoes[i] = this.tempArr[i].id;
           console.log("OK!");
         }
-        //console.log('testando...')
+        console.log(this.permissoes);
       });
     },
     testFunc() {
       console.log("Está ativo!");
     },
-    checkPermissoes(e) {
+     checkPermissoes(e) {
+      console.log('teste')
+      console.log(this.permissoes);
       //Função que retorna se o
       let teste = true;
-      let arrayT = this.$store.state.permissoes;
-      //  setTimeout(() => {
+      // let arrayT = this.permissoes;
+        // setTimeout(() => {
       console.log(e);
-      if (arrayT.includes(e)) {
-        console.log(arrayT.includes(e));
+      if (this.permissoes.includes(e)) {
+        console.log(this.permissoes.includes(e));
         teste = false;
       } else {
         teste = true;
       }
-      //  }, 1500);
+        // }, 1500);
       return teste;
     }
   }

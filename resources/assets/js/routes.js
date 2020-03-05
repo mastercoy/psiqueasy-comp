@@ -17,7 +17,7 @@ const routes = [
     {
         path: "/teste",
         component: BotoesTestes,
-        name: "Teste"
+        name: "Teste",
     },
     {
         path: "/cadastro",

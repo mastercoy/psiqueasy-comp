@@ -17,7 +17,7 @@
             <router-link v-if="this.$store.state.Status >= 1 " class="nav-link active" id="v-pills-empresa-tab" data-toggle="pill" href="#v-pills-empresa" role="tab" to="/cadastro" aria-selected="true"> Empresa </router-link>
             <router-link v-if="this.$store.state.Status === 2" class="nav-link" id="v-pills-filial-tab" data-toggle="pill" href="#v-pills-filial" role="tab" to="/filial" aria-selected="false"> Filiais </router-link>
             <router-link v-if="this.$store.state.Status === 2" class="nav-link" id="v-pills-users-tab" data-toggle="pill" href="#v-pills-users" role="tab" to="/usuarios" aria-selected="false"> Usuários </router-link>
-            <router-link v-if="this.$store.state.Status === 2" class="nav-link" id="v-pills-permission-tab" data-toggle="pill" href="#v-pills-permissoes" role="tab" to="/usuarios/invite/permissions" aria-selected="false"> Permissoes </router-link>                        
+            <!-- <router-link v-if="this.$store.state.Status === 2" class="nav-link" id="v-pills-permission-tab" data-toggle="pill" href="#v-pills-permissoes" role="tab" to="/usuarios/invite/permissions" aria-selected="false"> Permissoes </router-link>                         -->
             <router-link to="/teste" class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Botoes para Teste</router-link>
             <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">E-mail</a>
             <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Idioma</a>
@@ -41,17 +41,19 @@ export default {
   name: "modulo_clinica",
   mounted() {
     //ADICIONAR MÉTODO PARA VERIFICAR QUAL O USUÁRIO QUE ESTÁ LOGADO E QUAIS AS PERMISSÕES DO MESMO
+    
      },
   data() {
     return {
-      nivelPermissao: 0,
+      nivelPermissao: 0
      
     }
   },
   methods: {
     imprimir(){
       console.log("OK!"); 
-    }
+    },
+    
   }
 }
 </script>
