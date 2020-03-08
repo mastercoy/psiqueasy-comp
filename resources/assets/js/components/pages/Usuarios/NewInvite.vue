@@ -4,18 +4,13 @@
       <div class="container">
       <div class="row">
         <h5>Insira o e-mail do colaborador</h5>
-        <p>Ex laboris nostrud nisi ullamco laborum sint eu cillum quis occaecat et. 
-          Cupidatat laborum amet elit aliqua reprehenderit velit nisi proident.
-          Ut dolor fugiat velit Lorem pariatur velit nulla pariatur.
-          Duis id velit sit commodo eiusmod officia minim id adipisicing exercitation enim voluptate eiusmod.
-          Aliquip fugiat est ullamco ad ullamco qui incididunt consequat nulla laboris quis aliqua.</p>
-
+        <hr>
            <div class="col-md-9">
-             <div class="form-group">
+             <!-- <div class="form-group">
               <label for="name"><strong>Nome: </strong></label>
               <input type="text" class="form-control" v-bind:class="{ 'is-invalid': $v.userName.$error}" id="name" v-model="$v.userName.$model" >
                <span v-if="$v.userName.$error"> O campo é obrigatório!! </span>
-             </div>
+             </div> -->
              <div class="form-group">
               <label for="email"><strong>E-mail: </strong></label>
               <input type="text" class="form-control" v-bind:class="{ 'is-invalid': $v.userEmail.$error}" id="email" v-model="$v.userEmail.$model" >
@@ -52,7 +47,7 @@ export default {
   },
   validations: {
     userEmail: {required, email},
-    userName: {required}
+    // userName: {required}
   },
   methods: {
     verificaEmail() {
@@ -69,7 +64,7 @@ export default {
            this.testeVal = true;
          }else {
            this.testeVal = false;
-           this.$router.push({ name: 'convitePermissoes', params: { emailUser, nameUser } });
+           this.$router.push({ name: 'convitePermissoes', params: { emailUser } });
          }         
        });  
       }

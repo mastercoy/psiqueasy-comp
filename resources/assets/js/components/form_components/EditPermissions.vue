@@ -426,7 +426,15 @@ export default {
                     .then(({data}) => {
                       console.log(data);                     
                     });
-               this.$router.push("/usuarios");
+
+            toast = this.$toasted.success("As permissões foram atualizadas com Sucesso!!", {
+                      iconPack: 'fontawesome',
+                      icon: "fa-exclamation-circle",
+                      theme: "bubble", 
+                      position: "bottom-right", 
+                      duration : 1500
+                      });
+        this.$router.push("/usuarios");
     }
   }
 }

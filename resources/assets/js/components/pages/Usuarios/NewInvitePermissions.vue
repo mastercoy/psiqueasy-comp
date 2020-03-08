@@ -3,14 +3,14 @@
     <div class="form-temp"> 
       <div class="row">
                 
-        <div class="col-md-6">
+        <div class="col-md-12">
           <i class="fa fa-envelope fa-2x" aria-hidden="true"></i><hr>
           <div><label><strong>Email: </strong> {{ emailUser }}</label></div>          
          </div>
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
           <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i><hr>
           <div><label><strong>Nome: </strong> {{ nameUser }}</label></div>           
-        </div>
+        </div> -->
       </div>
       <div class="row">
         <div class="col-md-12">
@@ -27,13 +27,13 @@
           <div class="col md-6">
             <div>
               <input class="magic-radio" type="radio" name="radio" id="12" value="new" checked v-model="showPresetPerfil">
-              <label for="12">Criar um perfil do zero</label>              
+              <label for="12">Criar novo perfil </label>              
             </div>
           </div>
           <div class="col md-6">
             <div>
               <input class="magic-radio" type="radio" name="radio" id="11" value="old" v-model="showPresetPerfil">
-              <label for="11">Utilizar um perfil salvo</label>              
+              <label for="11">Utilizar um perfil existente</label>              
             </div>
           </div>
           <div>       
@@ -93,7 +93,7 @@ import PermissoesForm from '../../form_components/PermissoesForm'
 
 import { required } from 'vuelidate/lib/validators'
 export default {
-  props: ["emailUser", "nameUser"],
+  props: ["emailUser"],
   mounted() {
     this.carregaPerfis();
   },
@@ -132,8 +132,6 @@ export default {
     getPermissoes() {
       let toast;
       let checkPerfil = '';      
-      // let var1 = this.permissoesRF1;
-      // let var2 = this.permissoesRF2
       let arrayPermissoes = [];
       let newp = {
                 name: this.labelPerfil,
@@ -172,8 +170,8 @@ export default {
               }
 
                console.log(perfId);
-              // FALTA COMPLETAR COM A CHAMADA PARA A API
-              this.formConvite.empresa_id = perfId
+              this.formConvite.perfil_id = perfId
+              this.formConvite.empresa_id = this.$store.state.empresaID
               axios.post('/api/enviar-convite', this.formConvite)
                 .then(({data}) => {
                   //console.log(data);
