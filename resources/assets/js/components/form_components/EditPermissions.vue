@@ -417,24 +417,26 @@ export default {
         empresa_id: this.$store.state.empresaID,
         array_permissoes: this.permissoes   //VERIFICAR SE AS PERMISSOES ESCOLHIDAS ATENDEM AS DEMANDAS
       }; 
-          console.log(pedit);
+          //console.log(pedit);
       axios.patch(`/api/user-perfil-json/${pedit.id}`, {name: pedit.name, empresa_id: pedit.empresa_id})
                 .then(({data}) => {
-                  console.log(pedit.array_permissoes);                   
+                  //console.log(pedit.array_permissoes);                   
                });
       axios.patch(`/api/sync-permissoes-perfil/${pedit.id}`, pedit.array_permissoes)
                     .then(({data}) => {
-                      console.log(data);                     
+                      //console.log(data);    
+                       this.$router.push("/usuarios");
                     });
 
-            toast = this.$toasted.success("As permissões foram atualizadas com Sucesso!!", {
+           let toast = this.$toasted.success("As permissões foram atualizadas com Sucesso!!", {
                       iconPack: 'fontawesome',
                       icon: "fa-exclamation-circle",
                       theme: "bubble", 
                       position: "bottom-right", 
                       duration : 1500
                       });
-        this.$router.push("/usuarios");
+
+       
     }
   }
 }

@@ -2,11 +2,12 @@
   <div class="container">
     <div class="form-temp"> 
       <div class="row">
-                
-        <div class="col-md-12">
+        <div class="col-md-2"></div>        
+        <div class="col-md-8">
           <i class="fa fa-envelope fa-2x" aria-hidden="true"></i><hr>
           <div><label><strong>Email: </strong> {{ emailUser }}</label></div>          
          </div>
+         <div class="col-md-2"></div>
         <!-- <div class="col-md-6">
           <i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i><hr>
           <div><label><strong>Nome: </strong> {{ nameUser }}</label></div>           

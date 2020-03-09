@@ -32,17 +32,6 @@
               <td>{{ user.email }}</td>
               <!-- <td v-bind:class="{'ativo': user.emailStatus === 1, 'pendente': user.emailStatus === 0, 'expirado': user.emailStatus === 2}">{{ user.vefEmail}}</td> -->
               <td><router-link :to="{name:'EditUsuario', params: {user} }" class="btn btn-sm btn-warning"><i class="fa fa-pencil-square" aria-hidden="true"></i></router-link></td>
-              <!-- <td v-if="user.emailStatus === 1"
-                v-else-if="user.emailStatus === 0">
-                <button class="btn btn-sm btn-warning" disabled><i class="fa fa-pencil-square" aria-hidden="true"></i></button>
-              </td>  -->
-              <!-- <td 
-                v-else-if="user.emailStatus === 2">
-                <a @click="reenviarEmail" 
-                class="btn btn-secondary btn-sm" 
-                data-toggle="popover" data-trigger="hover" title="OBS" data-placement="bottom" data-content="Tempo expirado do convite, clique para enviar novamente"
-                ><i class="fa fa-refresh" aria-hidden="true"></i> </a>
-              </td>  -->
               <td><a @click="selectUser = user.name" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-trash" aria-hidden="true"></i></a></td>                
             </tr>
           </tbody>
