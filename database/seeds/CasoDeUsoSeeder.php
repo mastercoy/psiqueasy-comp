@@ -337,6 +337,57 @@ class CasoDeUsoSeeder extends Seeder {
                                            'label' => 'show_cat',
 
                                        ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'criar_agendamento',
+                                           'label' => 'criar_agendamento',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'show_agendamento',
+                                           'label' => 'show_agendamento',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'update_agendamento',
+                                           'label' => 'update_agendamento',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'destroy_agendamento',
+                                           'label' => 'destroy_agendamento',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'index_atendimento',
+                                           'label' => 'index_atendimento',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'criar_atendimento',
+                                           'label' => 'criar_atendimento',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'show_atendimento',
+                                           'label' => 'show_atendimento',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'update_atendimento',
+                                           'label' => 'update_atendimento',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'destroy_atendimento',
+                                           'label' => 'destroy_atendimento',
+
+                                       ]);
+        DB::table('permissao')->insert([
+                                           'name' => 'buscar_atendimento',
+                                           'label' => 'buscar_atendimento',
+
+                                       ]);
+
 
         DB::table('empresas')->insert([
                                           'cpf_cnpj' => '11111111',
@@ -725,6 +776,61 @@ class CasoDeUsoSeeder extends Seeder {
 
                                               ]);
         DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '67',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '68',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '69',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '70',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '66',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '71',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '72',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '73',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '74',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '75',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
+                                                  'perfil_id' => '1',
+                                                  'permissao_id' => '76',
+
+                                              ]);
+        DB::table('perfil_permissao')->insert([
                                                   'perfil_id' => '2',
                                                   'permissao_id' => '1',
 
@@ -893,37 +999,43 @@ class CasoDeUsoSeeder extends Seeder {
                                               'status' => 'paciente 1 profissional 1',
                                               'user_id' => '1',
                                               'paciente_id' => '1',
-                                              'procedimento' => 'consulta'
+                                              'procedimento' => 'consulta',
+                                              'data' => '2020-03-20 12:30:00.000000'
                                           ]);
         DB::table('atendimentos')->insert([
                                               'status' => 'paciente 2 profissional 1',
                                               'user_id' => '1',
                                               'paciente_id' => '2',
-                                              'procedimento' => 'consulta'
+                                              'procedimento' => 'consulta',
+                                              'data' => '2020-03-20 14:30:00.000000'
                                           ]);
         DB::table('atendimentos')->insert([
                                               'status' => 'paciente 1 profissional 2',
                                               'user_id' => '2',
                                               'paciente_id' => '3',
-                                              'procedimento' => 'consulta'
+                                              'procedimento' => 'consulta',
+                                              'data' => '2020-03-22 12:30:00.000000'
                                           ]);
         DB::table('atendimentos')->insert([
                                               'status' => 'paciente 2 profissional 2',
                                               'user_id' => '2',
                                               'paciente_id' => '4',
-                                              'procedimento' => 'consulta'
+                                              'procedimento' => 'consulta',
+                                              'data' => '2020-03-20 12:30:00.000000'
                                           ]);
         DB::table('atendimentos')->insert([
                                               'status' => 'paciente 1 profissional 3',
                                               'user_id' => '3',
                                               'paciente_id' => '5',
-                                              'procedimento' => 'consulta'
+                                              'procedimento' => 'consulta',
+                                              'data' => '2020-03-20 15:30:00.000000'
                                           ]);
         DB::table('atendimentos')->insert([
                                               'status' => 'paciente 2 profissional 3',
                                               'user_id' => '3',
                                               'paciente_id' => '6',
-                                              'procedimento' => 'consulta'
+                                              'procedimento' => 'consulta',
+                                              'data' => '2020-03-22 12:30:00.000000'
                                           ]);
 
     }

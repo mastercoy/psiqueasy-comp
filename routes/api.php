@@ -76,6 +76,13 @@ Route::get('completar-cadastro', 'ConviteController@completarCadastro')->name('c
 Route::get('associar-cadastro', 'ConviteController@associarCadastro')->name('associar');
 Route::post('aceitar-convite', 'ConviteController@aceitar')->name('aceitar');
 
+// rotas para AGENDAMENTO
+Route::resource('agendamento-json', 'AgendamentoController');
+
+// rotas para ATENDIMENTO
+Route::resource('atendimento-json', 'AtendimentoController');
+Route::get('atendimento-buscar/{request}', 'AtendimentoController@buscar');
+
 /*
  +--------+-----------+--------------------------------------------------------------------+-------------------------------------+------------------------------------------------------------------------+--------------+
 | Domain | Method    | URI                                                                | Name                                | Action                                                                 | Middleware   |
