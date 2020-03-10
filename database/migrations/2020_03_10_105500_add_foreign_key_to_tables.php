@@ -49,6 +49,19 @@ class AddForeignKeyToTables extends Migration {
                   ->onDelete('cascade');
         });
 
+        Schema::table('atendimentos', function ($table) {
+            $table->foreign('user_id')
+                  ->references('id')->on('users')
+                  ->onDelete('cascade');
+            $table->foreign('paciente_id')->references('id')->on('pacientes');
+        });
+
+        Schema::table('pacientes', function ($table) {
+            $table->foreign('user_id')
+                  ->references('id')->on('users')
+                  ->onDelete('cascade');
+        });
+
     }
 
     public function down() {
