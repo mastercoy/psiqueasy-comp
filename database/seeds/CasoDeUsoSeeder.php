@@ -127,7 +127,6 @@ class CasoDeUsoSeeder extends Seeder {
                                            'label' => 'sync_permissao',
 
                                        ]);
-
         DB::table('permissao')->insert([
                                            'name' => 'criar_perfil',
                                            'label' => 'Cria um novo perfil',
@@ -833,7 +832,7 @@ class CasoDeUsoSeeder extends Seeder {
                                                  'empresa_id' => '1',
                                              ]);
         DB::table('empresa_filiais')->insert([
-                                                 'name' => 'Filial Dois Emp2',
+                                                 'name' => 'Filial Um Emp2',
                                                  'empresa_id' => '2',
                                              ]);
         DB::table('empresa_filiais')->insert([
@@ -841,7 +840,7 @@ class CasoDeUsoSeeder extends Seeder {
                                                  'empresa_id' => '2',
                                              ]);
         DB::table('empresa_filiais')->insert([
-                                                 'name' => 'Filial Dois Emp3',
+                                                 'name' => 'Filial Um Emp3',
                                                  'empresa_id' => '3',
                                              ]);
         DB::table('empresa_filiais')->insert([
@@ -864,6 +863,68 @@ class CasoDeUsoSeeder extends Seeder {
                                                     'descricao' => 'Categoria Tres',
                                                     'empresa_id' => '3',
                                                 ]);
+
+        DB::table('pacientes')->insert([
+                                           'nome' => 'Paciente 1 Prof 1',
+                                           'user_id' => '1',
+                                       ]);
+        DB::table('pacientes')->insert([
+                                           'nome' => 'Paciente 2 Prof 1',
+                                           'user_id' => '1',
+                                       ]);
+        DB::table('pacientes')->insert([
+                                           'nome' => 'Paciente 1 Prof 2',
+                                           'user_id' => '2',
+                                       ]);
+        DB::table('pacientes')->insert([
+                                           'nome' => 'Paciente 2 Prof 2',
+                                           'user_id' => '2',
+                                       ]);
+        DB::table('pacientes')->insert([
+                                           'nome' => 'Paciente 1 Prof 3',
+                                           'user_id' => '3',
+                                       ]);
+        DB::table('pacientes')->insert([
+                                           'nome' => 'Paciente 2 Prof 3',
+                                           'user_id' => '3',
+                                       ]);
+
+        DB::table('atendimentos')->insert([
+                                              'status' => 'paciente 1 profissional 1',
+                                              'user_id' => '1',
+                                              'paciente_id' => '1',
+                                              'procedimento' => 'consulta'
+                                          ]);
+        DB::table('atendimentos')->insert([
+                                              'status' => 'paciente 2 profissional 1',
+                                              'user_id' => '1',
+                                              'paciente_id' => '2',
+                                              'procedimento' => 'consulta'
+                                          ]);
+        DB::table('atendimentos')->insert([
+                                              'status' => 'paciente 1 profissional 2',
+                                              'user_id' => '2',
+                                              'paciente_id' => '3',
+                                              'procedimento' => 'consulta'
+                                          ]);
+        DB::table('atendimentos')->insert([
+                                              'status' => 'paciente 2 profissional 2',
+                                              'user_id' => '2',
+                                              'paciente_id' => '4',
+                                              'procedimento' => 'consulta'
+                                          ]);
+        DB::table('atendimentos')->insert([
+                                              'status' => 'paciente 1 profissional 3',
+                                              'user_id' => '3',
+                                              'paciente_id' => '5',
+                                              'procedimento' => 'consulta'
+                                          ]);
+        DB::table('atendimentos')->insert([
+                                              'status' => 'paciente 2 profissional 3',
+                                              'user_id' => '3',
+                                              'paciente_id' => '6',
+                                              'procedimento' => 'consulta'
+                                          ]);
 
     }
 }
