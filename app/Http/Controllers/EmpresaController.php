@@ -23,6 +23,7 @@ class EmpresaController extends Controller {
                 $listaEmpresa[] = $empresa;
             }
         }
+
         return Response::json($listaEmpresa);
     }
 

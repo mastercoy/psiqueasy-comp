@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Paciente extends Model {
     //
     protected $guarded = [];
+    protected $table   = 'pacientes';
 
     public function atendimentos() {
         return $this->hasMany('App\Models\Atendimento')

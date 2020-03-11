@@ -21,7 +21,6 @@ class CreateAtendimentosTable extends Migration {
             $table->string('procedimento')->nullable();
             $table->boolean('active')->default(true);
             $table->timestamps();
-
             $table->integer('user_id')->unsigned();
             $table->integer('paciente_id')->unsigned();
         });

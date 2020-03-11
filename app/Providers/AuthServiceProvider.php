@@ -23,6 +23,7 @@ class AuthServiceProvider extends ServiceProvider {
 
         Gate::define('pertence-usuario-logado-e-tem-permissao', function ($user, $objeto) {
 
+            // $permissoesUser = (new UserController)->retornaPermissoes();
             $permissoesUser = (new UserController)->retornaPermissoes();
             $decoder        = json_decode($objeto);
             $nomeMetodo     = $decoder[0];
@@ -53,9 +54,9 @@ class AuthServiceProvider extends ServiceProvider {
 
         });
 
-        // ============================================================================================================
-        // ============================================================================================================
-        // ============================================================================================================
+        // ========================================================================
+        // ========================================================================
+        // ========================================================================
 
 
         Gate::define('pertence-usuario-logado', function ($user, $objeto) {

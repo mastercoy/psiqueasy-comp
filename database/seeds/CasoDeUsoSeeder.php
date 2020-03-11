@@ -310,62 +310,35 @@ class CasoDeUsoSeeder extends Seeder {
         DB::table('permissao')->insert([
                                            'name' => 'index_filial',
                                            'label' => 'index_filial',
-
                                        ]);
         DB::table('permissao')->insert([
                                            'name' => 'listar_cat_desat',
                                            'label' => 'listar_cat_desat',
-
                                        ]);
         DB::table('permissao')->insert([
                                            'name' => 'desativar_cat',
                                            'label' => 'desativar_cat',
-
                                        ]);
         DB::table('permissao')->insert([
                                            'name' => 'destroy_cat',
                                            'label' => 'destroy_cat',
-
                                        ]);
         DB::table('permissao')->insert([
                                            'name' => 'update_cat',
                                            'label' => 'update_cat',
-
                                        ]);
         DB::table('permissao')->insert([
                                            'name' => 'show_cat',
                                            'label' => 'show_cat',
-
                                        ]);
-        DB::table('permissao')->insert([
-                                           'name' => 'criar_agendamento',
-                                           'label' => 'criar_agendamento',
 
-                                       ]);
-        DB::table('permissao')->insert([
-                                           'name' => 'show_agendamento',
-                                           'label' => 'show_agendamento',
-
-                                       ]);
-        DB::table('permissao')->insert([
-                                           'name' => 'update_agendamento',
-                                           'label' => 'update_agendamento',
-
-                                       ]);
-        DB::table('permissao')->insert([
-                                           'name' => 'destroy_agendamento',
-                                           'label' => 'destroy_agendamento',
-
-                                       ]);
         DB::table('permissao')->insert([
                                            'name' => 'index_atendimento',
                                            'label' => 'index_atendimento',
-
                                        ]);
         DB::table('permissao')->insert([
                                            'name' => 'criar_atendimento',
                                            'label' => 'criar_atendimento',
-
                                        ]);
         DB::table('permissao')->insert([
                                            'name' => 'show_atendimento',
@@ -375,17 +348,15 @@ class CasoDeUsoSeeder extends Seeder {
         DB::table('permissao')->insert([
                                            'name' => 'update_atendimento',
                                            'label' => 'update_atendimento',
-
                                        ]);
+
         DB::table('permissao')->insert([
                                            'name' => 'destroy_atendimento',
                                            'label' => 'destroy_atendimento',
-
                                        ]);
         DB::table('permissao')->insert([
                                            'name' => 'buscar_atendimento',
                                            'label' => 'buscar_atendimento',
-
                                        ]);
 
 
@@ -797,11 +768,6 @@ class CasoDeUsoSeeder extends Seeder {
                                               ]);
         DB::table('perfil_permissao')->insert([
                                                   'perfil_id' => '1',
-                                                  'permissao_id' => '66',
-
-                                              ]);
-        DB::table('perfil_permissao')->insert([
-                                                  'perfil_id' => '1',
                                                   'permissao_id' => '71',
 
                                               ]);
@@ -810,26 +776,7 @@ class CasoDeUsoSeeder extends Seeder {
                                                   'permissao_id' => '72',
 
                                               ]);
-        DB::table('perfil_permissao')->insert([
-                                                  'perfil_id' => '1',
-                                                  'permissao_id' => '73',
 
-                                              ]);
-        DB::table('perfil_permissao')->insert([
-                                                  'perfil_id' => '1',
-                                                  'permissao_id' => '74',
-
-                                              ]);
-        DB::table('perfil_permissao')->insert([
-                                                  'perfil_id' => '1',
-                                                  'permissao_id' => '75',
-
-                                              ]);
-        DB::table('perfil_permissao')->insert([
-                                                  'perfil_id' => '1',
-                                                  'permissao_id' => '76',
-
-                                              ]);
         DB::table('perfil_permissao')->insert([
                                                   'perfil_id' => '2',
                                                   'permissao_id' => '1',
