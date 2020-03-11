@@ -98,3 +98,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+ span {
+    color: red;
+    font-weight: bold
+  }
+</style>

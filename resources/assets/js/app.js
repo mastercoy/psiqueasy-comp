@@ -16,8 +16,13 @@ import store from "./store";
 import Toasted from "vue-toasted";
 import Vuelidate from "vuelidate";
 import VueTheMask from "vue-the-mask";
+import FullCalendar from 'vue-full-calendar';
+import FullCalendarCss from "fullcalendar/dist/fullcalendar.min.css";
 
 
+
+
+Vue.use(FullCalendar, FullCalendarCss);
 Vue.use(Vuelidate);
 Vue.use(Toasted);
 Vue.use(VueRouter);

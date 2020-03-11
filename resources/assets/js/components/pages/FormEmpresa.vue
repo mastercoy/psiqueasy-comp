@@ -175,4 +175,9 @@ export default {
   h4 {
     color: rgb(112, 112, 112);
   }
+
+  span {
+    color: red;
+    font-weight: bold
+  }
 </style>

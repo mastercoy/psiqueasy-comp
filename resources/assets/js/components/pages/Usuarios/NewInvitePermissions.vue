@@ -317,5 +317,8 @@ export default {
   justify-content: space-between;
   vertical-align: middle;
 }
-
+span {
+    color: red;
+    font-weight: bold
+  }
 </style>

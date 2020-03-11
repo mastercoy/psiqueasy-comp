@@ -163,5 +163,10 @@ export default {
     font-weight: bold;
     color: grey;
   }
+
+  span {
+    color: red;
+    font-weight: bold
+  }
   
 </style>

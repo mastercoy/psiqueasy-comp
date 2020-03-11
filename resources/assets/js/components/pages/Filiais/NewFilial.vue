@@ -84,7 +84,7 @@ export default {
 </script>
 
 <style scoped>
-  /* .form-temp {
+   .form-temp {
    padding: 20px;
    background-color: #fff;
    border-radius: 5px;
@@ -99,7 +99,8 @@ export default {
     padding: 10px;
   }
 
-  p {
+  span {
     color: red;
-  } */
+    font-weight: bold
+  }
 </style>

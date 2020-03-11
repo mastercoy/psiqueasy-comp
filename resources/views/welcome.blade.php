@@ -8,6 +8,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
+        <link href='fullcalendar/bootstrap/main.css' rel='stylesheet'>
         <title>Componente - Botão de Relatórios</title>
 
         <!-- Fonts -->

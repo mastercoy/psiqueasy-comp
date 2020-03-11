@@ -67,4 +67,8 @@ export default {
     border-radius: 5px;
     padding: 10px;
   }
+  span {
+    color: red;
+    font-weight: bold
+  }
 </style>

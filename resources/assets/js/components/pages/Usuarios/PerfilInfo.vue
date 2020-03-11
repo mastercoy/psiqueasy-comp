@@ -30,7 +30,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .form-temp {
   margin-bottom: 30px;
 }
