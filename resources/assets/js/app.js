@@ -26,7 +26,7 @@ Vue.use(VueTheMask);
 
 const router = new VueRouter({
     mode: "history",
-    base: process.env.APP_URL,  
+    base: process.env.APP_URL,
     routes
 });
 
