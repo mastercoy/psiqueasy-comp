@@ -9,11 +9,19 @@ import newInvite from "./components/pages/Usuarios/NewInvite";
 import newInviteP from "./components/pages/Usuarios/NewInvitePermissions";
 import PerfilInfo from "./components/pages/Usuarios/PerfilInfo";
 
+//
+import Agendamentos from "./components/pages/Agendamentos/Agendamentos";
+
 //TESTE DE APLICABILIDADE
 import BotoesTestes from "./components/pages/Usuarios/BotoesTestes";
 
 
 const routes = [
+    {
+        path: "/agendamentos",
+        component: Agendamentos,
+        name: 'realizaAgendamentos'
+    },
     {
         path: "/teste",
         component: BotoesTestes,

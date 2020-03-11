@@ -28,10 +28,12 @@
     },
     "dependencies": {
         "axios": "^0.19.1",
+        "bootstrap": "^4.4.1",
         "font-awesome": "^4.7.0",
         "jquery": "^3.4.1",
         "magic-check": "^1.0.3",
         "popper.js": "^1.16.0",
+        "vue": "^2.6.11",
         "vue-router": "^3.1.5",
         "vue-the-mask": "^0.11.1",
         "vue-toasted": "^1.1.27",
