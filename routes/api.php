@@ -79,7 +79,7 @@ Route::post('aceitar-convite', 'ConviteController@aceitar')->name('aceitar');
 // rotas para ATENDIMENTO
 Route::resource('atendimento-json', 'AtendimentoController');
 Route::patch('desativar-atendimento-json/{atendimento}', 'AtendimentoController@desativarAtendimento');
-Route::get('buscar-atendimento/{request}', 'AtendimentoController@buscarAtendimento');
+Route::get('buscar-atendimento-json', 'AtendimentoController@buscarAtendimento');
 
 /*
 +--------+-----------+--------------------------------------------------------------------+-------------------------------------+------------------------------------------------------------------------+--------------+
