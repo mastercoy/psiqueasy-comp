@@ -1,6 +1,11 @@
 <template>
 <div class="form-temp">
    <div class="container">
+     <div class="form-group">
+       <div class="row">
+         <button class="btn btn-primary"> Agendar Consulta </button>
+       </div>
+     </div>
     <div class="form-group">
     <label for="exampleFormControlSelect1">Example select</label>
     <select class="form-control" id="exampleFormControlSelect1">
@@ -10,12 +15,13 @@
       <option>4</option>
       <option>5</option>
     </select>
-  </div>
+  </div> 
+  <!-- :header="header" -->
   
-     <button class="btn btn-primary btn-block" @click="handleAddConsulta"> Agendar Atendimento</button>
+     <button class="btn btn-primary btn-block" @click="handleAddConsulta"> Agendar Atendimento</button><br>
     <div class="row">      
       <div class="col-md-12">
-        <full-calendar :events="events" :config="config" :eventTimeFormat='eventTimeFormat'/>
+        <full-calendar  :events="events" :config="config" :eventTimeFormat='eventTimeFormat' @click="handleCalendar"/>
       </div>
       <!-- <div class="col-md-3"></div> -->
       <div class="row"><br>
@@ -43,11 +49,10 @@ export default {
     return {
       header: [
         {
-          left:   'title',
-          center: '',
-          right:  'Hoje , prev,next',
-          Hoje: 'today',
-          month: 'Mes'
+          left:  'prev, next, today',
+          center: 'title',
+          right:  'dayGridMonth,timeGridWeek,timeGridDay',          
+          today: 'today',          
         }
       ],
       events: [
@@ -65,9 +70,6 @@ export default {
             title  : 'Dra Livia - Roberto',
             start  : '2020-03-03T15:30:00',
             end    : '2020-03-03T16:20:00',
-            extendedProps: {
-              status: 'done'
-            }
         },
         {   
             id     : 'b',
@@ -105,6 +107,7 @@ export default {
           minute: '2-digit',
           meridiem: 'short'
         },
+        themeSystem: 'bootstrap',
         config: {          
           locale: 'pt-br',  
           eventLimit: true,
