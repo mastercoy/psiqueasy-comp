@@ -29,7 +29,7 @@ class ConviteController extends Controller {
         $userComEmpresa = User::where('email', $request->get('email'))
                               ->where('empresa_id', !null)->first();
 
-        // para saber se existe usuario cadastrado SEM emJustiça do Ceará manda soltar 46 PMs detidos em motim - 02/03/2020 - Poder - Folhapresa_id
+        // para saber se existe usuario cadastrado SEM empresa_id
         $userSemEmpresa = User::where('email', $request->get('email'))
                               ->where('empresa_id', null)->first();
 
