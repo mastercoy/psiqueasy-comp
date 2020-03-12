@@ -80,7 +80,7 @@ Route::post('aceitar-convite', 'ConviteController@aceitar')->name('aceitar');
 Route::resource('atendimento-json', 'AtendimentoController');
 Route::patch('desativar-atendimento-json/{atendimento}', 'AtendimentoController@desativarAtendimento');
 Route::get('buscar-atendimento-json', 'AtendimentoController@buscarAtendimento');
-
+// inicio, fim, status, user_id
 /*
 +--------+-----------+--------------------------------------------------------------------+-------------------------------------+------------------------------------------------------------------------+--------------+
 | Domain | Method    | URI                                                                | Name                                | Action                                                                 | Middleware   |
