@@ -71,6 +71,7 @@ class AtendimentoController extends Controller {
     }
 
     public function buscarAtendimento(Request $request) {
+        //teste
         $nomeMetodo = 'buscar_atendimento';
 
         if (Gate::denies('tem-permissao', $nomeMetodo)) {
