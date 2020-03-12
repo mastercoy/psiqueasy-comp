@@ -16,12 +16,12 @@
       <option>5</option>
     </select>
   </div> 
-  <!-- :header="header" -->
+  <!-- -->
   
      <button class="btn btn-primary btn-block" @click="handleAddConsulta"> Agendar Atendimento</button><br>
     <div class="row">      
       <div class="col-md-12">
-        <full-calendar  :events="events" :config="config" :eventTimeFormat='eventTimeFormat' @click="handleCalendar"/>
+        <full-calendar :header="header" :events="events" :config="config" :eventTimeFormat='eventTimeFormat' :views='views'/>
       </div>
       <!-- <div class="col-md-3"></div> -->
       <div class="row"><br>
@@ -42,19 +42,20 @@
 
 <script>
 
-import { FullCalendar } from 'vue-full-calendar';
+import { FullCalendar, agendaDay, agendaWeek, month, themeSystem } from 'vue-full-calendar';
 
 export default {
   data() {
     return {
-      header: [
+      header: 
         {
           left:  'prev, next, today',
           center: 'title',
-          right:  'dayGridMonth,timeGridWeek,timeGridDay',          
-          today: 'today',          
+          right:  'month,agendaWeek,agendaDay', 
+          month: { title: 'Mes'}      
+                    
         }
-      ],
+      ,
       events: [
          {   
             id        : 'a',
@@ -117,6 +118,20 @@ export default {
             } 
           }         
        },
+       views: {
+          dayGrid: {
+            // options apply to dayGridMonth, dayGridWeek, and dayGridDay views
+          },
+          timeGrid: {
+            // options apply to timeGridWeek and timeGridDay views
+          },
+          week: {
+            title: 'Semana'
+          },
+          day: {
+            // options apply to dayGridDay and timeGridDay views
+          }
+      },
         eventClick: function(info) {
          console.log('testando...'+ info)
         }      

@@ -105,6 +105,7 @@ class AtendimentoController extends Controller {
     }
 
     public function buscarAtendimento(Request $request) {
+        //teste
         $nomeMetodo = 'buscar_atendimento';
 
         $dataInicial = ($request->dataInicial) ? date('Y-m-d 00:00', strtotime($request->dataInicial)) : null;
