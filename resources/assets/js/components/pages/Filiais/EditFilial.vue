@@ -8,12 +8,6 @@
           <label for="nome"><strong>Nome: </strong></label>
           <input type="text" class="form-control" id="nome" v-model="filial.name" >
         </div>
-
-        <!-- <div class="form-group">
-          <label for="CNPJ"><strong>localidade: </strong></label>
-          <input type="text" class="form-control" id="CNPJ" v-model="filial.localidade" >
-        </div> -->
-
           <hr />
           <div class="row">          
             <div class="col-md-8"></div>

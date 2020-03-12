@@ -21,7 +21,6 @@ import FullCalendarCss from "fullcalendar/dist/fullcalendar.min.css";
 
 
 
-
 Vue.use(FullCalendar, FullCalendarCss);
 Vue.use(Vuelidate);
 Vue.use(Toasted);

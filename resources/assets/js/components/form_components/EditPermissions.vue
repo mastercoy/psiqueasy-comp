@@ -441,3 +441,41 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.form-temp {
+  margin-bottom: 30px;
+}
+
+.parent {
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  background-color: #eee;
+  border-radius: 5px;
+}
+
+.vl {
+  border-left: 3px solid #eee;
+  height: 300px;
+  margin-bottom: 30px;
+}
+
+.container-n1 {
+  padding: 20px;
+} 
+
+.pf {
+  color: rgb(112, 112, 112);
+}
+
+.docker {
+  padding: 20px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  vertical-align: middle;
+}
+
+</style>
