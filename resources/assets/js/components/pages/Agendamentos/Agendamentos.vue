@@ -6,11 +6,13 @@
          <div class="col-md-4">
            <button class="btn btn-primary btn-block mb-1" data-toggle="modal" data-target="#exampleModalCenter"> 
              <i class="fa fa-plus-circle fa-lg" aria-hidden="true"></i>
-             Agendar atendimento </button>
+             Agendar Atendimento </button>
          </div>
          <div class="col-md-4"></div>
          <div class="col-md-4">
-           <button class="btn btn-warning btn-block"> Editar atendimento </button>
+           <button class="btn btn-secondary btn-block" data-toggle="modal" data-target="#modalEditarAtendimento"> 
+             <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+             Editar Atendimento </button>
          </div>         
        </div><hr>
      </div>
@@ -30,7 +32,7 @@
       </div>
       </div>
 
-       <!-- Modal para comfirmação de deletar -->
+      <!-- Modal para comfirmação de deletar -->
           <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog" role="document">
               <div class="modal-content">
@@ -87,6 +89,39 @@
             </div>
           </div>
 
+
+      <!-- Modal para comfirmação de deletar -->
+          <div class="modal fade" id="modalEditarAtendimento" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Editar Atendimento</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <label for="exampleFormControlSelect1" >Selecione o Profissional</label>
+                    <select class="form-control" id="exampleFormControlSelect1" v-model="$v.selectUserNew.$model" v-bind:class="{ 'is-invalid': $v.selectUserNew.$error}">                    
+                      <option v-for="user in users" :key="user.id">{{ user.name}}</option>              
+                    </select> <span v-if="$v.selectUserNew.$error">Este campo não foi preenchido corretamente</span>
+                    <br>
+                    <div class="form-group" v-if="selectUserNew !== ''">
+                      <label  for="exampleFormControlSelect2" >Selecione o Paciente</label>
+                      <select class="form-control" id="exampleFormControlSelect2" v-model="$v.selectPacienteNew.$model" v-bind:class="{ 'is-invalid': $v.selectPacienteNew.$error}">
+                        <option v-for="paciente in pacientes" :key="paciente.id">{{ paciente.id}}</option>              
+                      </select> <span v-if="$v.selectPacienteNew.$error">Este campo não foi preenchido corretamente</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                  <button type="button" class="btn btn-success" >Continuar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+    
     </div> 
 </template>
 
@@ -206,12 +241,11 @@ export default {
         } 
          this.consultas.forEach((consulta) => {
            const newAtend = {
-              id     : 'e',
+              id        : 'e',
               textColor : 'white',
-              color  : 'primary',
-              title  : consulta.status,
-              // end    : '2020-03-20T14:00:00',
-              start  :  consulta.data
+              color     : 'primary',
+              title     : consulta.status,
+              start     : consulta.data
            }
            this.events.push(newAtend);
          });  
@@ -241,19 +275,15 @@ export default {
                   user_id: usuario_id,
                   paciente_id: this.selectPacienteNew
                 }
-              });       
+              });
+              
+              $('#exampleModalCenter').modal('hide');
         } catch (err) {
           
         }
       }
     },
-    changeCostumer(){
-    //   axios.get('api/user-json').then(({data})=> { 
-    //   this.users = data;
-
-    //   console.log(this.users);
-    // });    
-    }
+    changeCostumer(){}
   },
 
 }
