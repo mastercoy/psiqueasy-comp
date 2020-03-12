@@ -5,23 +5,40 @@ namespace App\Http\Controllers;
 
 use App\Models\Atendimento;
 use App\Models\Paciente;
-use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
 class AtendimentoController extends Controller {
 
-    public function store() {
-        //obs formato da data é ANO-MES-DIA HORA:MINUTO
+    public function store(Request $request) {
         Auth::loginUsingId(1); //fixme
         $nomeMetodo = 'criar_atendimento';
 
-        if (Gate::allows('tem-permissao', $nomeMetodo)) {
-            return Atendimento::create($this->validateAgendamentoRequest());
-        } else {
+        if (Gate::denies('tem-permissao', $nomeMetodo)) {
             abort(403, 'Sem Permissão!');
         }
+
+        $this->validate($request, [
+            'status' => 'required | max: 190',
+            'date' => 'date | required',
+            'obs' => 'max: 190',
+            'paciente_id' => 'required',
+            'user_id' => 'required',
+        ]);
+
+        $atendimento               = new Atendimento;
+        $atendimento->status       = $request->status;
+        $atendimento->data         = ($request->date) ? date('Y-m-d H:i', strtotime($request->date)) : null;
+        $atendimento->obs          = $request->obs;
+        $atendimento->user_id      = $request->user()->id;
+        $atendimento->paciente_id  = $request->paciente_id;
+        $atendimento->resultado    = $request->resultado;
+        $atendimento->procedimento = $request->procedimento;
+
+        $atendimento->save();
+
+        return Atendimento::find($atendimento->id);
 
     }
 
@@ -29,9 +46,11 @@ class AtendimentoController extends Controller {
         Auth::loginUsingId(1);
         $paciente = Paciente::with('atendimentos')->find($id);
 
-        $nomeMetodo = 'show_atendimento';
+        $nomeMetodo    = 'show_atendimento';             // nome do método - permissão que usuário PRECISA ter
+        $arrayCompleto = [$nomeMetodo, $paciente];       // jogo as informações anteriores em um array para enviar no guard
+        $jsonEncoder   = json_encode($arrayCompleto);    // precisa transformar em json pois o guard nao aceita array
 
-        if (Gate::allows('tem-permissao', $nomeMetodo)) {
+        if (Gate::allows('pertence-usuario-logado-e-tem-permissao', $jsonEncoder)) {
             return response()->json($paciente);
         } else {
             abort(403, 'Sem Permissão!');
@@ -40,27 +59,42 @@ class AtendimentoController extends Controller {
     }
 
     public function update(Request $request, $id) {
-        //obs formato da data é ANO-MES-DIA HORA:MINUTO
         Auth::loginUsingId(1);
         $atendimento = Atendimento::find($id);
-        $nomeMetodo  = 'update_atendimento';
 
-        if (Gate::allows('tem-permissao', $nomeMetodo)) {
-            $atendimento->update($this->validateAgendamentoRequest());
-            return $atendimento;
-        } else {
-            abort(403, 'Sem Permissão!');
+        $this->validate($request, [
+            'status' => 'required | max: 190',
+            'date' => 'date | required',
+            'obs' => 'max: 190',
+            'paciente_id' => 'required',
+        ]);
+
+        $nomeMetodo    = 'update_atendimento';
+        $arrayCompleto = [$nomeMetodo, $atendimento];
+        $jsonEncoder   = json_encode($arrayCompleto);
+
+        if (Gate::denies('pertence-usuario-logado-e-tem-permissao', $jsonEncoder)) {
+            abort(403, 'Não encontrado!');
         }
 
+        $atendimento->status = $request->status;
+        $atendimento->data   = ($request->date) ? date('Y-m-d H:i', strtotime($request->date)) : null;
+        $atendimento->obs    = $request->obs;
+
+        $atendimento->save();
+        return Atendimento::find($id);
 
     }
 
-    public function desativarAtendimento($id) { //fixme talvez trocar o gate
+    public function desativarAtendimento($id) {
         Auth::loginUsingId(1);
         $atendimento = Atendimento::find($id);
-        $nomeMetodo  = 'desativar_atendimento';
 
-        if (Gate::denies('tem-permissao', $nomeMetodo)) {
+        $nomeMetodo    = 'desativar_atendimento';
+        $arrayCompleto = [$nomeMetodo, $atendimento];
+        $jsonEncoder   = json_encode($arrayCompleto);
+
+        if (Gate::denies('pertence-usuario-logado-e-tem-permissao', $jsonEncoder)) {
             abort(403, 'Sem Permissão!');
         }
 
@@ -73,18 +107,14 @@ class AtendimentoController extends Controller {
     public function buscarAtendimento(Request $request) {
         $nomeMetodo = 'buscar_atendimento';
 
-        if (Gate::denies('tem-permissao', $nomeMetodo)) {
-            abort(403, 'Sem Permissão!');
-        }
+        $dataInicial = ($request->dataInicial) ? date('Y-m-d 00:00', strtotime($request->dataInicial)) : null;
+        $dataFinal   = ($request->dataFinal) ? date('Y-m-d 23:59', strtotime($request->dataFinal)) : null;
 
-        $dataInicial = ($request->inicio) ? date('Y-m-d', strtotime($request->inicio)) : null;
-        $dataFinal   = ($request->fim) ? date('Y-m-d', strtotime($request->fim)) : null;
-
-        $usuario = User::find($request->toArray()['user_id']);
-
-        if ($request->status == 'todos') {
+        $user = $request->user();
+        //todos
+        if ($request->status == 'Todos') {
             $atendimentos = Atendimento::where([
-                                                   ['user_id', $usuario->id],
+                                                   ['user_id', $user->id],
                                                    ['active', 1],
                                                ])
                                        ->whereBetween('data', [$dataInicial, $dataFinal]) //buscar por data
@@ -93,7 +123,7 @@ class AtendimentoController extends Controller {
 
         } else {
             $atendimentos = Atendimento::where([
-                                                   ['user_id', $usuario->id],
+                                                   ['user_id', $user->id],
                                                    ['active', 1],
                                                    ['status', $request->status],
                                                ])
@@ -114,12 +144,10 @@ class AtendimentoController extends Controller {
     protected function validateAgendamentoRequest() {
         return request()->validate([
                                        'status' => 'required | max: 190',
-                                       'data' => 'required|date_format:"Y-m-d H:i"',
+                                       'date' => 'date | required',
                                        'obs' => 'max: 190',
                                        'paciente_id' => 'required',
-                                       'user_id' => 'required',
-                                       'resultado' => 'nullable',
-                                       'procedimento' => 'nullable',
+                                       'user_id' => 'required'
                                    ]);
     }
 

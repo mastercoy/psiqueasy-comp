@@ -11,9 +11,9 @@ export default new Vuex.Store({
             cnpj: ""
         },
         Filiais: [],
-        permissoes: [1, 2, 20],
+        permissoes: [1,2, 20],
         usuários: [],
-        Status: 2, //OK // Variável que é modificada  se o usuário tiver ou não permissão de visualizar as opções
+        Status: 2, //OK // Variável que é modificada  se o usuário tiver ou não permissão de visualizar as opções 
         statusEmpresa: false, //OK  Booleano que muda de acordo com o status do empresa, se a mesma foi criada exibe uma opção e caso contrário exibe uma tela de cadastro
         userID: 1,  //Vai receber o ID do usuário que estiver logado (SuperAdmin)
         empresaID: 1,   //Vai receber o ID da empresa associado ao usuário logado (SuperAdmin)
