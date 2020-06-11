@@ -25,7 +25,7 @@
         "vue-quill-editor": "^2.2.6",
         "vue-template-compiler": "^2.5.13",
         "vuejs-datepicker": "^0.8.4",
-        "webpack-bundle-analyzer": "^2.9.2"
+        "webpack-bundle-analyzer": "^3.3.2"
     },
     "dependencies": {
         "axios": "^0.19.1",
