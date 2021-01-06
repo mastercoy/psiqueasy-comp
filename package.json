@@ -28,7 +28,7 @@
         "webpack-bundle-analyzer": "^2.9.2"
     },
     "dependencies": {
-        "axios": "^0.19.1",
+        "axios": "^0.21.1",
         "bootstrap": "^4.4.1",
         "font-awesome": "^4.7.0",
         "jquery": "^3.4.1",
